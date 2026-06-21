@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The AI Capital Stack — OpenAI × Anthropic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+  :root{
+    --bg:#0A0D13;--panel:#11161F;--panel2:#161C28;--line:#222A38;
+    --text:#E7ECF3;--muted:#8893A6;--faint:#5A6377;
+    --equity:#F4B740;--compute:#3FA9FF;--supply:#8C97AC;--power:#34D399;--leasing:#B58CFF;--loop:#FF5470;
+    --fam-lab:#F4B740;--fam-capital:#4C82BE;--fam-compute:#23A6A6;--fam-silicon:#C0703E;--fam-power:#4FA45A;--fam-other:#8893A6;--fam-person:#E0A062;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+  .mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+  .disp{font-family:"Space Grotesk","Inter",sans-serif}
+  #app{display:flex;flex-direction:column;height:100%;width:100%}
+  header{padding:14px 18px 11px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0c1119,#0A0D13);flex:0 0 auto}
+  .titlewrap{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  h1{font-family:"Space Grotesk";font-weight:700;font-size:19px;letter-spacing:-.02em;margin:0}
+  h1 .x{color:var(--equity);font-weight:500;margin:0 5px}
+  .sub{color:var(--muted);font-size:12.5px;line-height:1.5;margin-top:6px;max-width:780px}
+  .sub b{color:var(--text);font-weight:600}
+  .stamp{margin-left:auto;color:var(--faint);font-size:10.5px;text-align:right;line-height:1.5;white-space:nowrap}
+  .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--panel);flex:0 0 auto}
+  .tabs{display:flex;gap:2px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:3px}
+  .tab{font-family:"Space Grotesk";font-size:12.5px;font-weight:600;color:var(--muted);padding:6px 13px;border-radius:6px;cursor:pointer;border:none;background:none;letter-spacing:-.01em}
+  .tab.on{background:var(--text);color:#0A0D13}
+  .tab:hover:not(.on){color:var(--text)}
+  .spacer{flex:1 1 auto}
+  .legend{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+  .lg{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);cursor:pointer;user-select:none;border:none;background:none;padding:2px 0}
+  .lg .dash{width:20px;border-top:3px solid;border-radius:2px}
+  .lg.off{opacity:.3}
+  .lg:hover{color:var(--text)}
+  .loopbtn{font-family:"JetBrains Mono";font-size:11px;font-weight:600;color:var(--loop);border:1px solid rgba(255,84,112,.4);background:rgba(255,84,112,.08);padding:6px 11px;border-radius:7px;cursor:pointer}
+  .loopbtn.on{background:var(--loop);color:#0A0D13;border-color:var(--loop)}
+  select{font-family:"JetBrains Mono";font-size:11.5px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:7px;padding:6px 9px;outline:none;max-width:230px}
+  main{position:relative;flex:1 1 auto;min-height:0;overflow:hidden}
+  .view{position:absolute;inset:0;display:none}
+  .view.on{display:block}
+  #graph{width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+  #graph:active{cursor:grabbing}
+  .link{fill:none}
+  .node circle{cursor:pointer}
+  .node text{font-family:"JetBrains Mono";font-size:9.5px;font-weight:600;fill:var(--text);pointer-events:none;paint-order:stroke;stroke:#0A0D13;stroke-width:2.6px;stroke-linejoin:round}
+  .nlabel-core{font-family:"Space Grotesk" !important;font-size:12.5px !important;font-weight:700 !important}
+  .faded{opacity:.07 !important}
+  .faded text{opacity:.18 !important}
+  @keyframes flow{to{stroke-dashoffset:-22}}
+  .loopflow{stroke-dasharray:5 6;animation:flow .7s linear infinite}
+  #tip{position:absolute;pointer-events:none;z-index:40;background:#070a0f;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:11.5px;max-width:250px;opacity:0;transition:opacity .1s;box-shadow:0 8px 30px rgba(0,0,0,.6)}
+  #tip .tt-t{font-family:"Space Grotesk";font-weight:700;font-size:12.5px;margin-bottom:3px}
+  #tip .tt-k{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.02em;text-transform:uppercase}
+  #detail{position:absolute;top:12px;right:12px;width:314px;max-height:calc(100% - 24px);overflow:auto;background:rgba(17,22,31,.97);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:13px;z-index:30;display:none;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+  #detail.show{display:block}
+  .d-head{padding:15px 16px 12px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(17,22,31,.98);border-radius:13px 13px 0 0}
+  .d-tick{font-family:"JetBrains Mono";font-size:12px;font-weight:700;color:#0A0D13;padding:2px 7px;border-radius:5px;display:inline-block;margin-bottom:7px}
+  .d-name{font-family:"Space Grotesk";font-weight:700;font-size:16px;letter-spacing:-.01em}
+  .d-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-family:"JetBrains Mono";font-size:9.5px;text-transform:uppercase;letter-spacing:.03em;padding:3px 7px;border-radius:5px;background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+  .chip.rank{color:var(--equity);border-color:rgba(244,183,64,.3)}
+  .d-why{padding:11px 16px;color:var(--text);font-size:12.5px;line-height:1.5;border-bottom:1px solid var(--line);font-style:italic;background:rgba(63,169,255,.05)}
+  .d-sec{padding:11px 16px}
+  .d-sec h4{font-family:"JetBrains Mono";font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin:0 0 9px}
+  .conn{display:flex;gap:9px;padding:8px 0;border-top:1px solid rgba(34,42,56,.6)}
+  .conn:first-of-type{border-top:none}
+  .conn .bar{width:3px;align-self:stretch;border-radius:2px;flex:0 0 auto;min-height:30px}
+  .conn .cbody{flex:1;min-width:0}
+  .conn .ctop{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+  .conn .cname{font-family:"JetBrains Mono";font-size:11.5px;font-weight:600}
+  .conn .cval{font-family:"JetBrains Mono";font-size:11px;color:var(--equity);white-space:nowrap}
+  .conn .cdesc{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4}
+  .conn .cdir{font-size:9.5px;color:var(--faint);font-family:"JetBrains Mono";text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+  .closeX{position:absolute;top:13px;right:13px;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;border:none;background:none}
+  .closeX:hover{color:var(--text)}
+  #hint{position:absolute;left:12px;bottom:12px;z-index:20;background:rgba(17,22,31,.92);border:1px solid var(--line);border-radius:10px;padding:11px 13px;max-width:270px;font-size:11.5px;color:var(--muted);line-height:1.5}
+  #hint b{color:var(--text)}
+  #hint .dismiss{color:var(--faint);cursor:pointer;float:right;margin-left:8px}
+  #hint .dismiss:hover{color:var(--text)}
+  .scroll{position:absolute;inset:0;overflow:auto;padding:22px 18px 60px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .vhead{font-family:"Space Grotesk";font-weight:700;font-size:17px;letter-spacing:-.01em;margin:0 0 5px}
+  .vintro{color:var(--muted);font-size:12.5px;line-height:1.6;max-width:820px;margin-bottom:18px}
+  .vintro b{color:var(--text)}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th{font-family:"JetBrains Mono";font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  td{padding:10px;border-bottom:1px solid rgba(34,42,56,.55);vertical-align:top}
+  tr.tierhead td{background:var(--panel);border-top:1px solid var(--line)}
+  .tiertag{font-family:"Space Grotesk";font-weight:700;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--equity)}
+  .tiertag .sm{color:var(--muted);font-weight:500;font-family:"Inter";text-transform:none;letter-spacing:0;font-size:11px;margin-left:8px}
+  td.rk{font-family:"Space Grotesk";font-weight:700;font-size:15px;width:34px;text-align:center}
+  .co{white-space:nowrap}
+  .co .tk{font-family:"JetBrains Mono";font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;color:#0A0D13;margin-right:7px;display:inline-block}
+  .co .cn{font-weight:600}
+  .chcell{display:flex;flex-wrap:wrap;gap:4px}
+  .ch{font-family:"JetBrains Mono";font-size:9px;text-transform:uppercase;letter-spacing:.02em;padding:2px 6px;border-radius:4px;border:1px solid}
+  .magn{font-family:"JetBrains Mono";font-size:11px;color:var(--equity)}
+  .shr{color:var(--muted);font-size:11.5px;line-height:1.4;max-width:300px}
+  .why{color:var(--text);font-size:11.5px;line-height:1.45;font-style:italic;max-width:330px}
+  .cf{font-family:"JetBrains Mono";font-size:9px;text-transform:uppercase;letter-spacing:.04em;padding:2px 6px;border-radius:10px}
+  .cf.high{background:rgba(52,211,153,.14);color:#34D399}
+  .cf.med{background:rgba(244,183,64,.14);color:var(--equity)}
+  .cf.low{background:rgba(255,84,112,.14);color:var(--loop)}
+  .flowgrid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:6px}
+  .flowcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .flowcard h3{font-family:"Space Grotesk";font-weight:700;font-size:15px;margin:0 0 2px;display:flex;align-items:center;gap:9px}
+  .flowcard h3 .dot{width:9px;height:9px;border-radius:50%}
+  .flowcard .meta{color:var(--muted);font-size:11.5px;margin-bottom:14px;line-height:1.45}
+  .flowsub{font-family:"JetBrains Mono";font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);margin:16px 0 10px;display:flex;justify-content:space-between}
+  .frow{margin-bottom:11px}
+  .frow .ftop{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;gap:10px}
+  .frow .fn{font-family:"JetBrains Mono";font-size:11.5px;font-weight:600}
+  .frow .fv{font-family:"JetBrains Mono";font-size:11.5px;white-space:nowrap}
+  .frow .track{height:7px;background:var(--panel2);border-radius:4px;overflow:hidden}
+  .frow .fill{height:100%;border-radius:4px}
+  .frow .fnote{font-size:10px;color:var(--faint);margin-top:3px}
+  .gap{margin-top:20px;background:rgba(255,84,112,.06);border:1px solid rgba(255,84,112,.28);border-radius:12px;padding:14px 16px;font-size:12px;line-height:1.6;color:var(--text)}
+  .gap b{color:var(--loop)}
+  .foot{margin-top:28px;color:var(--faint);font-size:10.5px;line-height:1.6;border-top:1px solid var(--line);padding-top:14px;max-width:900px}
+  @media (max-width:880px){
+    .flowgrid{grid-template-columns:1fr}.stamp{display:none}
+    #detail{top:auto;bottom:0;right:0;left:0;width:100%;max-height:64%;border-radius:14px 14px 0 0}
+    .d-head{border-radius:14px 14px 0 0}#hint{display:none}
+    .shr,.why{max-width:none}h1{font-size:16px}.sub{font-size:11.5px}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="titlewrap">
+      <h1 class="disp">The AI Capital Stack<span class="x">×</span><span style="color:var(--compute)">OpenAI</span> &amp; <span style="color:var(--fam-power)">Anthropic</span></h1>
+      <div class="stamp mono">PUBLIC RECONSTRUCTION · ~JUN 2026<br>not investment advice</div>
+    </div>
+    <div class="sub">Both labs are <b>private</b> — there is no 10-K to trace. Every figure is a <b>publicly disclosed headline</b> (deal value, stake, round) or a reasoned estimate, each edge tagged <span class="mono" style="color:#34D399">confirmed</span> / <span class="mono" style="color:var(--equity)">estimated</span> / <span class="mono" style="color:var(--compute)">letter-of-intent</span>. Ranking is by <b>total economic exposure</b> — equity + revenue + supply-chain pull-through + financing risk — not direct revenue.</div>
+  </header>
+  <div class="bar">
+    <div class="tabs">
+      <button class="tab on" data-view="graph">Network</button>
+      <button class="tab" data-view="rank">Exposure ranking</button>
+      <button class="tab" data-view="flows">Money flows</button>
+    </div>
+    <div class="spacer"></div>
+    <div class="legend" id="legend">
+      <button class="lg" data-kind="equity"><span class="dash" style="border-color:var(--equity)"></span>Equity / ownership</button>
+      <button class="lg" data-kind="compute"><span class="dash" style="border-color:var(--compute)"></span>Compute spend</button>
+      <button class="lg" data-kind="supply"><span class="dash" style="border-color:var(--supply)"></span>Hardware supply</button>
+      <button class="lg" data-kind="power"><span class="dash" style="border-color:var(--power)"></span>Power</button>
+      <button class="lg" data-kind="leasing"><span class="dash" style="border-color:var(--leasing)"></span>DC lease</button>
+    </div>
+    <button class="loopbtn" id="loopBtn">&#9673; Highlight circular financing</button>
+    <select id="nodeSel" title="Jump to a company"><option value="">Jump to company…</option></select>
+  </div>
+  <main>
+    <div class="view on" id="v-graph">
+      <svg id="graph"></svg>
+      <div id="tip"></div>
+      <div id="detail"></div>
+      <div id="hint"><span class="dismiss" onclick="document.getElementById('hint').style.display='none'">×</span><b>Tap any node</b> for its full exposure ledger. Drag to rearrange, scroll to zoom. Dim, dashed lines are <b>estimated</b> / letter-of-intent; solid lines are confirmed. Toggle the loop button to watch money that circles back to its source.</div>
+    </div>
+    <div class="view" id="v-rank"><div class="scroll"><div class="wrap">
+      <h2 class="vhead disp">Ranked by total economic exposure</h2>
+      <p class="vintro">Direct revenue understates the entanglement. Companies are ranked on how much of their economic future is wired to OpenAI + Anthropic across <b>every</b> channel. Two ideas drive the order: <b>relative exposure</b> beats absolute (Oracle and CoreWeave outrank Microsoft because one deal is a multiple of their business, while for Microsoft it is a slice of a giant), and <b>derivative / reflexive exposure</b> counts (memory, optics and power makers never sign with the labs, yet their demand is gated by the labs' buildout — and Nvidia funds the very customers who then buy its chips).</p>
+      <table><thead><tr><th>#</th><th>Company</th><th>Exposure channels</th><th>Scale of tie</th><th>As share of business</th><th>Why it ranks here</th><th>Conf.</th></tr></thead><tbody id="rankBody"></tbody></table>
+      <p class="foot">Market-cap bands and "share of business" are approximate, from public reporting through mid-2026. Confidence reflects how firmly the underlying relationship/figure is disclosed, not a view on the company. Analytical map, not investment advice.</p>
+    </div></div></div>
+    <div class="view" id="v-flows"><div class="scroll"><div class="wrap">
+      <h2 class="vhead disp">The money flows, side by side</h2>
+      <p class="vintro">Multi-year <b>commitments</b>, not annualised spend — bars are scaled to the headline contract/stake value. The asymmetry is the story: each lab has committed to spend far more on compute than it has raised in equity, which is why a <b>funding gap</b> sits under the whole structure.</p>
+      <div class="flowgrid" id="flowGrid"></div>
+      <div class="gap" id="gapNote"></div>
+      <p class="foot">Sources: OpenAI / Anthropic / partner announcements, Microsoft &amp; Amazon filings, CNBC, Reuters, Bloomberg, FT, Fortune, DCD and others, through ~Jun 2026. Figures are the largest publicly reported values; many deals disclose only ceilings ("up to") or nothing. Not investment advice.</p>
+    </div></div></div>
+  </main>
+</div>
+<script>
+/* ============================== DATA ============================== */
+const FAM={lab:'#F4B740',capital:'#4C82BE',compute:'#23A6A6',silicon:'#C0703E',power:'#4FA45A',other:'#8893A6',person:'#E0A062'};
+
+const NODES=[
+  {id:'openai',label:'OpenAI',name:'OpenAI Group PBC',fam:'lab',layer:'lab',kind:'private',mcap:'~$850B val',tier:'core',ax:.42,ay:.5},
+  {id:'anthropic',label:'Anthropic',name:'Anthropic PBC',fam:'lab',layer:'lab',kind:'private',mcap:'~$965B val',tier:'core',ax:.58,ay:.5},
+  {id:'xai',label:'xAI',name:'xAI (private)',fam:'other',layer:'lab',kind:'private',mcap:'private',tier:'C',ax:.5,ay:.68},
+  {id:'altman',label:'Altman',name:'Sam Altman',fam:'person',layer:'lab',kind:'person',mcap:'individual',tier:'-',ax:.4,ay:.86},
+  {id:'msft',label:'MSFT',name:'Microsoft',fam:'capital',layer:'cloud',kind:'public',mcap:'$1T+',tier:'S',ax:.28,ay:.30},
+  {id:'amzn',label:'AMZN',name:'Amazon',fam:'capital',layer:'cloud',kind:'public',mcap:'$1T+',tier:'S',ax:.30,ay:.60},
+  {id:'googl',label:'GOOGL',name:'Alphabet / Google',fam:'capital',layer:'cloud',kind:'public',mcap:'$1T+',tier:'S',ax:.30,ay:.80},
+  {id:'orcl',label:'ORCL',name:'Oracle',fam:'capital',layer:'cloud',kind:'public',mcap:'$100B+',tier:'S',ax:.30,ay:.15},
+  {id:'meta',label:'META',name:'Meta Platforms',fam:'capital',layer:'cloud',kind:'public',mcap:'$1T+',tier:'A',ax:.18,ay:.5},
+  {id:'softbank',label:'SoftBank',name:'SoftBank Group',fam:'capital',layer:'fund',kind:'public',mcap:'$100B+',tier:'A',ax:.12,ay:.28},
+  {id:'mgx',label:'MGX',name:'MGX (Abu Dhabi)',fam:'capital',layer:'fund',kind:'fund',mcap:'SWF-backed',tier:'-',ax:.06,ay:.18},
+  {id:'gic',label:'GIC',name:'GIC (Singapore)',fam:'capital',layer:'fund',kind:'fund',mcap:'sovereign',tier:'-',ax:.06,ay:.40},
+  {id:'coatue',label:'Coatue',name:'Coatue Mgmt',fam:'capital',layer:'fund',kind:'fund',mcap:'fund',tier:'-',ax:.06,ay:.60},
+  {id:'blk',label:'BLK',name:'BlackRock',fam:'capital',layer:'fund',kind:'public',mcap:'$100B+',tier:'B',ax:.07,ay:.78},
+  {id:'thrive',label:'Thrive',name:'Thrive Capital',fam:'capital',layer:'fund',kind:'fund',mcap:'fund',tier:'-',ax:.13,ay:.62},
+  {id:'sequoia',label:'Sequoia',name:'Sequoia Capital',fam:'capital',layer:'fund',kind:'fund',mcap:'fund',tier:'-',ax:.13,ay:.78},
+  {id:'crwv',label:'CRWV',name:'CoreWeave',fam:'compute',layer:'neocloud',kind:'public',mcap:'$10B+',tier:'S',ax:.62,ay:.30},
+  {id:'nbis',label:'NBIS',name:'Nebius Group',fam:'compute',layer:'neocloud',kind:'public',mcap:'$10B+',tier:'A',ax:.70,ay:.40},
+  {id:'apld',label:'APLD',name:'Applied Digital',fam:'compute',layer:'neocloud',kind:'public',mcap:'$1B+',tier:'A',ax:.66,ay:.62},
+  {id:'iren',label:'IREN',name:'IREN',fam:'compute',layer:'neocloud',kind:'public',mcap:'$1B+',tier:'B',ax:.74,ay:.60},
+  {id:'corz',label:'CORZ',name:'Core Scientific',fam:'compute',layer:'neocloud',kind:'public',mcap:'$1B+',tier:'B',ax:.60,ay:.20},
+  {id:'lambda',label:'Lambda',name:'Lambda (private)',fam:'compute',layer:'neocloud',kind:'private',mcap:'private',tier:'B',ax:.72,ay:.28},
+  {id:'nscale',label:'Nscale',name:'Nscale (private)',fam:'compute',layer:'neocloud',kind:'private',mcap:'private',tier:'C',ax:.78,ay:.50},
+  {id:'eqix',label:'EQIX',name:'Equinix',fam:'compute',layer:'reit',kind:'public',mcap:'$10B+',tier:'B',ax:.55,ay:.80},
+  {id:'dlr',label:'DLR',name:'Digital Realty',fam:'compute',layer:'reit',kind:'public',mcap:'$10B+',tier:'B',ax:.62,ay:.83},
+  {id:'nvda',label:'NVDA',name:'Nvidia',fam:'silicon',layer:'accel',kind:'public',mcap:'$1T+',tier:'S',ax:.80,ay:.50},
+  {id:'amd',label:'AMD',name:'AMD',fam:'silicon',layer:'accel',kind:'public',mcap:'$100B+',tier:'S',ax:.86,ay:.62},
+  {id:'avgo',label:'AVGO',name:'Broadcom',fam:'silicon',layer:'accel',kind:'public',mcap:'$1T+',tier:'S',ax:.86,ay:.38},
+  {id:'mrvl',label:'MRVL',name:'Marvell',fam:'silicon',layer:'accel',kind:'public',mcap:'$10B+',tier:'A',ax:.90,ay:.50},
+  {id:'arm',label:'ARM',name:'Arm Holdings',fam:'silicon',layer:'accel',kind:'public',mcap:'$100B+',tier:'B',ax:.92,ay:.62},
+  {id:'intc',label:'INTC',name:'Intel',fam:'silicon',layer:'accel',kind:'public',mcap:'$100B+',tier:'B',ax:.92,ay:.38},
+  {id:'skhynix',label:'SK Hynix',name:'SK Hynix',fam:'silicon',layer:'memory',kind:'public',mcap:'$100B+',tier:'A',ax:.96,ay:.20},
+  {id:'mu',label:'MU',name:'Micron',fam:'silicon',layer:'memory',kind:'public',mcap:'$100B+',tier:'A',ax:.91,ay:.16},
+  {id:'samsung',label:'Samsung',name:'Samsung Electronics',fam:'silicon',layer:'memory',kind:'public',mcap:'$100B+',tier:'A',ax:.97,ay:.32},
+  {id:'tsm',label:'TSM',name:'TSMC',fam:'silicon',layer:'foundry',kind:'public',mcap:'$1T+',tier:'A',ax:.97,ay:.50},
+  {id:'asml',label:'ASML',name:'ASML',fam:'silicon',layer:'foundry',kind:'public',mcap:'$100B+',tier:'B',ax:.99,ay:.60},
+  {id:'amkr',label:'AMKR',name:'Amkor',fam:'silicon',layer:'foundry',kind:'public',mcap:'$1B+',tier:'B',ax:.95,ay:.66},
+  {id:'ase',label:'ASX',name:'ASE Technology',fam:'silicon',layer:'foundry',kind:'public',mcap:'$10B+',tier:'B',ax:.99,ay:.72},
+  {id:'snps',label:'SNPS',name:'Synopsys',fam:'silicon',layer:'foundry',kind:'public',mcap:'$10B+',tier:'B',ax:.90,ay:.72},
+  {id:'cohr',label:'COHR',name:'Coherent',fam:'silicon',layer:'optical',kind:'public',mcap:'$10B+',tier:'A',ax:.86,ay:.82},
+  {id:'lite',label:'LITE',name:'Lumentum',fam:'silicon',layer:'optical',kind:'public',mcap:'$1B+',tier:'A',ax:.92,ay:.84},
+  {id:'fn',label:'FN',name:'Fabrinet',fam:'silicon',layer:'optical',kind:'public',mcap:'$10B+',tier:'A',ax:.80,ay:.85},
+  {id:'crdo',label:'CRDO',name:'Credo Technology',fam:'silicon',layer:'optical',kind:'public',mcap:'$10B+',tier:'A',ax:.90,ay:.78},
+  {id:'alab',label:'ALAB',name:'Astera Labs',fam:'silicon',layer:'optical',kind:'public',mcap:'$10B+',tier:'A',ax:.84,ay:.74},
+  {id:'anet',label:'ANET',name:'Arista Networks',fam:'silicon',layer:'optical',kind:'public',mcap:'$100B+',tier:'A',ax:.78,ay:.74},
+  {id:'nok',label:'NOK',name:'Nokia',fam:'silicon',layer:'optical',kind:'public',mcap:'$10B+',tier:'C',ax:.96,ay:.85},
+  {id:'ceg',label:'CEG',name:'Constellation Energy',fam:'power',layer:'power',kind:'public',mcap:'$100B+',tier:'B',ax:.30,ay:.95},
+  {id:'vst',label:'VST',name:'Vistra',fam:'power',layer:'power',kind:'public',mcap:'$10B+',tier:'B',ax:.40,ay:.96},
+  {id:'tln',label:'TLN',name:'Talen Energy',fam:'power',layer:'power',kind:'public',mcap:'$10B+',tier:'B',ax:.22,ay:.95},
+  {id:'gev',label:'GEV',name:'GE Vernova',fam:'power',layer:'power',kind:'public',mcap:'$100B+',tier:'B',ax:.50,ay:.97},
+  {id:'oklo',label:'OKLO',name:'Oklo',fam:'power',layer:'power',kind:'public',mcap:'$10B+',tier:'B',ax:.46,ay:.90},
+  {id:'ccj',label:'CCJ',name:'Cameco',fam:'power',layer:'power',kind:'public',mcap:'$10B+',tier:'C',ax:.36,ay:.99},
+  {id:'rxrx',label:'RXRX',name:'Recursion Pharma',fam:'other',layer:'misc',kind:'public',mcap:'$1B+',tier:'C',ax:.84,ay:.66},
+  {id:'wrd',label:'WRD',name:'WeRide',fam:'other',layer:'misc',kind:'public',mcap:'$1B+',tier:'C',ax:.80,ay:.66}
+];
+
+const LINKS=[
+  {source:'msft',target:'openai',k:'equity',v:135,lbl:'27% · ~$135–228B',c:'ok',loop:true},
+  {source:'nvda',target:'openai',k:'equity',v:30,lbl:'$30B stake (was up-to-$100B LOI)',c:'ok',loop:true},
+  {source:'softbank',target:'openai',k:'equity',v:40,lbl:'Lead investor · Stargate JV',c:'ok'},
+  {source:'thrive',target:'openai',k:'equity',v:null,lbl:'Major investor',c:'ok'},
+  {source:'mgx',target:'openai',k:'equity',v:null,lbl:'Round participant',c:'est'},
+  {source:'sequoia',target:'openai',k:'equity',v:null,lbl:'Investor',c:'ok'},
+  {source:'amzn',target:'anthropic',k:'equity',v:30,lbl:'~$8B in + up to $20B more',c:'ok'},
+  {source:'googl',target:'anthropic',k:'equity',v:13,lbl:'$3.3B + $10B (deal up to $40B)',c:'ok'},
+  {source:'msft',target:'anthropic',k:'equity',v:5,lbl:'Up to $5B',c:'ok',loop:true},
+  {source:'nvda',target:'anthropic',k:'equity',v:10,lbl:'Up to $10B',c:'ok',loop:true},
+  {source:'gic',target:'anthropic',k:'equity',v:null,lbl:'Co-led Series G',c:'ok'},
+  {source:'coatue',target:'anthropic',k:'equity',v:null,lbl:'Co-led Series G',c:'ok'},
+  {source:'blk',target:'anthropic',k:'equity',v:null,lbl:'Series F onward',c:'ok'},
+  {source:'sequoia',target:'anthropic',k:'equity',v:null,lbl:'Investor',c:'ok'},
+  {source:'mgx',target:'anthropic',k:'equity',v:null,lbl:'Investor',c:'est'},
+  {source:'openai',target:'amd',k:'equity',v:90,lbl:'Warrants for ~10% of AMD @ $0.01',c:'ok'},
+  {source:'altman',target:'openai',k:'equity',v:null,lbl:'CEO · holds ~0% equity',c:'ok'},
+  {source:'altman',target:'oklo',k:'equity',v:null,lbl:'~4.3% personal stake (~$650M)',c:'ok'},
+  {source:'nvda',target:'crwv',k:'equity',v:4,lbl:'~7% stake + $6.3B capacity backstop',c:'ok',loop:true},
+  {source:'nvda',target:'nbis',k:'equity',v:2,lbl:'~1.5% / $2B',c:'ok',loop:true},
+  {source:'nvda',target:'apld',k:'equity',v:null,lbl:'13F holding',c:'ok'},
+  {source:'nvda',target:'arm',k:'equity',v:null,lbl:'13F holding',c:'ok'},
+  {source:'nvda',target:'rxrx',k:'equity',v:null,lbl:'13F holding (AI drug discovery)',c:'ok'},
+  {source:'nvda',target:'wrd',k:'equity',v:null,lbl:'13F holding (autonomy)',c:'ok'},
+  {source:'nvda',target:'intc',k:'equity',v:5,lbl:'$5B strategic investment',c:'ok'},
+  {source:'nvda',target:'lambda',k:'equity',v:null,lbl:'Strategic investment',c:'ok'},
+  {source:'nvda',target:'nscale',k:'equity',v:null,lbl:'~$433M SAFE',c:'ok'},
+  {source:'nvda',target:'cohr',k:'equity',v:null,lbl:'13F holding',c:'ok'},
+  {source:'nvda',target:'snps',k:'equity',v:null,lbl:'13F holding',c:'ok'},
+  {source:'nvda',target:'nok',k:'equity',v:null,lbl:'13F holding',c:'ok'},
+  {source:'nvda',target:'xai',k:'equity',v:null,lbl:'Strategic / partner',c:'est'},
+  {source:'crwv',target:'corz',k:'equity',v:9,lbl:'$9B all-stock acquisition',c:'ok'},
+  {source:'openai',target:'orcl',k:'compute',v:300,lbl:'$300B / 5yr (Stargate)',c:'ok'},
+  {source:'openai',target:'msft',k:'compute',v:250,lbl:'$250B Azure commitment',c:'ok',loop:true},
+  {source:'openai',target:'amzn',k:'compute',v:38,lbl:'$38B / 7yr (AWS)',c:'ok'},
+  {source:'openai',target:'crwv',k:'compute',v:22.4,lbl:'$22.4B through 2029',c:'ok',loop:true},
+  {source:'openai',target:'amd',k:'compute',v:90,lbl:'6GW Instinct · ~$90B',c:'ok'},
+  {source:'openai',target:'avgo',k:'compute',v:30,lbl:'10GW custom XPU (undisclosed $)',c:'est'},
+  {source:'openai',target:'nvda',k:'compute',v:100,lbl:'10GW systems (~$350B gear over time)',c:'ok',loop:true},
+  {source:'anthropic',target:'amzn',k:'compute',v:100,lbl:'>$100B AWS / Trainium (decade)',c:'ok'},
+  {source:'anthropic',target:'googl',k:'compute',v:40,lbl:'Up to 5GW TPU (deal ~$40B)',c:'ok'},
+  {source:'anthropic',target:'msft',k:'compute',v:30,lbl:'$30B Azure (on Nvidia systems)',c:'ok',loop:true},
+  {source:'anthropic',target:'crwv',k:'compute',v:null,lbl:'CoreWeave footprint',c:'est'},
+  {source:'nvda',target:'tsm',k:'supply',v:null,lbl:'Foundry + CoWoS packaging',c:'ok'},
+  {source:'amd',target:'tsm',k:'supply',v:null,lbl:'Foundry',c:'ok'},
+  {source:'avgo',target:'tsm',k:'supply',v:null,lbl:'Foundry (XPUs)',c:'ok'},
+  {source:'mrvl',target:'tsm',k:'supply',v:null,lbl:'Foundry (custom ASIC)',c:'ok'},
+  {source:'tsm',target:'asml',k:'supply',v:null,lbl:'EUV lithography',c:'ok'},
+  {source:'tsm',target:'amkr',k:'supply',v:null,lbl:'OSAT packaging',c:'ok'},
+  {source:'tsm',target:'ase',k:'supply',v:null,lbl:'OSAT packaging',c:'ok'},
+  {source:'nvda',target:'skhynix',k:'supply',v:null,lbl:'HBM (primary supplier)',c:'ok'},
+  {source:'nvda',target:'mu',k:'supply',v:null,lbl:'HBM',c:'ok'},
+  {source:'nvda',target:'samsung',k:'supply',v:null,lbl:'HBM',c:'ok'},
+  {source:'amd',target:'samsung',k:'supply',v:null,lbl:'HBM4 (MI455X primary)',c:'ok'},
+  {source:'skhynix',target:'tsm',k:'supply',v:null,lbl:'HBM4 base die (12nm)',c:'ok'},
+  {source:'nvda',target:'cohr',k:'supply',v:null,lbl:'Optical transceivers',c:'ok'},
+  {source:'nvda',target:'lite',k:'supply',v:null,lbl:'Lasers / optics',c:'ok'},
+  {source:'nvda',target:'fn',k:'supply',v:null,lbl:'Optical module assembly',c:'ok'},
+  {source:'nvda',target:'crdo',k:'supply',v:null,lbl:'Active electrical cables',c:'ok'},
+  {source:'nvda',target:'alab',k:'supply',v:null,lbl:'Connectivity / retimers',c:'ok'},
+  {source:'nvda',target:'mrvl',k:'supply',v:null,lbl:'Optical DSP / custom',c:'est'},
+  {source:'anet',target:'avgo',k:'supply',v:null,lbl:'Switch silicon (Tomahawk/Jericho)',c:'ok'},
+  {source:'nvda',target:'snps',k:'supply',v:null,lbl:'Chip-design EDA',c:'ok'},
+  {source:'amd',target:'snps',k:'supply',v:null,lbl:'EDA',c:'ok'},
+  {source:'avgo',target:'snps',k:'supply',v:null,lbl:'EDA',c:'ok'},
+  {source:'crwv',target:'nvda',k:'supply',v:6.3,lbl:'GPUs + $6.3B Nvidia capacity deal',c:'ok',loop:true},
+  {source:'nbis',target:'nvda',k:'supply',v:null,lbl:'GPU fleet',c:'ok',loop:true},
+  {source:'msft',target:'nvda',k:'supply',v:null,lbl:'GPUs (Azure)',c:'ok',loop:true},
+  {source:'amzn',target:'nvda',k:'supply',v:null,lbl:'GPUs (AWS) — also builds Trainium',c:'ok'},
+  {source:'googl',target:'nvda',k:'supply',v:null,lbl:'GPUs — also builds TPUs',c:'ok'},
+  {source:'orcl',target:'nvda',k:'supply',v:null,lbl:'GB200/GB300 racks',c:'ok'},
+  {source:'orcl',target:'amd',k:'supply',v:null,lbl:'50k AMD GPUs (2026+)',c:'ok'},
+  {source:'msft',target:'amd',k:'supply',v:null,lbl:'MI-series GPUs',c:'est'},
+  {source:'lambda',target:'nvda',k:'supply',v:null,lbl:'GPU fleet',c:'ok'},
+  {source:'msft',target:'ceg',k:'power',v:16,lbl:'Three Mile Island restart · $16B / 835MW',c:'ok'},
+  {source:'amzn',target:'tln',k:'power',v:null,lbl:'Susquehanna nuclear · 1.92GW',c:'ok'},
+  {source:'amzn',target:'vst',k:'power',v:null,lbl:'Comanche Peak · up to 1.2GW',c:'ok'},
+  {source:'meta',target:'vst',k:'power',v:null,lbl:'2.6GW+ PPAs',c:'ok'},
+  {source:'meta',target:'oklo',k:'power',v:null,lbl:'1.2GW SMR campus (Ohio)',c:'ok'},
+  {source:'meta',target:'ceg',k:'power',v:null,lbl:'20-yr nuclear PPA',c:'ok'},
+  {source:'vst',target:'gev',k:'power',v:null,lbl:'Gas turbines / grid kit',c:'est'},
+  {source:'ceg',target:'ccj',k:'power',v:null,lbl:'Uranium fuel',c:'est'},
+  {source:'oklo',target:'ccj',k:'power',v:null,lbl:'Fuel cycle',c:'est'},
+  {source:'msft',target:'dlr',k:'leasing',v:null,lbl:'Hyperscale leasing',c:'ok'},
+  {source:'amzn',target:'dlr',k:'leasing',v:null,lbl:'Hyperscale leasing',c:'ok'},
+  {source:'googl',target:'eqix',k:'leasing',v:null,lbl:'Colocation + interconnect',c:'ok'},
+  {source:'msft',target:'eqix',k:'leasing',v:null,lbl:'Colocation',c:'ok'},
+  {source:'crwv',target:'eqix',k:'leasing',v:null,lbl:'Neocloud colocation',c:'ok'},
+  {source:'nbis',target:'eqix',k:'leasing',v:null,lbl:'Colocation',c:'est'},
+  {source:'crwv',target:'apld',k:'leasing',v:7.5,lbl:'Ellendale · 250MW (~$7.5B class)',c:'ok'},
+  {source:'orcl',target:'dlr',k:'leasing',v:null,lbl:'Stargate-adjacent capacity',c:'est'}
+];
+const RANK=[
+  {tier:'S',sub:'Existential / reflexive exposure'},
+  {rk:1,id:'nvda',ch:['equity','compute','supply'],magn:'$40B equity + ~$350B+ systems',shr:'Data-center ≈88% of revenue; the labs are the demand engine',why:'Funds its own customers and supplies the entire stack — exposure is total and self-reinforcing.',cf:'high'},
+  {rk:2,id:'orcl',ch:['compute'],magn:'$300B / 5yr (Stargate)',shr:'One deal ≈ multiples of current cloud revenue',why:'Stargate turns OpenAI’s solvency into an Oracle balance-sheet question.',cf:'high'},
+  {rk:3,id:'crwv',ch:['compute','equity','supply'],magn:'$22.4B OpenAI backlog · Nvidia-funded',shr:'OpenAI is the majority workload behind lease-backed debt',why:'If OpenAI can’t pay, CoreWeave’s GPU-collateralised debt cracks first.',cf:'high'},
+  {rk:4,id:'msft',ch:['equity','compute'],magn:'~$135–228B stake + $280B compute',shr:'Enormous absolute, modest share of a diversified giant',why:'Biggest dollar exposure of anyone — but diluted across Microsoft, so not #1 on a relative basis.',cf:'high'},
+  {rk:5,id:'amd',ch:['compute','equity'],magn:'~$90B order + ~10% of AMD to OpenAI',shr:'OpenAI is a top customer and a top shareholder at once',why:'Two-way entanglement: chips out, equity in — uniquely circular.',cf:'high'},
+  {rk:6,id:'avgo',ch:['compute','supply'],magn:'10GW custom XPU for OpenAI',shr:'Custom AI silicon is Broadcom’s fastest-growing core',why:'OpenAI co-designs Broadcom’s flagship accelerator franchise.',cf:'med'},
+  {rk:7,id:'amzn',ch:['equity','compute'],magn:'$16.8B Q1’26 gains · >$100B commit',shr:'Anthropic is AWS’s flagship AI story (+ $38B OpenAI deal)',why:'The mirror of Microsoft–OpenAI, one tier down in scale.',cf:'high'},
+  {rk:8,id:'googl',ch:['equity','compute'],magn:'Up to $40B deal · ~$44B paper',shr:'Anthropic funds TPUs and competes with Gemini',why:'Backs a direct rival to spin its silicon — exposure plus strategic tension.',cf:'high'},
+  {tier:'A',sub:'Derivative exposure — gated by the buildout, one step removed'},
+  {rk:9,id:'skhynix',ch:['supply'],magn:'HBM sold out through 2026',shr:'Memory ~55% AI-driven; op-margin ~90%',why:'Acute but indirect: every GPU the labs buy needs its HBM stacks.',cf:'high'},
+  {rk:10,id:'mu',ch:['supply'],magn:'HBM capacity sold out CY26',shr:'Data-center ~56% of revenue; only US HBM maker',why:'Same memory supercycle, US-domiciled — the policy-safe HBM play.',cf:'high'},
+  {rk:11,id:'samsung',ch:['supply'],magn:'HBM4 ramp; AMD MI455X primary',shr:'~17% HBM share, recovering yields',why:'Third HBM source — leverage rising as it re-qualifies with Nvidia/AMD.',cf:'med'},
+  {rk:12,id:'tsm',ch:['supply'],magn:'Foundry for every AI accelerator',shr:'CoWoS ~80%; AI is the growth driver, base diversified',why:'The chokepoint everyone routes through — broad exposure, not lab-specific.',cf:'high'},
+  {rk:13,id:'softbank',ch:['equity'],magn:'OpenAI lead + Stargate JV',shr:'OpenAI is the centrepiece of the Vision-Fund-era bet',why:'A funding-gap scare sent SoftBank down ~10% in a single day.',cf:'high'},
+  {rk:14,id:'cohr',ch:['supply','equity'],magn:'~22% optical transceiver share',shr:'Networking ~59% of revenue; also a Nvidia holding',why:'Scale-out clusters are an optics problem — Coherent sells the photons.',cf:'med'},
+  {rk:15,id:'alab',ch:['supply'],magn:'Scale-up connectivity / retimers',shr:'~100% data-center revenue — a pure play',why:'No AI buildout, no Astera: maximal beta to rack density.',cf:'med'},
+  {rk:16,id:'crdo',ch:['supply'],magn:'Active electrical cables',shr:'~95% data-center revenue',why:'Copper-interconnect pure play riding the same cluster wave.',cf:'med'},
+  {rk:17,id:'lite',ch:['supply'],magn:'Lasers + transceivers',shr:'AI optical ramp; legacy telecom base',why:'Optical incumbent re-rated on AI interconnect demand.',cf:'med'},
+  {rk:18,id:'meta',ch:['compute','power'],magn:'$60B AMD chips · 6.6GW nuclear',shr:'Competes via Llama; sets the demand comps',why:'Not exposed to the two labs directly — but defines the buildout they all ride.',cf:'med'},
+  {rk:19,id:'anet',ch:['supply'],magn:'AI back-end Ethernet switching',shr:'Hyperscaler-capex driven',why:'The Ethernet alternative to Nvidia’s InfiniBand in AI fabrics.',cf:'med'},
+  {rk:20,id:'nbis',ch:['compute','supply'],magn:'Nvidia $2B · AI cloud pure-play',shr:'Full-stack neocloud',why:'Nvidia-funded capacity that ultimately serves lab-scale workloads.',cf:'med'},
+  {rk:21,id:'apld',ch:['leasing','equity'],magn:'$7.5B lease · CoreWeave 250MW',shr:'Levered AI-buildout developer',why:'Landlord to the neoclouds that serve the labs — and a Nvidia holding.',cf:'med'},
+  {tier:'B',sub:'Infrastructure exposure — power, real estate, upstream tooling'},
+  {rk:22,id:'ceg',ch:['power'],magn:'$16B Microsoft TMI + Calpine',shr:'AI demand is the entire bull case; regulated base',why:'Nuclear baseload is one step removed but is the whole thesis.',cf:'med'},
+  {rk:23,id:'vst',ch:['power'],magn:'1.2GW AWS + 2.6GW Meta',shr:'Merchant nuclear/gas re-rated on data centers',why:'Largest contracted nuclear capacity into hyperscale AI.',cf:'med'},
+  {rk:24,id:'tln',ch:['power'],magn:'Susquehanna 1.92GW (Amazon)',shr:'Single-site nuclear, hyperscaler-anchored',why:'The original co-located nuclear + data-center template.',cf:'med'},
+  {rk:25,id:'gev',ch:['power'],magn:'BWRX-300 SMR + grid turbines',shr:'Electrification of the AI buildout',why:'Sells the turbines and SMRs that energise everyone’s campuses.',cf:'med'},
+  {rk:26,id:'oklo',ch:['power','equity'],magn:'Meta 1.2GW · Altman ~4.3%',shr:'Pre-revenue SMR; direct Altman link',why:'The most personal tie in the map: OpenAI’s CEO is a major shareholder.',cf:'low'},
+  {rk:27,id:'eqix',ch:['leasing'],magn:'8 of top-10 labs colocate',shr:'AI incremental to a very large base',why:'Owns the interconnection meeting-room the whole ecosystem plugs into.',cf:'med'},
+  {rk:28,id:'dlr',ch:['leasing'],magn:'Record 200MW single lease',shr:'AI incremental; hyperscale wholesale',why:'Scale landlord to the clouds that host the labs.',cf:'med'},
+  {rk:29,id:'asml',ch:['supply'],magn:'EUV monopoly upstream of TSMC',shr:'Two steps removed; indispensable',why:'Furthest upstream — real exposure, maximally diffused across all chips.',cf:'med'}
+];
+
+const FLOWS={
+  openai:{color:'var(--compute)',raised:'~$60B+ raised across rounds · ~$850B valuation (Feb 2026)',
+    out:[{n:'Oracle (Stargate)',v:300,note:'$300B / 5yr · 4.5GW+'},{n:'Nvidia systems',v:350,note:'10GW · ~$35B/GW of gear over time'},{n:'Microsoft Azure',v:250,note:'$250B commitment'},{n:'AMD',v:90,note:'6GW Instinct'},{n:'AWS',v:38,note:'$38B / 7yr'},{n:'CoreWeave',v:22.4,note:'through 2029'},{n:'Broadcom XPU',v:30,note:'10GW custom (undisclosed $)'}],
+    in:[{n:'Feb 2026 round',v:110,note:'~$110B; Nvidia took $30B'},{n:'Microsoft (cumulative)',v:13.8,note:'since 2019 → 27% stake'},{n:'Nvidia',v:30,note:'equity (scaled from $100B LOI)'},{n:'SoftBank + others',v:40,note:'lead + Thrive / MGX / Sequoia'}]},
+  anthropic:{color:'var(--fam-power)',raised:'~$132B raised across 18 rounds · ~$965B valuation (Series H, Apr 2026)',
+    out:[{n:'AWS / Trainium',v:100,note:'>$100B over the decade'},{n:'Google TPU',v:40,note:'up to 5GW (deal up to $40B)'},{n:'Microsoft Azure',v:30,note:'$30B, on Nvidia systems'}],
+    in:[{n:'Series H (Apr 2026)',v:65,note:'$965B post-money'},{n:'Series G (Feb 2026)',v:30,note:'$380B post-money'},{n:'Amazon (cumulative)',v:33,note:'~$8B + $5B + up to $20B more'},{n:'Google (cumulative)',v:23,note:'$3.3B + $10B (up to $40B)'},{n:'Nvidia',v:10,note:'up to $10B'},{n:'Microsoft',v:5,note:'up to $5B'},{n:'Series F (Sep 2025)',v:13,note:'$183B valuation'}]}
+};
+/* ============================== HELPERS ============================== */
+function getCSS(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+function fmt(v){return Number.isInteger(v)?(''+v):v.toFixed(1);}
+function kindName(k){return {equity:'Equity stake',compute:'Compute spend',supply:'Hardware supply',power:'Power purchase',leasing:'Data-center lease'}[k]||k;}
+function kindShort(k){return {equity:'Equity',compute:'Compute',supply:'Supply',power:'Power',leasing:'Lease'}[k]||k;}
+function confName(c){return {ok:'confirmed',est:'estimated',loi:'letter of intent'}[c]||c;}
+function layerName(l){return {lab:'AI lab',cloud:'Hyperscale cloud',fund:'Capital / fund',neocloud:'Neocloud / GPU cloud',reit:'Data-center REIT',accel:'AI accelerator',memory:'HBM memory',foundry:'Foundry / packaging',optical:'Optical / networking',power:'Power / energy',misc:'Nvidia portfolio'}[l]||l;}
+function kindLabel(k){return {public:'Public',private:'Private',fund:'Fund',person:'Individual'}[k]||k;}
+function famColor(n){return FAM[n.fam]||FAM.other;}
+
+const KCOL={equity:getCSS('--equity'),compute:getCSS('--compute'),supply:getCSS('--supply'),power:getCSS('--power'),leasing:getCSS('--leasing')};
+const R={core:24,S:17,A:12,B:9,C:7,'-':7};
+function radius(n){if(n.kind==='person')return 7;if(n.kind==='fund')return 8;return R[n.tier]||8;}
+NODES.forEach(n=>n.r=radius(n));
+const nodeById=Object.fromEntries(NODES.map(n=>[n.id,n]));
+const adj={};NODES.forEach(n=>adj[n.id]=new Set());
+LINKS.forEach(l=>{adj[l.source].add(l.target);adj[l.target].add(l.source);});
+
+const tipEl=document.getElementById('tip');
+function showTip(e,html){const r=document.getElementById('v-graph').getBoundingClientRect();tipEl.innerHTML=html;tipEl.style.opacity=1;let x=e.clientX-r.left+14,y=e.clientY-r.top+14;if(x>r.width-260)x-=275;if(y>r.height-110)y-=120;tipEl.style.left=x+'px';tipEl.style.top=y+'px';}
+function hideTip(){tipEl.style.opacity=0;}
+
+/* ============================== GRAPH ============================== */
+let W=0,H=0,pinned=null,loopMode=false,linkG,nodeG;
+const svg=d3.select('#graph'),root=svg.append('g'),gLink=root.append('g'),gNode=root.append('g');
+const defs=svg.append('defs');
+Object.entries(KCOL).forEach(([k,c])=>{defs.append('marker').attr('id','arr-'+k).attr('viewBox','0 -5 10 10').attr('refX',9).attr('refY',0).attr('markerWidth',5.5).attr('markerHeight',5.5).attr('orient','auto').append('path').attr('d','M0,-4L9,0L0,4').attr('fill',c).attr('opacity',.85);});
+const widthScale=d3.scaleSqrt().domain([1,350]).range([1.3,6]).clamp(true);
+function linkWidth(l){return l.v?widthScale(l.v):1.3;}
+
+const sim=d3.forceSimulation(NODES)
+  .force('link',d3.forceLink(LINKS).id(d=>d.id).distance(l=>({equity:135,compute:120,supply:78,power:108,leasing:92}[l.k]||100)).strength(.18))
+  .force('charge',d3.forceManyBody().strength(-270))
+  .force('collide',d3.forceCollide().radius(d=>d.r+7).strength(.9))
+  .force('x',d3.forceX(d=>d.ax*W).strength(.10))
+  .force('y',d3.forceY(d=>d.ay*H).strength(.12));
+
+function draw(){
+  linkG=gLink.selectAll('path').data(LINKS).join('path').attr('class','link')
+    .attr('stroke',l=>KCOL[l.k]).attr('stroke-width',linkWidth)
+    .attr('stroke-opacity',l=>l.c==='ok'?.5:.34)
+    .attr('stroke-dasharray',l=>l.c==='ok'?null:'4 4')
+    .attr('marker-end',l=>'url(#arr-'+l.k+')')
+    .on('mousemove',(e,l)=>showTip(e,'<div class="tt-t" style="color:'+KCOL[l.k]+'">'+nodeById[l.source.id].name+' &#8594; '+nodeById[l.target.id].name+'</div>'+l.lbl+'<br><span class="tt-k" style="color:var(--muted)">'+kindName(l.k)+' · '+confName(l.c)+'</span>'))
+    .on('mouseleave',hideTip);
+  nodeG=gNode.selectAll('g').data(NODES).join('g').attr('class','node')
+    .call(d3.drag().on('start',dstart).on('drag',dged).on('end',dend))
+    .on('mouseover',(e,n)=>focus(n.id))
+    .on('mouseout',()=>{if(!pinned)clearFocus();})
+    .on('click',(e,n)=>{e.stopPropagation();pin(n);});
+  nodeG.append('circle').attr('r',n=>n.r)
+    .attr('fill',n=>n.tier==='core'?'#0A0D13':famColor(n))
+    .attr('stroke',n=>n.tier==='core'?getCSS('--equity'):(d3.color(famColor(n))||d3.color('#888888')).brighter(.5))
+    .attr('stroke-width',n=>n.tier==='core'?2.6:1.2)
+    .attr('stroke-dasharray',n=>(n.kind==='private'||n.kind==='person')?'2.5 2':null);
+  nodeG.append('text').attr('class',n=>n.tier==='core'?'nlabel-core':null).attr('text-anchor','middle').attr('dy',n=>n.r+11).text(n=>n.label);
+  document.querySelectorAll('.lg').forEach(b=>b.addEventListener('click',()=>{b.classList.toggle('off');applyFilter();}));
+}
+function ticked(){
+  linkG.attr('d',l=>{const s=l.source,t=l.target,dx=t.x-s.x,dy=t.y-s.y,dr=Math.sqrt(dx*dx+dy*dy)*1.7;return 'M'+s.x+','+s.y+'A'+dr+','+dr+' 0 0,1 '+t.x+','+t.y;});
+  nodeG.attr('transform',n=>'translate('+n.x+','+n.y+')');
+}
+sim.on('tick',ticked);
+function dstart(e,d){if(!e.active)sim.alphaTarget(.18).restart();d.fx=d.x;d.fy=d.y;}
+function dged(e,d){d.fx=e.x;d.fy=e.y;}
+function dend(e,d){if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}
+
+function focus(id){
+  const keep=new Set([id,...adj[id]]);
+  nodeG.classed('faded',n=>!keep.has(n.id));
+  linkG.classed('faded',l=>!(l.source.id===id||l.target.id===id)).attr('stroke-opacity',l=>(l.source.id===id||l.target.id===id)?.95:.04);
+}
+function clearFocus(){
+  nodeG.classed('faded',false);
+  linkG.classed('faded',false).attr('stroke-opacity',l=>loopMode?(l.loop?.95:.08):(l.c==='ok'?.5:.34));
+  applyFilter();
+}
+function applyFilter(){
+  const off=new Set([...document.querySelectorAll('.lg.off')].map(b=>b.dataset.kind));
+  linkG.style('display',l=>off.has(l.k)?'none':null);
+  const live=new Set();LINKS.forEach(l=>{if(!off.has(l.k)){live.add(l.source.id);live.add(l.target.id);}});
+  nodeG.style('opacity',n=>live.has(n.id)||n.tier==='core'?1:.28);
+}
+
+document.getElementById('loopBtn').addEventListener('click',function(){
+  loopMode=!loopMode;this.classList.toggle('on',loopMode);
+  this.innerHTML=loopMode?'&#9673; Showing money that loops back':'&#9673; Highlight circular financing';
+  if(loopMode){
+    linkG.classed('loopflow',l=>l.loop).attr('stroke-opacity',l=>l.loop?.98:.06)
+      .attr('stroke-width',l=>l.loop?Math.max(2.4,linkWidth(l)):linkWidth(l))
+      .attr('stroke',l=>l.loop?getCSS('--loop'):KCOL[l.k]);
+    nodeG.style('opacity',n=>LINKS.some(l=>l.loop&&(l.source.id===n.id||l.target.id===n.id))?1:.22);
+  }else{
+    linkG.classed('loopflow',false).attr('stroke',l=>KCOL[l.k]).attr('stroke-width',linkWidth).attr('stroke-opacity',l=>l.c==='ok'?.5:.34);
+    nodeG.style('opacity',1);applyFilter();
+  }
+});
+
+function pin(n){
+  pinned=n.id;focus(n.id);
+  const d=document.getElementById('detail'),fam=famColor(n),rkRow=RANK.find(r=>r.id===n.id);
+  const outs=LINKS.filter(l=>l.source.id===n.id),ins=LINKS.filter(l=>l.target.id===n.id);
+  function connHTML(l,outgoing){
+    const o=nodeById[outgoing?l.target.id:l.source.id];
+    const dir=l.k==='equity'?(outgoing?'owns &#8594;':'&#8592; owned by'):(outgoing?'pays &#8594;':'&#8592; paid by');
+    return '<div class="conn"><div class="bar" style="background:'+KCOL[l.k]+'"></div><div class="cbody"><div class="ctop"><span class="cname">'+o.name+'</span>'+(l.v?'<span class="cval">$'+fmt(l.v)+'B</span>':'')+'</div><div class="cdesc">'+l.lbl+'</div><div class="cdir">'+dir+' '+kindName(l.k)+' · '+confName(l.c)+'</div></div></div>';
+  }
+  let body='';
+  if(rkRow)body+='<div class="d-why">"'+rkRow.why+'"</div>';
+  if(outs.length)body+='<div class="d-sec"><h4>Sends money / owns</h4>'+outs.map(l=>connHTML(l,true)).join('')+'</div>';
+  if(ins.length)body+='<div class="d-sec"><h4>Receives money / owned by</h4>'+ins.map(l=>connHTML(l,false)).join('')+'</div>';
+  d.innerHTML='<button class="closeX" onclick="unpin()">×</button><div class="d-head"><span class="d-tick" style="background:'+fam+'">'+n.label+'</span><div class="d-name">'+n.name+'</div><div class="d-meta"><span class="chip">'+layerName(n.layer)+'</span><span class="chip">'+kindLabel(n.kind)+'</span><span class="chip">'+n.mcap+'</span>'+(rkRow?'<span class="chip rank">Exposure #'+rkRow.rk+'</span>':'')+'</div></div>'+body;
+  d.classList.add('show');document.getElementById('nodeSel').value=n.id;
+}
+function unpin(){pinned=null;document.getElementById('detail').classList.remove('show');document.getElementById('nodeSel').value='';clearFocus();}
+window.unpin=unpin;
+svg.on('click',()=>{if(pinned)unpin();});
+
+const sel=document.getElementById('nodeSel');
+NODES.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(n=>{const o=document.createElement('option');o.value=n.id;o.textContent=n.label+' — '+n.name;sel.appendChild(o);});
+sel.addEventListener('change',()=>{const id=sel.value;if(!id)return;showView('graph');init();pin(nodeById[id]);});
+
+/* ============================== RENDER: RANKING ============================== */
+function renderRank(){
+  document.getElementById('rankBody').innerHTML=RANK.map(row=>{
+    if(row.tier)return '<tr class="tierhead"><td colspan="7"><span class="tiertag">Tier '+row.tier+'<span class="sm">'+row.sub+'</span></span></td></tr>';
+    const n=nodeById[row.id],fam=famColor(n);
+    const chips=row.ch.map(k=>'<span class="ch" style="color:'+KCOL[k]+';border-color:'+KCOL[k]+'55">'+kindShort(k)+'</span>').join('');
+    return '<tr><td class="rk">'+row.rk+'</td><td class="co"><span class="tk" style="background:'+fam+'">'+n.label+'</span><span class="cn">'+n.name+'</span><div class="mono" style="font-size:10px;color:var(--faint);margin-top:3px">'+layerName(n.layer)+' · '+n.mcap+'</div></td><td><div class="chcell">'+chips+'</div></td><td class="magn">'+row.magn+'</td><td class="shr">'+row.shr+'</td><td class="why">'+row.why+'</td><td><span class="cf '+row.cf+'">'+row.cf+'</span></td></tr>';
+  }).join('');
+}
+
+/* ============================== RENDER: FLOWS ============================== */
+function renderFlows(){
+  const MAX=350;
+  function rows(arr,kind){
+    const col=kind==='out'?getCSS('--compute'):getCSS('--equity');
+    return arr.map(f=>{const w=Math.max(4,f.v/MAX*100);return '<div class="frow"><div class="ftop"><span class="fn">'+f.n+'</span><span class="fv" style="color:'+col+'">$'+fmt(f.v)+'B</span></div><div class="track"><div class="fill" style="width:'+w+'%;background:'+col+'"></div></div><div class="fnote">'+f.note+'</div></div>';}).join('');
+  }
+  function card(key,title){const d=FLOWS[key];return '<div class="flowcard"><h3><span class="dot" style="background:'+d.color+'"></span>'+title+'</h3><div class="meta">'+d.raised+'</div><div class="flowsub"><span>Money OUT — multi-year compute commitments</span><span>scaled vs $350B</span></div>'+rows(d.out,'out')+'<div class="flowsub"><span>Money IN — equity raised / invested</span><span></span></div>'+rows(d.in,'in')+'</div>';}
+  document.getElementById('flowGrid').innerHTML=card('openai','OpenAI')+card('anthropic','Anthropic');
+  document.getElementById('gapNote').innerHTML='<b>The gap.</b> OpenAI has signed on the order of <b>$1T+</b> in multi-year compute deals — its CFO reportedly flagged ~$600B of compute commitments against revenue that still has to grow into them. Anthropic has committed <b>$170B+</b> (AWS + Google + Azure). Both numbers dwarf the equity each has raised, so the difference is filled by vendor financing and fresh capital — much of it from the same vendors (Nvidia, Microsoft, Amazon, Google) whose chips and clouds the money is spent on. That circularity is the structural risk under the entire stack.';
+}
+
+/* ============================== VIEWS + INIT ============================== */
+function showView(v){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.view===v));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+  document.getElementById('v-'+v).classList.add('on');
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{showView(t.dataset.view);if(t.dataset.view==='graph')init();}));
+
+const zoom=d3.zoom().scaleExtent([.35,3]).on('zoom',e=>root.attr('transform',e.transform));
+svg.call(zoom).on('dblclick.zoom',null);
+function init(){const r=svg.node().getBoundingClientRect();W=r.width||window.innerWidth;H=r.height||600;sim.alpha(.9).restart();}
+window.addEventListener('resize',()=>{if(document.getElementById('v-graph').classList.contains('on'))init();});
+
+draw();renderRank();renderFlows();init();
+</script>
+</body>
+</html>
