@@ -378,14 +378,14 @@ const REPORT = {
     { lab:"Consensus", val:"Strong Buy", sub:"43 analysts · avg PT $1,048", cls:"pos" }
   ],
   kpis:[
-    { k:"Revenue", v:"$41.5B", yoy:"▲ 34% YoY", beat:"Beat est. $36.0B" },
-    { k:"EPS (GAAP)", v:"$25.11", yoy:"▲ 254% YoY", beat:"Beat est. $21.00" },
+    { k:"Revenue", v:"$41.5B", yoy:"▲ 346% YoY", beat:"+74% QoQ · beat est. ~$35.7B" },
+    { k:"EPS (non-GAAP)", v:"$25.11", yoy:"▲ ~1,400% YoY", beat:"Beat est. $20.28 · GAAP $24.67" },
     { k:"Gross margin", v:"84.9%", yoy:"▲ 47pp YoY", beat:"Company record" },
     { k:"Operating margin", v:"80.0%", yoy:"▲ 57pp YoY", beat:"Op. profit $33.3B" },
-    { k:"Net income", v:"$28.2B", yoy:"▲ 148% YoY", beat:"Net margin 68%" }
+    { k:"Net income", v:"$28.2B", yoy:"▲ ~1,396% YoY", beat:"Net margin 68% · from $1.9B" }
   ],
   flow:[
-    { fn:"Revenue", pc:"100%", fv:"$41.5B", w:100, type:"rev", det:"Four units, all growing. Data-center memory (Cloud + Core) is now the engine. <b>+34% YoY</b> — the fifth straight quarterly revenue record." },
+    { fn:"Revenue", pc:"100%", fv:"$41.5B", w:100, type:"rev", det:"Four units, all growing. Data-center memory (Cloud + Core) is now the engine. <b>+346% YoY</b> (from $9.3B a year ago) and <b>+74% QoQ</b> — the fifth straight quarterly revenue record." },
     { fn:"– Cost of revenue", pc:"15%", fv:"$6.4B", w:15, type:"cost", neg:true, det:"Just <b>15¢ of every dollar</b> goes to making the product — extraordinary for memory, which historically runs 60–80% COGS. The pricing-power story in one number." },
     { fn:"= Gross profit", pc:"85%", fv:"$35.1B", w:85, type:"profit", det:"<b>84.9% gross margin</b>, +47pp YoY. The bull and bear case both live or die on whether this holds." },
     { fn:"– Operating expenses", pc:"4%", fv:"$1.7B", w:4, type:"cost", neg:true, det:"R&D <b>$1.3B</b> + SG&A <b>$0.4B</b>. Opex barely moved while revenue tripled — enormous operating leverage." },
@@ -408,8 +408,8 @@ const REPORT = {
   ]},
   segments:[
     { emoji:"☁️", nm:"Cloud Memory", rev:"$13.8B", yoy:"▲ 307% YoY", opm:78, more:"<b>HBM + high-cap DIMMs for hyperscalers.</b> The AI-accelerator attach — every GPU cluster needs stacked memory. Up 4× YoY and supply-constrained: the highest-conviction line in the model." },
-    { emoji:"🗄️", nm:"Core Data Center", rev:"$11.5B", yoy:"▲ 553% YoY", opm:83, more:"<b>Server DRAM + data-center SSDs.</b> Fastest-growing segment at +553% — AI is pulling conventional server memory along with HBM. Highest operating margin of the four." },
-    { emoji:"📱", nm:"Mobile & Client", rev:"$11.5B", yoy:"▲ 25% YoY", opm:86, more:"<b>Phones + PCs.</b> The cyclical, consumer-exposed leg — only +25% YoY. But the 86% margin shows how tight industry supply is lifting pricing <i>everywhere</i>, not just in AI." },
+    { emoji:"🗄️", nm:"Core Data Center", rev:"$11.5B", yoy:"▲ 653% YoY", opm:83, more:"<b>Server DRAM + data-center SSDs.</b> Fastest-growing segment at <b>+653% YoY</b> — AI is pulling conventional server memory along with HBM. Highest operating margin of the four." },
+    { emoji:"📱", nm:"Mobile & Client", rev:"$11.5B", yoy:"▲ 254% YoY", opm:86, more:"<b>Phones + PCs.</b> The lowest-growth leg — but <i>still</i> <b>+254% YoY</b>. That's the tell: tight industry supply is lifting memory pricing <i>everywhere</i>, not just in AI. The 86% operating margin proves it." },
     { emoji:"🚗", nm:"Automotive & Embedded", rev:"$4.6B", yoy:"▲ 311% YoY", opm:75, more:"<b>Cars, industrial, edge.</b> Smallest but +311% YoY — long-cycle, sticky content growth as vehicles add compute. A quieter, more durable demand pool than consumer." }
   ],
   sankey:{
@@ -570,7 +570,7 @@ app.innerHTML = `
 
 <section id="earnings"><div class="wrap">
   <div class="sechead"><span class="eyebrow">01 — The Print</span><h2>Q3 FY26 earnings, decoded</h2>
-  <p class="sintro">Every headline number set a record and beat the Street: revenue cleared the <b>$36.0B</b> estimate by ~$6B, EPS of <b>$25.11</b> blew past <b>$21.00</b>. <b>Tap each bar</b> to see what flows through the income statement.</p></div>
+  <p class="sintro">Every headline number set a record and crushed the Street: revenue cleared the <b>~$35.7B</b> consensus by ~$5.8B and rose <b>346% YoY</b>, while non-GAAP EPS of <b>$25.11</b> blew past the <b>$20.28</b> estimate. <b>Tap each bar</b> to see what flows through the income statement.</p></div>
   <div class="kpis">${R.kpis.map(k=>`<div class="kpi glass"><div class="glow"></div><div class="k">${k.k}</div><div class="v">${k.v}</div><div class="yoy pos">${k.yoy}</div><div class="beat">${k.beat}</div></div>`).join('')}</div>
   <div class="sankeywrap glass vizbox mode-fit">
     <div class="vizhead"><h3 class="serif">Follow every dollar — the income statement, as a flow</h3>
@@ -592,7 +592,7 @@ app.innerHTML = `
 
 <section id="segments"><div class="wrap">
   <div class="sechead"><span class="eyebrow">02 — The Mix</span><h2>Where the revenue comes from</h2>
-  <p class="sintro">The story is a violent shift toward <b>data-center memory</b>. Cloud + Core Data Center are the engine; mobile is along for the ride. <b>Tap a card.</b> Bar = operating margin.</p></div>
+  <p class="sintro">The story is a violent shift toward <b>data-center memory</b> — Cloud + Core Data Center are the engine — but every segment is up triple digits as tight supply lifts pricing across the board. <b>Tap a card.</b> Bar = operating margin.</p></div>
   <div class="segs">${R.segments.map(s=>`<div class="seg glass" data-opm="${s.opm}"><div class="top"><span class="emoji">${s.emoji}</span><div class="nm">${s.nm}</div></div><div class="rev">${s.rev}</div><div class="yoy">${s.yoy}</div><div class="opm"><span>Operating margin</span><span>${s.opm}%</span></div><div class="barbg"><div class="barfg"></div></div><div class="more">${s.more}</div></div>`).join('')}</div>
 </div></section>
 
