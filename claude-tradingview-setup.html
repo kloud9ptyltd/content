@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Connect Claude Code to TradingView Desktop — Free Setup · Cloud9</title>
+<meta property="og:title" content="Let AI drive your TradingView charts — free setup"/>
+<meta property="og:description" content="Connect Claude Code to TradingView Desktop: scan your watchlist, draw trade plans with Pine Script, set alerts — all by prompting."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/tv-guide-tsla-plan.jpg"/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(106,168,255,.10),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
+  h1 em{font-style:normal;color:var(--g)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
+  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
+  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .step{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--g);color:#04130c;font-weight:900;font-size:14px;margin-right:10px}
+  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
+  .step p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0;padding-left:36px}
+  .code{position:relative;margin:12px 0 0 36px;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:13px 44px 13px 14px;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;line-height:1.55;color:#d8e6ff;white-space:pre-wrap;word-break:break-word}
+  .cp{position:absolute;top:8px;right:8px;font-size:11px;font-weight:700;color:var(--mut);background:var(--card2);border:1px solid var(--line2);border-radius:7px;padding:5px 9px;cursor:pointer}
+  .cp:active{color:var(--g)}
+  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px}
+  .note b{color:var(--mut)}
+  .shot{display:block;width:100%;border-radius:14px;border:1px solid var(--line);margin-top:14px}
+  .cap{font-size:12.5px;color:var(--faint);margin-top:8px;text-align:center}
+  .demo{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .demo h3{font-size:17px;font-weight:800}
+  .demo p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0}
+  .demo .code{margin-left:0}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.35);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Claude × TradingView</span></header>
+
+  <h1>Let AI <em>drive your charts</em> — Claude Code × TradingView Desktop.</h1>
+  <p class="lede">This free, open-source bridge lets Claude <b>see and control your actual TradingView Desktop app</b> — switch symbols, read candles and indicators, scan your whole watchlist, write &amp; compile Pine Script, draw trade plans, manage alerts. <b>No API key. Nothing leaves your machine.</b></p>
+
+  <div class="agents">
+    <span class="chip">📈 Watchlist scans</span><span class="chip">🧠 Chart analysis</span><span class="chip">📜 Pine Script</span>
+    <span class="chip">🎯 Trade plans</span><span class="chip">🔔 Alerts</span><span class="chip">⏪ Replay mode</span>
+  </div>
+
+  <div class="sect">Setup — 5 minutes</div>
+
+  <div class="step">
+    <h3><span class="n">1</span> Get the two apps</h3>
+    <p>You need <b>TradingView Desktop</b> (the app, not the website) and <b>Claude Code</b> (free with any Claude plan). Node.js 18+ if you don't have it.</p>
+    <div class="note">→ <a href="https://www.tradingview.com/desktop/" target="_blank" rel="noopener">tradingview.com/desktop</a> · <a href="https://claude.com/code" target="_blank" rel="noopener">claude.com/code</a> · <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a></div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">2</span> Install the bridge</h3>
+    <p>Clone the open-source MCP server and install its dependencies.</p>
+    <div class="code"><button class="cp">Copy</button>git clone https://github.com/tradesdontlie/tradingview-mcp.git ~/tradingview-mcp
+cd ~/tradingview-mcp &amp;&amp; npm install</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">3</span> Launch TradingView in debug mode</h3>
+    <p>The bridge talks to the app through Chrome DevTools Protocol, so TradingView must start with a debug flag. <b>Quit TradingView first</b>, then run:</p>
+    <div class="code"><button class="cp">Copy</button>open -a TradingView --args --remote-debugging-port=9222</div>
+    <div class="note"><b>Windows:</b> run <code>scripts\launch_tv_debug.bat</code> from the repo instead. <b>Every restart of TradingView needs this flag</b> — if you open it normally later, the connection drops until you relaunch this way.</div>
+    <div class="code"><button class="cp">Copy</button>curl http://127.0.0.1:9222/json/version</div>
+    <div class="note">That should print JSON. Use <b>127.0.0.1</b>, not localhost — localhost can resolve to IPv6 and fail.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">4</span> Connect it to Claude Code</h3>
+    <div class="code"><button class="cp">Copy</button>claude mcp add --scope user tradingview -- node ~/tradingview-mcp/src/server.js</div>
+    <div class="note">User scope = available in every project. Verify with <code>claude mcp list</code> — you want <b>tradingview ✔ Connected</b>.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">5</span> Test it</h3>
+    <p>Open a new Claude Code session and ask:</p>
+    <div class="code"><button class="cp">Copy</button>Use tv_health_check to verify TradingView is connected.</div>
+  </div>
+
+  <div class="sect">What it can actually do</div>
+
+  <div class="demo">
+    <h3>🔍 “Go through my watchlist and give me the best chart to trade”</h3>
+    <p>Claude flipped the chart through every watchlist symbol, pulled 150 daily candles each, computed trend/momentum/volatility for all of them — and picked the strongest setup, with reasoning.</p>
+    <div class="code"><button class="cp">Copy</button>Go through my watchlist and give me the best chart to trade right now.</div>
+    <img class="shot" src="tv-guide-scan.jpg" alt="Claude scanned the watchlist and opened the winning chart in TradingView" loading="lazy"/>
+    <div class="cap">The scan's pick, opened automatically on the chart — indicators and news panel included.</div>
+  </div>
+
+  <div class="demo">
+    <h3>📜 “Draw my trade plan with Pine Script”</h3>
+    <p>Claude wrote a Pine v6 indicator — entry, stop, take-profit with risk/reward shading, supply zone, moving averages, alert conditions — compiled it in the Pine editor and applied it to the chart. Every level is an editable input.</p>
+    <div class="code"><button class="cp">Copy</button>Draw the TSLA chart with entry, stop loss, take profit and any needed indicators using Pine Script.</div>
+    <img class="shot" src="tv-guide-tsla-plan.jpg" alt="AI-generated Pine Script trade plan on the TSLA daily chart" loading="lazy"/>
+    <div class="cap">TSLA daily — blue entry, red stop, green target, supply zone box: all drawn by one prompt.</div>
+  </div>
+
+  <div class="demo">
+    <h3>🪙 “Give me a Bitcoin trade setup, update the chart”</h3>
+    <p>Same flow on crypto: Claude read the structure (a liquidity sweep off the lows), built the setup with confirmation trigger and invalidation, and put it on the chart — including three ready-to-enable alert conditions.</p>
+    <img class="shot" src="tv-guide-btc-plan.jpg" alt="AI Bitcoin trade setup drawn on the BTCUSD daily chart" loading="lazy"/>
+    <div class="cap">BTCUSD daily — entry, stop under the sweep low, target in front of supply, breakout trigger line.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">!</span> Good to know</h3>
+    <p><b>It's your account, your limits.</b> On the free/Basic plan TradingView allows 2 indicators per chart — Claude works within that (it swaps indicators in and out). Paid plans remove the friction.</p>
+    <p><b>All local.</b> The bridge connects to the app on your machine only — no TradingView API, no credentials, no data sent anywhere.</p>
+    <p><b>AI can be wrong.</b> Treat every setup as a starting point, not a signal. Size your own risk.</p>
+  </div>
+
+  <div class="cta">
+    <h2>This is the @cloud9.markets edge.</h2>
+    <p>Follow for the full video walkthrough — watchlist scan to trade plan, live.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Educational setup guide · not affiliated with TradingView Inc. or Anthropic · charts shown are examples, <b>not financial advice</b> · do your own research<br/>© Cloud9 Markets</footer>
+
+<script>
+  document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',function(){
+    var code=b.parentNode.textContent.replace('Copy','').trim();
+    navigator.clipboard&&navigator.clipboard.writeText(code);b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy';},1500);});});
+</script>
+</body>
+</html>
