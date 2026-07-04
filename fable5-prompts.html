@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Finance AI Agents on Claude Fable 5 — The Exact Prompts · Cloud9</title>
+<meta property="og:title" content="I rebuilt my finance AI agents on Claude Fable 5 — here's the prompting strategy"/>
+<meta property="og:description" content="Anthropic published how to prompt their most powerful model. I applied it to my AI trade desk. The exact Analyst Agent prompt — free."/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff;--disc:#5865F2;--cf:#c96442}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(201,100,66,.12),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  .discord{margin-top:16px;background:linear-gradient(180deg,rgba(88,101,242,.22),var(--card));border:1px solid rgba(88,101,242,.5);border-radius:20px;padding:20px;text-align:center}
+  .discord h2{font-size:19px;font-weight:850}
+  .discord p{font-size:13.5px;color:#cfd8e4;margin:7px 0 13px;line-height:1.5}
+  .dbtn{display:inline-block;background:var(--disc);color:#fff;font-weight:850;font-size:15px;padding:12px 26px;border-radius:999px;text-decoration:none}
+  .dbtn small{display:block;font-size:10.5px;font-weight:700;opacity:.85;margin-top:2px}
+  h1{font-size:32px;font-weight:850;line-height:1.1;letter-spacing:-.5px;margin:26px 0 10px}
+  h1 em{font-style:normal;color:var(--cf)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .step{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--cf);color:#fff;font-weight:900;font-size:14px;margin-right:10px}
+  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800;line-height:1.3}
+  .step p{font-size:14px;line-height:1.55;color:#cfd8e4;margin:10px 0 0;padding-left:36px}
+  .step p b{color:#fff}
+  .code{position:relative;margin:12px 0 0 36px;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:13px 44px 13px 14px;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.55;color:#d8e6ff;white-space:pre-wrap;word-break:break-word}
+  .cp{position:absolute;top:8px;right:8px;font-size:11px;font-weight:700;color:var(--mut);background:var(--card2);border:1px solid var(--line2);border-radius:7px;padding:5px 9px;cursor:pointer}
+  .cp:active{color:var(--g)}
+  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px;line-height:1.55}
+  .note b{color:var(--mut)}
+  .vs{margin:12px 0 0 36px;display:grid;gap:8px}
+  .vs .bad,.vs .good{border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.5;font-family:"SF Mono",ui-monospace,Menlo,monospace}
+  .vs .bad{background:rgba(255,91,91,.08);border:1px solid rgba(255,91,91,.25);color:#f0b9b9}
+  .vs .good{background:rgba(22,224,138,.07);border:1px solid rgba(22,224,138,.25);color:#b9e8cf}
+  .vs .tag{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;font-family:-apple-system,system-ui,sans-serif;display:block;margin-bottom:4px}
+  .bad .tag{color:#ff8a8a}.good .tag{color:var(--g)}
+  .lock{margin-top:22px;background:linear-gradient(180deg,rgba(230,200,120,.10),var(--card));border:1px solid rgba(230,200,120,.35);border-radius:18px;padding:18px}
+  .lock h3{font-size:17px;font-weight:800;color:var(--gold)}
+  .lock p{font-size:14px;line-height:1.6;color:#cfd8e4;margin:9px 0 0}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.35);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  .cardlink{display:block;margin-top:24px;background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:18px;padding:18px;text-decoration:none;color:var(--tx)}
+  .cardlink .t{font-size:16px;font-weight:800} .cardlink .s{font-size:13px;color:var(--mut);margin-top:3px}
+  .cardlink .go{color:var(--g);font-weight:800;margin-top:8px}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Claude Fable 5 × Finance</span></header>
+
+  <div class="discord">
+    <h2>💬 Join the Cloud9 Discord</h2>
+    <p>The Fable 5-powered Trade Desk posts its verdicts there every market day — and the prompt breakdowns drop there first.</p>
+    <a class="dbtn" href="https://discord.gg/mhdS8PmPx7" target="_blank" rel="noopener">Join the server →<small>free · educational · no signal-selling</small></a>
+  </div>
+
+  <h1>I rebuilt my finance AI agents on <em>Claude Fable 5</em>. Here's the prompting strategy.</h1>
+  <p class="lede">Anthropic published <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5" target="_blank" rel="noopener">an official guide</a> on prompting their most powerful model — and most people will never read it. I did, and rewired my entire AI trade desk with it. Below: the <b>5 rules that actually matter for finance agents</b>, and my <b>full Fable 5 Analyst Agent prompt</b>, free.</p>
+
+  <div class="sect">The 5 Fable 5 rules for finance agents</div>
+
+  <div class="step">
+    <h3><span class="n">1</span> Give the reason, not just the request</h3>
+    <p>Fable 5 performs measurably better when it knows <b>who the output is for and what it enables</b>. Don't just say "analyze this chart" — say who's reading the analysis and what they'll do with it.</p>
+    <div class="vs">
+      <div class="bad"><span class="tag">Before</span>You are a technical analyst. Analyze this data.</div>
+      <div class="good"><span class="tag">Fable 5</span>You are the Analyst Agent on a trade desk. Your verdict posts to a retail-education community — they need one honest, defined-risk idea they can learn from.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">2</span> Make it audit its claims against the data</h3>
+    <p>Anthropic's own testing found that telling the model to <b>verify each claim against actual evidence</b> nearly eliminated fabricated reports. For trading, this is the anti-hallucinated-price-levels weapon:</p>
+    <div class="code"><button class="cp">Copy</button>The price data is authoritative. Audit every level against the bars before you output it — each entry, stop and target must be traceable to a visible swing, retest, moving average or confluence. Never invent prices the data doesn't show.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">3</span> Demand a verdict, not a survey</h3>
+    <p>Un-steered, powerful models hedge: they'll describe the bull case, the bear case, and three scenarios. One line fixes it — and it's the difference between analysis you can act on and analysis that acts busy:</p>
+    <div class="code"><button class="cp">Copy</button>Commit to ONE verdict — do not survey scenarios or hedge across possibilities. If you are weighing a choice, give a recommendation.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">4</span> Tell it it's running unattended</h3>
+    <p>If your agent runs in a pipeline (mine posts to Discord with nobody watching), say so explicitly — otherwise it may pause to ask a clarifying question that nobody will ever answer:</p>
+    <div class="code"><button class="cp">Copy</button>You are running unattended in a pipeline: there is no user to ask questions of, so never ask — always return the verdict.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">5</span> Delete your old micro-instructions</h3>
+    <p>Straight from Anthropic: prompts written for older models are often <b>too prescriptive for Fable 5 and can degrade output</b>. Instruction-following is strong enough that one brief steering line replaces a list of ten behavioral rules. I cut my prompts down, not up — and quality went up.</p>
+  </div>
+
+  <div class="sect">The full prompt — free</div>
+
+  <div class="step">
+    <h3><span class="n">★</span> The Fable 5 Analyst Agent</h3>
+    <p>All five rules composed into the working prompt. Paste into Claude, swap the ticker, provide recent price data:</p>
+    <div class="code"><button class="cp">Copy</button>You are the Analyst Agent on my trade desk, covering $TICKER. I'm a retail trader studying risk-defined setups — I need one honest, committed verdict I can learn from, not a survey of possibilities. You are the only analyst on duty: never ask me questions, always deliver the verdict.
+
+The price data I provide is authoritative. Audit every level against it before you output it — each entry, stop and target must be traceable to a visible swing, retest, moving average or confluence. Never invent prices the data doesn't show.
+
+House rules:
+- Direction follows structure: a crashing chart is short-the-bounce or no-trade, never a knife-catch.
+- "No trade" is a valid verdict — say why, and what would change your mind.
+- Stops beyond the invalidation swing; targets in front of visible supply or support; reward-to-risk at least 1.5:1.
+
+Deliver: direction (long/short/no-trade), timeframe, entry, stop, target, R:R, a status line telling me what to do RIGHT NOW, a thesis in three plain sentences a newer trader can follow, and the one thing that would invalidate the whole idea. Education only — not financial advice.</div>
+    <div class="note">This is the real production prompt structure from my desk (consumer edition). The pipeline version returns strict JSON and feeds two more agents — that's below. 🔒</div>
+  </div>
+
+  <div class="lock">
+    <h3>🔒 What the full desk runs (next drops)</h3>
+    <p>🔜 <b>The Master Agent on Fable 5</b> — the deliberation prompt that takes three disagreeing AIs (Analyst, a candlestick-forecast model, a backtested rules engine) and grades every signal high/moderate/low — <i>coming soon</i></p>
+    <p>🔜 <b>The Quant Agent's "receipts"</b> — the backtester that makes every signal carry its own measured win rate — <i>coming soon</i></p>
+    <p>🔜 <b>The full self-hosted pipeline</b> — scanner → agents → auto-rendered charts → Discord, daily — <i>coming soon</i></p>
+    <p style="margin-top:14px">👉 <b>Follow <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a> — the Master Agent breakdown is next.</b> Or wait in the <a href="https://discord.gg/mhdS8PmPx7" target="_blank" rel="noopener">Discord</a> and get pinged when it drops.</p>
+  </div>
+
+  <a class="cardlink" href="https://kloud9ptyltd.github.io/content/tri-agent-starter.html">
+    <div class="t">⚡ New here? Start with Part 1</div>
+    <div class="s">The Tri-Agent Trade Desk — live pipeline demo + the Analyst & Oracle starter kit.</div>
+    <div class="go">Open the starter kit →</div>
+  </a>
+
+  <div class="cta">
+    <h2>This is the @cloud9.markets edge.</h2>
+    <p>Real agents, real pipeline, receipts for everything. Follow for the next drop.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Educational content · AI models can be wrong and often are · nothing here is financial advice · do your own research<br/>Claude and Claude Fable 5 are trademarks of Anthropic, PBC — this is an independent project, not affiliated with or endorsed by Anthropic<br/>© Cloud9 Markets</footer>
+
+<script>
+  document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',function(){
+    var code=b.parentNode.textContent.replace('Copy','').trim();
+    navigator.clipboard&&navigator.clipboard.writeText(code);b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy';},1500);});});
+</script>
+</body>
+</html>
