@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Build Your First AI Trading Agent — Free Starter Kit · Cloud9</title>
+<meta property="og:title" content="The Tri-Agent AI Trade Desk — free starter kit"/>
+<meta property="og:description" content="Three AI agents argue about every trade before it hits Discord. Get the Analyst Agent prompt + the candlestick-prediction AI quickstart — free."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/tv-guide-tsla-plan.jpg"/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff;--pur:#ba68c8;--disc:#5865F2}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(106,168,255,.10),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  .discord{margin-top:16px;background:linear-gradient(180deg,rgba(88,101,242,.22),var(--card));border:1px solid rgba(88,101,242,.5);border-radius:20px;padding:20px;text-align:center}
+  .discord h2{font-size:19px;font-weight:850}
+  .discord p{font-size:13.5px;color:#cfd8e4;margin:7px 0 13px;line-height:1.5}
+  .dbtn{display:inline-block;background:var(--disc);color:#fff;font-weight:850;font-size:15px;padding:12px 26px;border-radius:999px;text-decoration:none}
+  .dbtn small{display:block;font-size:10.5px;font-weight:700;opacity:.85;margin-top:2px}
+  h1{font-size:33px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:26px 0 10px}
+  h1 em{font-style:normal;color:var(--g)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
+  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
+  .deskwrap{margin-top:18px;border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative;background:#0a0e16}
+  .deskwrap iframe{display:block;border:0;transform-origin:top left;pointer-events:none}
+  .desk-open{display:block;text-align:center;font-size:12.5px;font-weight:700;padding:10px;background:var(--card);border-top:1px solid var(--line2);text-decoration:none}
+  .cap{font-size:12.5px;color:var(--faint);margin-top:8px;text-align:center}
+  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .step{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--g);color:#04130c;font-weight:900;font-size:14px;margin-right:10px}
+  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
+  .step p{font-size:14px;line-height:1.55;color:#cfd8e4;margin:10px 0 0;padding-left:36px}
+  .step p b{color:#fff}
+  .code{position:relative;margin:12px 0 0 36px;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:13px 44px 13px 14px;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.55;color:#d8e6ff;white-space:pre-wrap;word-break:break-word}
+  .cp{position:absolute;top:8px;right:8px;font-size:11px;font-weight:700;color:var(--mut);background:var(--card2);border:1px solid var(--line2);border-radius:7px;padding:5px 9px;cursor:pointer}
+  .cp:active{color:var(--g)}
+  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px;line-height:1.5}
+  .note b{color:var(--mut)}
+  .lock{margin-top:22px;background:linear-gradient(180deg,rgba(230,200,120,.10),var(--card));border:1px solid rgba(230,200,120,.35);border-radius:18px;padding:18px}
+  .lock h3{font-size:17px;font-weight:800;color:var(--gold)}
+  .lock p{font-size:14px;line-height:1.55;color:#cfd8e4;margin:10px 0 0}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.35);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">AI Trade Desk</span></header>
+
+  <div class="discord">
+    <h2>💬 Join the Cloud9 Discord</h2>
+    <p>Watch the <b>Tri-Agent Trade Desk</b> post its verdicts — Bitcoin, Gold and US stock movers — every market day. Plus the builds behind it, before they hit Instagram.</p>
+    <a class="dbtn" href="https://discord.gg/mhdS8PmPx7" target="_blank" rel="noopener">Join the server →<small>free · educational · no signal-selling</small></a>
+  </div>
+
+  <h1>Three AI agents <em>argue about every trade</em>. You can build the first one today.</h1>
+  <p class="lede">My Tri-Agent Trade Desk runs on a home server: an <b>Analyst Agent</b> (Claude) proposes a setup, an <b>Oracle Agent</b> (an open-source candlestick-prediction model) forecasts the next 10 candles, a <b>Quant Agent</b> checks backtested signals — and a <b>Master Agent</b> weighs all three before anything posts to Discord. Here's the live pipeline, and the free starter kit to build your own first agent.</p>
+
+  <div class="agents">
+    <span class="chip">🧠 Analyst Agent</span><span class="chip">🔮 Oracle Agent</span><span class="chip">📐 Quant Agent</span><span class="chip">👑 Master Agent</span>
+  </div>
+
+  <div class="deskwrap" id="deskwrap">
+    <iframe id="deskframe" src="tri-agent-desk.html" scrolling="no" title="Tri-Agent Trade Desk live pipeline"></iframe>
+    <a class="desk-open" href="tri-agent-desk.html" target="_blank" rel="noopener">▶ Open the live pipeline full-screen</a>
+  </div>
+  <div class="cap">This is the real production pipeline — real run, real timings, real verdict.</div>
+
+  <div class="sect">The free starter kit</div>
+
+  <div class="step">
+    <h3><span class="n">1</span> The Analyst Agent prompt</h3>
+    <p>This is the working core of my Analyst Agent — paste it into <b>Claude</b> (free at claude.ai), swap the ticker, and attach or paste recent daily price data (or let Claude pull it if you've connected live data). It forces the discipline most AI trading prompts miss: structure first, defined risk, and permission to say "no trade".</p>
+    <div class="code"><button class="cp">Copy</button>You are a disciplined technical analyst. Analyze $TICKER using the price data provided (the data is authoritative — never invent prices).
+
+Rules:
+- Direction must follow structure: a crashing chart is a short-the-bounce or no-trade, NEVER a knife-catch. A gap-up in an uptrend may be a breakout or pullback long.
+- "No good setup" is a valid answer. If nothing has defined risk, say so and explain what would change your mind.
+- Levels must come from the data: entries at retests/retraces/moving averages, stops beyond the invalidation swing, targets in front of visible supply or support.
+- Reward-to-risk must be at least 1.5:1 or the setup doesn't qualify.
+- Be honest about event/gap risk.
+
+Give me: direction (long/short/no-trade), timeframe, entry, stop, target, R:R, a status line telling me what to do RIGHT NOW (e.g. "wait for pullback to entry"), and a thesis of max 3 sentences. Then list the one thing that would invalidate the whole idea. This is for education, not financial advice.</div>
+    <div class="note">Works in any Claude chat. Power move: run it through <b>Claude Code</b> connected to free live data — that's the exact setup from my earlier guide → <a href="https://kloud9ptyltd.github.io/content/claude-finance-agents.html">claude-finance-agents.html</a></div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">2</span> The Oracle Agent — free "GPT for candlesticks"</h3>
+    <p>The Oracle is <b>Kronos</b> — an open-source foundation model trained on 12B+ candles that autoregressively predicts the next candles. Free weights, runs on a laptop CPU.</p>
+    <div class="code"><button class="cp">Copy</button>git clone https://github.com/shiyu-coder/Kronos.git
+cd Kronos && pip install -r requirements.txt
+# models auto-download from HuggingFace (NeoQuasar/Kronos-small)</div>
+    <p><b>The three gotchas that cost me hours</b> (nobody tells you these):</p>
+    <div class="note">1️⃣ <b>Feed it log-prices, not raw prices.</b> It normalizes price levels over the window, so a parabolic chart becomes a clipped outlier and the forecast is garbage. <code>np.log</code> the OHLC in, <code>np.exp</code> the forecast out.<br/><br/>
+    2️⃣ <b>It's a ~10-candle model.</b> The authors' own config is lookback 90 → predict 10. Beyond that, errors compound fast. Don't ask it for a 6-month price target.<br/><br/>
+    3️⃣ <b>Never trust one run.</b> It's stochastic — sample 8–30 forecasts and read the cone, not a single path.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">3</span> The Quant Agent's secret: "receipts"</h3>
+    <p>The third agent only uses signals with published evidence (time-series momentum, breakout state, regime filter, RSI-2 stretch) — but here's the idea worth stealing: <b>every signal must carry its own backtested hit rate on that exact asset</b>. Not "momentum says long" but "momentum says long — and this call was right 56.3% of its last 364 occurrences on this chart, averaging +0.4% per signal."</p>
+    <p>When a signal's receipt drops below 50%, the Master Agent is told to discount it. An opinion with a receipt beats an opinion with a reputation — that one rule filters out most of the nonsense in AI trading.</p>
+  </div>
+
+  <div class="lock">
+    <h3>🔒 What's not in this kit (yet)</h3>
+    <p>The <b>Master Agent's deliberation prompt</b> (how it weighs three disagreeing models and grades signal strength), the <b>Quant Agent's backtester code</b>, and the <b>full automation</b> — scanner → agents → auto-rendered charts → Discord, self-hosted, running daily. That's the next drop. Follow <b>@cloud9.markets</b> and join the Discord so you don't miss it.</p>
+  </div>
+
+  <div class="cta">
+    <h2>This is the @cloud9.markets edge.</h2>
+    <p>The full Master Agent breakdown drops next — follow so you catch part 2.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Educational content · AI models can be wrong and often are · nothing here is financial advice · do your own research<br/>© Cloud9 Markets</footer>
+
+<script>
+  document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',function(){
+    var code=b.parentNode.textContent.replace('Copy','').trim();
+    navigator.clipboard&&navigator.clipboard.writeText(code);b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy';},1500);});});
+  (function(){
+    var wrap=document.getElementById('deskwrap'), fr=document.getElementById('deskframe');
+    var NATIVE_W=1180, NATIVE_H=780;
+    function fit(){
+      var w=wrap.clientWidth, s=w/NATIVE_W;
+      fr.style.width=NATIVE_W+'px'; fr.style.height=NATIVE_H+'px';
+      fr.style.transform='scale('+s+')';
+      fr.parentNode.style.height='';
+      wrap.style.height='auto';
+      fr.style.marginBottom=(NATIVE_H*s-NATIVE_H)+'px';
+    }
+    fit(); addEventListener('resize',fit);
+  })();
+</script>
+</body>
+</html>
