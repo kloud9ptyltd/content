@@ -68,7 +68,7 @@
   <p class="lede">My Tri-Agent Trade Desk runs on a home server: an <b>Analyst Agent</b> (Claude) proposes a setup, an <b>Oracle Agent</b> (an open-source candlestick-prediction model) forecasts the next 10 candles, a <b>Quant Agent</b> checks backtested signals — and a <b>Master Agent</b> weighs all three before anything posts to Discord. Here's the live pipeline, and the free starter kit to build your own first agent.</p>
 
   <div class="agents">
-    <span class="chip">🧠 Analyst Agent</span><span class="chip">🔮 Oracle Agent</span><span class="chip">📐 Quant Agent</span><span class="chip">👑 Master Agent</span>
+    <span class="chip">🧠 Analyst Agent</span><span class="chip">🔮 Oracle Agent</span><span class="chip">📐 Quant Agent</span><span class="chip">👑 Master Agent</span><span class="chip" style="color:var(--g);border-color:rgba(22,224,138,.4)">🚫 No API keys · nothing to pay for</span>
   </div>
 
   <div class="deskwrap" id="deskwrap">
@@ -80,7 +80,7 @@
   <div class="sect">The free starter kit</div>
 
   <div class="step">
-    <h3><span class="n">1</span> The Analyst Agent prompt</h3>
+    <h3><span class="n">1</span> The Analyst Agent prompt <span style="margin-left:auto;font-size:10.5px;font-weight:800;color:var(--g);letter-spacing:.5px;white-space:nowrap">60 SEC · ZERO INSTALL</span></h3>
     <p>This is the working core of my Analyst Agent — paste it into <b>Claude</b> (free at claude.ai), swap the ticker, and attach or paste recent daily price data (or let Claude pull it if you've connected live data). It forces the discipline most AI trading prompts miss: structure first, defined risk, and permission to say "no trade".</p>
     <div class="code"><button class="cp">Copy</button>You are a disciplined technical analyst. Analyze $TICKER using the price data provided (the data is authoritative — never invent prices).
 
@@ -96,8 +96,8 @@ Give me: direction (long/short/no-trade), timeframe, entry, stop, target, R:R, a
   </div>
 
   <div class="step">
-    <h3><span class="n">2</span> Level up: run it as a script, on live data</h3>
-    <p>This is where it stops being a chatbot and starts being an <b>agent</b>. With the free <a href="https://claude.com/code" target="_blank" rel="noopener">Claude Code CLI</a> installed, three commands pull live market data, run the Analyst on it headless, and write the verdict to a file:</p>
+    <h3><span class="n">2</span> Level up: run it as a script, on live data <span style="margin-left:auto;font-size:10.5px;font-weight:800;color:var(--gold);letter-spacing:.5px;white-space:nowrap">OPTIONAL · 10 MIN</span></h3>
+    <p>This is where it stops being a chatbot and starts being an <b>agent</b> — and still <b>zero API keys</b>: the market data below is keyless, and the free <a href="https://claude.com/code" target="_blank" rel="noopener">Claude Code CLI</a> uses your normal Claude login. Three commands pull live data, run the Analyst headless, and write the verdict to a file:</p>
     <div class="code"><button class="cp">Copy</button># 1) save the Step-1 prompt to a file (once)
 #    e.g. analyst.txt  — replace $TICKER with BTC-USD
 
