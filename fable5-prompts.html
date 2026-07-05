@@ -72,8 +72,8 @@
   <div class="sect">The 5 Fable 5 rules for finance agents</div>
 
   <div class="step">
-    <h3><span class="n">1</span> Give the reason, not just the request</h3>
-    <p>Fable 5 performs measurably better when it knows <b>who the output is for and what it enables</b>. Don't just say "analyze this chart" — say who's reading the analysis and what they'll do with it.</p>
+    <h3><span class="n">1</span> "Give the reason, not only the request"</h3>
+    <p>A literal section title in Anthropic's guide. Fable 5 <i>"tends to perform better when it understands the intent behind a request."</i> Their template: <i>"I'm working on [the larger task] for [who it's for]. They need [what the output enables]."</i> Applied to trading — don't just say "analyze this chart":</p>
     <div class="vs">
       <div class="bad"><span class="tag">Before</span>You are a technical analyst. Analyze this data.</div>
       <div class="good"><span class="tag">Fable 5</span>You are the Analyst Agent on a trade desk. Your verdict posts to a retail-education community — they need one honest, defined-risk idea they can learn from.</div>
@@ -82,25 +82,26 @@
 
   <div class="step">
     <h3><span class="n">2</span> Make it audit its claims against the data</h3>
-    <p>Anthropic's own testing found that telling the model to <b>verify each claim against actual evidence</b> nearly eliminated fabricated reports. For trading, this is the anti-hallucinated-price-levels weapon:</p>
+    <p>From the guide's <i>"Ground progress claims"</i> section: instructing the model to <i>"audit each claim against a tool result"</i> — in Anthropic's testing this <i>"nearly eliminated fabricated status reports."</i> They wrote it for progress reports; <b>I apply the same audit rule to price levels</b>, and it kills hallucinated support lines the same way:</p>
     <div class="code"><button class="cp">Copy</button>The price data is authoritative. Audit every level against the bars before you output it — each entry, stop and target must be traceable to a visible swing, retest, moving average or confluence. Never invent prices the data doesn't show.</div>
   </div>
 
   <div class="step">
     <h3><span class="n">3</span> Demand a verdict, not a survey</h3>
-    <p>Un-steered, powerful models hedge: they'll describe the bull case, the bear case, and three scenarios. One line fixes it — and it's the difference between analysis you can act on and analysis that acts busy:</p>
+    <p>Anthropic's exact words: <i>"If you are weighing a choice, give a recommendation, not an exhaustive survey."</i> Un-steered, powerful models hedge — bull case, bear case, three scenarios. For a trader that's useless. So:</p>
     <div class="code"><button class="cp">Copy</button>Commit to ONE verdict — do not survey scenarios or hedge across possibilities. If you are weighing a choice, give a recommendation.</div>
   </div>
 
   <div class="step">
     <h3><span class="n">4</span> Tell it it's running unattended</h3>
-    <p>If your agent runs in a pipeline (mine posts to Discord with nobody watching), say so explicitly — otherwise it may pause to ask a clarifying question that nobody will ever answer:</p>
+    <p>Straight from the guide's autonomous-pipeline advice — their suggested prompt begins <i>"You are operating autonomously… asking 'Shall I…?' will block the work."</i> My desk posts to Discord with nobody watching, so:</p>
     <div class="code"><button class="cp">Copy</button>You are running unattended in a pipeline: there is no user to ask questions of, so never ask — always return the verdict.</div>
   </div>
 
   <div class="step">
     <h3><span class="n">5</span> Delete your old micro-instructions</h3>
-    <p>Straight from Anthropic: prompts written for older models are often <b>too prescriptive for Fable 5 and can degrade output</b>. Instruction-following is strong enough that one brief steering line replaces a list of ten behavioral rules. I cut my prompts down, not up — and quality went up.</p>
+    <p>Anthropic's exact warning: prompts and skills written for prior models are <i>"often too prescriptive for Claude Fable 5 and can degrade output quality — review and consider removing older instructions."</i> One brief steering line now replaces ten behavioral rules. I cut my prompts down, not up — and quality went up.</p>
+    <div class="note"><b>The guide covers more</b> — parallel subagents, memory systems, effort levels, a send-to-user tool. Those matter when you run a full multi-agent desk (that's the series 🔒); these five are the ones that transform a single analyst prompt. Read the source: <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5" target="_blank" rel="noopener">Anthropic's official guide</a>.</div>
   </div>
 
   <div class="sect">The full prompt — free</div>
