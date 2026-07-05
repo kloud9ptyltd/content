@@ -45,6 +45,10 @@
   .live{margin-left:auto;font-family:"JetBrains Mono";font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px}
   .live .pulse{width:7px;height:7px;border-radius:50%;background:var(--buy);box-shadow:0 0 12px var(--buy);animation:pulse 2.4s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .brandbar{display:flex;align-items:center;gap:10px;padding:18px 0 0;text-decoration:none}
+  .brandbar img{height:34px;width:auto;border-radius:8px}
+  .brandbar span{font-family:"JetBrains Mono";font-size:12px;letter-spacing:.08em;color:var(--muted)}
+  .brandbar:hover span{color:var(--gold)}
   header.hero{padding:56px 0 30px}
   .herorow{display:flex;gap:38px;align-items:center;flex-wrap:wrap}
   .herotext{flex:1 1 380px;min-width:280px}
@@ -180,6 +184,10 @@
   </div></div>
 
   <div class="wrap">
+    <a class="brandbar" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">
+      <img src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets" loading="lazy">
+      <span>cloud9.markets</span>
+    </a>
     <header class="hero"><div class="herorow">
       <div class="herotext">
         <div class="tagrow">
@@ -319,7 +327,9 @@
       <span id="covNote"></span> This page is for information
       and entertainment only, is <b>not financial advice or a recommendation</b>, and is not affiliated with or endorsed by
       the official. Figures reflect filings available as of <span id="asOf"></span>. Always do your own research.
-      <div style="margin-top:10px">© Cloud9 Markets · Politician Trade Desk</div>
+      <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+        <img src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets" style="height:22px;border-radius:5px">
+        <span>© Cloud9 Markets · Politician Trade Desk · <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener" style="color:inherit">@cloud9.markets</a></span></div>
     </div>
   </footer></div>
 
