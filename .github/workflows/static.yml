@@ -41,3 +41,15 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+        continue-on-error: true
+      # Pages deploys fail transiently (service-side flakes) — retry up to twice before
+      # declaring failure, so a one-off blip doesn't leave the site stale.
+      - name: Retry deploy (1st)
+        id: retry1
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v5
+        continue-on-error: true
+      - name: Retry deploy (2nd)
+        id: retry2
+        if: steps.deployment.outcome == 'failure' && steps.retry1.outcome == 'failure'
+        uses: actions/deploy-pages@v5
