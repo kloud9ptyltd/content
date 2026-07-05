@@ -121,6 +121,35 @@ Deliver: direction (long/short/no-trade), timeframe, entry, stop, target, R:R, a
     <div class="note">This is the real production prompt structure from my desk (consumer edition). The pipeline version returns strict JSON and feeds two more agents — that's below. 🔒</div>
   </div>
 
+  <div class="step">
+    <h3><span class="n">⚡</span> Works on any chart — stocks, Bitcoin, gold</h3>
+    <p>The prompt is asset-agnostic. Swap <b>$TICKER</b> and feed the matching data:</p>
+    <div class="code"><button class="cp">Copy</button># stocks     →  $TICKER = NVDA, TSLA, AAPL …
+# Bitcoin    →  $TICKER = Bitcoin (BTC-USD)   — works weekends, crypto never closes
+# gold       →  $TICKER = Gold futures (GC=F)
+
+# free data for any of them, no API key (needs Python):
+pip install yfinance
+python3 -c "import yfinance as yf; yf.download('BTC-USD', period='6mo', interval='1d').to_csv('data.csv')"</div>
+    <div class="note">Zero-install alternative: on claude.ai, just paste the prompt and ask Claude to use its live web data for the ticker — or copy recent OHLC rows from any free chart site into the chat. The prompt's audit rule keeps it honest either way: it can only cite levels the data actually shows.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">₿</span> Real example — Fable 5 analyzing Bitcoin</h3>
+    <p>Actual output from my desk's Fable 5 run (July 5, condensed). Input: 6 months of daily bars + recent 4-hour bars. Time to verdict: ~40 seconds.</p>
+    <div class="vs">
+      <div class="good"><span class="tag">Fable 5 verdict — Bitcoin, 4h</span>direction: LONG · timeframe: 4h
+entry 61,900 · stop 60,400 · target ~64,900 · R:R 2.1
+
+status: wait for the pullback to entry — do not chase above 63k.
+
+thesis: BTC reclaimed the June lid at 61.9k and is retesting it as support after tagging 63k. The higher-low chain from the 57.7k sweep keeps buyers in control. Risk sits defined under the retest shelf.
+
+invalidation: a 4h close back below 60,400 breaks the higher-low structure — idea dead.</div>
+    </div>
+    <div class="note"><b>The honest part:</b> on my desk this verdict didn't post as a trade. A second AI forecast a bearish path, the backtested rules engine leaned short, and a red-team "Bear Advocate" landed this kill shot: <i>"your entry only fills if the breakout is already failing."</i> The Master Agent withdrew it — no trade posted. One brilliant analyst is a starting point; agents that check each other are the system. That's the rest of the series. 🔒</div>
+  </div>
+
   <div class="lock">
     <h3>🔒 What the full desk runs (next drops)</h3>
     <p>🔜 <b>The Master Agent on Fable 5</b> — the deliberation prompt that takes three disagreeing AIs (Analyst, a candlestick-forecast model, a backtested rules engine) and grades every signal high/moderate/low — <i>coming soon</i></p>
