@@ -45,10 +45,6 @@
   .live{margin-left:auto;font-family:"JetBrains Mono";font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px}
   .live .pulse{width:7px;height:7px;border-radius:50%;background:var(--buy);box-shadow:0 0 12px var(--buy);animation:pulse 2.4s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-  .brandbar{display:flex;align-items:center;gap:10px;padding:18px 0 0;text-decoration:none}
-  .brandbar img{height:34px;width:auto;border-radius:8px}
-  .brandbar span{font-family:"JetBrains Mono";font-size:12px;letter-spacing:.08em;color:var(--muted)}
-  .brandbar:hover span{color:var(--gold)}
   header.hero{padding:56px 0 30px}
   .herorow{display:flex;gap:38px;align-items:center;flex-wrap:wrap}
   .herotext{flex:1 1 380px;min-width:280px}
@@ -179,15 +175,11 @@
 </head>
 <body>
   <div class="topbar"><div class="wrap">
-    <div class="brand"><span class="dot"></span><div><div class="bn">Cloud<b>9</b> Markets</div><small>Politician Trade Desk</small></div></div>
+    <a class="brand" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit"><img src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets" style="height:30px;width:auto;border-radius:7px"><div><div class="bn">Cloud<b>9</b> Markets</div><small>Politician Trade Desk</small></div></a>
     <div class="live"><span class="pulse"></span><span>LIVE · auto-updated</span></div>
   </div></div>
 
   <div class="wrap">
-    <a class="brandbar" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">
-      <img src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets" loading="lazy">
-      <span>cloud9.markets</span>
-    </a>
     <header class="hero"><div class="herorow">
       <div class="herotext">
         <div class="tagrow">
