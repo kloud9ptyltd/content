@@ -96,7 +96,25 @@ Give me: direction (long/short/no-trade), timeframe, entry, stop, target, R:R, a
   </div>
 
   <div class="step">
-    <h3><span class="n">2</span> The Oracle Agent — free "GPT for candlesticks"</h3>
+    <h3><span class="n">2</span> Level up: run it as a script, on live data</h3>
+    <p>This is where it stops being a chatbot and starts being an <b>agent</b>. With the free <a href="https://claude.com/code" target="_blank" rel="noopener">Claude Code CLI</a> installed, three commands pull live market data, run the Analyst on it headless, and write the verdict to a file:</p>
+    <div class="code"><button class="cp">Copy</button># 1) save the Step-1 prompt to a file (once)
+#    e.g. analyst.txt  — replace $TICKER with BTC-USD
+
+# 2) pull 6 months of live daily candles — free, no API key
+pip install yfinance
+python3 -c "import yfinance as yf; yf.download('BTC-USD', period='6mo', interval='1d').to_csv('data.csv')"
+
+# 3) run the Analyst Agent headless → verdict lands in a file
+claude -p "$(cat analyst.txt)
+
+PRICE DATA:
+$(cat data.csv)" > verdict-$(date +%F).md</div>
+    <div class="note">Swap <b>BTC-USD</b> for any ticker (<b>GC=F</b> = gold, <b>NVDA</b>, <b>TSLA</b>…). Open <code>verdict-2026-07-05.md</code> and you've got a dated, on-record trade brief — direction, levels, R:R, invalidation. Now the fun part: put those three lines in a cron job and you have an analyst that reports every morning without being asked. <b>That's literally how my desk started</b> — the scanner, the other two agents and the Discord wiring grew on top of exactly this seed (that's Part 4).</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">3</span> The Oracle Agent — free "GPT for candlesticks"</h3>
     <p>The Oracle is <b>Kronos</b> — an open-source foundation model trained on 12B+ candles that autoregressively predicts the next candles. Free weights, runs on a laptop CPU.</p>
     <div class="code"><button class="cp">Copy</button>git clone https://github.com/shiyu-coder/Kronos.git
 cd Kronos && pip install -r requirements.txt
@@ -108,7 +126,7 @@ cd Kronos && pip install -r requirements.txt
   </div>
 
   <div class="step">
-    <h3><span class="n">3</span> The Quant Agent's secret: "receipts"</h3>
+    <h3><span class="n">4</span> The Quant Agent's secret: "receipts"</h3>
     <p>The third agent only uses signals with published evidence (time-series momentum, breakout state, regime filter, RSI-2 stretch) — but here's the idea worth stealing: <b>every signal must carry its own backtested hit rate on that exact asset</b>. Not "momentum says long" but "momentum says long — and this call was right 56.3% of its last 364 occurrences on this chart, averaging +0.4% per signal."</p>
     <p>When a signal's receipt drops below 50%, the Master Agent is told to discount it. An opinion with a receipt beats an opinion with a reputation — that one rule filters out most of the nonsense in AI trading.</p>
   </div>
