@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>The VIX Buy Button — a backtested market playbook · Cloud9</title>
+<meta property="og:title" content="The VIX Buy Button — backtested 1990–2026"/>
+<meta property="og:description" content="One number told you when to buy stocks — right 93% of the time for 36 years. The full regime + sector rotation, backtested."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--red:#ff6b6b;--c9:#46a8ff}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(70,168,255,.11),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
+  h1 em{font-style:normal;color:var(--g)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .hero{margin-top:20px;background:linear-gradient(180deg,rgba(22,224,138,.13),var(--card));border:1px solid rgba(22,224,138,.34);border-radius:18px;padding:20px;text-align:center}
+  .hero .big{font-size:44px;font-weight:900;letter-spacing:-1px;color:var(--g);line-height:1}
+  .hero .lab{font-size:13px;color:#cfd8e4;margin-top:6px}
+  .hero .lab b{color:#fff}
+  .sect{margin:32px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .z{margin-top:14px;background:var(--card);border:1px solid var(--line);border-left-width:4px;border-radius:14px;padding:15px 16px}
+  .z .top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .z .band{font-size:18px;font-weight:850}
+  .z .act{font-size:12px;font-weight:800;letter-spacing:.6px;padding:3px 9px;border-radius:999px;text-transform:uppercase}
+  .z .stat{margin-left:auto;font-size:13px;font-weight:800;color:#fff}
+  .z .stat span{color:var(--mut);font-weight:600}
+  .z .fav{font-size:13.5px;color:#cfd8e4;margin-top:9px;line-height:1.45}
+  .z .fav b{color:#fff}
+  .z.buy{border-left-color:var(--g)} .z.buy .act{background:rgba(22,224,138,.16);color:var(--g)}
+  .z.scale{border-left-color:var(--gold)} .z.scale .act{background:rgba(230,200,120,.16);color:var(--gold)}
+  .z.hold{border-left-color:var(--blu)} .z.hold .act{background:rgba(106,168,255,.16);color:var(--blu)}
+  .z.caution{border-left-color:var(--red)} .z.caution .act{background:rgba(255,107,107,.14);color:var(--red)}
+  .rot{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .rot h3{font-size:17px;font-weight:850}
+  .rot p{font-size:14px;line-height:1.55;color:#cfd8e4;margin-top:10px}
+  .rot p b{color:#fff}
+  .rot .pill{display:inline-block;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:var(--card2);border:1px solid var(--line2);color:var(--mut);margin:4px 4px 0 0}
+  .note{font-size:13px;color:var(--faint);margin-top:12px;line-height:1.5}
+  .note b{color:var(--mut)}
+  .now{margin-top:16px;background:var(--card2);border:1px dashed var(--line);border-radius:14px;padding:14px 16px;font-size:14px;color:#cfd8e4}
+  .now b{color:var(--blu)}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.15),var(--card));border:1px solid rgba(70,168,255,.38);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">The VIX Playbook</span></header>
+
+  <h1>The stock market's <em>buy button</em> — backtested to 1990.</h1>
+  <p class="lede">One number — the <b>VIX</b>, Wall Street's fear index — has flagged nearly every major buying opportunity for 36 years. We backtested every regime on real S&amp;P 500 data. Here's the full playbook, <b>including which stocks each zone actually favors.</b></p>
+
+  <div class="hero">
+    <div class="big">+28.4%</div>
+    <div class="lab">avg S&amp;P return the <b>12 months after the VIX spiked above 35</b> — and it was positive <b>93% of the time</b> across 36 years.</div>
+  </div>
+
+  <div class="sect">The 4 zones — what to do &amp; what it favors</div>
+
+  <div class="z buy">
+    <div class="top"><span class="band">VIX &gt; 35</span><span class="act">Buy aggressively</span><span class="stat">+28.4% <span>/ 93% win</span></span></div>
+    <div class="fav">Peak panic = the generational-buy zone. Favors <b>high-beta tech, growth &amp; small caps</b> — they fall hardest and rebound hardest. Our backtest: <b>tech (QQQ) returned +27% vs +18% for the S&amp;P</b> in the year after a spike.</div>
+  </div>
+
+  <div class="z scale">
+    <div class="top"><span class="band">VIX 25–35</span><span class="act">Scale in</span><span class="stat">+10.4% <span>/ 74% win</span></span></div>
+    <div class="fav">Fear is building. Start adding gradually — not all at once. Favors <b>quality tech, financials, industrials &amp; cyclicals</b>: beaten-down leaders that recover early.</div>
+  </div>
+
+  <div class="z hold">
+    <div class="top"><span class="band">VIX 15–25</span><span class="act">Steady / DCA</span><span class="stat">+8.0% <span>/ 77% win</span></span></div>
+    <div class="fav">Normal market. Keep buying on schedule, don't chase. Favors a <b>balanced mix — tech plus dividend growers</b>. Let winners run.</div>
+  </div>
+
+  <div class="z caution">
+    <div class="top"><span class="band">VIX &lt; 15</span><span class="act">Caution — stay ready</span><span class="stat">+11.0% <span>/ 88% win</span></span></div>
+    <div class="fav"><b>Not a sell</b> — calm markets keep rising, and you hold your winners. But this is the <b>complacency zone</b>: nobody's hedging, and it's where every big crash was born. Point <b>new</b> buys at <b>quality, cash-rich dividend names</b> (defensive accumulation while it's calm), keep leverage off, and <b>stockpile dry powder</b> for the next spike.</div>
+  </div>
+
+  <div class="sect">Where to point your buys</div>
+  <div class="rot">
+    <h3>This isn't rotation. You never sell your winners.</h3>
+    <p>The VIX doesn't just tell you <b>when</b> to buy — it tells you <b>what to buy next</b>. You stay invested the whole way through and let winners run; you just aim each <b>new</b> dollar where the fear level says the reward is. In extreme panic, high-beta tech snaps back hardest. In dead calm, fresh money goes to resilient, cash-generative names — because that's when a surprise is most likely to arrive.</p>
+    <p>The loop: <b>calm → accumulate quality + build cash → spike → deploy dry powder into high-beta → hold through the recovery.</b> Same index, opposite target at each end — <b>no selling required.</b></p>
+    <div style="margin-top:10px">
+      <span class="pill">&gt;35 · tech / growth / small cap</span>
+      <span class="pill">25–35 · quality + cyclicals</span>
+      <span class="pill">15–25 · balanced + dividend growth</span>
+      <span class="pill">&lt;15 · cash-rich / defensive / dividend</span>
+    </div>
+  </div>
+
+  <div class="now">📍 <b>Right now the VIX is ~16</b> — the <b>Steady / DCA</b> zone, just above complacency. Keep buying on schedule, keep some powder dry.</div>
+
+  <div class="sect">How we tested it</div>
+  <p class="note"><b>Data:</b> real CBOE VIX + S&amp;P 500 (and QQQ / XLP / XLU for sectors), daily, <b>Jan 1990 → Jul 2026</b> — 9,194 trading days, 49 distinct VIX&gt;35 spikes. Forward returns measured at 12 months. <b>Honest caveats:</b> you can be early — buying the VIX&gt;35 in Sept 2008 was down at 12 months before the market roared back. Averages aren't guarantees, and past performance never promises the future.</p>
+
+  <div class="cta">
+    <h2>Follow for the full Cloud9 playbooks.</h2>
+    <p>Backtested, cited, no hype — the next one drops on @cloud9.markets.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Educational research based on a historical backtest · <b>not financial advice</b> · not a recommendation to buy or sell any security · do your own research<br/>© Cloud9 Markets</footer>
+</body>
+</html>
