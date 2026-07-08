@@ -108,6 +108,15 @@
     <div class="note"><b>Keep the terminal running</b> the whole time — closing it stops the server, and the browser tab goes blank. To stop later, press <code>Ctrl+C</code> in that terminal. Prefer the terminal? Skip the browser and run the commands below directly.</div>
   </div>
 
+  <div class="step" style="border-color:rgba(230,200,120,.38)">
+    <h3><span class="n" style="background:var(--gold);color:#181203">⚠</span> Getting Chinese replies? Read this</h3>
+    <p>The models that run this best — like DeepSeek — are Chinese, so <b>by default the AI answers in Chinese.</b> The language switch at the bottom of the app only changes the buttons, <b>not the AI's replies</b> — and there's no setting for it. Miss this and it looks broken; that's why most people give up. The fix takes two seconds:</p>
+    <div class="warn"><b>In the Agent tab:</b> just end your prompt with <b>"Reply in English."</b> — works instantly, every time.</div>
+    <p>For the AI teams in the terminal, put it right in the command:</p>
+    <div class="code"><button class="cp">Copy</button>vibe-trading --swarm-run investment_committee '{"target":"NVDA","market":"US equities — respond entirely in English"}'</div>
+    <div class="note">That's the one step nobody tells you about. Now you know.</div>
+  </div>
+
   <div class="sect">Try these first</div>
 
   <div class="demo">
