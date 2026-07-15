@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Wake up to an AI market brief in your DMs — free, self-hosted · Cloud9</title>
+<meta property="og:title" content="An AI that DMs you a market brief every morning — free setup"/>
+<meta property="og:description" content="Self-host the Hermes agent: a daily market brief, live portfolio analysis, delivered to your Telegram, Discord or WhatsApp — running unattended on a $5 box."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#e6c265;--gd:#ffdd8a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(230,194,101,.10),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(70,168,255,.07),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
+  h1 em{font-style:normal;color:var(--g)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
+  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
+  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .step{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--g);color:#1c1405;font-weight:900;font-size:14px;margin-right:10px}
+  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
+  .step p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0;padding-left:36px}
+  .code{position:relative;margin:12px 0 0 36px;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:13px 44px 13px 14px;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;line-height:1.55;color:#d8e6ff;white-space:pre-wrap;word-break:break-word}
+  .cp{position:absolute;top:8px;right:8px;font-size:11px;font-weight:700;color:var(--mut);background:var(--card2);border:1px solid var(--line2);border-radius:7px;padding:5px 9px;cursor:pointer}
+  .cp:active{color:var(--g)}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:.92em;color:var(--gd);background:rgba(230,194,101,.08);padding:1px 5px;border-radius:5px}
+  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px}
+  .note b{color:var(--mut)}
+  .demo{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .demo h3{font-size:17px;font-weight:800}
+  .demo p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0}
+  .demo .quote{margin-top:12px;border-left:2px solid var(--g);padding:2px 0 2px 13px;color:#dfe7f1;font-size:13.5px;line-height:1.55;font-style:italic}
+  .chan{margin-top:22px;display:grid;gap:10px}
+  .chan .c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .chan .c h4{font-size:14.5px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .chan .c p{font-size:13px;color:#bcc7d5;line-height:1.5;margin-top:7px}
+  .chan .c b{color:#eaf0f7}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(230,194,101,.14),var(--card));border:1px solid rgba(230,194,101,.35);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  .locked{margin-top:22px;border:1px dashed rgba(230,194,101,.4);border-radius:16px;padding:18px;background:rgba(230,194,101,.04)}
+  .locked h3{font-size:15.5px;font-weight:800;color:var(--gd)}
+  .locked ul{margin:11px 0 0;padding-left:20px}
+  .locked li{font-size:13.5px;color:#cfd8e4;line-height:1.7}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Cloud9 × Hermes</span></header>
+
+  <h1>An AI that <em>DMs you a market brief</em> every morning — self-hosted, basically free.</h1>
+  <p class="lede">Meet <b>Hermes</b> — a self-hosted AI agent that wakes up before you do, reads the market, <b>analyses the stocks in your portfolio</b>, and drops a punchy brief straight into your <b>Telegram, Discord or WhatsApp</b>. It runs unattended on a $5 box, uses whatever model you like, and it's <b>open-source (MIT)</b>. Here's how to stand it up.</p>
+
+  <div class="agents">
+    <span class="chip">📈 Daily market brief</span><span class="chip">💼 Portfolio analysis</span>
+    <span class="chip">📥 Straight to your DMs</span><span class="chip">⏰ Runs unattended</span><span class="chip">🧠 Learns your style</span>
+  </div>
+
+  <div class="sect">What it actually does</div>
+
+  <div class="demo">
+    <h3>☀️ A brief in your pocket, every morning</h3>
+    <p>Hermes has a built-in scheduler. Tell it — in plain English — to send you a market brief at 7am, and every morning it pulls the tape, the headlines and your holdings, then writes a tight, human read and delivers it to your chat app. No dashboard to open.</p>
+    <div class="quote">“Morning. Tech's soft but your book's holding — Nvidia up 4%, doing the heavy lifting. Iran's rattling the Strait of Hormuz, so watch crude. Portfolio: +0.7%.”</div>
+  </div>
+
+  <div class="demo">
+    <h3>💼 Ask it about your own stocks</h3>
+    <p>Because it remembers your portfolio across sessions, you can just message it — “how's my book looking?”, “is it worth trimming Nvidia?”, “what's the risk in my tech names this week?” — and get a grounded answer using live data, wherever you are.</p>
+  </div>
+
+  <div class="sect">Setup — about 10 minutes</div>
+
+  <div class="step">
+    <h3><span class="n">1</span> Install Hermes</h3>
+    <p>One line. The installer sets up the agent, its managed environment and the <code>hermes</code> command. Works on macOS and Linux (a $5 VPS is plenty; it barely uses anything when idle).</p>
+    <div class="code"><button class="cp">Copy</button>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</div>
+    <div class="note">Built by <a href="https://nousresearch.com" target="_blank" rel="noopener">Nous Research</a> · source: <a href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener">github.com/NousResearch/hermes-agent</a></div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">2</span> Run the setup wizard</h3>
+    <p>This walks you through everything at once — pick a model provider and drop in a key. <b>OpenRouter</b> is the cheap, easy pick (one key, hundreds of models); you can also use Nous Portal, OpenAI or your own endpoint.</p>
+    <div class="code"><button class="cp">Copy</button>hermes setup</div>
+    <div class="note">Swap models anytime with <code>hermes model</code> — no code changes, no lock-in. A cheap model is perfectly good for a daily brief.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">3</span> Talk to it once from the terminal</h3>
+    <p>Make sure the brain works before wiring up chat. Launch the terminal UI and say hello — then tell it who you are and hand it your watchlist.</p>
+    <div class="code"><button class="cp">Copy</button>hermes</div>
+    <div class="note">Try: <i>“Remember my portfolio: Apple, Google, Nvidia, Microsoft, Amazon.”</i> It keeps that across sessions.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">4</span> Connect a chat app</h3>
+    <p>One gateway process serves Telegram, Discord, Slack, WhatsApp and Signal. Run the setup, start the gateway, then just message your bot.</p>
+    <div class="code"><button class="cp">Copy</button>hermes gateway setup
+hermes gateway start</div>
+    <div class="note">After this, sending your bot a message is the same as chatting in the terminal — same agent, same memory, from anywhere.</div>
+  </div>
+
+  <div class="sect">Wiring up each channel</div>
+
+  <div class="chan">
+    <div class="c">
+      <h4>✈️ Telegram <span style="color:var(--faint);font-weight:600;font-size:12px">· easiest</span></h4>
+      <p>In Telegram, message <b>@BotFather</b>, run <code>/newbot</code>, and copy the token it gives you. Paste it when <code>hermes gateway setup</code> asks. Done — DM your new bot and it answers.</p>
+    </div>
+    <div class="c">
+      <h4>🎮 Discord</h4>
+      <p>Create an app at the <b>Discord Developer Portal</b>, add a Bot, copy its token, and invite it to a private server or DM. Feed the token to the gateway setup and lock it to your user so only you can talk to it.</p>
+    </div>
+    <div class="c">
+      <h4>💬 WhatsApp</h4>
+      <p>The gateway prints a <b>QR code</b> — scan it from WhatsApp (Linked Devices), the same way WhatsApp Web works. After that, texts to that number reach your agent.</p>
+    </div>
+  </div>
+  <div class="note" style="padding-left:0;margin-top:12px">Full per-platform docs: <a href="https://hermes-agent.nousresearch.com/docs/user-guide/messaging" target="_blank" rel="noopener">hermes-agent.nousresearch.com/docs</a> → Messaging Gateway.</div>
+
+  <div class="locked">
+    <h3>⚡ The part that makes it a <i>market</i> brief</h3>
+    <p style="font-size:14px;color:#cfd8e4;line-height:1.55;margin-top:9px">Installing Hermes gets you a brilliant general agent. Turning it into the <b>7am market analyst</b> in the demo — the bit that reliably pulls live prices, scores your specific holdings, and schedules the delivery in your voice — is the Cloud9 recipe:</p>
+    <ul>
+      <li>the exact <b>daily-brief prompt</b> that keeps it punchy, not rambling</li>
+      <li>hooking it to <b>live market + portfolio data</b> so numbers are real</li>
+      <li>the <b>schedule + delivery</b> setup so it just shows up, every day</li>
+      <li>keeping it <b>cheap</b> — which model, and how to stop runaway spend</li>
+    </ul>
+    <p style="font-size:13.5px;color:var(--mut);margin-top:11px">I walk through the whole thing on the channel. 👇</p>
+  </div>
+
+  <div class="cta">
+    <h2>Get the full market-brief build.</h2>
+    <p>Follow @cloud9.markets for the step-by-step video — from install to a brief in your DMs.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Educational setup guide · Hermes is open-source, built by Nous Research · Cloud9 is not affiliated with Nous Research · examples are illustrative, <b>not financial advice</b> · do your own research<br/>© Cloud9 Markets</footer>
+
+<script>
+  document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',function(){
+    var code=b.parentNode.textContent.replace('Copy','').trim();
+    navigator.clipboard&&navigator.clipboard.writeText(code);b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy';},1500);});});
+</script>
+</body>
+</html>
