@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Build Nimbus — your own JARVIS for the markets · Cloud9</title>
+<meta property="og:title" content="Build your own JARVIS for the markets"/>
+<meta property="og:description" content="Nimbus is a voice AI market terminal — talk to it, it answers out loud in a British voice with live market data, on a cinematic Iron-Man HUD. Here's the stack to build one."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<style>
+  :root{--bg:#04070f;--card:#0c131f;--card2:#121b29;--line:rgba(63,233,255,.14);--line2:rgba(255,255,255,.05);
+    --tx:#eaf2fb;--mut:#8aa0bd;--faint:#5a6f8a;--cy:#3fe9ff;--cy2:#1f7bff;--up:#22e0a0;--c9:#46a8ff}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 520px at 82% -6%,rgba(63,233,255,.12),transparent 60%),radial-gradient(760px 520px at 0% 12%,rgba(31,123,255,.10),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
+  h1 em{font-style:normal;color:var(--cy)}
+  .lede{font-size:16px;line-height:1.5;color:#cfdcec;font-weight:500}
+  .lede b{color:#fff}
+  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
+  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
+  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .step{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--cy);color:#04121f;font-weight:900;font-size:14px;margin-right:10px}
+  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
+  .step p{font-size:14px;line-height:1.55;color:#cfdcec;margin:10px 0 0;padding-left:36px}
+  .step p b{color:#eaf2fb}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:.9em;color:var(--cy);background:rgba(63,233,255,.08);padding:1px 5px;border-radius:5px}
+  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px}
+  .flow{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .flow ol{margin:0;padding-left:20px}
+  .flow li{font-size:13.5px;color:#cfdcec;line-height:1.75}
+  .flow b{color:var(--cy)}
+  .warn{margin-top:18px;border:1px solid rgba(34,224,160,.32);border-radius:14px;padding:14px 16px;background:rgba(34,224,160,.05)}
+  .warn b{color:var(--up)}
+  .warn p{font-size:13.5px;color:#cfdcec;line-height:1.55}
+  .locked{margin-top:22px;border:1px dashed rgba(63,233,255,.4);border-radius:16px;padding:18px;background:rgba(63,233,255,.04)}
+  .locked h3{font-size:15.5px;font-weight:800;color:var(--cy)}
+  .locked ul{margin:11px 0 0;padding-left:20px}
+  .locked li{font-size:13.5px;color:#cfdcec;line-height:1.7}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(63,233,255,.14),var(--card));border:1px solid rgba(63,233,255,.35);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfdcec;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Cloud9 × Nimbus</span></header>
+
+  <h1>Build your own <em>JARVIS for the markets.</em></h1>
+  <p class="lede"><b>Nimbus</b> is a voice AI market terminal. You <b>talk to it</b> and it answers out loud — in a calm British voice — with <b>live market data</b>, on a cinematic Iron-Man-style HUD: a reactive glowing orb, live panels, a market galaxy you can fly through. It runs on a small home server or a cheap VPS. Here's the exact stack.</p>
+
+  <div class="agents">
+    <span class="chip">🎙️ Talk to it</span><span class="chip">🧠 Claude brain</span><span class="chip">🔊 ElevenLabs voice</span>
+    <span class="chip">📈 Live market data</span><span class="chip">🪐 Cinematic HUD</span>
+  </div>
+
+  <div class="sect">The stack — five pieces</div>
+
+  <div class="step">
+    <h3><span class="n">1</span> The backend</h3>
+    <p>A tiny <b>FastAPI</b> (Python) app. It serves the HUD as a single web page and exposes a few endpoints: one to <b>ask</b> a question, one for <b>text-to-speech</b>, and a couple for the <b>live market feed</b>. That's the whole spine — a few hundred lines.</p>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">2</span> The brain — Claude</h3>
+    <p>Every question goes to <b>Claude</b> (via the Anthropic API). The trick isn't the model — it's the <b>context</b>: you fetch the live numbers first, hand them to Claude, and it narrates a tight, witty spoken answer. Give it a persona (a British butler who runs a hedge fund) and it delivers a proper morning brief on command.</p>
+    <div class="note">Speaking out loud means no markdown, no bullet points — short, punchy sentences that sound good read aloud.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">3</span> The voice — ElevenLabs</h3>
+    <p>The magic is the delivery. <b>ElevenLabs' API</b> turns Claude's text into a warm, expressive British voice in about a second. Pick a voice you like, send the text, stream back the audio, and play it in the browser. Their low-latency model keeps the back-and-forth feeling like a real conversation.</p>
+    <div class="note">You'll need an ElevenLabs API key with a voice-generation plan that fits your usage.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">4</span> The market data</h3>
+    <p>Real numbers, from free-ish market sources: quotes and company news, plus indices, crypto, gold and the VIX. This is what Claude narrates — indices, today's biggest movers, your portfolio, the headlines that matter.</p>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">5</span> The HUD</h3>
+    <p>One self-contained HTML page with an HTML <code>canvas</code>: a <b>reactive particle orb</b> that pulses to the voice, live market panels, a news crawl, and a full-screen <b>3D market galaxy</b> you can orbit and fly through. Pure canvas + a little WebGL — no heavy framework.</p>
+  </div>
+
+  <div class="sect">How it fits together</div>
+  <div class="flow">
+    <ol>
+      <li>You tap the orb and speak → the browser does <b>speech-to-text</b>.</li>
+      <li>The backend fetches the <b>live market data</b> for your question.</li>
+      <li><b>Claude</b> turns the data + your question into a spoken answer.</li>
+      <li><b>ElevenLabs</b> voices it; the browser plays it and the <b>orb reacts</b>.</li>
+    </ol>
+  </div>
+
+  <div class="warn">
+    <p><b>⚠️ The one rule that matters:</b> the AI must <b>never invent a number.</b> A market brief with a wrong price is worse than none. The script fetches the figures; the model only writes the words around them. Grounded, always.</p>
+  </div>
+
+  <div class="note" style="padding-left:0;margin-top:14px">One gotcha: browser microphones need a <b>secure context</b>, so serve the HUD over HTTPS (a self-signed cert on your LAN is fine).</div>
+
+  <div class="locked">
+    <h3>⚡ What turns this from a demo into <i>Nimbus</i></h3>
+    <p style="font-size:14px;color:#cfdcec;line-height:1.55;margin-top:9px">The stack above gets you a talking terminal. The bits that make it feel <b>alive and viral-ready</b> are the Cloud9 build:</p>
+    <ul>
+      <li>the <b>reactive orb + 3D galaxy</b> — the animation that stops the scroll</li>
+      <li>the <b>grounded-data prompt</b> that keeps every number honest</li>
+      <li><b>zero-latency mode</b> — pre-baked briefs so it answers instantly on camera</li>
+      <li>the <b>voice pipeline</b> tricks that make it feel like a real conversation</li>
+      <li>making it look <b>cinematic</b> enough for reels, not like an app</li>
+    </ul>
+    <p style="font-size:13.5px;color:var(--mut);margin-top:11px">I break the whole build down on the channel. 👇</p>
+  </div>
+
+  <div class="cta">
+    <h2>Get the full Nimbus build.</h2>
+    <p>Follow @cloud9.markets for the step-by-step — orb to galaxy, voice to live data.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Educational build guide · uses the Anthropic and ElevenLabs APIs (bring your own keys) · examples are illustrative, <b>not financial advice</b> · do your own research<br/>© Cloud9 Markets</footer>
+</body>
+</html>
