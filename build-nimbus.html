@@ -82,7 +82,9 @@
 
   <div class="step">
     <h3><span class="n">4</span> The market data</h3>
-    <p>Real numbers, from free-ish market sources: quotes and company news, plus indices, crypto, gold and the VIX. This is what Claude narrates — indices, today's biggest movers, your portfolio, the headlines that matter.</p>
+    <p>Real numbers, from free market sources: quotes and company news, plus indices, crypto, gold and the VIX. This is what Claude narrates — indices, today's biggest movers, your portfolio, the headlines that matter.</p>
+    <p><b>Skip the plumbing:</b> we open-sourced the exact market-data layer as <b>drop-in skills</b> — small scripts that fetch <b>verified</b> live numbers and hand your AI clean JSON to narrate. There's a skill for a <b>market brief</b>, your <b>portfolio</b>, a single-stock <b>snapshot</b>, the day's <b>movers</b>, and a full <b>pre-open global brief</b>.</p>
+    <div class="note">🛠️ Open-source (MIT): <a href="https://github.com/kloud9ptyltd/cloud9-finance-skills" target="_blank" rel="noopener">github.com/kloud9ptyltd/cloud9-finance-skills</a> — built to the <a href="https://agentskills.io" target="_blank" rel="noopener">agentskills.io</a> standard, so the same skills work in Claude Code, Hermes, OpenJarvis, or wired straight into your Nimbus backend. Each is a folder: the script prints verified JSON, and the <code>SKILL.md</code> tells the model to narrate <i>only</i> those numbers.</div>
   </div>
 
   <div class="step">
