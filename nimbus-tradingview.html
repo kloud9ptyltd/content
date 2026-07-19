@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>I let my AI draw trade setups on TradingView — the stack · Cloud9</title>
+<meta property="og:title" content="I talk, my AI marks up the TradingView chart"/>
+<meta property="og:description" content="Nimbus is a voice AI that draws a live trade setup on TradingView — support, resistance, buy/sell zones, stop-loss — the moment you ask, out loud. Here's the exact stack."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<style>
+  :root{--bg:#04070f;--card:#0c131f;--card2:#121b29;--line:rgba(63,233,255,.14);--line2:rgba(255,255,255,.05);
+    --tx:#eaf2fb;--mut:#8aa0bd;--faint:#5a6f8a;--cy:#3fe9ff;--cy2:#1f7bff;--up:#22e0a0;--dn:#ff4d61;--c9:#46a8ff}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 520px at 82% -6%,rgba(63,233,255,.12),transparent 60%),radial-gradient(760px 520px at 0% 12%,rgba(31,123,255,.10),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
+  h1 em{font-style:normal;color:var(--cy)}
+  .lede{font-size:16px;line-height:1.5;color:#cfdcec;font-weight:500}
+  .lede b{color:#fff}
+  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
+  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
+  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .step{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--cy);color:#04121f;font-weight:900;font-size:14px;margin-right:10px}
+  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
+  .step p{font-size:14px;line-height:1.55;color:#cfdcec;margin:10px 0 0;padding-left:36px}
+  .step p b{color:#eaf2fb}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:.9em;color:var(--cy);background:rgba(63,233,255,.08);padding:1px 5px;border-radius:5px}
+  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px}
+  .fable{margin-top:12px;margin-left:36px;border:1px solid rgba(70,168,255,.4);border-radius:12px;padding:12px 14px;background:linear-gradient(180deg,rgba(70,168,255,.12),rgba(70,168,255,.03))}
+  .fable b{color:var(--c9)}
+  .fable .tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#04101f;background:var(--c9);padding:3px 9px;border-radius:999px;margin-bottom:8px}
+  .fable p{font-size:13.5px;color:#cfdcec;line-height:1.55;padding-left:0;margin:0}
+  .flow{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .flow ol{margin:0;padding-left:20px}
+  .flow li{font-size:13.5px;color:#cfdcec;line-height:1.75}
+  .flow b{color:var(--cy)}
+  .zones{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .zone{flex:1;min-width:150px;border-radius:12px;padding:11px 13px;font-size:12.5px;line-height:1.5}
+  .zone.sell{border:1px solid rgba(255,77,97,.35);background:rgba(255,77,97,.06)}
+  .zone.buy{border:1px solid rgba(34,224,160,.32);background:rgba(34,224,160,.06)}
+  .zone b.s{color:var(--dn)}.zone b.b{color:var(--up)}
+  .warn{margin-top:18px;border:1px solid rgba(34,224,160,.32);border-radius:14px;padding:14px 16px;background:rgba(34,224,160,.05)}
+  .warn b{color:var(--up)}
+  .warn p{font-size:13.5px;color:#cfdcec;line-height:1.55}
+  .locked{margin-top:22px;border:1px dashed rgba(63,233,255,.4);border-radius:16px;padding:18px;background:rgba(63,233,255,.04)}
+  .locked h3{font-size:15.5px;font-weight:800;color:var(--cy)}
+  .locked ul{margin:11px 0 0;padding-left:20px}
+  .locked li{font-size:13.5px;color:#cfdcec;line-height:1.7}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(63,233,255,.14),var(--card));border:1px solid rgba(63,233,255,.35);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfdcec;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Cloud9 × Nimbus</span></header>
+
+  <h1>I talk. My AI <em>draws the trade on TradingView.</em></h1>
+  <p class="lede">"Nimbus, draw me a Bitcoin trade setup." A beat later, a calm British voice replies — and my <b>live TradingView chart</b> marks itself up: support and resistance, a <b>buy zone</b>, a <b>sell zone</b>, a stop-loss, clean labels. No mouse. Just a sentence. Here's the exact stack that makes an AI <b>act on your screen</b> instead of just chatting back.</p>
+
+  <div class="agents">
+    <span class="chip">🎙️ Talk to it</span><span class="chip">🧠 Claude + Fable 5</span><span class="chip">🔌 TradingView MCP</span>
+    <span class="chip">📈 Draws on a live chart</span><span class="chip">⚡ Instant on camera</span>
+  </div>
+
+  <div class="sect">The stack — four pieces</div>
+
+  <div class="step">
+    <h3><span class="n">1</span> The builder — Claude Code</h3>
+    <p>The whole thing is built <b>in Claude Code</b> — it writes the backend, wires the pieces, and drives TradingView while you watch. You describe what you want; it codes it. This is the piece that turns "AI that talks" into <b>AI that does things on your computer.</b></p>
+    <div class="fable">
+      <span class="tag">Highly recommended</span>
+      <p>Build it on <b>Claude's Fable 5 model.</b> The voice→chart chain lives or dies on one thing: turning a spoken sentence into <b>exact draw coordinates</b> on a real chart — the right prices, the right anchors, clean geometry. Fable 5's reasoning nails that translation; lighter models fumble the numbers and you get a mess of crooked lines. If you're serious about this build, run Claude Code on Fable 5 — it's the difference between a clean setup and a scribble. <a href="https://kloud9ptyltd.github.io/content/fable5-prompts.html" target="_blank" rel="noopener">Why Fable 5 for finance →</a></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">2</span> The bridge to the chart — TradingView MCP</h3>
+    <p>An <b>MCP server</b> connects Claude Code to <b>TradingView Desktop</b> — so the AI can read the live price, switch symbols, and <b>draw</b> lines, zones, and labels on the chart itself. This is the connective tissue: once it's wired, your AI has hands on your charts.</p>
+    <div class="note">🔗 Start here — the free setup guide: <a href="https://kloud9ptyltd.github.io/content/claude-tradingview-setup.html" target="_blank" rel="noopener">Connect Claude Code to TradingView Desktop</a>. Get this working first; everything else builds on top.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">3</span> The voice — talk in, talk back</h3>
+    <p>The browser does <b>speech-to-text</b> so you can just speak. For the reply, <b>ElevenLabs' API</b> turns the AI's line into a warm British voice in about a second — the "sir, it's on your chart" that makes it feel like JARVIS, not a terminal.</p>
+    <div class="note">You'll need an ElevenLabs API key with a voice plan that fits your usage, plus an Anthropic API key for the brain.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">4</span> The action bridge — a sentence becomes a drawing</h3>
+    <p>A small service sits between the voice and the chart: it hears <b>"draw me a Bitcoin trade setup,"</b> works out the <b>structure</b> — recent swing highs and lows — and issues the TradingView draw calls, then snaps the chart to the front. That's the whole trick: <b>intent in, marked-up chart out.</b></p>
+    <div class="zones">
+      <div class="zone sell"><b class="s">SELL ZONE</b> — resistance overhead, where price has been rejected before.</div>
+      <div class="zone buy"><b class="b">BUY ZONE</b> — support below, where buyers have stepped in before.</div>
+    </div>
+  </div>
+
+  <div class="sect">How it fits together</div>
+  <div class="flow">
+    <ol>
+      <li>You tap the orb and speak → the browser does <b>speech-to-text</b>.</li>
+      <li><b>Claude</b> recognises it's a chart action and figures out the plan.</li>
+      <li>The <b>TradingView MCP</b> reads the live chart and <b>draws</b> the levels + zones.</li>
+      <li><b>ElevenLabs</b> voices the confirmation; TradingView snaps to the front — done.</li>
+    </ol>
+  </div>
+
+  <div class="warn">
+    <p><b>⚠️ What it is — and isn't:</b> Nimbus marks <b>structure</b> (where price has turned before), not a call on where it's going next. The levels are an <b>illustration to think with</b>, never a signal to trade. And the rule that makes it trustworthy: the AI <b>never invents a number</b> — it reads the real chart and draws only what's there. Educational, grounded, <b>not financial advice.</b></p>
+  </div>
+
+  <div class="locked">
+    <h3>⚡ What turns this from a demo into <i>Nimbus</i></h3>
+    <p style="font-size:14px;color:#cfdcec;line-height:1.55;margin-top:9px">The four pieces get you an AI that can draw on a chart. The bits that make it look <b>this clean on camera</b> are the Cloud9 build — and that's what I break down on the channel:</p>
+    <ul>
+      <li>the <b>swing-structure logic</b> that picks levels that actually matter (not every wiggle)</li>
+      <li><b>zero-latency mode</b> — the setup is pre-computed so it appears the instant you ask</li>
+      <li>the <b>buy/sell zones + stop + labels</b> styled to pop on a reel, not look like an app</li>
+      <li>the <b>voice pipeline</b> tricks that make the "right away, sir" land at the perfect beat</li>
+      <li>routing a spoken command to the <b>chart action</b> reliably — the Fable 5 secret sauce</li>
+    </ul>
+    <p style="font-size:13.5px;color:var(--mut);margin-top:11px">I show the whole thing — voice to chart — on the channel. 👇</p>
+  </div>
+
+  <div class="cta">
+    <h2>Get the full Nimbus × TradingView build.</h2>
+    <p>Follow @cloud9.markets for the step-by-step — talk to it, watch it draw. New builds drop there first.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Educational build guide · uses the Anthropic and ElevenLabs APIs (bring your own keys) · built with Claude Code on Fable 5 · chart markups are illustrative, <b>not financial advice</b> · do your own research<br/>© Cloud9 Markets</footer>
+</body>
+</html>
