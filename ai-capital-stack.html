@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The AI Capital Stack — OpenAI × Anthropic</title>
+<title>The AI Capital Stack — OpenAI × Anthropic × China · Cloud9</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -135,10 +135,10 @@
 <div id="app">
   <header>
     <div class="titlewrap">
-      <h1 class="disp">The AI Capital Stack<span class="x">×</span><span style="color:var(--compute)">OpenAI</span> &amp; <span style="color:var(--fam-power)">Anthropic</span></h1>
-      <div class="stamp mono">PUBLIC RECONSTRUCTION · ~JUN 2026<br>not investment advice</div>
+      <h1 class="disp">The AI Capital Stack<span class="x">×</span><span style="color:var(--compute)">OpenAI</span> &amp; <span style="color:var(--fam-power)">Anthropic</span> <span class="x">×</span><span style="color:#D6455D">China</span></h1>
+      <div class="stamp mono">PUBLIC RECONSTRUCTION · ~JUL 2026<br>not investment advice</div>
     </div>
-    <div class="sub">Both labs are <b>private</b> — there is no 10-K to trace. Every figure is a <b>publicly disclosed headline</b> (deal value, stake, round) or a reasoned estimate, each edge tagged <span class="mono" style="color:#34D399">confirmed</span> / <span class="mono" style="color:var(--equity)">estimated</span> / <span class="mono" style="color:var(--compute)">letter-of-intent</span>. Ranking is by <b>total economic exposure</b> — equity + revenue + supply-chain pull-through + financing risk — not direct revenue.</div>
+    <div class="sub">Both labs are <b>private</b> — there is no 10-K to trace. Every figure is a <b>publicly disclosed headline</b> (deal value, stake, round) or a reasoned estimate, each edge tagged <span class="mono" style="color:#34D399">confirmed</span> / <span class="mono" style="color:var(--equity)">estimated</span> / <span class="mono" style="color:var(--compute)">letter-of-intent</span>. Ranking is by <b>total economic exposure</b> — equity + revenue + supply-chain pull-through + financing risk — not direct revenue. <b style="color:#D6455D">Now mapped: the China bloc.</b> Alibaba's <b>Qwen</b>, Moonshot's <b>Kimi</b> and <b>DeepSeek</b> are no longer side projects — so the stack now traces their money too: who funds them (Alibaba, Tencent, China Mobile), whose silicon they run on (Huawei, Cambricon, SMIC), and the one bottleneck both blocs still share — <b>HBM memory</b>. China nodes are <span style="color:#D6455D">crimson</span>.</div>
   </header>
   <div class="bar">
     <div class="tabs">
@@ -181,7 +181,7 @@
 </div>
 <script>
 /* ============================== DATA ============================== */
-const FAM={lab:'#F4B740',capital:'#4C82BE',compute:'#23A6A6',silicon:'#C0703E',power:'#4FA45A',other:'#8893A6',person:'#E0A062'};
+const FAM={lab:'#F4B740',capital:'#4C82BE',compute:'#23A6A6',silicon:'#C0703E',power:'#4FA45A',other:'#8893A6',person:'#E0A062',china:'#D6455D'};
 
 const NODES=[
   {id:'openai',label:'OpenAI',name:'OpenAI Group PBC',fam:'lab',layer:'lab',kind:'private',mcap:'~$850B val',tier:'core',ax:.42,ay:.5},
@@ -237,7 +237,19 @@ const NODES=[
   {id:'oklo',label:'OKLO',name:'Oklo',fam:'power',layer:'power',kind:'public',mcap:'$10B+',tier:'B',ax:.46,ay:.90},
   {id:'ccj',label:'CCJ',name:'Cameco',fam:'power',layer:'power',kind:'public',mcap:'$10B+',tier:'C',ax:.36,ay:.99},
   {id:'rxrx',label:'RXRX',name:'Recursion Pharma',fam:'other',layer:'misc',kind:'public',mcap:'$1B+',tier:'C',ax:.84,ay:.66},
-  {id:'wrd',label:'WRD',name:'WeRide',fam:'other',layer:'misc',kind:'public',mcap:'$1B+',tier:'C',ax:.80,ay:.66}
+  {id:'wrd',label:'WRD',name:'WeRide',fam:'other',layer:'misc',kind:'public',mcap:'$1B+',tier:'C',ax:.80,ay:.66},
+  {id:'baba',label:'BABA',name:'Alibaba (Qwen + Cloud)',fam:'china',layer:'cloud',kind:'public',mcap:'$300B+',tier:'S',ax:.20,ay:.68},
+  {id:'tcehy',label:'Tencent',name:'Tencent (Hunyuan)',fam:'china',layer:'cloud',kind:'public',mcap:'$500B+',tier:'A',ax:.14,ay:.80},
+  {id:'bytedance',label:'ByteDance',name:'ByteDance (Doubao / Volcengine)',fam:'china',layer:'cloud',kind:'private',mcap:'private',tier:'A',ax:.12,ay:.62},
+  {id:'bidu',label:'BIDU',name:'Baidu (Ernie + Kunlun)',fam:'china',layer:'cloud',kind:'public',mcap:'$40B+',tier:'B',ax:.24,ay:.90},
+  {id:'chinamob',label:'China Mobile',name:'China Mobile (state)',fam:'china',layer:'fund',kind:'public',mcap:'$200B+',tier:'B',ax:.07,ay:.90},
+  {id:'moonshot',label:'Kimi',name:'Moonshot AI (Kimi)',fam:'china',layer:'lab',kind:'private',mcap:'~$20B val',tier:'A',ax:.46,ay:.72},
+  {id:'deepseek',label:'DeepSeek',name:'DeepSeek (High-Flyer)',fam:'china',layer:'lab',kind:'private',mcap:'~$20B val',tier:'A',ax:.58,ay:.72},
+  {id:'zhipu',label:'Zhipu',name:'Zhipu AI (GLM)',fam:'china',layer:'lab',kind:'private',mcap:'private',tier:'B',ax:.52,ay:.84},
+  {id:'huawei',label:'Huawei',name:'Huawei (Ascend / HiSilicon)',fam:'china',layer:'accel',kind:'private',mcap:'private',tier:'S',ax:.82,ay:.72},
+  {id:'cambricon',label:'Cambricon',name:'Cambricon (688256.SS)',fam:'china',layer:'accel',kind:'public',mcap:'$100B+',tier:'A',ax:.90,ay:.74},
+  {id:'smic',label:'SMIC',name:'SMIC (0981.HK)',fam:'china',layer:'foundry',kind:'public',mcap:'$60B+',tier:'A',ax:.95,ay:.82},
+  {id:'cxmt',label:'CXMT',name:'CXMT (domestic HBM)',fam:'china',layer:'memory',kind:'private',mcap:'private',tier:'B',ax:.90,ay:.90}
 ];
 
 const LINKS=[
@@ -331,7 +343,21 @@ const LINKS=[
   {source:'crwv',target:'eqix',k:'leasing',v:null,lbl:'Neocloud colocation',c:'ok'},
   {source:'nbis',target:'eqix',k:'leasing',v:null,lbl:'Colocation',c:'est'},
   {source:'crwv',target:'apld',k:'leasing',v:7.5,lbl:'Ellendale · 250MW (~$7.5B class)',c:'ok'},
-  {source:'orcl',target:'dlr',k:'leasing',v:null,lbl:'Stargate-adjacent capacity',c:'est'}
+  {source:'orcl',target:'dlr',k:'leasing',v:null,lbl:'Stargate-adjacent capacity',c:'est'},
+  {source:'baba',target:'moonshot',k:'equity',v:2,lbl:'Largest outside shareholder',c:'ok',loop:true},
+  {source:'tcehy',target:'moonshot',k:'equity',v:null,lbl:'Early backer',c:'ok'},
+  {source:'chinamob',target:'moonshot',k:'equity',v:null,lbl:'May-2026 round · ~$20B val',c:'ok'},
+  {source:'baba',target:'deepseek',k:'equity',v:null,lbl:'In talks · ~$20B val',c:'est'},
+  {source:'tcehy',target:'deepseek',k:'equity',v:null,lbl:'In talks · ~$20B val',c:'est'},
+  {source:'moonshot',target:'baba',k:'compute',v:null,lbl:'Alibaba Cloud capacity',c:'est',loop:true},
+  {source:'moonshot',target:'bytedance',k:'compute',v:null,lbl:'Volcengine capacity',c:'ok'},
+  {source:'deepseek',target:'huawei',k:'compute',v:null,lbl:'Tuned for Ascend (V4)',c:'ok'},
+  {source:'bidu',target:'huawei',k:'compute',v:null,lbl:'Also builds Kunlun in-house',c:'est'},
+  {source:'huawei',target:'smic',k:'supply',v:null,lbl:'Ascend on SMIC N+2 (7nm)',c:'ok'},
+  {source:'cambricon',target:'smic',k:'supply',v:null,lbl:'Domestic foundry',c:'est'},
+  {source:'huawei',target:'skhynix',k:'supply',v:null,lbl:'HBM — the shared bottleneck',c:'ok'},
+  {source:'cambricon',target:'skhynix',k:'supply',v:null,lbl:'HBM',c:'ok'},
+  {source:'huawei',target:'cxmt',k:'supply',v:null,lbl:'Domestic HBM (ramping)',c:'est'}
 ];
 const RANK=[
   {tier:'S',sub:'Existential / reflexive exposure'},
@@ -344,7 +370,7 @@ const RANK=[
   {rk:7,id:'amzn',ch:['equity','compute'],magn:'$16.8B Q1’26 gains · >$100B commit',shr:'Anthropic is AWS’s flagship AI story (+ $38B OpenAI deal)',why:'The mirror of Microsoft–OpenAI, one tier down in scale.',cf:'high'},
   {rk:8,id:'googl',ch:['equity','compute'],magn:'Up to $40B deal · ~$44B paper',shr:'Anthropic funds TPUs and competes with Gemini',why:'Backs a direct rival to spin its silicon — exposure plus strategic tension.',cf:'high'},
   {tier:'A',sub:'Derivative exposure — gated by the buildout, one step removed'},
-  {rk:9,id:'skhynix',ch:['supply'],magn:'HBM sold out through 2026',shr:'Memory ~55% AI-driven; op-margin ~90%',why:'Acute but indirect: every GPU the labs buy needs its HBM stacks.',cf:'high'},
+  {rk:9,id:'skhynix',ch:['supply'],magn:'HBM sold out through 2026',shr:'Memory ~55% AI-driven; op-margin ~90%',why:'Acute but indirect: every GPU the labs buy needs its HBM stacks — and China\'s domestic chips need the same stacks. HBM is the one bottleneck both blocs share.',cf:'high'},
   {rk:10,id:'mu',ch:['supply'],magn:'HBM capacity sold out CY26',shr:'Data-center ~56% of revenue; only US HBM maker',why:'Same memory supercycle, US-domiciled — the policy-safe HBM play.',cf:'high'},
   {rk:11,id:'samsung',ch:['supply'],magn:'HBM4 ramp; AMD MI455X primary',shr:'~17% HBM share, recovering yields',why:'Third HBM source — leverage rising as it re-qualifies with Nvidia/AMD.',cf:'med'},
   {rk:12,id:'tsm',ch:['supply'],magn:'Foundry for every AI accelerator',shr:'CoWoS ~80%; AI is the growth driver, base diversified',why:'The chokepoint everyone routes through — broad exposure, not lab-specific.',cf:'high'},
@@ -365,7 +391,15 @@ const RANK=[
   {rk:26,id:'oklo',ch:['power','equity'],magn:'Meta 1.2GW · Altman ~4.3%',shr:'Pre-revenue SMR; direct Altman link',why:'The most personal tie in the map: OpenAI’s CEO is a major shareholder.',cf:'low'},
   {rk:27,id:'eqix',ch:['leasing'],magn:'8 of top-10 labs colocate',shr:'AI incremental to a very large base',why:'Owns the interconnection meeting-room the whole ecosystem plugs into.',cf:'med'},
   {rk:28,id:'dlr',ch:['leasing'],magn:'Record 200MW single lease',shr:'AI incremental; hyperscale wholesale',why:'Scale landlord to the clouds that host the labs.',cf:'med'},
-  {rk:29,id:'asml',ch:['supply'],magn:'EUV monopoly upstream of TSMC',shr:'Two steps removed; indispensable',why:'Furthest upstream — real exposure, maximally diffused across all chips.',cf:'med'}
+  {rk:29,id:'asml',ch:['supply'],magn:'EUV monopoly upstream of TSMC',shr:'Two steps removed; indispensable',why:'Furthest upstream — real exposure, maximally diffused across all chips.',cf:'med'},
+  {tier:'CN',sub:'The China bloc — no longer a side project (ranked within China)'},
+  {rk:1,id:'baba',ch:['equity','compute'],magn:'$55B+ AI capex FY26–28 · owns Qwen · backs Kimi',shr:'Cloud re-accelerating (~26–38% YoY); AI revenue triple-digit for 11 straight quarters',why:'The closest thing to Nvidia-plus-Microsoft in one ticker: a frontier model (Qwen), the cloud that serves it, the capex to build it, and the largest outside stake in Moonshot (Kimi).',cf:'high'},
+  {rk:2,id:'tcehy',ch:['equity','compute'],magn:'Hunyuan model · early Moonshot backer · in talks on DeepSeek',shr:'AI feeds ads, games and WeChat; cloud is the growth arm',why:'The other Chinese hyperscaler-plus-lab: builds its own model and quietly backs the independents.',cf:'high'},
+  {rk:3,id:'smic',ch:['supply'],magn:'~$11B+ revenue (2026E) · doubling 7nm capacity',shr:'The only at-scale advanced foundry inside China',why:'Every domestic AI chip — Huawei, Cambricon — has to route through SMIC. It is China\'s TSMC chokepoint.',cf:'high'},
+  {rk:4,id:'cambricon',ch:['supply'],magn:'~500K accelerators targeted in 2026',shr:'Near-pure-play China AI silicon',why:'The listed way to own China\'s domestic-accelerator ramp — maximal beta, gated by HBM and yields.',cf:'med'},
+  {rk:5,id:'bidu',ch:['compute'],magn:'Ernie model + Kunlun in-house chips',shr:'AI cloud + search; smaller, earlier in the re-rate',why:'The third model-plus-chip stack — lower profile, more leverage if China AI keeps compounding.',cf:'med'},
+  {rk:6,id:'huawei',ch:['supply','compute'],magn:'~600K Ascend 910C in 2026 (≈2× 2025)',shr:'~half of China\'s domestic AI-chip market (private — not investable)',why:'The engine of China\'s compute independence and the demand pull under SMIC and CXMT — but unlisted, so you own it through its suppliers.',cf:'high'},
+  {rk:7,id:'cxmt',ch:['supply'],magn:'Domestic HBM3 ramp (private)',shr:'The missing piece — if it works, China\'s HBM import dependence eases',why:'The long-shot that would unlock China\'s output ceiling; until then, SK Hynix / Samsung / Micron still gate the whole bloc.',cf:'low'}
 ];
 
 const FLOWS={
@@ -535,5 +569,16 @@ window.addEventListener('resize',()=>{if(document.getElementById('v-graph').clas
 
 draw();renderRank();renderFlows();init();
 </script>
+
+<div style="max-width:820px;margin:0 auto;padding:30px 20px 70px;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif">
+  <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(214,69,93,.4),transparent);margin-bottom:26px"></div>
+  <img src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets" style="height:30px;opacity:.92;border-radius:6px"/>
+  <h3 style="font-size:22px;font-weight:800;color:#eaf2fb;margin:16px 0 8px;letter-spacing:-.3px">Two blocs are now building the future of AI.</h3>
+  <p style="font-size:15px;line-height:1.55;color:#aab6cc;max-width:600px;margin:0 auto 18px">The West spends the most; China ships the fastest open models. This map traces the money under both — and the choke points (HBM, foundry, power) that decide who compounds. Follow along as we track it.</p>
+  <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener" style="display:inline-block;background:#46a8ff;color:#04101f;font-weight:800;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none">Follow @cloud9.markets →</a>
+  <p style="font-size:13px;color:#8aa0bd;margin:14px 0 0">Comment <b style="color:#eaf2fb">“STACK”</b> for the interactive map + the China deep-dive.</p>
+  <p style="font-size:11px;color:#5a6f8a;margin:22px 0 0;line-height:1.6">Public reconstruction from disclosed headlines through ~Jul 2026 · figures are the largest publicly reported values · <b>analytical map, not investment advice — do your own research.</b><br/>© Cloud9 Markets</p>
+</div>
+
 </body>
 </html>
