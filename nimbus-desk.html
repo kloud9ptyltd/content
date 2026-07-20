@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>I built an AI trading desk — nine agents, one voice · Cloud9</title>
+<meta property="og:title" content="I built an AI trading desk. Nine agents. One voice."/>
+<meta property="og:description" content="Nimbus is a voice AI that commands a desk of nine specialist agents — macro, smart-money, risk, execution — each with its own voice. You talk; the desk works. Here's the blueprint."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<style>
+  :root{--bg:#04070f;--card:#0c131f;--card2:#121b29;--line:rgba(63,233,255,.14);--line2:rgba(255,255,255,.05);
+    --tx:#eaf2fb;--mut:#8aa0bd;--faint:#5a6f8a;--cy:#3fe9ff;--cy2:#1f7bff;--up:#22e0a0;--dn:#ff4d61;--c9:#46a8ff}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 520px at 82% -6%,rgba(63,233,255,.12),transparent 60%),radial-gradient(760px 520px at 0% 12%,rgba(31,123,255,.10),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
+  h1 em{font-style:normal;color:var(--cy)}
+  .lede{font-size:16px;line-height:1.5;color:#cfdcec;font-weight:500}
+  .lede b{color:#fff}
+  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
+  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
+  .sect{margin:34px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .wing{margin-top:16px}
+  .wingname{font-size:11px;font-weight:800;letter-spacing:2px;color:var(--faint);text-transform:uppercase;margin:16px 0 8px;display:flex;align-items:center;gap:8px}
+  .wingname::before{content:"";width:20px;height:1px;background:var(--line)}
+  .seat{display:flex;gap:13px;align-items:flex-start;background:var(--card);border:1px solid var(--line2);border-radius:14px;padding:13px 15px;margin-top:8px}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none;margin-top:4px;box-shadow:0 0 10px currentColor}
+  .seat h4{font-size:14.5px;font-weight:800;letter-spacing:.5px}
+  .seat h4 span{font-weight:700;color:var(--faint);font-size:11px;letter-spacing:1px;margin-left:7px}
+  .seat p{font-size:13.5px;color:#cfdcec;line-height:1.45;margin-top:3px}
+  .master{background:linear-gradient(180deg,rgba(63,233,255,.12),var(--card));border:1px solid rgba(63,233,255,.3)}
+  .step{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px}
+  .step h3{font-size:16px;font-weight:800;display:flex;align-items:center}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--cy);color:#04121f;font-weight:900;font-size:13px;margin-right:10px}
+  .step p{font-size:14px;line-height:1.55;color:#cfdcec;margin:9px 0 0;padding-left:34px}
+  .step p b{color:#eaf2fb}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:.9em;color:var(--cy);background:rgba(63,233,255,.08);padding:1px 5px;border-radius:5px}
+  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:34px}
+  .fable{margin-top:16px;border:1px solid rgba(70,168,255,.4);border-radius:14px;padding:16px;background:linear-gradient(180deg,rgba(70,168,255,.12),rgba(70,168,255,.03))}
+  .fable .tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#04101f;background:var(--c9);padding:3px 9px;border-radius:999px;margin-bottom:9px}
+  .fable p{font-size:13.5px;color:#cfdcec;line-height:1.55}
+  .fable b{color:var(--c9)}
+  .warn{margin-top:18px;border:1px solid rgba(255,77,97,.32);border-radius:14px;padding:14px 16px;background:rgba(255,77,97,.05)}
+  .warn b{color:var(--dn)}
+  .warn p{font-size:13.5px;color:#cfdcec;line-height:1.55}
+  .locked{margin-top:22px;border:1px dashed rgba(63,233,255,.4);border-radius:16px;padding:18px;background:rgba(63,233,255,.04)}
+  .locked h3{font-size:15.5px;font-weight:800;color:var(--cy)}
+  .locked ul{margin:11px 0 0;padding-left:20px}
+  .locked li{font-size:13.5px;color:#cfdcec;line-height:1.7}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(63,233,255,.14),var(--card));border:1px solid rgba(63,233,255,.35);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfdcec;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Cloud9 × Nimbus</span></header>
+
+  <h1>I built an AI trading desk.<br/><em>Nine agents. One voice.</em></h1>
+  <p class="lede">Everyone's cloning a general-purpose Jarvis. I built one that's <b>deep in a single world — the markets</b>. You talk to <b>Nimbus</b>, and it commands a desk of <b>nine specialist AI agents</b> — each an expert in one job, each with its own voice — who research, argue, and execute together. I can even <b>steer the whole thing with my bare hands.</b> Meet the desk.</p>
+
+  <div class="agents">
+    <span class="chip">🎙️ Talk to it</span><span class="chip">🧠 Claude + Fable 5</span><span class="chip">🖐️ Steer it by hand</span>
+    <span class="chip">🔊 Nine distinct voices</span><span class="chip">📈 Real market work</span>
+  </div>
+
+  <div class="sect">The desk — one master, nine specialists</div>
+
+  <div class="seat master"><span class="dot" style="color:#3fe9ff"></span><div><h4>NIMBUS <span>THE MASTER</span></h4><p>The orchestrator. You give one command; it routes the work to the right agents, synthesizes what comes back, and answers out loud. Never does the specialist work itself — it runs the desk.</p></div></div>
+
+  <div class="wing">
+    <div class="wingname">Intelligence — what's happening</div>
+    <div class="seat"><span class="dot" style="color:#7b8cff"></span><div><h4>ATLAS <span>MACRO</span></h4><p>Reads the Fed, rates, and the market's weather — the tide everything else floats on.</p></div></div>
+    <div class="seat"><span class="dot" style="color:#ffd54d"></span><div><h4>CAPITOL <span>SMART MONEY</span></h4><p>Tracks what Congress, insiders, and the big funds are quietly buying — before the news does.</p></div></div>
+    <div class="seat"><span class="dot" style="color:#ffb84d"></span><div><h4>SCOUT <span>RECON</span></h4><p>Finds whatever stock is going viral today — an hour before your feed does.</p></div></div>
+  </div>
+
+  <div class="wing">
+    <div class="wingname">Analysis — what it's worth</div>
+    <div class="seat"><span class="dot" style="color:#2fd6c4"></span><div><h4>ATHENA <span>ANALYST</span></h4><p>Reads the boring legal filings — all of them, footnotes included — so you know if the business is real.</p></div></div>
+    <div class="seat"><span class="dot" style="color:#3fe9ff"></span><div><h4>CHARTIST <span>TECHNICIAN</span></h4><p>Draws the lines on the chart — where to buy, and where to run.</p></div></div>
+    <div class="seat"><span class="dot" style="color:#b57bff"></span><div><h4>ORACLE <span>QUANT</span></h4><p>Whispers where the price might go next. Probabilities — never promises.</p></div></div>
+  </div>
+
+  <div class="wing">
+    <div class="wingname">Execution — where money moves</div>
+    <div class="seat"><span class="dot" style="color:#ff4d61"></span><div><h4>SENTINEL <span>RISK OFFICER</span></h4><p>Sizes every position, sets every stop, and holds veto power. Its favourite word is <b>no</b>. Nothing trades without its sign-off.</p></div></div>
+    <div class="seat"><span class="dot" style="color:#ff6bd6"></span><div><h4>PILOT <span>EXECUTION</span></h4><p>Places the trade — but only once Sentinel signs off. No cowboy stuff.</p></div></div>
+    <div class="seat"><span class="dot" style="color:#aab6cc"></span><div><h4>LEDGER <span>THE BOOK</span></h4><p>Journals every call the desk makes — especially the bad ones — and watches the health of the whole system.</p></div></div>
+  </div>
+
+  <div class="sect">The idea — how it holds together</div>
+
+  <div class="step">
+    <h3><span class="n">1</span> Built in Claude Code</h3>
+    <p>The whole desk is built and driven with <b>Claude Code</b>. You describe an agent; it writes it. This is what turns "an AI that talks" into <b>a team that does the work</b>.</p>
+    <div class="fable">
+      <span class="tag">Highly recommended</span>
+      <p>Run it on <b>Claude's Fable 5 model.</b> An orchestrator that routes one spoken command to the right specialists — and knows when to stop and let the risk officer say no — lives or dies on reasoning quality. Fable 5 is the difference between a real desk and nine chatbots talking over each other. If you're serious, build on Fable 5. <a href="https://kloud9ptyltd.github.io/content/fable5-prompts.html" target="_blank" rel="noopener">Why Fable 5 for finance →</a></p>
+    </div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">2</span> One master, many specialists</h3>
+    <p>Each agent is its <b>own independent service</b> with a single job and a clean way to talk to the others. Nimbus is the only one that talks to <i>you</i> — it delegates down and synthesizes up. Adding a tenth agent later doesn't touch the other nine.</p>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">3</span> The voice — talk in, talk back</h3>
+    <p>Speech-to-text in the browser lets you just speak. For the replies, <b>ElevenLabs' API</b> gives Nimbus and every agent a <b>distinct voice</b> — so the roll call feels like a real team, not one robotic monotone.</p>
+    <div class="note">You'll need an ElevenLabs API key and an Anthropic API key (bring your own).</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">4</span> The one rule that makes it safe</h3>
+    <p>Money moves through exactly one gated path: a proposal only becomes a trade after <b>Sentinel</b> stamps it. Analysis can't execute; execution can't self-authorize. The risk officer is built into the architecture — not bolted on.</p>
+  </div>
+
+  <div class="warn">
+    <p><b>⚠️ What it is — and isn't:</b> Nimbus is a research and awareness co-pilot with a built-in risk officer, not a money printer. It surfaces structure and context; <b>it does not tell you what will happen next.</b> Educational, grounded, and <b>not financial advice</b> — always do your own research.</p>
+  </div>
+
+  <div class="locked">
+    <h3>⚡ What turns nine agents into <i>the desk</i></h3>
+    <p style="font-size:14px;color:#cfdcec;line-height:1.55;margin-top:9px">The roster above is the map. The parts that make it feel <b>alive on camera</b> are the Cloud9 build — and that's what I break down on the channel:</p>
+    <ul>
+      <li>the <b>orchestration</b> that routes one command to the right agents and merges their answers</li>
+      <li>the <b>hand-tracking</b> that lets you steer the orb with your bare hands</li>
+      <li>the <b>voice pipeline</b> that gives each agent its own personality and timing</li>
+      <li><b>zero-latency mode</b> so the desk answers the instant you finish speaking</li>
+      <li>wiring each agent to <b>real, verified market data</b> — never invented numbers</li>
+    </ul>
+    <p style="font-size:13.5px;color:var(--mut);margin-top:11px">I show the whole build — wake to roll call to live trade — on the channel. 👇</p>
+  </div>
+
+  <div class="cta">
+    <h2>Get the full Nimbus desk build.</h2>
+    <p>Follow @cloud9.markets and comment <b>“DESK”</b> — the step-by-step drops there first.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Educational build guide · uses the Anthropic and ElevenLabs APIs (bring your own keys) · built with Claude Code on Fable 5 · examples are illustrative, <b>not financial advice</b> · do your own research<br/>© Cloud9 Markets</footer>
+</body>
+</html>
