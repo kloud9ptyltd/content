@@ -27,6 +27,9 @@
   .sub{color:var(--muted);font-size:12.5px;line-height:1.5;margin-top:6px;max-width:780px}
   .sub b{color:var(--text);font-weight:600}
   .stamp{margin-left:auto;color:var(--faint);font-size:10.5px;text-align:right;line-height:1.5;white-space:nowrap}
+.subtoggle{cursor:pointer;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--muted);font-size:10.5px;letter-spacing:.03em;padding:4px 11px;border-radius:999px;white-space:nowrap;align-self:center;transition:.15s}
+.subtoggle:hover{color:#eaf2fb;border-color:rgba(63,233,255,.45)}
+body.subhide .sub{display:none}
   .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--panel);flex:0 0 auto}
   .tabs{display:flex;gap:2px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:3px}
   .tab{font-family:"Space Grotesk";font-size:12.5px;font-weight:600;color:var(--muted);padding:6px 13px;border-radius:6px;cursor:pointer;border:none;background:none;letter-spacing:-.01em}
@@ -136,7 +139,7 @@
   <header>
     <div class="titlewrap">
       <h1 class="disp">The AI Capital Stack<span class="x">×</span><span style="color:var(--compute)">OpenAI</span> &amp; <span style="color:var(--fam-power)">Anthropic</span> <span class="x">×</span><span style="color:#D6455D">China</span></h1>
-      <div class="stamp mono">PUBLIC RECONSTRUCTION · ~JUL 2026<br>not investment advice</div>
+      <button class="subtoggle" onclick="document.body.classList.toggle('subhide');this.textContent=document.body.classList.contains('subhide')?'\u25be Show intro':'\u25b4 Hide intro';window.dispatchEvent(new Event('resize'));">▴ Hide intro</button><div class="stamp mono">PUBLIC RECONSTRUCTION · ~JUL 2026<br>not investment advice</div>
     </div>
     <div class="sub">Both labs are <b>private</b> — there is no 10-K to trace. Every figure is a <b>publicly disclosed headline</b> (deal value, stake, round) or a reasoned estimate, each edge tagged <span class="mono" style="color:#34D399">confirmed</span> / <span class="mono" style="color:var(--equity)">estimated</span> / <span class="mono" style="color:var(--compute)">letter-of-intent</span>. Ranking is by <b>total economic exposure</b> — equity + revenue + supply-chain pull-through + financing risk — not direct revenue. <b style="color:#D6455D">Now mapped: the China bloc.</b> Alibaba's <b>Qwen</b>, Moonshot's <b>Kimi</b> and <b>DeepSeek</b> are no longer side projects — so the stack now traces their money too: who funds them (Alibaba, Tencent, China Mobile), whose silicon they run on (Huawei, Cambricon, SMIC), and the one bottleneck both blocs still share — <b>HBM memory</b>. China nodes are <span style="color:#D6455D">crimson</span>. And the twist that breaks the "two separate worlds" story: because the Chinese models are <b>open-weight</b>, they are served worldwide on <b>Nvidia</b> — <b>CoreWeave</b> is the #1 host for Kimi — so the blocs <b>meet at the same silicon, memory and cooling.</b></div>
   </header>
