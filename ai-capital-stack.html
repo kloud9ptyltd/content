@@ -138,7 +138,7 @@
       <h1 class="disp">The AI Capital Stack<span class="x">×</span><span style="color:var(--compute)">OpenAI</span> &amp; <span style="color:var(--fam-power)">Anthropic</span> <span class="x">×</span><span style="color:#D6455D">China</span></h1>
       <div class="stamp mono">PUBLIC RECONSTRUCTION · ~JUL 2026<br>not investment advice</div>
     </div>
-    <div class="sub">Both labs are <b>private</b> — there is no 10-K to trace. Every figure is a <b>publicly disclosed headline</b> (deal value, stake, round) or a reasoned estimate, each edge tagged <span class="mono" style="color:#34D399">confirmed</span> / <span class="mono" style="color:var(--equity)">estimated</span> / <span class="mono" style="color:var(--compute)">letter-of-intent</span>. Ranking is by <b>total economic exposure</b> — equity + revenue + supply-chain pull-through + financing risk — not direct revenue. <b style="color:#D6455D">Now mapped: the China bloc.</b> Alibaba's <b>Qwen</b>, Moonshot's <b>Kimi</b> and <b>DeepSeek</b> are no longer side projects — so the stack now traces their money too: who funds them (Alibaba, Tencent, China Mobile), whose silicon they run on (Huawei, Cambricon, SMIC), and the one bottleneck both blocs still share — <b>HBM memory</b>. China nodes are <span style="color:#D6455D">crimson</span>.</div>
+    <div class="sub">Both labs are <b>private</b> — there is no 10-K to trace. Every figure is a <b>publicly disclosed headline</b> (deal value, stake, round) or a reasoned estimate, each edge tagged <span class="mono" style="color:#34D399">confirmed</span> / <span class="mono" style="color:var(--equity)">estimated</span> / <span class="mono" style="color:var(--compute)">letter-of-intent</span>. Ranking is by <b>total economic exposure</b> — equity + revenue + supply-chain pull-through + financing risk — not direct revenue. <b style="color:#D6455D">Now mapped: the China bloc.</b> Alibaba's <b>Qwen</b>, Moonshot's <b>Kimi</b> and <b>DeepSeek</b> are no longer side projects — so the stack now traces their money too: who funds them (Alibaba, Tencent, China Mobile), whose silicon they run on (Huawei, Cambricon, SMIC), and the one bottleneck both blocs still share — <b>HBM memory</b>. China nodes are <span style="color:#D6455D">crimson</span>. And the twist that breaks the "two separate worlds" story: because the Chinese models are <b>open-weight</b>, they are served worldwide on <b>Nvidia</b> — <b>CoreWeave</b> is the #1 host for Kimi — so the blocs <b>meet at the same silicon, memory and cooling.</b></div>
   </header>
   <div class="bar">
     <div class="tabs">
@@ -249,7 +249,10 @@ const NODES=[
   {id:'huawei',label:'Huawei',name:'Huawei (Ascend / HiSilicon)',fam:'china',layer:'accel',kind:'private',mcap:'private',tier:'S',ax:.82,ay:.72},
   {id:'cambricon',label:'Cambricon',name:'Cambricon (688256.SS)',fam:'china',layer:'accel',kind:'public',mcap:'$100B+',tier:'A',ax:.90,ay:.74},
   {id:'smic',label:'SMIC',name:'SMIC (0981.HK)',fam:'china',layer:'foundry',kind:'public',mcap:'$60B+',tier:'A',ax:.95,ay:.82},
-  {id:'cxmt',label:'CXMT',name:'CXMT (domestic HBM)',fam:'china',layer:'memory',kind:'private',mcap:'private',tier:'B',ax:.90,ay:.90}
+  {id:'cxmt',label:'CXMT',name:'CXMT (domestic HBM)',fam:'china',layer:'memory',kind:'private',mcap:'private',tier:'B',ax:.90,ay:.90},
+  {id:'vrt',label:'VRT',name:'Vertiv (power + cooling)',fam:'power',layer:'power',kind:'public',mcap:'$100B+',tier:'A',ax:.62,ay:.90},
+  {id:'fireworks',label:'Fireworks',name:'Fireworks AI (Nvidia-backed)',fam:'compute',layer:'neocloud',kind:'private',mcap:'~$17.5B val',tier:'B',ax:.68,ay:.18},
+  {id:'together',label:'Together',name:'Together AI (private)',fam:'compute',layer:'neocloud',kind:'private',mcap:'private',tier:'C',ax:.74,ay:.14}
 ];
 
 const LINKS=[
@@ -357,7 +360,25 @@ const LINKS=[
   {source:'cambricon',target:'smic',k:'supply',v:null,lbl:'Domestic foundry',c:'est'},
   {source:'huawei',target:'skhynix',k:'supply',v:null,lbl:'HBM — the shared bottleneck',c:'ok'},
   {source:'cambricon',target:'skhynix',k:'supply',v:null,lbl:'HBM',c:'ok'},
-  {source:'huawei',target:'cxmt',k:'supply',v:null,lbl:'Domestic HBM (ramping)',c:'est'}
+  {source:'huawei',target:'cxmt',k:'supply',v:null,lbl:'Domestic HBM (ramping)',c:'est'},
+  {source:'moonshot',target:'crwv',k:'compute',v:null,lbl:'#1 inference host for Kimi (K2)',c:'ok'},
+  {source:'moonshot',target:'nvda',k:'compute',v:null,lbl:'Open weights served on Nvidia H200/GB300',c:'ok'},
+  {source:'deepseek',target:'nvda',k:'compute',v:null,lbl:'Open weights widely served on Nvidia',c:'est'},
+  {source:'meta',target:'anet',k:'supply',v:null,lbl:'AI back-end Ethernet fabric',c:'ok'},
+  {source:'msft',target:'anet',k:'supply',v:null,lbl:'AI Ethernet switching',c:'est'},
+  {source:'orcl',target:'anet',k:'supply',v:null,lbl:'AI cluster networking',c:'est'},
+  {source:'crwv',target:'vrt',k:'supply',v:null,lbl:'Liquid cooling + power for GPU racks',c:'est'},
+  {source:'meta',target:'vrt',k:'supply',v:null,lbl:'Data-center cooling + power',c:'est'},
+  {source:'msft',target:'vrt',k:'supply',v:null,lbl:'Thermal management',c:'est'},
+  {source:'bytedance',target:'nvda',k:'compute',v:14,lbl:'~$14B Nvidia chips planned 2026 (+ cloud rentals)',c:'est'},
+  {source:'bytedance',target:'huawei',k:'supply',v:5.6,lbl:'$5.6B Ascend 950PR order',c:'ok'},
+  {source:'baba',target:'nvda',k:'compute',v:null,lbl:'Nvidia GPU buyer when licensed (H20/H200)',c:'est'},
+  {source:'baba',target:'fireworks',k:'compute',v:null,lbl:'Qwen served on US inference',c:'ok'},
+  {source:'baba',target:'together',k:'compute',v:null,lbl:'Qwen on Together AI',c:'est'},
+  {source:'deepseek',target:'fireworks',k:'compute',v:null,lbl:'Also served on US inference clouds',c:'est'},
+  {source:'nvda',target:'fireworks',k:'equity',v:null,lbl:'Nvidia-backed (~$17.5B val)',c:'ok'},
+  {source:'fireworks',target:'nvda',k:'supply',v:null,lbl:'Nvidia GPU fleet',c:'ok'},
+  {source:'together',target:'nvda',k:'supply',v:null,lbl:'Nvidia GPU fleet',c:'ok'}
 ];
 const RANK=[
   {tier:'S',sub:'Existential / reflexive exposure'},
@@ -392,6 +413,7 @@ const RANK=[
   {rk:27,id:'eqix',ch:['leasing'],magn:'8 of top-10 labs colocate',shr:'AI incremental to a very large base',why:'Owns the interconnection meeting-room the whole ecosystem plugs into.',cf:'med'},
   {rk:28,id:'dlr',ch:['leasing'],magn:'Record 200MW single lease',shr:'AI incremental; hyperscale wholesale',why:'Scale landlord to the clouds that host the labs.',cf:'med'},
   {rk:29,id:'asml',ch:['supply'],magn:'EUV monopoly upstream of TSMC',shr:'Two steps removed; indispensable',why:'Furthest upstream — real exposure, maximally diffused across all chips.',cf:'med'},
+  {rk:30,id:'vrt',ch:['supply'],magn:'~$15B backlog · liquid-cooling leader',shr:'AI is the entire growth story; book-to-bill well above 1',why:'Every GPU rack needs power distribution and liquid cooling — the pick-and-shovel on AI\'s heat problem.',cf:'med'},
   {tier:'CN',sub:'The China bloc — no longer a side project (ranked within China)'},
   {rk:1,id:'baba',ch:['equity','compute'],magn:'$55B+ AI capex FY26–28 · owns Qwen · backs Kimi',shr:'Cloud re-accelerating (~26–38% YoY); AI revenue triple-digit for 11 straight quarters',why:'The closest thing to Nvidia-plus-Microsoft in one ticker: a frontier model (Qwen), the cloud that serves it, the capex to build it, and the largest outside stake in Moonshot (Kimi).',cf:'high'},
   {rk:2,id:'tcehy',ch:['equity','compute'],magn:'Hunyuan model · early Moonshot backer · in talks on DeepSeek',shr:'AI feeds ads, games and WeChat; cloud is the growth arm',why:'The other Chinese hyperscaler-plus-lab: builds its own model and quietly backs the independents.',cf:'high'},
@@ -399,7 +421,8 @@ const RANK=[
   {rk:4,id:'cambricon',ch:['supply'],magn:'~500K accelerators targeted in 2026',shr:'Near-pure-play China AI silicon',why:'The listed way to own China\'s domestic-accelerator ramp — maximal beta, gated by HBM and yields.',cf:'med'},
   {rk:5,id:'bidu',ch:['compute'],magn:'Ernie model + Kunlun in-house chips',shr:'AI cloud + search; smaller, earlier in the re-rate',why:'The third model-plus-chip stack — lower profile, more leverage if China AI keeps compounding.',cf:'med'},
   {rk:6,id:'huawei',ch:['supply','compute'],magn:'~600K Ascend 910C in 2026 (≈2× 2025)',shr:'~half of China\'s domestic AI-chip market (private — not investable)',why:'The engine of China\'s compute independence and the demand pull under SMIC and CXMT — but unlisted, so you own it through its suppliers.',cf:'high'},
-  {rk:7,id:'cxmt',ch:['supply'],magn:'Domestic HBM3 ramp (private)',shr:'The missing piece — if it works, China\'s HBM import dependence eases',why:'The long-shot that would unlock China\'s output ceiling; until then, SK Hynix / Samsung / Micron still gate the whole bloc.',cf:'low'}
+  {rk:7,id:'cxmt',ch:['supply'],magn:'Domestic HBM3 ramp (private)',shr:'The missing piece — if it works, China\'s HBM import dependence eases',why:'The long-shot that would unlock China\'s output ceiling; until then, SK Hynix / Samsung / Micron still gate the whole bloc.',cf:'low'},
+  {rk:8,id:'bytedance',ch:['compute','supply'],magn:'~$14B Nvidia chips + $5.6B Huawei Ascend (2026)',shr:'Doubao is China\'s most-used chatbot; Volcengine is its cloud',why:'The single biggest AI-compute buyer in China — and the clearest proof the blocs overlap: it spends billions on BOTH Nvidia and Huawei. Private — you own it through its suppliers.',cf:'high'}
 ];
 
 const FLOWS={
