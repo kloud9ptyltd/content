@@ -54,6 +54,7 @@ body.subhide .sub{display:none}
   .node text{font-family:"JetBrains Mono";font-size:9.5px;font-weight:600;fill:var(--text);pointer-events:none;paint-order:stroke;stroke:#0A0D13;stroke-width:2.6px;stroke-linejoin:round}
   .nlabel-core{font-family:"Space Grotesk" !important;font-size:12.5px !important;font-weight:700 !important}
   .faded{opacity:.07 !important}
+.faded2{opacity:.4 !important}
   .faded text{opacity:.18 !important}
   @keyframes flow{to{stroke-dashoffset:-22}}
   .loopflow{stroke-dasharray:5 6;animation:flow .7s linear infinite}
@@ -511,12 +512,20 @@ function dged(e,d){d.fx=e.x;d.fy=e.y;}
 function dend(e,d){if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null;}
 
 function focus(id){
-  const keep=new Set([id,...adj[id]]);
-  nodeG.classed('faded',n=>!keep.has(n.id));
-  linkG.classed('faded',l=>!(l.source.id===id||l.target.id===id)).attr('stroke-opacity',l=>(l.source.id===id||l.target.id===id)?.95:.04);
+  const n1=adj[id];                                   // 1-hop neighbours
+  const n2=new Set();                                 // 2-hop (the next link in the chain)
+  n1.forEach(a=>adj[a].forEach(b=>{if(b!==id&&!n1.has(b))n2.add(b);}));
+  nodeG.classed('faded', n=> n.id!==id && !n1.has(n.id) && !n2.has(n.id))
+       .classed('faded2', n=> n2.has(n.id));
+  const tier=l=>{const a=l.source.id,b=l.target.id;
+    if(a===id||b===id) return 1;                                        // direct
+    if((n1.has(a)&&n1.has(b))||(n1.has(a)&&n2.has(b))||(n2.has(a)&&n1.has(b))) return 2; // chain step
+    return 0;};
+  linkG.classed('faded', l=>tier(l)===0)
+       .attr('stroke-opacity', l=>{const t=tier(l);return t===1?.95:t===2?.34:.03;});
 }
 function clearFocus(){
-  nodeG.classed('faded',false);
+  nodeG.classed('faded',false).classed('faded2',false);
   linkG.classed('faded',false).attr('stroke-opacity',l=>loopMode?(l.loop?.95:.08):(l.c==='ok'?.5:.34));
   applyFilter();
 }
