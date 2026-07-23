@@ -185,7 +185,7 @@ body.subhide .sub{display:none}
 </div>
 <script>
 /* ============================== DATA ============================== */
-const FAM={lab:'#F4B740',capital:'#4C82BE',compute:'#23A6A6',silicon:'#C0703E',power:'#4FA45A',other:'#8893A6',person:'#E0A062',china:'#D6455D'};
+const FAM={lab:'#F4B740',capital:'#4C82BE',compute:'#23A6A6',silicon:'#C0703E',power:'#4FA45A',other:'#8893A6',person:'#E0A062',china:'#D6455D',finance:'#9A6BD0'};
 
 const NODES=[
   {id:'openai',label:'OpenAI',name:'OpenAI Group PBC',fam:'lab',layer:'lab',kind:'private',mcap:'~$850B val',tier:'core',ax:.42,ay:.5},
@@ -256,10 +256,55 @@ const NODES=[
   {id:'cxmt',label:'CXMT',name:'CXMT (domestic HBM)',fam:'china',layer:'memory',kind:'private',mcap:'private',tier:'B',ax:.90,ay:.90},
   {id:'vrt',label:'VRT',name:'Vertiv (power + cooling)',fam:'power',layer:'power',kind:'public',mcap:'$100B+',tier:'A',ax:.62,ay:.90},
   {id:'fireworks',label:'Fireworks',name:'Fireworks AI (Nvidia-backed)',fam:'compute',layer:'neocloud',kind:'private',mcap:'~$17.5B val',tier:'B',ax:.68,ay:.18},
-  {id:'together',label:'Together',name:'Together AI (private)',fam:'compute',layer:'neocloud',kind:'private',mcap:'private',tier:'C',ax:.74,ay:.14}
+  {id:'together',label:'Together',name:'Together AI (private)',fam:'compute',layer:'neocloud',kind:'private',mcap:'private',tier:'C',ax:.74,ay:.14},
+  {id:'gs',label:'GS',name:'Goldman Sachs',fam:'finance',layer:'finance',kind:'public',mcap:'$200B+',tier:'B',ax:.03,ay:.04},
+  {id:'ms',label:'MS',name:'Morgan Stanley',fam:'finance',layer:'finance',kind:'public',mcap:'$200B+',tier:'B',ax:.10,ay:.04},
+  {id:'jpm',label:'JPM',name:'JPMorgan Chase',fam:'finance',layer:'finance',kind:'public',mcap:'$700B+',tier:'A',ax:.17,ay:.04},
+  {id:'bx',label:'BX',name:'Blackstone',fam:'finance',layer:'finance',kind:'public',mcap:'$200B+',tier:'A',ax:.24,ay:.04},
+  {id:'apo',label:'APO',name:'Apollo Global',fam:'finance',layer:'finance',kind:'public',mcap:'$100B+',tier:'B',ax:.06,ay:.10},
+  {id:'owl',label:'OWL',name:'Blue Owl Capital',fam:'finance',layer:'finance',kind:'public',mcap:'$30B+',tier:'B',ax:.13,ay:.10},
+  {id:'bam',label:'BAM',name:'Brookfield',fam:'finance',layer:'finance',kind:'public',mcap:'$100B+',tier:'B',ax:.20,ay:.10},
+  {id:'etn',label:'ETN',name:'Eaton',fam:'power',layer:'power',kind:'public',mcap:'$100B+',tier:'A',ax:.56,ay:.95},
+  {id:'nee',label:'NEE',name:'NextEra Energy',fam:'power',layer:'power',kind:'public',mcap:'$100B+',tier:'B',ax:.14,ay:.97},
+  {id:'be',label:'BE',name:'Bloom Energy',fam:'power',layer:'power',kind:'public',mcap:'$20B+',tier:'B',ax:.08,ay:.95},
+  {id:'amat',label:'AMAT',name:'Applied Materials',fam:'silicon',layer:'foundry',kind:'public',mcap:'$100B+',tier:'B',ax:.995,ay:.20},
+  {id:'lrcx',label:'LRCX',name:'Lam Research',fam:'silicon',layer:'foundry',kind:'public',mcap:'$100B+',tier:'B',ax:.995,ay:.27},
+  {id:'klac',label:'KLAC',name:'KLA',fam:'silicon',layer:'foundry',kind:'public',mcap:'$100B+',tier:'B',ax:.995,ay:.34},
+  {id:'cdns',label:'CDNS',name:'Cadence (EDA · FPI 83)',fam:'silicon',layer:'foundry',kind:'public',mcap:'$100B+',tier:'B',ax:.87,ay:.68},
+  {id:'lasertec',label:'6920.T',name:'Lasertec (EUV mask inspection · FPI 74)',fam:'silicon',layer:'foundry',kind:'public',mcap:'$10B+',tier:'B',ax:.93,ay:.57},
+  {id:'mpwr',label:'MPWR',name:'Monolithic Power (AI power ICs · FPI 72)',fam:'silicon',layer:'accel',kind:'public',mcap:'$40B+',tier:'A',ax:.825,ay:.56},
+  {id:'sitm',label:'SITM',name:'SiTime (AI-DC timing · FPI 76)',fam:'silicon',layer:'accel',kind:'public',mcap:'$10B+',tier:'B',ax:.885,ay:.56},
+  {id:'rmbs',label:'RMBS',name:'Rambus (memory-interface IP · FPI 72)',fam:'silicon',layer:'memory',kind:'public',mcap:'$10B+',tier:'B',ax:.87,ay:.12},
+  {id:'glw',label:'GLW',name:'Corning (fiber)',fam:'silicon',layer:'optical',kind:'public',mcap:'$40B+',tier:'B',ax:.74,ay:.88},
+  {id:'cien',label:'CIEN',name:'Ciena (DCI optics)',fam:'silicon',layer:'optical',kind:'public',mcap:'$10B+',tier:'B',ax:.70,ay:.84},
+  {id:'csco',label:'CSCO',name:'Cisco (AI networking)',fam:'silicon',layer:'optical',kind:'public',mcap:'$200B+',tier:'B',ax:.72,ay:.78},
+  {id:'crusoe',label:'Crusoe',name:'Crusoe (private)',fam:'compute',layer:'neocloud',kind:'private',mcap:'~$10B val',tier:'B',ax:.56,ay:.14}
 ];
 
 const LINKS=[
+  {source:'jpm',target:'crwv',k:'equity',v:8,lbl:'$7.5B+ GPU-backed debt facilities co-led',c:'ok'},
+  {source:'bx',target:'crwv',k:'equity',v:8,lbl:'$7.5B GPU-collateralised loan co-led (w/ Magnetar)',c:'ok'},
+  {source:'gs',target:'crwv',k:'equity',v:null,lbl:'IPO bookrunner + debt syndicate',c:'ok'},
+  {source:'ms',target:'xai',k:'equity',v:5,lbl:'$5B debt raise led (2025)',c:'ok'},
+  {source:'jpm',target:'openai',k:'equity',v:4,lbl:'$4B revolver syndicate',c:'est'},
+  {source:'apo',target:'intc',k:'equity',v:11,lbl:'$11B Fab 34 Ireland JV (49%)',c:'ok'},
+  {source:'owl',target:'meta',k:'equity',v:27,lbl:'~$27B Hyperion DC JV financing',c:'ok'},
+  {source:'bam',target:'msft',k:'power',v:null,lbl:'10.5GW renewables framework (2024)',c:'ok'},
+  {source:'nee',target:'msft',k:'power',v:null,lbl:'Renewable PPAs for DCs',c:'est'},
+  {source:'be',target:'orcl',k:'power',v:null,lbl:'Fuel cells for OCI data centers',c:'ok'},
+  {source:'etn',target:'msft',k:'supply',v:null,lbl:'DC electrical infrastructure',c:'est'},
+  {source:'amat',target:'tsm',k:'supply',v:null,lbl:'Wafer-fab equipment',c:'ok'},
+  {source:'lrcx',target:'tsm',k:'supply',v:null,lbl:'Etch & deposition tools',c:'ok'},
+  {source:'klac',target:'tsm',k:'supply',v:null,lbl:'Process control / metrology',c:'ok'},
+  {source:'cdns',target:'nvda',k:'supply',v:null,lbl:'EDA — the GPUs are designed in it',c:'ok'},
+  {source:'lasertec',target:'asml',k:'supply',v:null,lbl:'Actinic EUV mask inspection (~monopoly)',c:'ok'},
+  {source:'mpwr',target:'nvda',k:'supply',v:null,lbl:'Power ICs / VRMs on GPU boards',c:'ok'},
+  {source:'sitm',target:'nvda',k:'supply',v:null,lbl:'Precision timing for AI racks',c:'est'},
+  {source:'rmbs',target:'mu',k:'supply',v:null,lbl:'Memory-interface IP royalties',c:'est'},
+  {source:'glw',target:'msft',k:'supply',v:null,lbl:'AI fiber supply agreement (2024)',c:'ok'},
+  {source:'cien',target:'eqix',k:'supply',v:null,lbl:'DCI optical transport',c:'est'},
+  {source:'csco',target:'msft',k:'supply',v:null,lbl:'AI networking orders ($1B+ run-rate)',c:'ok'},
+  {source:'crusoe',target:'openai',k:'compute',v:null,lbl:'Stargate Abilene campus build (w/ Oracle)',c:'ok'},
   {source:'msft',target:'openai',k:'equity',v:135,lbl:'27% · ~$135–228B',c:'ok',loop:true},
   {source:'nvda',target:'openai',k:'equity',v:30,lbl:'$30B stake (was up-to-$100B LOI)',c:'ok',loop:true},
   {source:'softbank',target:'openai',k:'equity',v:40,lbl:'Lead investor · Stargate JV',c:'ok'},
@@ -452,7 +497,7 @@ function fmt(v){return Number.isInteger(v)?(''+v):v.toFixed(1);}
 function kindName(k){return {equity:'Equity stake',compute:'Compute spend',supply:'Hardware supply',power:'Power purchase',leasing:'Data-center lease'}[k]||k;}
 function kindShort(k){return {equity:'Equity',compute:'Compute',supply:'Supply',power:'Power',leasing:'Lease'}[k]||k;}
 function confName(c){return {ok:'confirmed',est:'estimated',loi:'letter of intent'}[c]||c;}
-function layerName(l){return {lab:'AI lab',cloud:'Hyperscale cloud',fund:'Capital / fund',neocloud:'Neocloud / GPU cloud',reit:'Data-center REIT',accel:'AI accelerator',memory:'HBM memory',foundry:'Foundry / packaging',optical:'Optical / networking',power:'Power / energy',misc:'Nvidia portfolio'}[l]||l;}
+function layerName(l){return {lab:'AI lab',cloud:'Hyperscale cloud',fund:'Capital / fund',neocloud:'Neocloud / GPU cloud',reit:'Data-center REIT',accel:'AI accelerator',memory:'HBM memory',foundry:'Foundry / packaging',optical:'Optical / networking',power:'Power / energy',finance:'Wall Street / private credit',misc:'Nvidia portfolio'}[l]||l;}
 function kindLabel(k){return {public:'Public',private:'Private',fund:'Fund',person:'Individual'}[k]||k;}
 function famColor(n){return FAM[n.fam]||FAM.other;}
 
