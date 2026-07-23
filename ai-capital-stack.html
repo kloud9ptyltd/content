@@ -653,7 +653,7 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{sho
 
 const zoom=d3.zoom().scaleExtent([.35,3]).on('zoom',e=>root.attr('transform',e.transform));
 svg.call(zoom).on('dblclick.zoom',null);
-function init(){const r=svg.node().getBoundingClientRect();W=r.width||window.innerWidth;H=r.height||600;sim.alpha(.9).restart();}
+function init(){const r=svg.node().getBoundingClientRect();W=r.width||window.innerWidth;H=r.height||600;sim.force('x',d3.forceX(d=>d.ax*W).strength(.10)).force('y',d3.forceY(d=>d.ay*H).strength(.12));sim.alpha(.9).restart();}
 window.addEventListener('resize',()=>{if(document.getElementById('v-graph').classList.contains('on'))init();});
 
 draw();renderRank();renderFlows();init();
