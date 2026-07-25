@@ -52,12 +52,22 @@
   <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Claude × TradingView</span></header>
 
   <h1>Let AI <em>drive your charts</em> — Claude Code × TradingView Desktop.</h1>
-  <p class="lede">This free, open-source bridge lets Claude <b>see and control your actual TradingView Desktop app</b> — switch symbols, read candles and indicators, scan your whole watchlist, write &amp; compile Pine Script, draw trade plans, manage alerts. <b>No API key. Nothing leaves your machine.</b></p>
+  <p class="lede">This free, open-source bridge lets Claude <b>see and control your actual TradingView Desktop app</b> — switch symbols, read candles and indicators, scan your whole watchlist, write &amp; compile Pine Script, draw trade plans, <b>backtest the strategy, audit it for weak rules and overfitting</b>, and manage alerts. <b>No API key. Nothing leaves your machine.</b></p>
 
   <div class="agents">
     <span class="chip">📈 Watchlist scans</span><span class="chip">🧠 Chart analysis</span><span class="chip">📜 Pine Script</span>
-    <span class="chip">🎯 Trade plans</span><span class="chip">🔔 Alerts</span><span class="chip">⏪ Replay mode</span>
+    <span class="chip">🎯 Trade plans</span><span class="chip">🧪 Backtest</span><span class="chip">🛡️ Audit</span><span class="chip">🔔 Alerts</span>
   </div>
+
+  <div class="sect">The workflow — end to end</div>
+  <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:700;letter-spacing:.5px">
+    <span style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--blu)">CHART</span><span style="color:var(--faint)">→</span>
+    <span style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--blu)">ANALYZE</span><span style="color:var(--faint)">→</span>
+    <span style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--blu)">CODE</span><span style="color:var(--faint)">→</span>
+    <span style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--blu)">BACKTEST</span><span style="color:var(--faint)">→</span>
+    <span style="background:var(--card);border:1px solid rgba(22,224,138,.4);border-radius:8px;padding:7px 11px;color:var(--g)">AUDIT</span>
+  </div>
+  <p class="note" style="padding-left:0;margin-top:10px"><b>No backtest, no trust. No blind execution.</b> The steps below build to a strategy you can actually stress-test — then you make the call.</p>
 
   <div class="sect">Setup — 5 minutes</div>
 
@@ -118,6 +128,20 @@ cd ~/tradingview-mcp &amp;&amp; npm install</div>
     <p>Same flow on crypto: Claude read the structure (a liquidity sweep off the lows), built the setup with confirmation trigger and invalidation, and put it on the chart — including three ready-to-enable alert conditions.</p>
     <img class="shot" src="tv-guide-btc-plan.jpg" alt="AI Bitcoin trade setup drawn on the BTCUSD daily chart" loading="lazy"/>
     <div class="cap">BTCUSD daily — entry, stop under the sweep low, target in front of supply, breakout trigger line.</div>
+  </div>
+
+  <div class="demo">
+    <h3>🧪 “Turn it into a strategy and backtest it”</h3>
+    <p>An indicator draws levels; a <b>strategy</b> can be tested. Ask Claude to convert the plan into a Pine <code>strategy()</code> — entries, exits, stop and target as real orders — then open the Strategy Tester. It reads the results back: net profit, win rate, profit factor, max drawdown and the trade list.</p>
+    <div class="code"><button class="cp">Copy</button>Convert this trade plan into a Pine v6 strategy with entry, stop and target orders. Compile it, open the Strategy Tester, and tell me the net profit, win rate, profit factor, max drawdown and number of trades.</div>
+    <div class="note"><b>Why it matters:</b> most AI chart posts stop at a pretty picture. A backtest is the difference between a setup that <i>looks</i> good and one that survived history. Fewer than ~30 trades or a suspiciously perfect equity curve is a red flag, not a green light.</div>
+  </div>
+
+  <div class="demo">
+    <h3>🛡️ “Audit the strategy — is it real or overfit?”</h3>
+    <p>Now make Claude interrogate its own work. It reviews the strategy code and the backtest stats for the ways strategies lie: curve-fit parameters, too few trades, look-ahead bias, no out-of-sample check, and rules that only worked in one regime.</p>
+    <div class="code"><button class="cp">Copy</button>Audit this strategy for overfitting and bias. Check: how many inputs were tuned, whether any rule uses future data, trade count and sample size, performance in different market conditions, and what would break it. Be skeptical — argue the bear case against your own strategy.</div>
+    <div class="note"><b>This is the whole edge.</b> An AI that only ever agrees with itself is dangerous. Forcing it to attack its own idea is how you avoid trading a hope with extra math. The final call — and every real order — stays with you.</div>
   </div>
 
   <div class="step">
