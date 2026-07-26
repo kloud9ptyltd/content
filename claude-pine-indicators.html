@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Beat TradingView's indicator limit with Pine Script + Claude Code · Cloud9</title>
+<meta property="og:title" content="Pack 8 indicators into 1 slot — Pine Script + Claude Code"/>
+<meta property="og:description" content="TradingView free plan caps you at 2 indicators. Have Claude Code write one Pine script that stacks EMAs, Bollinger, VWAP, RSI, Stochastic and MFI into a single slot — no paid plan."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/pine-allin1-pack.jpg"/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff;--amb:#ffb84d}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(106,168,255,.10),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
+  h1 em{font-style:normal;color:var(--g)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
+  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
+  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .step{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--g);color:#04130c;font-weight:900;font-size:14px;margin-right:10px}
+  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
+  .step p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0;padding-left:36px}
+  .code{position:relative;margin:12px 0 0 36px;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:13px 44px 13px 14px;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;line-height:1.55;color:#d8e6ff;white-space:pre-wrap;word-break:break-word}
+  .cp{position:absolute;top:8px;right:8px;font-size:11px;font-weight:700;color:var(--mut);background:var(--card2);border:1px solid var(--line2);border-radius:7px;padding:5px 9px;cursor:pointer}
+  .cp:active{color:var(--g)}
+  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px}
+  .note b{color:var(--mut)}
+  .shot{display:block;width:100%;border-radius:14px;border:1px solid var(--line);margin-top:14px}
+  .cap{font-size:12.5px;color:var(--faint);margin-top:8px;text-align:center}
+  .demo{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .demo h3{font-size:17px;font-weight:800}
+  .demo p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0}
+  .demo .code{margin-left:0}
+  .demo .note{padding-left:0}
+  .prereq{margin-top:22px;background:linear-gradient(180deg,rgba(230,200,120,.10),var(--card));border:1px solid rgba(230,200,120,.30);border-radius:18px;padding:16px 18px}
+  .prereq .k{font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold)}
+  .prereq h3{font-size:16px;font-weight:800;margin:6px 0 4px}
+  .prereq p{font-size:13.5px;line-height:1.5;color:#cfd8e4}
+  .prereq a{font-weight:800}
+  .flag{margin-top:22px;background:linear-gradient(180deg,rgba(255,184,77,.09),var(--card));border:1px solid rgba(255,184,77,.30);border-radius:18px;padding:16px 18px}
+  .flag .k{font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--amb)}
+  .flag h3{font-size:16px;font-weight:800;margin:6px 0 6px}
+  .flag p{font-size:13.5px;line-height:1.55;color:#cfd8e4}
+  .flag p+p{margin-top:8px}
+  .flag b{color:#fff}
+  .pane{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:700;letter-spacing:.4px}
+  .pane .tag{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--blu)}
+  .pane .tag.osc{color:var(--g);border-color:rgba(22,224,138,.35)}
+  .run{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 16px 18px;overflow:hidden}
+  .msg{display:flex;gap:10px;align-items:flex-start}
+  .msg+.msg{margin-top:14px;padding-top:14px;border-top:1px solid var(--line2)}
+  .who{flex:0 0 auto;font-size:10.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:5px 9px;border-radius:7px;margin-top:1px}
+  .who.u{background:rgba(106,168,255,.14);color:var(--blu);border:1px solid rgba(106,168,255,.3)}
+  .who.a{background:rgba(22,224,138,.12);color:var(--g);border:1px solid rgba(22,224,138,.3)}
+  .bubble{flex:1 1 auto;min-width:0;font-size:14px;line-height:1.5;color:#cfd8e4}
+  .bubble b{color:#fff}
+  .bubble .code{margin:10px 0 0}
+  .ok{display:inline-block;margin-top:10px;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:700;color:var(--g);background:rgba(22,224,138,.08);border:1px solid rgba(22,224,138,.25);border-radius:8px;padding:6px 10px}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.35);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Claude × Pine Script</span></header>
+
+  <h1>Only 2 indicators? <em>Pack 8 into one.</em></h1>
+  <p class="lede">TradingView's free/Basic plan caps you at <b>2 indicators per chart</b>. But <b>1 Pine script = 1 slot</b> — no matter how much it plots. So have <b>Claude Code write a single script</b> that stacks your EMAs, Bollinger Bands, VWAP, RSI, Stochastic and MFI into <b>one indicator</b>. Same chart, same free plan, none of the limit.</p>
+
+  <div class="agents">
+    <span class="chip">📉 EMA 20/50/200</span><span class="chip">🎚️ Bollinger</span><span class="chip">📊 VWAP</span>
+    <span class="chip">🌀 RSI</span><span class="chip">⚡ Stochastic</span><span class="chip">💧 MFI</span>
+    <span class="chip">= 1 slot</span>
+  </div>
+
+  <div class="sect">Why it works</div>
+  <p class="note" style="padding-left:0;margin-top:10px">TradingView counts <b>scripts</b>, not <b>plots</b>. A single <code>indicator()</code> can draw a dozen lines and still costs you exactly one of your two slots. Overlay studies (moving averages, bands, VWAP) sit <i>on</i> the price. Oscillators (RSI, Stoch, MFI) live in a <i>separate</i> 0–100 pane. The trick that lets them share one script is Pine v6's <code>force_overlay=true</code>.</p>
+
+  <div class="pane">
+    <span class="tag">EMA·BB·VWAP → on price</span><span style="color:var(--faint)">＋</span>
+    <span class="tag osc">RSI·Stoch·MFI → 0–100 pane</span><span style="color:var(--faint)">＝</span>
+    <span class="tag" style="color:var(--tx)">1 study</span>
+  </div>
+
+  <div class="sect">Do it in one prompt</div>
+
+  <div class="demo">
+    <h3>🧩 “Combine all my indicators into one Pine script”</h3>
+    <p>With the bridge connected (see prerequisite below), just ask. Claude writes the Pine v6, compiles it in the editor, and adds it to the chart — both panes appear from the one script.</p>
+    <div class="code"><button class="cp">Copy</button>Write ONE Pine v6 indicator that packs EMA 20/50/200, Bollinger Bands and VWAP onto the price chart using force_overlay, plus RSI, Stochastic and MFI in a 0–100 sub-pane. Compile it and add it to my BTC chart.</div>
+    <img class="shot" src="pine-allin1-pack.jpg" alt="One Pine script drawing EMAs, Bollinger, VWAP on the price chart plus RSI, Stochastic and MFI in a sub-pane on BTCUSDT" loading="lazy"/>
+    <div class="cap">One study — “All-in-1 Pack”: EMAs + Bollinger + VWAP on price, RSI/Stoch/MFI in their own pane. 8 indicators, 1 slot.</div>
+  </div>
+
+  <div class="sect">The script it writes</div>
+  <div class="code" style="margin-left:0"><button class="cp">Copy</button>//@version=6
+indicator("All-in-1 Pack", overlay=false)
+
+// TREND / VOLATILITY — forced onto the price chart
+plot(ta.ema(close, 20),  "EMA 20",  color=color.new(color.aqua, 0),   force_overlay=true)
+plot(ta.ema(close, 50),  "EMA 50",  color=color.new(color.orange, 0), force_overlay=true)
+plot(ta.ema(close, 200), "EMA 200", color=color.new(color.red, 0),    force_overlay=true)
+basis = ta.sma(close, 20)
+dev   = 2 * ta.stdev(close, 20)
+u = plot(basis + dev, "BB Upper", color=color.new(color.gray, 0), force_overlay=true)
+l = plot(basis - dev, "BB Lower", color=color.new(color.gray, 0), force_overlay=true)
+fill(u, l, color=color.new(color.blue, 92), title="BB Range")
+plot(ta.vwap(hlc3), "VWAP", color=color.new(color.yellow, 0), force_overlay=true)
+
+// MOMENTUM — own 0-100 sub-pane
+plot(ta.rsi(close, 14), "RSI", color=color.aqua)
+k = ta.stoch(close, high, low, 14)
+plot(k,             "Stoch %K", color=color.orange)
+plot(ta.sma(k, 3),  "Stoch %D", color=color.red)
+plot(ta.mfi(hlc3, 14), "MFI", color=color.purple)
+hline(70, "Overbought", color=color.new(color.gray, 50))
+hline(30, "Oversold",   color=color.new(color.gray, 50))</div>
+  <div class="note" style="padding-left:0"><b>The one gotcha:</b> <code>overlay=false</code> gives the oscillators their own pane; <code>force_overlay=true</code> pushes the trend plots back onto price. <code>fill()</code> doesn't take that argument — but since it fills between two already-forced plots, it renders on the price chart anyway.</div>
+
+  <div class="sect">Sample run — Bitcoin</div>
+  <div class="run">
+    <div class="msg">
+      <span class="who u">You</span>
+      <div class="bubble">Draw the Bitcoin daily and give me a clean <b>trend + volatility overlay</b> — EMA 20/50/200, Bollinger Bands and VWAP — as <b>one</b> Pine script so it only uses a single indicator slot. Add it to the chart.</div>
+    </div>
+    <div class="msg">
+      <span class="who a">Claude</span>
+      <div class="bubble">On it — one overlay indicator, five plots, one slot. Here's the Pine v6 I compiled and applied to BTCUSDT:
+        <div class="code"><button class="cp">Copy</button>//@version=6
+indicator("Cloud9 · 5-in-1 Pack", overlay=true)
+plot(ta.ema(close, 20),  "EMA 20",  color=color.new(color.aqua, 0))
+plot(ta.ema(close, 50),  "EMA 50",  color=color.new(color.orange, 0))
+plot(ta.ema(close, 200), "EMA 200", color=color.new(color.red, 0))
+basis = ta.sma(close, 20)
+dev   = 2 * ta.stdev(close, 20)
+u = plot(basis + dev, "BB Upper", color=color.new(color.gray, 0))
+l = plot(basis - dev, "BB Lower", color=color.new(color.gray, 0))
+fill(u, l, color=color.new(color.blue, 92), title="BB Range")
+plot(ta.vwap(hlc3), "VWAP", color=color.new(color.yellow, 0))</div>
+        <span class="ok">✓ Compiled · 0 errors · added to chart as “Cloud9 · 5-in-1 Pack”</span>
+        <div class="note" style="padding-left:0;margin-top:10px"><b>Read:</b> price is holding above the EMA 20/50 with the 200 far overhead — short-term bid, longer-term still heavy. VWAP marks the fair-value line intraday; the Bollinger width shows whether it's coiling or expanding. Want me to add the momentum pane (RSI/Stoch/MFI) as a second script, or fold it into this one?</div>
+      </div>
+    </div>
+  </div>
+  <p class="note" style="padding-left:0">Fold it in and you get the <b>All-in-1 Pack</b> above — all eight indicators, still one slot. Two separate packs = two slots (your whole free allowance), which is where the save-first note below applies.</p>
+
+  <div class="flag">
+    <div class="k">⚠︎ Good to know — MCP limitation</div>
+    <h3>Combining beats stacking</h3>
+    <p>The clean move is <b>one combined script</b> like above. If you instead try to add a <b>second, separate</b> indicator script through the bridge, the “new script” tool can leave the editor still bound to your previous script — and TradingView will pop <b>“Save this script before adding?”</b> before it lets the new one onto the chart.</p>
+    <p>So when you go for two independent scripts, <b>save the second one manually</b> (⌘S / the Save button) before adding it. Packing everything into a single script sidesteps this entirely — and keeps your other free slot open.</p>
+  </div>
+
+  <div class="prereq">
+    <div class="k">Prerequisite — do this first</div>
+    <h3>Connect Claude Code to TradingView Desktop</h3>
+    <p>This whole workflow runs on the free, local Claude × TradingView bridge — no API key, nothing leaves your machine. If you haven't set it up yet, start here: <a href="https://kloud9ptyltd.github.io/content/claude-tradingview-setup.html" target="_blank" rel="noopener">the 5-minute setup guide →</a></p>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">!</span> Good to know</h3>
+    <p><b>Same scale = same pane.</b> RSI, Stochastic and MFI all read 0–100, so they layer cleanly in one sub-pane. Mixing scales that don't match (say RSI with MACD) gets unreadable — split those into a second script.</p>
+    <p><b>It's a chart, not a signal.</b> More indicators ≠ more edge. Fewer, understood indicators beat a wall of noise. Backtest before you trust, size your own risk.</p>
+  </div>
+
+  <div class="cta">
+    <h2>This is the @cloud9.markets edge.</h2>
+    <p>Comment <b>PINE</b> and follow for the full walkthrough — one prompt, eight indicators, zero paid plan.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Educational guide · not affiliated with TradingView Inc. or Anthropic · charts shown are examples, <b>not financial advice</b> · do your own research<br/>© Cloud9 Markets</footer>
+
+<script>
+  document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',function(){
+    var code=b.parentNode.textContent.replace('Copy','').trim();
+    navigator.clipboard&&navigator.clipboard.writeText(code);b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy';},1500);});});
+</script>
+</body>
+</html>
