@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="theme-color" content="#06080f"/>
+<title>Real-time earnings alerts, built in Codex · Cloud9</title>
+<meta name="description" content="A Codex-built market job that scans pre-market and after-hours earnings, watches for releases and sends clear alerts to Discord, Telegram or WhatsApp."/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="The market reports. Your alert lands."/>
+<meta property="og:description" content="Build a real-time earnings alert agent in Codex — pre-market, after-hours and the numbers that matter."/>
+<meta property="og:url" content="https://kloud9ptyltd.github.io/content/earnings-alert-agent.html"/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/earnings-alert-agent-og.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Real-time earnings alerts, built in Codex"/>
+<meta name="twitter:description" content="Scan the calendar. Watch the release. Send the signal."/>
+<meta name="twitter:image" content="https://kloud9ptyltd.github.io/content/earnings-alert-agent-og.png"/>
+<style>
+  :root{--bg:#06080f;--panel:#101725;--panel2:#151e2e;--line:rgba(255,255,255,.085);--line2:rgba(255,255,255,.055);
+    --tx:#f1f5fb;--soft:#cfd8e6;--mut:#8f9db1;--faint:#5e6c7f;--teal:#35e0c1;--blue:#52aaff;--vio:#a391ff;--gold:#e8cc79}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:640px;margin:0 auto;padding:0 18px 76px;background:
+    radial-gradient(760px 480px at 94% -3%,rgba(82,170,255,.14),transparent 58%),
+    radial-gradient(620px 460px at -10% 20%,rgba(53,224,193,.085),transparent 60%),var(--bg)}
+  a{color:var(--blue)}
+  header{padding:28px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:850;letter-spacing:1.65px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  .eyebrow{display:inline-flex;align-items:center;gap:7px;margin-top:25px;padding:7px 11px;border:1px solid rgba(53,224,193,.26);border-radius:999px;background:rgba(53,224,193,.07);color:#a9f5e7;font-size:11px;font-weight:850;letter-spacing:.8px;text-transform:uppercase}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 16px var(--teal)}
+  h1{font-size:39px;font-weight:870;line-height:1.03;letter-spacing:-1.15px;margin:17px 0 13px}
+  h1 em{font-style:normal;color:var(--teal)}
+  .lede{font-size:16px;line-height:1.55;color:var(--soft);font-weight:510}
+  .lede b{color:#fff}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0 4px}
+  .chip{font-size:11.5px;font-weight:800;padding:7px 11px;border-radius:999px;background:var(--panel);border:1px solid var(--line2);color:#bdc8d8}
+  .hero-visual{position:relative;margin-top:22px;border-radius:20px;border:1px solid rgba(82,170,255,.25);overflow:hidden;background:var(--panel);box-shadow:0 24px 70px rgba(0,0,0,.26)}
+  .hero-visual img{display:block;width:100%;height:auto}
+  .visual-cap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;color:var(--mut);font-size:11px;font-weight:700;border-top:1px solid var(--line)}
+  .visual-cap b{color:var(--teal);font-size:10px;letter-spacing:.8px;text-transform:uppercase}
+  .sect{margin:31px 0 5px;font-size:11.5px;font-weight:850;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .flow{margin-top:16px;background:linear-gradient(180deg,rgba(163,145,255,.10),var(--panel));border:1px solid rgba(163,145,255,.24);border-radius:19px;padding:18px}
+  .flow h2{font-size:19px;line-height:1.25;letter-spacing:-.2px}
+  .flow p{font-size:14px;line-height:1.55;color:var(--soft);margin-top:8px}
+  .pipe{display:flex;align-items:center;gap:6px;margin-top:14px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+  .pipe::-webkit-scrollbar{display:none}
+  .pipe span{flex:0 0 auto;font-size:11px;font-weight:800;padding:8px 9px;border-radius:9px;background:#090e17;border:1px solid var(--line);color:#d1dbea}
+  .pipe i{font-style:normal;color:var(--teal);font-weight:900}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+  .feature{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px;min-height:136px}
+  .feature .ico{font-size:20px}.feature h3{font-size:14px;margin-top:9px}.feature p{font-size:12.5px;line-height:1.48;color:var(--mut);margin-top:6px}
+  .built{margin-top:16px;background:linear-gradient(145deg,rgba(53,224,193,.11),rgba(82,170,255,.07));border:1px solid rgba(53,224,193,.27);border-radius:18px;padding:18px}
+  .built .label{font-size:10px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:var(--teal)}
+  .built h2{font-size:20px;margin-top:7px}.built p{font-size:13.5px;line-height:1.55;color:var(--soft);margin-top:8px}
+  .destinations{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+  .destination{padding:8px 11px;border-radius:10px;background:rgba(6,8,15,.62);border:1px solid var(--line);font-size:12px;font-weight:800;color:#d8e2ef}
+  .step{margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px 16px;display:grid;grid-template-columns:28px 1fr;gap:11px}
+  .n{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:var(--teal);color:#03140f;font-size:13px;font-weight:900}
+  .step h3{font-size:15px;line-height:1.35}.step p{font-size:12.8px;line-height:1.5;color:var(--mut);margin-top:4px}
+  .prompt-wrap{margin-top:16px;border-radius:18px;overflow:hidden;border:1px solid rgba(82,170,255,.28);background:#090e17}
+  .prompt-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 13px;border-bottom:1px solid var(--line);background:rgba(82,170,255,.07)}
+  .prompt-head b{font-size:12px;color:#dbe8f8}.prompt-head span{font-size:10px;color:var(--mut);font-weight:750;text-transform:uppercase;letter-spacing:.8px}
+  .prompt{padding:15px;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.62;color:#d7e5f7;white-space:pre-wrap;word-break:break-word}
+  .copy{display:block;width:calc(100% - 28px);margin:0 14px 14px;border:0;border-radius:11px;padding:11px 14px;background:var(--blue);color:#04101f;font:850 13px -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;cursor:pointer}
+  .copy:focus-visible,.btn:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+  .guard{margin-top:13px;border:1px solid rgba(232,204,121,.25);border-radius:14px;padding:13px 14px;background:rgba(232,204,121,.045);font-size:12.5px;color:#d9d3c2;line-height:1.5}
+  .guard b{color:var(--gold)}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(82,170,255,.15),var(--panel));border:1px solid rgba(82,170,255,.35);border-radius:21px;padding:22px;text-align:center}
+  .cta h2{font-size:22px;letter-spacing:-.3px}.cta p{font-size:13.5px;color:var(--soft);line-height:1.5;margin:8px 0 15px}
+  .btn{display:inline-block;background:var(--blue);color:#04101f;font-weight:850;font-size:15px;padding:12px 23px;border-radius:999px;text-decoration:none}
+  footer{margin-top:25px;text-align:center;color:var(--faint);font-size:11px;line-height:1.65}
+  @media(max-width:420px){h1{font-size:35px}.grid{grid-template-columns:1fr}.feature{min-height:0}.visual-cap{align-items:flex-start;flex-direction:column;gap:4px}}
+</style>
+</head>
+<body>
+  <header><img class="c9logo" src="cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">AI × Markets</span></header>
+
+  <div class="eyebrow"><span class="dot"></span>Codex build · always on</div>
+  <h1>The market reports.<br/><em>Your alert lands.</em></h1>
+  <p class="lede">We built an automated earnings desk in <b>Codex</b>. It scans the day’s important pre-market and after-hours reporters, watches for the release, then sends the numbers and first price reaction straight to your chosen channel.</p>
+
+  <div class="chips">
+    <span class="chip">☀️ Pre-market</span><span class="chip">🌙 After-hours</span><span class="chip">⚡ Near real-time</span><span class="chip">🧠 Ranked for relevance</span>
+  </div>
+
+  <figure class="hero-visual">
+    <img src="earnings-alerts-preview.png" alt="Example earnings alert card showing twelve major companies reporting before the market opens"/>
+    <figcaption class="visual-cap"><span>Real output from an always-on market job</span><b>Preview → release → reaction</b></figcaption>
+  </figure>
+
+  <div class="sect">What it does</div>
+  <section class="flow">
+    <h2>From calendar to catalyst—automatically.</h2>
+    <p>A lightweight job reads a finance calendar, surfaces the companies that matter, monitors fresh results and packages the update into a clean, useful alert.</p>
+    <div class="pipe" aria-label="Earnings alert workflow">
+      <span>earnings calendar</span><i>→</i><span>rank</span><i>→</i><span>watch</span><i>→</i><span>compare</span><i>→</i><span>alert</span>
+    </div>
+  </section>
+
+  <div class="grid">
+    <article class="feature"><div class="ico">🗓️</div><h3>Before + after the bell</h3><p>Daily previews focus attention on the most relevant scheduled reporters.</p></article>
+    <article class="feature"><div class="ico">⚡</div><h3>Release monitoring</h3><p>New EPS and revenue figures are detected and delivered as the data appears.</p></article>
+    <article class="feature"><div class="ico">🎯</div><h3>Expectation check</h3><p>Actual versus forecast is translated into a fast beat, miss or in-line read.</p></article>
+    <article class="feature"><div class="ico">📈</div><h3>Market reaction</h3><p>The alert adds an indicative price move, with a short follow-up refresh.</p></article>
+  </div>
+
+  <section class="built">
+    <div class="label">Built in Codex</div>
+    <h2>Your workflow. Your machine. Your endpoint.</h2>
+    <p>Codex can shape the architecture, write the job, connect market-data providers such as <b>Finnhub</b> or <b>Yahoo Finance</b>, and configure it on an always-on NAS or server.</p>
+    <div class="destinations" aria-label="Supported alert destinations">
+      <span class="destination">Discord</span><span class="destination">Telegram</span><span class="destination">WhatsApp</span>
+    </div>
+  </section>
+
+  <div class="sect">High-level setup</div>
+  <div class="step"><span class="n">1</span><div><h3>Describe the outcome in Codex</h3><p>Specify the sessions, ranking style, alert fields and where the job should run.</p></div></div>
+  <div class="step"><span class="n">2</span><div><h3>Connect data + destination</h3><p>Add API credentials and a webhook or messaging endpoint through protected environment variables.</p></div></div>
+  <div class="step"><span class="n">3</span><div><h3>Deploy, test and leave it running</h3><p>Validate with a dry run, enable the scheduled service and confirm duplicate protection and retries.</p></div></div>
+
+  <div class="sect">Start with this Codex prompt</div>
+  <div class="prompt-wrap">
+    <div class="prompt-head"><b>Earnings alert agent</b><span>Starter brief</span></div>
+    <div class="prompt" id="starterPrompt">Build an always-on earnings alert job for my NAS.
+
+It should:
+• scan a reputable finance API for today’s pre-market and after-hours earnings
+• rank the most market-relevant companies and create a compact daily preview
+• monitor releases, compare actual EPS/revenue with forecasts, and report beat/miss/in-line
+• include an indicative stock reaction and refresh it shortly afterward
+• support my choice of Discord, Telegram, or WhatsApp
+• archive results, prevent duplicate alerts, retry safely, and keep secrets in environment variables
+
+Before implementation, inspect what can be reused on the NAS and show me the proposed architecture, schedule, data sources, and test plan. Do not expose API keys or webhook secrets.</div>
+    <button class="copy" id="copyPrompt" type="button">Copy prompt for Codex</button>
+  </div>
+
+  <div class="guard"><b>Keep it honest:</b> free market-data feeds can be delayed, incomplete or revised. Treat alerts as a fast research aid, verify important releases at the source, and never commit credentials to code.</div>
+
+  <section class="cta">
+    <h2>Build the desk you wish you had.</h2>
+    <p>Follow @cloud9.markets for practical AI × markets builds, prompts and field notes.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </section>
+
+  <footer>Concept and implementation built with Codex · example for educational purposes · market data and delivery depend on third-party services · not financial advice<br/>© Cloud9 Markets</footer>
+
+<script>
+  (function(){
+    var button=document.getElementById('copyPrompt');
+    var prompt=document.getElementById('starterPrompt');
+    button.addEventListener('click',function(){
+      var text=prompt.textContent.trim();
+      var done=function(){button.textContent='Copied ✓';setTimeout(function(){button.textContent='Copy prompt for Codex'},1600)};
+      if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(done);return}
+      var area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();document.execCommand('copy');area.remove();done();
+    });
+  })();
+</script>
+</body>
+</html>
