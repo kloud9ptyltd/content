@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>The Compounder Screen — built from free SEC filings · Cloud9</title>
+<meta property="og:title" content="I built a stock screener from free SEC filings — here's how it's scored"/>
+<meta property="og:description" content="3,000+ companies scored 0-100 on durable revenue growth, straight from the numbers every US company must file with the SEC. Data bill: $0. The build + the exact scoring recipe."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#5b9dff;--gold:#e6c878;--c9:#46a8ff}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(91,157,255,.13),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
+  h1 em{font-style:normal;color:var(--blu)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .cred{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0 2px}
+  .badge{font-size:12px;font-weight:800;padding:7px 12px;border-radius:999px;background:rgba(91,157,255,.10);border:1px solid rgba(91,157,255,.30);color:#bcd5ff}
+  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .step{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--blu);color:#04101f;font-weight:900;font-size:14px;margin-right:10px}
+  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
+  .step p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0;padding-left:36px}
+  .step p b{color:#fff}
+  .code{position:relative;margin:12px 0 0 36px;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:13px 44px 13px 14px;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;line-height:1.55;color:#d8e6ff;white-space:pre-wrap;word-break:break-word}
+  .cp{position:absolute;top:8px;right:8px;font-size:11px;font-weight:700;color:var(--mut);background:var(--card2);border:1px solid var(--line2);border-radius:7px;padding:5px 9px;cursor:pointer}
+  .cp:active{color:var(--g)}
+  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px}
+  .note b{color:var(--mut)}
+  .score{margin:12px 0 0 36px}
+  .srow{display:flex;align-items:center;gap:10px;margin-top:8px}
+  .srow .pts{flex:none;width:38px;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;color:var(--g);text-align:right}
+  .srow .lbl{font-size:13.5px;line-height:1.4;color:#cfd8e4}
+  .srow .lbl b{color:#fff}
+  .warn{margin:12px 0 0 36px;background:rgba(230,200,120,.07);border:1px solid rgba(230,200,120,.25);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.5;color:#e7dcc0}
+  .warn b{color:var(--gold)}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(91,157,255,.15),var(--card));border:1px solid rgba(91,157,255,.38);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Compounder Screen</span></header>
+
+  <h1>A stock screener built from <em>free SEC filings</em>.</h1>
+  <p class="lede">Every US public company is <b>required by law</b> to report its numbers to the SEC every quarter — and the SEC publishes all of it, <b>free, no signup</b>. This screener pulls those raw filings for <b>3,000+ companies</b>, scores each one 0–100 on <b>durable revenue growth</b>, and ranks the whole universe so the strongest businesses float to the top. Data bill: <b>$0</b>.</p>
+
+  <div class="cred">
+    <span class="badge">🏛 official SEC data</span>
+    <span class="badge">🆓 $0 · no API keys</span>
+    <span class="badge">📊 3,000+ companies scored</span>
+  </div>
+
+  <div class="sect">The build — 4 stages</div>
+
+  <div class="step">
+    <h3><span class="n">1</span> PULL — straight from the source</h3>
+    <p>The SEC's own servers hand out every company's full filing history as clean JSON. No vendor, no subscription, no scraping:</p>
+    <div class="code"><button class="cp">Copy</button>https://data.sec.gov/api/xbrl/companyfacts/CIK##########.json</div>
+    <div class="note">This is the same underlying data Bloomberg terminals charge $25k/yr to show you. (The SEC's filing system is called EDGAR — that's the only jargon you need.)</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">2</span> PARSE — make every company comparable</h3>
+    <p>Filings are messy: fiscal years differ, Q4 is buried inside the annual report (so it's derived as <b>full year minus Q1+Q2+Q3</b>), and one-off spikes get cleaned out. The result: an apples-to-apples quarterly revenue history for every name.</p>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">3</span> SCORE — the exact recipe (0–100)</h3>
+    <p>The score rewards companies that grow revenue <b>relentlessly, for years</b> — not one hot quarter:</p>
+    <div class="score">
+      <div class="srow"><span class="pts">25</span><span class="lbl"><b>Durable growth rate</b> — multi-year revenue compounding, not a one-year pop</span></div>
+      <div class="srow"><span class="pts">22</span><span class="lbl"><b>Consistency</b> — does trailing-12-month revenue rise almost every quarter?</span></div>
+      <div class="srow"><span class="pts">20</span><span class="lbl"><b>Recent growth</b> — still growing strongly year-over-year right now</span></div>
+      <div class="srow"><span class="pts">15</span><span class="lbl"><b>Track record</b> — how many years it's been proving it</span></div>
+      <div class="srow"><span class="pts">8</span><span class="lbl"><b>Acceleration</b> — growth speeding up beats slowing down</span></div>
+      <div class="srow"><span class="pts">10</span><span class="lbl"><b>Margins &amp; profit</b> — quality check, kept minor on purpose</span></div>
+    </div>
+    <div class="note">Stock price is deliberately <b>not</b> chased — it only nudges the final score ±5. The point is finding proven revenue machines, whether or not the stock already popped.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">4</span> RANK — junk is kicked out first</h3>
+    <p>Before ranking, the screen removes what fakes growth: crypto miners, commodity cyclicals (their revenue is just the commodity price), companies growing off a tiny base, sub-scale names under $50M revenue, and $200B+ mega-caps (too big to 5-10x).</p>
+  </div>
+
+  <div class="sect">Build your own — one prompt</div>
+
+  <div class="step">
+    <h3><span class="n">💬</span> Paste this into Claude</h3>
+    <p>The whole thing is buildable in an afternoon with an AI coding assistant:</p>
+    <div class="code"><button class="cp">Copy</button>Build me a Python stock screener that uses the SEC's free companyfacts API (data.sec.gov, no key needed — just set a User-Agent header). Pull quarterly revenue for all US companies over $2B market cap, derive Q4 as full-year minus Q1-Q3, store in SQLite, then score each company 0-100: multi-year revenue CAGR (25 pts), consistency of TTM revenue rising each quarter (22), recent YoY growth (20), years of track record (15), acceleration (8), margins (10). Exclude crypto miners, commodity cyclicals, and sub-$50M-revenue names. Output the top 20 as a table.</div>
+    <div class="note">Respect the SEC's fair-use rules: identify yourself in the User-Agent and keep requests under ~10/sec.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">!</span> Read this before acting on any screen</h3>
+    <div class="warn"><b>A screen is a starting point, not a buy list.</b> High scores mean the <i>past</i> revenue was durable — they say nothing about valuation, competition, or what happens next. Research every name yourself. Educational only, not financial advice.</div>
+  </div>
+
+  <div class="cta">
+    <h2>This is the @cloud9.markets edge.</h2>
+    <p>Follow for the next build — and the stocks we run through the screen.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Educational guide · data © SEC (public domain) · <b>not financial advice</b> · do your own research<br/>© Cloud9 Markets</footer>
+
+<script>
+  document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',function(){
+    var code=b.parentNode.textContent.replace('Copy','').trim();
+    navigator.clipboard&&navigator.clipboard.writeText(code);b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy';},1500);});});
+</script>
+</body>
+</html>
