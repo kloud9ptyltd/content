@@ -217,7 +217,9 @@
   </footer>
 </div>
 <script>
-const CODES = {"MAP285": "012", "WHALE35": "011", "TRUMP99": "005", "CHART2": "002"};           // code -> drop number
+const CODES = {"MAP285": "012", "WHALE35": "011", "TRUMP99": "005", "CHART2": "002"}; // append-only, valid FOREVER
+// gates auto-expire (codes keep working as confirmations after)
+const GATE_UNTIL = {"012": "2026-09-30", "011": "2026-09-30", "005": "2026-09-30", "002": "2026-09-30"};
 const PAGES = {"012": "saas-repricing-map.html", "011": "whale-58bro.html", "005": "trump-trade-tracker.html", "002": "claude-tradingview-setup.html"};           // drop number -> page
 const MASTER = "C9DESK";           // change me: opens everything
 const store = JSON.parse(localStorage.getItem("c9open") || "[]");
@@ -259,10 +261,11 @@ function tryCode(raw) {
   }
   if (CODES[c]) {
     const n = CODES[c];
+    const already = !document.querySelector('.row.locked[data-n="' + n + '"]');
     if (!store.includes(n)) store.push(n);
     localStorage.setItem("c9open", JSON.stringify(store));
     openRow(n, true);
-    msg.textContent = "Drop #" + n + " is open — tap the row.";
+    msg.textContent = already ? "Drop #" + n + " is already open — tap the row." : "Drop #" + n + " is open — tap the row.";
     msg.className = "gate-msg ok";
   } else {
     msg.textContent = "Not a live code. Comment the word on our latest post and check your DM.";
@@ -275,6 +278,10 @@ document.querySelectorAll(".row.locked").forEach(r => {
   const hint = () => { msg.textContent = "Sealed. Comment the word on the matching post — the code arrives by DM."; msg.className = "gate-msg"; document.getElementById("code").focus(); };
   r.addEventListener("click", hint);
   r.addEventListener("keydown", e => { if (e.key === "Enter") hint(); });
+});
+// expired gates auto-open (codes remain valid as confirmations forever)
+Object.entries(GATE_UNTIL).forEach(([n, until]) => {
+  if (new Date(until + "T23:59:59") < new Date()) openRow(n, false);
 });
 store.forEach(n => openRow(n, false));
 document.querySelectorAll(".chips button").forEach(b => b.addEventListener("click", () => {
