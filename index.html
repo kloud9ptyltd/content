@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Cloud9 Markets</title>
+<meta property="og:title" content="Cloud9 Markets — every build, tracker & guide"/>
+<meta property="og:description" content="Tap the number from your DM. Every Cloud9 build, tracker, and guide — free."/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--line:rgba(255,255,255,.08);--tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--c9:#46a8ff;--gold:#e6c878}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:520px;margin:0 auto;padding:0 14px 70px;
+    background:radial-gradient(700px 400px at 85% -5%,rgba(70,168,255,.12),transparent 60%),var(--bg)}
+  header{padding:30px 4px 8px;text-align:center}
+  header img{height:44px}
+  header h1{font-size:20px;font-weight:850;margin-top:10px}
+  header p{font-size:13.5px;color:var(--mut);margin-top:5px;line-height:1.45}
+  header p b{color:var(--gold)}
+  input#q{width:100%;margin:16px 0 12px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:12px 14px;font-size:15px;color:var(--tx);outline:none}
+  .card{display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:12px 13px;margin-bottom:9px;text-decoration:none;color:var(--tx)}
+  .card:active{border-color:var(--c9)}
+  .num{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:14px;font-weight:800;color:var(--c9);
+    background:rgba(70,168,255,.1);border:1px solid rgba(70,168,255,.28);border-radius:8px;padding:6px 8px;flex:none}
+  .ic{font-size:18px;flex:none}
+  .m{flex:1;min-width:0}
+  .m b{font-size:14.5px;display:block}
+  .m small{font-size:12px;color:var(--mut);display:block;margin-top:2px;line-height:1.35}
+  .go{color:var(--faint);font-size:16px;flex:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11px;line-height:1.7}
+</style>
+</head>
+<body>
+  <header>
+    <img src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/>
+    <h1>Cloud9 Markets</h1>
+    <p>Got a number from our DM? <b>Tap it below.</b><br/>Every build, tracker &amp; guide — free. Educational only, not financial advice.</p>
+  </header>
+  <input id="q" type="search" placeholder="Type a number or name… e.g. 005 or trump" oninput="f(this.value)"/>
+  <a class="card" href="nimbus-desk.html" id="l001">
+    <span class="num">#001</span><span class="ic">🖥️</span>
+    <span class="m"><b>NIMBUS DESK</b><small>The 9-agent AI trading desk — full build guide</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="claude-tradingview-setup.html" id="l002">
+    <span class="num">#002</span><span class="ic">📈</span>
+    <span class="m"><b>CLAUDE × TRADINGVIEW</b><small>Free setup — Claude reads & drives your charts</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="kronos-market-ai.html" id="l003">
+    <span class="num">#003</span><span class="ic">🔮</span>
+    <span class="m"><b>KRONOS</b><small>The open-source AI that predicts candlesticks</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="nancy-pelosi-tracker.html" id="l004">
+    <span class="num">#004</span><span class="ic">👑</span>
+    <span class="m"><b>PELOSI TRACKER</b><small>Every disclosed trade, charted live</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="trump-trade-tracker.html" id="l005">
+    <span class="num">#005</span><span class="ic">🇺🇸</span>
+    <span class="m"><b>TRUMP TRACKER</b><small>Every OGE filing decoded — 25k transactions</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="worldmonitor-warroom.html" id="l006">
+    <span class="num">#006</span><span class="ic">🌍</span>
+    <span class="m"><b>WORLD MONITOR</b><small>The war-room market dashboard</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="fundamentals-db.html" id="l007">
+    <span class="num">#007</span><span class="ic">🗄️</span>
+    <span class="m"><b>FUNDAMENTALS DB</b><small>Our 3,000-stock quant database</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="claude-finance-agents.html" id="l008">
+    <span class="num">#008</span><span class="ic">🤖</span>
+    <span class="m"><b>CLAUDE FINANCE AGENTS</b><small>Anthropic's 10 finance agents, explained</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="quant-bible.html" id="l009">
+    <span class="num">#009</span><span class="ic">📄</span>
+    <span class="m"><b>QUANT BIBLE</b><small>MIT students' leaked 50-page interview doc</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="ai-capital-stack.html" id="l010">
+    <span class="num">#010</span><span class="ic">🌐</span>
+    <span class="m"><b>AI CAPITAL STACK</b><small>OpenAI × Anthropic × China — the money map</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="whale-58bro.html" id="l011">
+    <span class="num">#011</span><span class="ic">🐋</span>
+    <span class="m"><b>THE $35M WHALE</b><small>Hyperliquid wallet forensics — verified on-chain</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="saas-repricing-map.html" id="l012">
+    <span class="num">#012</span><span class="ic">💥</span>
+    <span class="m"><b>SAAS REPRICING MAP</b><small>The $285B wipeout + our decade map</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="vix-playbook.html" id="l013">
+    <span class="num">#013</span><span class="ic">🛡️</span>
+    <span class="m"><b>VIX PLAYBOOK</b><small>The market's buy button — backtested to 1990</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="quantum-2b-plays.html" id="l014">
+    <span class="num">#014</span><span class="ic">⚛️</span>
+    <span class="m"><b>QUANTUM $2B LIST</b><small>The 9 companies the US government just funded</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="claude-money-prompts.html" id="l015">
+    <span class="num">#015</span><span class="ic">💰</span>
+    <span class="m"><b>CLAUDE MONEY PROMPTS</b><small>10 prompts that fix your finances</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="fable5-prompts.html" id="l016">
+    <span class="num">#016</span><span class="ic">✳️</span>
+    <span class="m"><b>FABLE 5 PROMPTS</b><small>The official-guide prompting rules for finance</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="micron-thesis.html" id="l017">
+    <span class="num">#017</span><span class="ic">💾</span>
+    <span class="m"><b>MICRON THESIS</b><small>The AI memory super-cycle research report</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="tri-agent-desk-v2.html" id="l018">
+    <span class="num">#018</span><span class="ic">🧠</span>
+    <span class="m"><b>TRI-AGENT DESK</b><small>Three AIs debate every trade</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="vibe-trading-setup.html" id="l019">
+    <span class="num">#019</span><span class="ic">⚡</span>
+    <span class="m"><b>VIBE TRADING</b><small>Run an AI hedge fund on your laptop</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="hermes-daily-brief.html" id="l020">
+    <span class="num">#020</span><span class="ic">📰</span>
+    <span class="m"><b>HERMES BRIEF</b><small>An AI that DMs you a market brief at 7am</small></span>
+    <span class="go">→</span></a>
+  <a class="card" href="claude-pine-indicators.html" id="l021">
+    <span class="num">#021</span><span class="ic">📜</span>
+    <span class="m"><b>PINE INDICATORS</b><small>Unlimited indicators on free TradingView</small></span>
+    <span class="go">→</span></a>
+  <footer>© Cloud9 Markets · @cloud9.markets · not financial advice</footer>
+<script>
+function f(v){v=v.toLowerCase().replace('#','');
+  document.querySelectorAll('.card').forEach(c=>{
+    c.style.display = c.textContent.toLowerCase().includes(v) ? 'flex' : 'none';});}
+if(location.hash){const el=document.getElementById('l'+location.hash.replace('#',''));
+  if(el){el.scrollIntoView();el.style.borderColor='#46a8ff';}}
+</script>
+</body>
+</html>
