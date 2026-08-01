@@ -1,298 +1,238 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Cloud9 Markets</title>
-<meta property="og:title" content="Cloud9 Markets — the board"/>
-<meta property="og:description" content="Builds, trackers and research at the edge of AI and finance. Free, educational, never advice. Got a code from our DM? The board opens here."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,500..900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cloud9 Markets — Research Desk</title>
+<meta property="og:title" content="Cloud9 Markets — Research Desk">
+<meta property="og:description" content="Builds, trackers and research at the edge of AI and finance. Everything free. Educational, never advice.">
+<!-- CLOUDFLARE WEB ANALYTICS — paste beacon token below and uncomment:
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "PASTE_TOKEN_HERE"}'></script>
+-->
 <style>
-  :root{--bg:#0A0F1C;--panel:#101725;--flap:#131A2A;--flap2:#0D1322;--line:#1D2739;
-    --bone:#E9E4D8;--bone-dim:#B9B4A8;--slate:#8A93A8;--blue:#46A8FF;--live:#FF5C49}
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--bone);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;
-    background-image:linear-gradient(var(--line) 1px, transparent 1px);background-size:100% 96px;background-position:0 40px}
-  .wrap{max-width:640px;margin:0 auto;padding:0 16px 90px}
-  a{color:inherit}
-  /* masthead */
-  header{padding:44px 0 8px;text-align:left}
-  .mark{display:flex;align-items:center;gap:12px}
-  .mark img{height:34px;border-radius:8px}
-  .mark .co{font-family:Archivo,sans-serif;font-stretch:125%;font-weight:900;font-size:24px;letter-spacing:.5px;text-transform:uppercase}
-  .mark .co i{font-style:normal;color:var(--blue)}
-  .tag{margin-top:14px;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:3px;color:var(--slate);text-transform:uppercase}
-  .lede{margin-top:14px;font-size:15.5px;line-height:1.6;color:var(--bone-dim);max-width:46ch}
-  .lede b{color:var(--bone);font-weight:600}
-  .socials{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-  .socials a{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:1.5px;color:var(--slate);
-    border:1px solid var(--line);border-radius:4px;padding:8px 12px;text-decoration:none;text-transform:uppercase}
-  .socials a:hover,.socials a:focus-visible{color:var(--bone);border-color:var(--slate)}
-  /* board section headers */
-  .bhead{display:flex;align-items:baseline;gap:12px;margin:46px 0 0;border-bottom:2px solid var(--bone);padding-bottom:10px}
-  .bhead h2{font-family:Archivo,sans-serif;font-stretch:125%;font-weight:900;font-size:17px;letter-spacing:1.5px;text-transform:uppercase}
-  .bhead .r{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:2px;color:var(--slate)}
-  .bhead .dot{width:8px;height:8px;border-radius:50%;background:var(--live);display:inline-block;margin-right:6px;animation:pulse 2s infinite}
-  @keyframes pulse{50%{opacity:.35}}
-  .bnote{font-size:13.5px;line-height:1.55;color:var(--slate);margin:12px 0 4px}
-  .bnote b{color:var(--bone-dim)}
-  /* code entry */
-  .gate{display:flex;gap:8px;margin:16px 0 6px}
-  .gate input{flex:1;background:var(--flap2);border:1px solid var(--line);border-radius:4px;color:var(--bone);
-    font-family:"IBM Plex Mono",monospace;font-size:15px;letter-spacing:3px;padding:13px 14px;text-transform:uppercase;outline:none;min-width:0}
-  .gate input:focus-visible{border-color:var(--blue)}
-  .gate button{background:var(--bone);color:var(--bg);border:none;border-radius:4px;font-family:Archivo,sans-serif;
-    font-stretch:125%;font-weight:800;font-size:13px;letter-spacing:1.5px;padding:0 20px;cursor:pointer;text-transform:uppercase}
-  .gate button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-  .gate-msg{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:1px;color:var(--slate);min-height:18px;margin-bottom:6px}
-  .gate-msg.ok{color:var(--blue)}
-  /* filter chips */
-  .chips{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0 10px}
-  .chips button{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
-    color:var(--slate);background:none;border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer}
-  .chips button[aria-pressed="true"]{color:var(--bg);background:var(--bone);border-color:var(--bone);font-weight:600}
-  .chips button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-  /* board rows */
-  .row{display:flex;align-items:center;gap:13px;background:var(--panel);border:1px solid var(--line);border-left:none;border-right:none;
-    padding:15px 12px;margin-top:-1px;text-decoration:none;min-height:64px}
-  .row:hover,.row:focus-visible{background:var(--flap)}
-  .row:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
-  .num{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;color:var(--slate);flex:none;width:34px}
-  .mid{flex:1;min-width:0}
-  .nm{font-family:Archivo,sans-serif;font-stretch:125%;font-weight:800;font-size:15px;letter-spacing:1px;text-transform:uppercase;display:block}
-  .mid small{display:block;font-size:12.5px;color:var(--slate);margin-top:4px;line-height:1.4}
-  .st{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:2px;flex:none;padding:6px 9px;border-radius:3px}
-  .st-open{color:var(--blue);border:1px solid rgba(70,168,255,.35)}
-  .st-lock{color:var(--slate);border:1px solid var(--line)}
-  .row.locked{cursor:pointer}
-  .row.locked .nm{color:var(--slate)}
-  /* flap cells */
-  .w{white-space:nowrap;display:inline-block;margin-right:6px}
-  .fc{display:inline-block;background:var(--flap);border-radius:2px;padding:2px 1px;margin-right:1px;min-width:11px;text-align:center;
-    box-shadow:inset 0 -1px 0 rgba(0,0,0,.5)}
-  .row.unlocking .fc{animation:flip .5s ease both}
-  @keyframes flip{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
-  @media (prefers-reduced-motion: reduce){.row.unlocking .fc{animation:none}.bhead .dot{animation:none}}
-  /* brief panel */
-  .brief{margin-top:46px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px}
-  .brief h3{font-family:Archivo,sans-serif;font-stretch:125%;font-weight:900;font-size:16px;letter-spacing:1.5px;text-transform:uppercase}
-  .brief p{font-size:13.5px;line-height:1.55;color:var(--slate);margin-top:8px}
-  .brief a.join{display:inline-block;margin-top:14px;background:var(--blue);color:var(--bg);font-family:Archivo,sans-serif;
-    font-stretch:125%;font-weight:800;font-size:13px;letter-spacing:1.5px;padding:12px 22px;border-radius:4px;text-decoration:none;text-transform:uppercase}
-  footer{margin-top:44px;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:1px;color:var(--slate);line-height:2}
-  footer b{color:var(--bone-dim)}
+  html,body{margin:0;padding:0;background:#0b0e0d}
+  body{font-family:Georgia,'Times New Roman',serif;color:#e7e0d0;-webkit-font-smoothing:antialiased}
+  a{color:#c1a467;text-decoration:none}
+  a:hover{color:#d8c390}
+  input::placeholder{color:#5d665f;letter-spacing:.16em}
+  :focus-visible{outline:2px solid #c1a467;outline-offset:2px}
+  .wrap{width:100%;max-width:560px;margin:0 auto;padding:0 20px 130px;box-sizing:border-box}
+  .eyebrow{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:.3em;color:#8ea094}
+  h1{font-weight:400;font-size:clamp(28px,8.4vw,42px);line-height:1;letter-spacing:-.03em;margin:14px 0 0;white-space:nowrap}
+  h2{font-weight:400;font-size:28px;letter-spacing:-.02em;margin:8px 0 0}
+  .lede,.sub{font-size:14.5px;line-height:1.55;color:#b3ac9a;margin:8px 0 0}
+  .icons{display:flex;gap:6px;margin-top:14px;margin-left:-11px}
+  .icons a{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#8ea094;border-radius:8px}
+  .icons a:hover,.icons a:focus-visible{color:#d8c390;background:rgba(193,164,103,.08)}
+  .gate{margin-top:16px;border:1px solid rgba(193,164,103,.4);padding:16px}
+  .gate.shake{animation:c9shake .35s ease}
+  .gate label{font-size:14px;color:#e7e0d0;display:block}
+  .grow{display:flex;gap:10px;margin-top:12px}
+  .gate input{flex:1;min-width:0;background:#101412;border:1px solid rgba(231,224,208,.2);color:#e7e0d0;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:16px;letter-spacing:.2em;padding:12px 14px;min-height:48px;box-sizing:border-box;border-radius:0}
+  .gate button{background:#c1a467;color:#0b0e0d;border:none;font-family:Georgia,serif;font-weight:700;font-size:16px;padding:0 24px;min-height:48px;cursor:pointer}
+  .gate button:hover{background:#d8c390}
+  .gate button:active{transform:scale(.97)}
+  .gmsg{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11.5px;line-height:1.65;letter-spacing:.02em;margin-top:12px}
+  .nocode{font-size:13px;line-height:1.6;color:#8ea094;margin-top:12px}
+  .nocode a{text-decoration:underline}
+  .rows{display:flex;flex-direction:column;margin-top:10px}
+  .vrow{display:flex;align-items:center;gap:16px;border-bottom:1px solid rgba(231,224,208,.14);padding:18px 2px;overflow:hidden}
+  a.vrow:hover{background:rgba(193,164,103,.06)}
+  .vrow.sealed{cursor:pointer}
+  .vrow.sealed:hover{background:rgba(231,224,208,.03)}
+  .vnum{font-size:58px;line-height:.8;letter-spacing:-.05em;color:#c1a467;flex-shrink:0;transform:translateY(4px)}
+  .vrow.sealed .vnum{color:rgba(193,164,103,.28)}
+  .vmid{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+  .vstat{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:.18em;color:#c1a467}
+  .vrow.sealed .vstat{letter-spacing:.14em;color:#8ea094}
+  .vtitle{font-size:19px;letter-spacing:-.01em;color:#e7e0d0}
+  .vrow.sealed .vtitle{color:#97917f}
+  .vdesc{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;color:#8ea094}
+  .vrow.sealed .vdesc{color:#5d665f}
+  .vgo{color:#c1a467;font-size:15px;flex-shrink:0;white-space:nowrap}
+  .needs{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:9.5px;letter-spacing:.12em;color:#c1a467;border:1px solid rgba(193,164,103,.4);padding:7px 9px;flex-shrink:0;white-space:nowrap}
+  .vrow.flash{animation:c9unseal 1.6s ease-out}
+  .showme{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:.2em;color:#746e5e;margin-top:18px}
+  .chips{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+  .chips button{cursor:pointer;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;letter-spacing:.04em;padding:0 16px;min-height:44px;border-radius:999px;background:transparent;color:#b3ac9a;border:1px solid rgba(231,224,208,.25);font-weight:400}
+  .chips button:hover{border-color:#c1a467}
+  .chips button[aria-pressed="true"]{background:#c1a467;color:#0b0e0d;border:1px solid #c1a467;font-weight:700}
+  .frow{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid rgba(231,224,208,.1);padding:14px 2px;min-height:44px;box-sizing:border-box}
+  .frow:hover{background:rgba(193,164,103,.05)}
+  .fnum{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;color:#8ea094;flex-shrink:0}
+  .fmid{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+  .ftitle{font-size:16.5px;color:#e7e0d0;letter-spacing:-.01em}
+  .fdesc{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10.5px;color:#746e5e}
+  .fgo{color:#c1a467;font-size:13.5px;flex-shrink:0;white-space:nowrap}
+  .brief{margin-top:56px;border:1px solid rgba(193,164,103,.4);padding:24px 20px;background:rgba(193,164,103,.05)}
+  .brief p{font-size:14.5px;line-height:1.55;color:#b3ac9a;margin:10px 0 0}
+  .brief a.get{display:flex;align-items:center;justify-content:center;margin-top:18px;background:#c1a467;color:#0b0e0d;font-family:Georgia,serif;font-weight:700;font-size:16px;min-height:48px}
+  .brief a.get:hover{background:#d8c390;color:#0b0e0d}
+  .svc{margin-top:44px;border-top:1px solid rgba(231,224,208,.14);padding-top:24px}
+  .svc p{font-size:14px;line-height:1.6;color:#b3ac9a;margin:0}
+  .svc a{text-decoration:underline}
+  .foot{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:10px;letter-spacing:.16em;line-height:2;color:#5d665f;margin-top:24px}
+  .pill{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom));z-index:50;background:#c1a467;color:#0b0e0d;border:1px solid #0b0e0d;box-shadow:0 4px 18px rgba(0,0,0,.5);border-radius:999px;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-weight:700;font-size:12px;letter-spacing:.18em;padding:0 26px;min-height:48px;cursor:pointer}
+  .pill:hover{background:#d8c390}
+  .pill:active{transform:translateX(-50%) scale(.96)}
+  @keyframes c9unseal{0%{background:rgba(193,164,103,.28)}100%{background:rgba(193,164,103,0)}}
+  @keyframes c9shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <div class="mark"><img src="cloud9-logo.png" alt=""/><span class="co">Cloud<i>9</i> Markets</span></div>
-    <div class="tag">AI &nbsp;·&nbsp; MARKETS &nbsp;·&nbsp; RESEARCH</div>
-    <p class="lede">Builds, trackers and research from one desk at the edge of AI and finance. <b>Everything here is free.</b> Everything is educational — never advice.</p>
-    <nav class="socials" aria-label="Elsewhere">
-      <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">X</a>
-      <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">YouTube</a>
-      <a href="mailto:hello@cloud9markets.com">Email</a>
-    </nav>
+  <header style="padding-top:40px">
+    <div class="eyebrow" style="letter-spacing:.34em">INDEPENDENT RESEARCH DESK</div>
+    <h1>Cloud9Markets<span style="color:#c1a467">.</span></h1>
+    <p class="lede" style="font-size:15px;max-width:380px;margin-top:16px">Builds, trackers and research at the edge of AI and finance. Everything free. Educational, never advice.</p>
+    <div class="icons">
+      <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.2"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="https://x.com/cloud9markets" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zM17.083 19.77h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="https://www.youtube.com/@cloud9markets/" target="_blank" rel="noopener" aria-label="YouTube"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="1.5" y="5" width="21" height="14" rx="4"/><path d="M10 9.2l5.4 2.8L10 14.8z" fill="#0b0e0d"/></svg></a>
+      <a href="https://www.tiktok.com/@cloud9marketshq" target="_blank" rel="noopener" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+      <a href="mailto:hello@kloud9ai.com.au" aria-label="Email"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="4.5" width="20" height="15" rx="2.5"/><path d="M3 6.5l9 7 9-7"/></svg></a>
+    </div>
   </header>
 
-  <section aria-label="This week's drops">
-    <div class="bhead"><h2><span class="dot" aria-hidden="true"></span>This week's drops</h2><span class="r" id="counter">0/4 OPEN</span></div>
-    <p class="bnote">Sealed rows open with a code from our DM — <b>comment the word on the post</b> and it lands in your inbox. Once opened, a drop stays open on this device.</p>
-    <div class="gate">
-      <input id="code" type="text" placeholder="ACCESS CODE" autocomplete="off" autocapitalize="characters" aria-label="Access code"/>
-      <button id="unlock" type="button">Open</button>
+  <section style="margin-top:52px" id="vault">
+    <div class="eyebrow">THE VAULT</div>
+    <h2>Locked posts</h2>
+    <p class="sub">These open with a code from our Instagram DM.</p>
+    <div class="gate" id="gate">
+      <label for="c9code">Got a code from our DM? Type it here.</label>
+      <div class="grow">
+        <input id="c9code" placeholder="YOUR CODE" autocapitalize="characters" autocomplete="off" spellcheck="false">
+        <button id="openBtn" type="button">Open</button>
+      </div>
+      <div class="gmsg" id="gmsg" role="status" hidden></div>
+      <div class="nocode">No code yet? Comment the word on our <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">latest post</a> and we&rsquo;ll DM it to you &mdash; free.</div>
     </div>
-    <div class="gate-msg" id="msg" role="status"></div>
-    <div class="row locked" data-n="012" data-cat="research" data-href="saas-repricing-map.html" tabindex="0" role="button" aria-label="Drop 012 — locked, DM for the code">
-      <span class="num">012</span>
-      <span class="mid"><span class="nm flapped" data-name="SAAS REPRICING MAP"><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span><span class="fc">&nbsp;</span><span class="fc">S</span><span class="fc">E</span><span class="fc">A</span><span class="fc">L</span><span class="fc">E</span><span class="fc">D</span><span class="fc">&nbsp;</span><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span></span><small>The $285B wipeout + our decade map</small></span>
-      <span class="st st-lock">CODE</span></div>
-    <div class="row locked" data-n="011" data-cat="trackers" data-href="whale-58bro.html" tabindex="0" role="button" aria-label="Drop 011 — locked, DM for the code">
-      <span class="num">011</span>
-      <span class="mid"><span class="nm flapped" data-name="THE $35M WHALE"><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span><span class="fc">&nbsp;</span><span class="fc">S</span><span class="fc">E</span><span class="fc">A</span><span class="fc">L</span><span class="fc">E</span><span class="fc">D</span><span class="fc">&nbsp;</span><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span></span><small>Hyperliquid wallet forensics — verified on-chain</small></span>
-      <span class="st st-lock">CODE</span></div>
-    <div class="row locked" data-n="005" data-cat="trackers" data-href="trump-trade-tracker.html" tabindex="0" role="button" aria-label="Drop 005 — locked, DM for the code">
-      <span class="num">005</span>
-      <span class="mid"><span class="nm flapped" data-name="TRUMP TRACKER"><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span><span class="fc">&nbsp;</span><span class="fc">S</span><span class="fc">E</span><span class="fc">A</span><span class="fc">L</span><span class="fc">E</span><span class="fc">D</span><span class="fc">&nbsp;</span><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span></span><small>Every OGE filing decoded — 25k transactions</small></span>
-      <span class="st st-lock">CODE</span></div>
-    <div class="row locked" data-n="002" data-cat="setups" data-href="claude-tradingview-setup.html" tabindex="0" role="button" aria-label="Drop 002 — locked, DM for the code">
-      <span class="num">002</span>
-      <span class="mid"><span class="nm flapped" data-name="CLAUDE × TRADINGVIEW"><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span><span class="fc">&nbsp;</span><span class="fc">S</span><span class="fc">E</span><span class="fc">A</span><span class="fc">L</span><span class="fc">E</span><span class="fc">D</span><span class="fc">&nbsp;</span><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span></span><small>Claude reads & drives your charts — free</small></span>
-      <span class="st st-lock">CODE</span></div>
+    <div class="rows" id="vaultRows"></div>
   </section>
 
-  <section aria-label="The floor — open archive">
-    <div class="bhead"><h2>The floor</h2><span class="r">ALWAYS OPEN</span></div>
-    <p class="bnote">Every past drop, open to everyone. Numbers never change — if a DM ever hands you a number, it lives here.</p>
-    <div class="chips" role="group" aria-label="Filter by category">
-      <button aria-pressed="true" data-f="all">All</button>
-      <button aria-pressed="false" data-f="trackers">Trackers</button>
-      <button aria-pressed="false" data-f="builds">Builds</button>
-      <button aria-pressed="false" data-f="setups">Setups</button>
-      <button aria-pressed="false" data-f="research">Research</button>
-    </div>
-    <a class="row" href="nimbus-desk.html" data-cat="builds">
-      <span class="num">001</span>
-      <span class="mid"><span class="nm">NIMBUS DESK</span><small>The 9-agent AI trading desk</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="kronos-market-ai.html" data-cat="setups">
-      <span class="num">003</span>
-      <span class="mid"><span class="nm">KRONOS</span><small>Open-source AI that predicts candlesticks</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="nancy-pelosi-tracker.html" data-cat="trackers">
-      <span class="num">004</span>
-      <span class="mid"><span class="nm">PELOSI TRACKER</span><small>Every disclosed trade, charted live</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="worldmonitor-warroom.html" data-cat="builds">
-      <span class="num">006</span>
-      <span class="mid"><span class="nm">WORLD MONITOR</span><small>The war-room market dashboard</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="fundamentals-db.html" data-cat="builds">
-      <span class="num">007</span>
-      <span class="mid"><span class="nm">FUNDAMENTALS DB</span><small>Our 3,000-stock quant database</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="claude-finance-agents.html" data-cat="setups">
-      <span class="num">008</span>
-      <span class="mid"><span class="nm">CLAUDE FINANCE AGENTS</span><small>Anthropic's 10 finance agents, explained</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="quant-bible.html" data-cat="research">
-      <span class="num">009</span>
-      <span class="mid"><span class="nm">QUANT BIBLE</span><small>MIT students' leaked 50-page interview doc</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="ai-capital-stack.html" data-cat="research">
-      <span class="num">010</span>
-      <span class="mid"><span class="nm">AI CAPITAL STACK</span><small>OpenAI × Anthropic × China — the money map</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="vix-playbook.html" data-cat="research">
-      <span class="num">013</span>
-      <span class="mid"><span class="nm">VIX PLAYBOOK</span><small>The market's buy button — backtested to 1990</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="quantum-2b-plays.html" data-cat="research">
-      <span class="num">014</span>
-      <span class="mid"><span class="nm">QUANTUM $2B LIST</span><small>The 9 companies the US government funded</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="claude-money-prompts.html" data-cat="setups">
-      <span class="num">015</span>
-      <span class="mid"><span class="nm">CLAUDE MONEY PROMPTS</span><small>10 prompts that fix your finances</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="fable5-prompts.html" data-cat="setups">
-      <span class="num">016</span>
-      <span class="mid"><span class="nm">FABLE 5 PROMPTS</span><small>Official-guide prompting rules for finance</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="micron-thesis.html" data-cat="research">
-      <span class="num">017</span>
-      <span class="mid"><span class="nm">MICRON THESIS</span><small>The AI memory super-cycle report</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="tri-agent-desk-v2.html" data-cat="builds">
-      <span class="num">018</span>
-      <span class="mid"><span class="nm">TRI-AGENT DESK</span><small>Three AIs debate every trade</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="vibe-trading-setup.html" data-cat="builds">
-      <span class="num">019</span>
-      <span class="mid"><span class="nm">VIBE TRADING</span><small>Run an AI hedge fund on your laptop</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="hermes-daily-brief.html" data-cat="builds">
-      <span class="num">020</span>
-      <span class="mid"><span class="nm">HERMES BRIEF</span><small>An AI that DMs you a market brief at 7am</small></span>
-      <span class="st st-open">OPEN</span></a>
-    <a class="row" href="claude-pine-indicators.html" data-cat="setups">
-      <span class="num">021</span>
-      <span class="mid"><span class="nm">PINE INDICATORS</span><small>Unlimited indicators on free TradingView</small></span>
-      <span class="st st-open">OPEN</span></a>
+  <section style="margin-top:56px">
+    <div class="eyebrow">THE FLOOR</div>
+    <h2>Free for everyone</h2>
+    <p class="sub">No code needed &mdash; tap anything.</p>
+    <div class="showme">SHOW ME:</div>
+    <div class="chips" id="chips" role="group" aria-label="Filter"></div>
+    <div class="rows" style="margin-top:6px" id="floorRows"></div>
   </section>
 
-  <section class="brief" aria-label="Newsletter">
-    <h3>The Cloud9 Brief</h3>
-    <p>One tight market read, written by the desk's own AI pipeline, delivered before the open. No spam, unsubscribe any time.</p>
-    <a class="join" id="joinBrief" href="mailto:hello@cloud9markets.com?subject=Join%20The%20Cloud9%20Brief&body=Add%20me%20to%20the%20list.">Join free</a>
+  <section class="brief">
+    <div class="eyebrow">NEWSLETTER</div>
+    <h2>The Cloud9 Brief</h2>
+    <p>One sharp market read every morning, written by our AI desk. Free.</p>
+    <a class="get" href="https://cloud9markets.substack.com/subscribe" target="_blank" rel="noopener">Get it free &rarr;</a>
   </section>
 
-  <footer>
-    <b>Cloud9 Markets</b> · research desk, not an adviser<br/>
-    Nothing here is financial advice. Markets involve risk — do your own research.
-  </footer>
+  <div class="svc">
+    <p><span style="color:#c1a467">Work with the desk.</span> I build AI agents, finance research agents, market dashboards and automated briefing pipelines &mdash; the same machinery that runs Cloud9. <a href="mailto:hello@kloud9ai.com.au?subject=Project%20enquiry">hello@kloud9ai.com.au</a></p>
+    <div class="foot">&copy; 2026 CLOUD9 MARKETS &middot; EDUCATIONAL ONLY &mdash; NOT FINANCIAL ADVICE</div>
+  </div>
 </div>
+<button class="pill" id="pill" type="button">GOT A CODE?</button>
 <script>
-const CODES = {"MAP285": "012", "WHALE35": "011", "TRUMP99": "005", "CHART2": "002"}; // append-only, valid FOREVER
-// gates auto-expire (codes keep working as confirmations after)
-const GATE_UNTIL = {"012": "2026-09-30", "011": "2026-09-30", "005": "2026-09-30", "002": "2026-09-30"};
-const PAGES = {"012": "saas-repricing-map.html", "011": "whale-58bro.html", "005": "trump-trade-tracker.html", "002": "claude-tradingview-setup.html"};           // drop number -> page
-const MASTER = "C9DESK";           // change me: opens everything
-const store = JSON.parse(localStorage.getItem("c9open") || "[]");
-const msg = document.getElementById("msg");
+// ============ EDITABLE CONSTANTS ============
+const BASE = 'https://www.cloud9markets.com/';
+const VAULT = [["005", "Trump Transaction Ledger", "Every OGE filing decoded — 25k transactions", "Live tracker", "trump-trade-tracker.html"], ["011", "The $35M Whale", "Hyperliquid wallet forensics — verified on-chain", "Market report", "whale-58bro.html"], ["012", "SaaS Repricing Map", "The $285B wipeout + our decade map", "Market report", "saas-repricing-map.html"], ["002", "Claude × TradingView", "Claude reads & drives your charts — free setup", "How-to guide", "claude-tradingview-setup.html"]];
+const CODES = { 'TRUMP99':'005', 'WHALE35':'011', 'MAP285':'012', 'CHART2':'002' }; // permanent, append-only
+const MASTER_CODE = 'C9MASTER';
+const GATE_UNTIL = { '005':'2026-12-31', '011':'2026-12-31', '012':'2026-12-31', '002':'2026-12-31' };
+const FLOOR = [["001", "Nimbus Desk", "The 9-agent AI trading desk — full build guide", "How-to guides", "nimbus-desk.html"], ["003", "Kronos", "The open-source AI that predicts candlesticks", "AI tools", "kronos-market-ai.html"], ["004", "Pelosi Tracker", "Every disclosed trade, charted live", "Live trackers", "nancy-pelosi-tracker.html"], ["006", "World Monitor", "The war-room market dashboard", "Live trackers", "worldmonitor-warroom.html"], ["007", "Fundamentals DB", "Our 3,000-stock quant database", "Market reports", "fundamentals-db.html"], ["008", "Claude Finance Agents", "Anthropic's 10 finance agents, explained", "How-to guides", "claude-finance-agents.html"], ["009", "Quant Bible", "MIT students' leaked 50-page interview doc", "Market reports", "quant-bible.html"], ["010", "AI Capital Stack", "OpenAI × Anthropic × China — the money map", "Market reports", "ai-capital-stack.html"], ["013", "VIX Playbook", "The market's buy button — backtested to 1990", "Market reports", "vix-playbook.html"], ["014", "Quantum $2B List", "The 9 companies the US government just funded", "Market reports", "quantum-2b-plays.html"], ["015", "Claude Money Prompts", "10 prompts that fix your finances", "How-to guides", "claude-money-prompts.html"], ["016", "Fable 5 Prompts", "The official-guide prompting rules for finance", "How-to guides", "fable5-prompts.html"], ["017", "Micron Thesis", "The AI memory super-cycle research report", "Market reports", "micron-thesis.html"], ["018", "Tri-Agent Desk", "Three AIs debate every trade", "AI tools", "tri-agent-desk-v2.html"], ["019", "Vibe Trading", "Run an AI hedge fund on your laptop", "How-to guides", "vibe-trading-setup.html"], ["020", "Hermes Brief", "An AI that DMs you a market brief at 7am", "AI tools", "hermes-daily-brief.html"], ["021", "Pine Indicators", "Unlimited indicators on free TradingView", "How-to guides", "claude-pine-indicators.html"]];
+const MSG_WRONG = "That code doesn\u2019t match. Comment the word on our latest post and we\u2019ll DM it to you \u2014 free.";
+const MSG_ALREADY = "This one\u2019s already free \u2014 tap it below.";
+const MSG_MASTER = "Master code accepted \u2014 everything\u2019s open.";
+// ============================================
 
-function openRow(n, animate) {
-  const row = document.querySelector('.row.locked[data-n="' + n + '"]');
-  if (!row) return;
-  const nm = row.querySelector(".nm");
-  const name = nm.dataset.name;
-  const reveal = () => {
-    nm.innerHTML = name.split(" ").map(w =>
-      '<span class="w">' + w.split("").map(c => '<span class="fc">' + c + "</span>").join("") + "</span>").join(" ");
-    nm.classList.remove("flapped");
-    row.classList.remove("locked");
-    row.querySelector(".st").textContent = "OPEN";
-    row.querySelector(".st").className = "st st-open";
-    row.setAttribute("aria-label", "Drop " + n + " — open");
-    row.addEventListener("click", () => location.href = row.dataset.href);
-    row.addEventListener("keydown", e => { if (e.key === "Enter") location.href = row.dataset.href; });
-    updateCounter();
-  };
-  if (animate) { row.classList.add("unlocking"); setTimeout(reveal, 250); }
-  else reveal();
+const norm = s => String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,'').replace(/^C9/,'');
+const motionOK = () => !matchMedia('(prefers-reduced-motion: reduce)').matches;
+const expired = id => GATE_UNTIL[id] && Date.now() > Date.parse(GATE_UNTIL[id]+'T23:59:59');
+let unlocked = [];
+try { const s = JSON.parse(localStorage.getItem('c9vault2')||'[]'); if (Array.isArray(s)) unlocked = s; } catch(e){}
+const isOpen = id => unlocked.includes(id) || expired(id);
+let filter = 'All';
+const gmsg = document.getElementById('gmsg');
+const input = document.getElementById('c9code');
+
+function fmtDate(iso){ const d = new Date(iso+'T00:00:00'); return d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
+
+function renderVault(flashId){
+  document.getElementById('vaultRows').innerHTML = VAULT.map(v => {
+    const id = v[0], title = v[1], desc = v[2], tag = v[3], page = v[4];
+    if (isOpen(id)) {
+      return '<a class="vrow'+(flashId===id&&motionOK()?' flash':'')+'" id="row'+id+'" href="'+BASE+page+'">'
+        +'<span class="vnum">'+id+'</span><span class="vmid">'
+        +'<span class="vstat">OPEN NOW \u00b7 '+tag.toUpperCase()+'</span>'
+        +'<span class="vtitle">'+title+'</span><span class="vdesc">'+desc+'</span></span>'
+        +'<span class="vgo">Open \u2192</span></a>';
+    }
+    const until = GATE_UNTIL[id] ? 'LOCKED \u00b7 FREE FOR EVERYONE ON '+fmtDate(GATE_UNTIL[id]).toUpperCase() : 'LOCKED';
+    return '<div class="vrow sealed" id="row'+id+'" role="button" tabindex="0" aria-label="'+title+' \u2014 locked, needs a code">'
+      +'<span class="vnum">'+id+'</span><span class="vmid">'
+      +'<span class="vstat">'+until+'</span>'
+      +'<span class="vtitle">'+title+'</span><span class="vdesc">'+desc+'</span></span>'
+      +'<span class="needs">NEEDS CODE</span></div>';
+  }).join('');
+  document.querySelectorAll('.vrow.sealed').forEach(r => {
+    r.addEventListener('click', goToGate);
+    r.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' '){ e.preventDefault(); goToGate(); } });
+  });
 }
-function updateCounter() {
-  const open = 4 - document.querySelectorAll(".row.locked").length;
-  document.getElementById("counter").textContent = open + "/4 OPEN";
+function renderFloor(){
+  const cats = ['All','Live trackers','AI tools','How-to guides','Market reports'];
+  document.getElementById('chips').innerHTML = cats.map(c => {
+    const n = c==='All' ? FLOOR.length : FLOOR.filter(d => d[3]===c).length;
+    return '<button aria-pressed="'+(filter===c)+'" data-c="'+c+'">'+c+' ('+n+')</button>';
+  }).join('');
+  document.querySelectorAll('#chips button').forEach(b => b.addEventListener('click', () => { filter=b.dataset.c; renderFloor(); }));
+  document.getElementById('floorRows').innerHTML = FLOOR
+    .filter(d => filter==='All' || d[3]===filter)
+    .map(d => '<a class="frow" href="'+BASE+d[4]+'">'
+      +'<span class="fnum">'+d[0]+'</span><span class="fmid">'
+      +'<span class="ftitle">'+d[1]+'</span><span class="fdesc">'+d[2]+'</span></span>'
+      +'<span class="fgo">Open \u2192</span></a>').join('');
 }
-function tryCode(raw) {
-  const c = raw.trim().toUpperCase();
-  if (!c) return;
-  if (c === MASTER) {
-    Object.values(CODES).forEach(n => { if (!store.includes(n)) store.push(n); openRow(n, true); });
-    localStorage.setItem("c9open", JSON.stringify(store));
-    msg.textContent = "Desk key accepted — board open.";
-    msg.className = "gate-msg ok";
+function say(t, ok){ gmsg.hidden=false; gmsg.textContent=t; gmsg.style.color = ok ? '#c1a467' : '#c98d76'; }
+function goToGate(){
+  const g = document.getElementById('gate');
+  const top = g.getBoundingClientRect().top + scrollY - 120;
+  scrollTo({ top: Math.max(top, 0), behavior: motionOK() ? 'smooth' : 'auto' });
+  setTimeout(() => input.focus({ preventScroll:true }), motionOK() ? 350 : 0);
+}
+function scrollToRow(id){
+  const el = document.getElementById('row'+id);
+  if (el) scrollTo({ top: el.getBoundingClientRect().top + scrollY - 140, behavior: motionOK() ? 'smooth' : 'auto' });
+}
+function persist(){ localStorage.setItem('c9vault2', JSON.stringify(unlocked)); }
+function unlock(raw){
+  const c = norm(raw != null ? raw : input.value);
+  if (!c){ goToGate(); return; }
+  if (c === norm(MASTER_CODE)){
+    unlocked = VAULT.map(v => v[0]); persist(); renderVault(); say(MSG_MASTER, true); input.value=''; return;
+  }
+  const key = Object.keys(CODES).find(k => norm(k) === c);
+  if (!key){
+    say(MSG_WRONG, false);
+    const g = document.getElementById('gate');
+    if (motionOK()){ g.classList.remove('shake'); void g.offsetWidth; g.classList.add('shake'); }
     return;
   }
-  if (CODES[c]) {
-    const n = CODES[c];
-    const already = !document.querySelector('.row.locked[data-n="' + n + '"]');
-    if (!store.includes(n)) store.push(n);
-    localStorage.setItem("c9open", JSON.stringify(store));
-    openRow(n, true);
-    msg.textContent = already ? "Drop #" + n + " is already open — tap the row." : "Drop #" + n + " is open — tap the row.";
-    msg.className = "gate-msg ok";
-  } else {
-    msg.textContent = "Not a live code. Comment the word on our latest post and check your DM.";
-    msg.className = "gate-msg";
-  }
+  const id = CODES[key];
+  const already = isOpen(id);
+  if (!unlocked.includes(id)){ unlocked.push(id); persist(); }
+  renderVault(already ? null : id);
+  const entry = VAULT.find(v => v[0]===id);
+  say(already ? MSG_ALREADY : ('Unlocked \u2014 NO.'+id+' '+(entry?entry[1]:'')+' is open below.'), true);
+  input.value='';
+  setTimeout(() => scrollToRow(id), 300);
 }
-document.getElementById("unlock").addEventListener("click", () => tryCode(document.getElementById("code").value));
-document.getElementById("code").addEventListener("keydown", e => { if (e.key === "Enter") tryCode(e.target.value); });
-document.querySelectorAll(".row.locked").forEach(r => {
-  const hint = () => { msg.textContent = "Sealed. Comment the word on the matching post — the code arrives by DM."; msg.className = "gate-msg"; document.getElementById("code").focus(); };
-  r.addEventListener("click", hint);
-  r.addEventListener("keydown", e => { if (e.key === "Enter") hint(); });
-});
-// expired gates auto-open (codes remain valid as confirmations forever)
-Object.entries(GATE_UNTIL).forEach(([n, until]) => {
-  if (new Date(until + "T23:59:59") < new Date()) openRow(n, false);
-});
-store.forEach(n => openRow(n, false));
-document.querySelectorAll(".chips button").forEach(b => b.addEventListener("click", () => {
-  document.querySelectorAll(".chips button").forEach(x => x.setAttribute("aria-pressed", "false"));
-  b.setAttribute("aria-pressed", "true");
-  const f = b.dataset.f;
-  document.querySelectorAll('.row[data-cat]').forEach(r => {
-    r.style.display = (f === "all" || r.dataset.cat === f) ? "flex" : "none";
-  });
-}));
-if (location.hash.length > 1) { document.getElementById("code").value = location.hash.slice(1); tryCode(location.hash.slice(1)); }
+document.getElementById('openBtn').addEventListener('click', () => unlock());
+input.addEventListener('keydown', e => { if (e.key==='Enter') unlock(); });
+document.getElementById('pill').addEventListener('click', goToGate);
+renderVault(); renderFloor();
+if (location.hash.length > 1) setTimeout(() => unlock(decodeURIComponent(location.hash.slice(1))), 400);
 </script>
 </body>
 </html>
