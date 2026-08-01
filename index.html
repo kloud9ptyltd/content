@@ -4,132 +4,286 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>Cloud9 Markets</title>
-<meta property="og:title" content="Cloud9 Markets — every build, tracker & guide"/>
-<meta property="og:description" content="Tap the number from your DM. Every Cloud9 build, tracker, and guide — free."/>
+<meta property="og:title" content="Cloud9 Markets — the board"/>
+<meta property="og:description" content="Builds, trackers and research at the edge of AI and finance. Free, educational, never advice. Got a code from our DM? The board opens here."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,500..900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#06080f;--card:#11161f;--line:rgba(255,255,255,.08);--tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--c9:#46a8ff;--gold:#e6c878}
+  :root{--bg:#0A0F1C;--panel:#101725;--flap:#131A2A;--flap2:#0D1322;--line:#1D2739;
+    --bone:#E9E4D8;--bone-dim:#B9B4A8;--slate:#8A93A8;--blue:#46A8FF;--live:#FF5C49}
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-  body{max-width:520px;margin:0 auto;padding:0 14px 70px;
-    background:radial-gradient(700px 400px at 85% -5%,rgba(70,168,255,.12),transparent 60%),var(--bg)}
-  header{padding:30px 4px 8px;text-align:center}
-  header img{height:44px}
-  header h1{font-size:20px;font-weight:850;margin-top:10px}
-  header p{font-size:13.5px;color:var(--mut);margin-top:5px;line-height:1.45}
-  header p b{color:var(--gold)}
-  input#q{width:100%;margin:16px 0 12px;background:var(--card);border:1px solid var(--line);border-radius:12px;
-    padding:12px 14px;font-size:15px;color:var(--tx);outline:none}
-  .card{display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--line);border-radius:14px;
-    padding:12px 13px;margin-bottom:9px;text-decoration:none;color:var(--tx)}
-  .card:active{border-color:var(--c9)}
-  .num{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:14px;font-weight:800;color:var(--c9);
-    background:rgba(70,168,255,.1);border:1px solid rgba(70,168,255,.28);border-radius:8px;padding:6px 8px;flex:none}
-  .ic{font-size:18px;flex:none}
-  .m{flex:1;min-width:0}
-  .m b{font-size:14.5px;display:block}
-  .m small{font-size:12px;color:var(--mut);display:block;margin-top:2px;line-height:1.35}
-  .go{color:var(--faint);font-size:16px;flex:none}
-  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11px;line-height:1.7}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--bone);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+    background-image:linear-gradient(var(--line) 1px, transparent 1px);background-size:100% 96px;background-position:0 40px}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px 90px}
+  a{color:inherit}
+  /* masthead */
+  header{padding:44px 0 8px;text-align:left}
+  .mark{display:flex;align-items:center;gap:12px}
+  .mark img{height:34px;border-radius:8px}
+  .mark .co{font-family:Archivo,sans-serif;font-stretch:125%;font-weight:900;font-size:24px;letter-spacing:.5px;text-transform:uppercase}
+  .mark .co i{font-style:normal;color:var(--blue)}
+  .tag{margin-top:14px;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:3px;color:var(--slate);text-transform:uppercase}
+  .lede{margin-top:14px;font-size:15.5px;line-height:1.6;color:var(--bone-dim);max-width:46ch}
+  .lede b{color:var(--bone);font-weight:600}
+  .socials{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .socials a{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:1.5px;color:var(--slate);
+    border:1px solid var(--line);border-radius:4px;padding:8px 12px;text-decoration:none;text-transform:uppercase}
+  .socials a:hover,.socials a:focus-visible{color:var(--bone);border-color:var(--slate)}
+  /* board section headers */
+  .bhead{display:flex;align-items:baseline;gap:12px;margin:46px 0 0;border-bottom:2px solid var(--bone);padding-bottom:10px}
+  .bhead h2{font-family:Archivo,sans-serif;font-stretch:125%;font-weight:900;font-size:17px;letter-spacing:1.5px;text-transform:uppercase}
+  .bhead .r{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:2px;color:var(--slate)}
+  .bhead .dot{width:8px;height:8px;border-radius:50%;background:var(--live);display:inline-block;margin-right:6px;animation:pulse 2s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  .bnote{font-size:13.5px;line-height:1.55;color:var(--slate);margin:12px 0 4px}
+  .bnote b{color:var(--bone-dim)}
+  /* code entry */
+  .gate{display:flex;gap:8px;margin:16px 0 6px}
+  .gate input{flex:1;background:var(--flap2);border:1px solid var(--line);border-radius:4px;color:var(--bone);
+    font-family:"IBM Plex Mono",monospace;font-size:15px;letter-spacing:3px;padding:13px 14px;text-transform:uppercase;outline:none;min-width:0}
+  .gate input:focus-visible{border-color:var(--blue)}
+  .gate button{background:var(--bone);color:var(--bg);border:none;border-radius:4px;font-family:Archivo,sans-serif;
+    font-stretch:125%;font-weight:800;font-size:13px;letter-spacing:1.5px;padding:0 20px;cursor:pointer;text-transform:uppercase}
+  .gate button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .gate-msg{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:1px;color:var(--slate);min-height:18px;margin-bottom:6px}
+  .gate-msg.ok{color:var(--blue)}
+  /* filter chips */
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0 10px}
+  .chips button{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--slate);background:none;border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer}
+  .chips button[aria-pressed="true"]{color:var(--bg);background:var(--bone);border-color:var(--bone);font-weight:600}
+  .chips button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  /* board rows */
+  .row{display:flex;align-items:center;gap:13px;background:var(--panel);border:1px solid var(--line);border-left:none;border-right:none;
+    padding:15px 12px;margin-top:-1px;text-decoration:none;min-height:64px}
+  .row:hover,.row:focus-visible{background:var(--flap)}
+  .row:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+  .num{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;color:var(--slate);flex:none;width:34px}
+  .mid{flex:1;min-width:0}
+  .nm{font-family:Archivo,sans-serif;font-stretch:125%;font-weight:800;font-size:15px;letter-spacing:1px;text-transform:uppercase;display:block}
+  .mid small{display:block;font-size:12.5px;color:var(--slate);margin-top:4px;line-height:1.4}
+  .st{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:2px;flex:none;padding:6px 9px;border-radius:3px}
+  .st-open{color:var(--blue);border:1px solid rgba(70,168,255,.35)}
+  .st-lock{color:var(--slate);border:1px solid var(--line)}
+  .row.locked{cursor:pointer}
+  .row.locked .nm{color:var(--slate)}
+  /* flap cells */
+  .fc{display:inline-block;background:var(--flap);border-radius:2px;padding:2px 1px;margin-right:1px;min-width:11px;text-align:center;
+    box-shadow:inset 0 -1px 0 rgba(0,0,0,.5)}
+  .row.unlocking .fc{animation:flip .5s ease both}
+  @keyframes flip{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
+  @media (prefers-reduced-motion: reduce){.row.unlocking .fc{animation:none}.bhead .dot{animation:none}}
+  /* brief panel */
+  .brief{margin-top:46px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:20px}
+  .brief h3{font-family:Archivo,sans-serif;font-stretch:125%;font-weight:900;font-size:16px;letter-spacing:1.5px;text-transform:uppercase}
+  .brief p{font-size:13.5px;line-height:1.55;color:var(--slate);margin-top:8px}
+  .brief a.join{display:inline-block;margin-top:14px;background:var(--blue);color:var(--bg);font-family:Archivo,sans-serif;
+    font-stretch:125%;font-weight:800;font-size:13px;letter-spacing:1.5px;padding:12px 22px;border-radius:4px;text-decoration:none;text-transform:uppercase}
+  footer{margin-top:44px;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:1px;color:var(--slate);line-height:2}
+  footer b{color:var(--bone-dim)}
 </style>
 </head>
 <body>
+<div class="wrap">
   <header>
-    <img src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/>
-    <h1>Cloud9 Markets</h1>
-    <p>Got a number from our DM? <b>Tap it below.</b><br/>Every build, tracker &amp; guide — free. Educational only, not financial advice.</p>
+    <div class="mark"><img src="cloud9-logo.png" alt=""/><span class="co">Cloud<i>9</i> Markets</span></div>
+    <div class="tag">AI &nbsp;·&nbsp; MARKETS &nbsp;·&nbsp; RESEARCH</div>
+    <p class="lede">Builds, trackers and research from one desk at the edge of AI and finance. <b>Everything here is free.</b> Everything is educational — never advice.</p>
+    <nav class="socials" aria-label="Elsewhere">
+      <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">X</a>
+      <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">YouTube</a>
+      <a href="mailto:hello@cloud9markets.com">Email</a>
+    </nav>
   </header>
-  <input id="q" type="search" placeholder="Type a number or name… e.g. 005 or trump" oninput="f(this.value)"/>
-  <a class="card" href="nimbus-desk.html" id="l001">
-    <span class="num">#001</span><span class="ic">🖥️</span>
-    <span class="m"><b>NIMBUS DESK</b><small>The 9-agent AI trading desk — full build guide</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="claude-tradingview-setup.html" id="l002">
-    <span class="num">#002</span><span class="ic">📈</span>
-    <span class="m"><b>CLAUDE × TRADINGVIEW</b><small>Free setup — Claude reads & drives your charts</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="kronos-market-ai.html" id="l003">
-    <span class="num">#003</span><span class="ic">🔮</span>
-    <span class="m"><b>KRONOS</b><small>The open-source AI that predicts candlesticks</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="nancy-pelosi-tracker.html" id="l004">
-    <span class="num">#004</span><span class="ic">👑</span>
-    <span class="m"><b>PELOSI TRACKER</b><small>Every disclosed trade, charted live</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="trump-trade-tracker.html" id="l005">
-    <span class="num">#005</span><span class="ic">🇺🇸</span>
-    <span class="m"><b>TRUMP TRACKER</b><small>Every OGE filing decoded — 25k transactions</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="worldmonitor-warroom.html" id="l006">
-    <span class="num">#006</span><span class="ic">🌍</span>
-    <span class="m"><b>WORLD MONITOR</b><small>The war-room market dashboard</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="fundamentals-db.html" id="l007">
-    <span class="num">#007</span><span class="ic">🗄️</span>
-    <span class="m"><b>FUNDAMENTALS DB</b><small>Our 3,000-stock quant database</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="claude-finance-agents.html" id="l008">
-    <span class="num">#008</span><span class="ic">🤖</span>
-    <span class="m"><b>CLAUDE FINANCE AGENTS</b><small>Anthropic's 10 finance agents, explained</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="quant-bible.html" id="l009">
-    <span class="num">#009</span><span class="ic">📄</span>
-    <span class="m"><b>QUANT BIBLE</b><small>MIT students' leaked 50-page interview doc</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="ai-capital-stack.html" id="l010">
-    <span class="num">#010</span><span class="ic">🌐</span>
-    <span class="m"><b>AI CAPITAL STACK</b><small>OpenAI × Anthropic × China — the money map</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="whale-58bro.html" id="l011">
-    <span class="num">#011</span><span class="ic">🐋</span>
-    <span class="m"><b>THE $35M WHALE</b><small>Hyperliquid wallet forensics — verified on-chain</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="saas-repricing-map.html" id="l012">
-    <span class="num">#012</span><span class="ic">💥</span>
-    <span class="m"><b>SAAS REPRICING MAP</b><small>The $285B wipeout + our decade map</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="vix-playbook.html" id="l013">
-    <span class="num">#013</span><span class="ic">🛡️</span>
-    <span class="m"><b>VIX PLAYBOOK</b><small>The market's buy button — backtested to 1990</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="quantum-2b-plays.html" id="l014">
-    <span class="num">#014</span><span class="ic">⚛️</span>
-    <span class="m"><b>QUANTUM $2B LIST</b><small>The 9 companies the US government just funded</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="claude-money-prompts.html" id="l015">
-    <span class="num">#015</span><span class="ic">💰</span>
-    <span class="m"><b>CLAUDE MONEY PROMPTS</b><small>10 prompts that fix your finances</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="fable5-prompts.html" id="l016">
-    <span class="num">#016</span><span class="ic">✳️</span>
-    <span class="m"><b>FABLE 5 PROMPTS</b><small>The official-guide prompting rules for finance</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="micron-thesis.html" id="l017">
-    <span class="num">#017</span><span class="ic">💾</span>
-    <span class="m"><b>MICRON THESIS</b><small>The AI memory super-cycle research report</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="tri-agent-desk-v2.html" id="l018">
-    <span class="num">#018</span><span class="ic">🧠</span>
-    <span class="m"><b>TRI-AGENT DESK</b><small>Three AIs debate every trade</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="vibe-trading-setup.html" id="l019">
-    <span class="num">#019</span><span class="ic">⚡</span>
-    <span class="m"><b>VIBE TRADING</b><small>Run an AI hedge fund on your laptop</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="hermes-daily-brief.html" id="l020">
-    <span class="num">#020</span><span class="ic">📰</span>
-    <span class="m"><b>HERMES BRIEF</b><small>An AI that DMs you a market brief at 7am</small></span>
-    <span class="go">→</span></a>
-  <a class="card" href="claude-pine-indicators.html" id="l021">
-    <span class="num">#021</span><span class="ic">📜</span>
-    <span class="m"><b>PINE INDICATORS</b><small>Unlimited indicators on free TradingView</small></span>
-    <span class="go">→</span></a>
-  <footer>© Cloud9 Markets · @cloud9.markets · not financial advice</footer>
+
+  <section aria-label="This week's drops">
+    <div class="bhead"><h2><span class="dot" aria-hidden="true"></span>This week's drops</h2><span class="r" id="counter">0/4 OPEN</span></div>
+    <p class="bnote">Sealed rows open with a code from our DM — <b>comment the word on the post</b> and it lands in your inbox. Once opened, a drop stays open on this device.</p>
+    <div class="gate">
+      <input id="code" type="text" placeholder="ACCESS CODE" autocomplete="off" autocapitalize="characters" aria-label="Access code"/>
+      <button id="unlock" type="button">Open</button>
+    </div>
+    <div class="gate-msg" id="msg" role="status"></div>
+    <div class="row locked" data-n="012" data-cat="research" data-href="saas-repricing-map.html" tabindex="0" role="button" aria-label="Drop 012 — locked, DM for the code">
+      <span class="num">012</span>
+      <span class="mid"><span class="nm flapped" data-name="SAAS REPRICING MAP"><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span><span class="fc">&nbsp;</span><span class="fc">S</span><span class="fc">E</span><span class="fc">A</span><span class="fc">L</span><span class="fc">E</span><span class="fc">D</span><span class="fc">&nbsp;</span><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span></span><small>The $285B wipeout + our decade map</small></span>
+      <span class="st st-lock">CODE</span></div>
+    <div class="row locked" data-n="011" data-cat="trackers" data-href="whale-58bro.html" tabindex="0" role="button" aria-label="Drop 011 — locked, DM for the code">
+      <span class="num">011</span>
+      <span class="mid"><span class="nm flapped" data-name="THE $35M WHALE"><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span><span class="fc">&nbsp;</span><span class="fc">S</span><span class="fc">E</span><span class="fc">A</span><span class="fc">L</span><span class="fc">E</span><span class="fc">D</span><span class="fc">&nbsp;</span><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span></span><small>Hyperliquid wallet forensics — verified on-chain</small></span>
+      <span class="st st-lock">CODE</span></div>
+    <div class="row locked" data-n="005" data-cat="trackers" data-href="trump-trade-tracker.html" tabindex="0" role="button" aria-label="Drop 005 — locked, DM for the code">
+      <span class="num">005</span>
+      <span class="mid"><span class="nm flapped" data-name="TRUMP TRACKER"><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span><span class="fc">&nbsp;</span><span class="fc">S</span><span class="fc">E</span><span class="fc">A</span><span class="fc">L</span><span class="fc">E</span><span class="fc">D</span><span class="fc">&nbsp;</span><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span></span><small>Every OGE filing decoded — 25k transactions</small></span>
+      <span class="st st-lock">CODE</span></div>
+    <div class="row locked" data-n="002" data-cat="setups" data-href="claude-tradingview-setup.html" tabindex="0" role="button" aria-label="Drop 002 — locked, DM for the code">
+      <span class="num">002</span>
+      <span class="mid"><span class="nm flapped" data-name="CLAUDE × TRADINGVIEW"><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span><span class="fc">&nbsp;</span><span class="fc">S</span><span class="fc">E</span><span class="fc">A</span><span class="fc">L</span><span class="fc">E</span><span class="fc">D</span><span class="fc">&nbsp;</span><span class="fc">/</span><span class="fc">/</span><span class="fc">/</span></span><small>Claude reads & drives your charts — free</small></span>
+      <span class="st st-lock">CODE</span></div>
+  </section>
+
+  <section aria-label="The floor — open archive">
+    <div class="bhead"><h2>The floor</h2><span class="r">ALWAYS OPEN</span></div>
+    <p class="bnote">Every past drop, open to everyone. Numbers never change — if a DM ever hands you a number, it lives here.</p>
+    <div class="chips" role="group" aria-label="Filter by category">
+      <button aria-pressed="true" data-f="all">All</button>
+      <button aria-pressed="false" data-f="trackers">Trackers</button>
+      <button aria-pressed="false" data-f="builds">Builds</button>
+      <button aria-pressed="false" data-f="setups">Setups</button>
+      <button aria-pressed="false" data-f="research">Research</button>
+    </div>
+    <a class="row" href="nimbus-desk.html" data-cat="builds">
+      <span class="num">001</span>
+      <span class="mid"><span class="nm">NIMBUS DESK</span><small>The 9-agent AI trading desk</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="kronos-market-ai.html" data-cat="setups">
+      <span class="num">003</span>
+      <span class="mid"><span class="nm">KRONOS</span><small>Open-source AI that predicts candlesticks</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="nancy-pelosi-tracker.html" data-cat="trackers">
+      <span class="num">004</span>
+      <span class="mid"><span class="nm">PELOSI TRACKER</span><small>Every disclosed trade, charted live</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="worldmonitor-warroom.html" data-cat="builds">
+      <span class="num">006</span>
+      <span class="mid"><span class="nm">WORLD MONITOR</span><small>The war-room market dashboard</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="fundamentals-db.html" data-cat="builds">
+      <span class="num">007</span>
+      <span class="mid"><span class="nm">FUNDAMENTALS DB</span><small>Our 3,000-stock quant database</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="claude-finance-agents.html" data-cat="setups">
+      <span class="num">008</span>
+      <span class="mid"><span class="nm">CLAUDE FINANCE AGENTS</span><small>Anthropic's 10 finance agents, explained</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="quant-bible.html" data-cat="research">
+      <span class="num">009</span>
+      <span class="mid"><span class="nm">QUANT BIBLE</span><small>MIT students' leaked 50-page interview doc</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="ai-capital-stack.html" data-cat="research">
+      <span class="num">010</span>
+      <span class="mid"><span class="nm">AI CAPITAL STACK</span><small>OpenAI × Anthropic × China — the money map</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="vix-playbook.html" data-cat="research">
+      <span class="num">013</span>
+      <span class="mid"><span class="nm">VIX PLAYBOOK</span><small>The market's buy button — backtested to 1990</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="quantum-2b-plays.html" data-cat="research">
+      <span class="num">014</span>
+      <span class="mid"><span class="nm">QUANTUM $2B LIST</span><small>The 9 companies the US government funded</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="claude-money-prompts.html" data-cat="setups">
+      <span class="num">015</span>
+      <span class="mid"><span class="nm">CLAUDE MONEY PROMPTS</span><small>10 prompts that fix your finances</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="fable5-prompts.html" data-cat="setups">
+      <span class="num">016</span>
+      <span class="mid"><span class="nm">FABLE 5 PROMPTS</span><small>Official-guide prompting rules for finance</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="micron-thesis.html" data-cat="research">
+      <span class="num">017</span>
+      <span class="mid"><span class="nm">MICRON THESIS</span><small>The AI memory super-cycle report</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="tri-agent-desk-v2.html" data-cat="builds">
+      <span class="num">018</span>
+      <span class="mid"><span class="nm">TRI-AGENT DESK</span><small>Three AIs debate every trade</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="vibe-trading-setup.html" data-cat="builds">
+      <span class="num">019</span>
+      <span class="mid"><span class="nm">VIBE TRADING</span><small>Run an AI hedge fund on your laptop</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="hermes-daily-brief.html" data-cat="builds">
+      <span class="num">020</span>
+      <span class="mid"><span class="nm">HERMES BRIEF</span><small>An AI that DMs you a market brief at 7am</small></span>
+      <span class="st st-open">OPEN</span></a>
+    <a class="row" href="claude-pine-indicators.html" data-cat="setups">
+      <span class="num">021</span>
+      <span class="mid"><span class="nm">PINE INDICATORS</span><small>Unlimited indicators on free TradingView</small></span>
+      <span class="st st-open">OPEN</span></a>
+  </section>
+
+  <section class="brief" aria-label="Newsletter">
+    <h3>The Cloud9 Brief</h3>
+    <p>One tight market read, written by the desk's own AI pipeline, delivered before the open. No spam, unsubscribe any time.</p>
+    <a class="join" id="joinBrief" href="mailto:hello@cloud9markets.com?subject=Join%20The%20Cloud9%20Brief&body=Add%20me%20to%20the%20list.">Join free</a>
+  </section>
+
+  <footer>
+    <b>Cloud9 Markets</b> · research desk, not an adviser<br/>
+    Nothing here is financial advice. Markets involve risk — do your own research.
+  </footer>
+</div>
 <script>
-function f(v){v=v.toLowerCase().replace('#','');
-  document.querySelectorAll('.card').forEach(c=>{
-    c.style.display = c.textContent.toLowerCase().includes(v) ? 'flex' : 'none';});}
-if(location.hash){const el=document.getElementById('l'+location.hash.replace('#',''));
-  if(el){el.scrollIntoView();el.style.borderColor='#46a8ff';}}
+const CODES = {"MAP285": "012", "WHALE35": "011", "TRUMP99": "005", "CHART2": "002"};           // code -> drop number
+const PAGES = {"012": "saas-repricing-map.html", "011": "whale-58bro.html", "005": "trump-trade-tracker.html", "002": "claude-tradingview-setup.html"};           // drop number -> page
+const MASTER = "C9DESK";           // change me: opens everything
+const store = JSON.parse(localStorage.getItem("c9open") || "[]");
+const msg = document.getElementById("msg");
+
+function openRow(n, animate) {
+  const row = document.querySelector('.row.locked[data-n="' + n + '"]');
+  if (!row) return;
+  const nm = row.querySelector(".nm");
+  const name = nm.dataset.name;
+  const reveal = () => {
+    nm.innerHTML = name.split("").map(c => '<span class="fc">' + (c === " " ? "&nbsp;" : c) + "</span>").join("");
+    nm.classList.remove("flapped");
+    row.classList.remove("locked");
+    row.querySelector(".st").textContent = "OPEN";
+    row.querySelector(".st").className = "st st-open";
+    row.setAttribute("aria-label", "Drop " + n + " — open");
+    row.addEventListener("click", () => location.href = row.dataset.href);
+    row.addEventListener("keydown", e => { if (e.key === "Enter") location.href = row.dataset.href; });
+  };
+  if (animate) { row.classList.add("unlocking"); setTimeout(reveal, 250); }
+  else reveal();
+  updateCounter();
+}
+function updateCounter() {
+  const open = 4 - document.querySelectorAll(".row.locked").length;
+  document.getElementById("counter").textContent = open + "/4 OPEN";
+}
+function tryCode(raw) {
+  const c = raw.trim().toUpperCase();
+  if (!c) return;
+  if (c === MASTER) {
+    Object.values(CODES).forEach(n => { if (!store.includes(n)) store.push(n); openRow(n, true); });
+    localStorage.setItem("c9open", JSON.stringify(store));
+    msg.textContent = "Desk key accepted — board open.";
+    msg.className = "gate-msg ok";
+    return;
+  }
+  if (CODES[c]) {
+    const n = CODES[c];
+    if (!store.includes(n)) store.push(n);
+    localStorage.setItem("c9open", JSON.stringify(store));
+    openRow(n, true);
+    msg.textContent = "Drop #" + n + " is open — tap the row.";
+    msg.className = "gate-msg ok";
+  } else {
+    msg.textContent = "Not a live code. Comment the word on our latest post and check your DM.";
+    msg.className = "gate-msg";
+  }
+}
+document.getElementById("unlock").addEventListener("click", () => tryCode(document.getElementById("code").value));
+document.getElementById("code").addEventListener("keydown", e => { if (e.key === "Enter") tryCode(e.target.value); });
+document.querySelectorAll(".row.locked").forEach(r => {
+  const hint = () => { msg.textContent = "Sealed. Comment the word on the matching post — the code arrives by DM."; msg.className = "gate-msg"; document.getElementById("code").focus(); };
+  r.addEventListener("click", hint);
+  r.addEventListener("keydown", e => { if (e.key === "Enter") hint(); });
+});
+store.forEach(n => openRow(n, false));
+document.querySelectorAll(".chips button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".chips button").forEach(x => x.setAttribute("aria-pressed", "false"));
+  b.setAttribute("aria-pressed", "true");
+  const f = b.dataset.f;
+  document.querySelectorAll('.row[data-cat]').forEach(r => {
+    r.style.display = (f === "all" || r.dataset.cat === f) ? "flex" : "none";
+  });
+}));
+if (location.hash.length > 1) { document.getElementById("code").value = location.hash.slice(1); tryCode(location.hash.slice(1)); }
 </script>
 </body>
 </html>
