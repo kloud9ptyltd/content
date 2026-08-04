@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Build Your First AI Agent From Your Phone — Claude Cowork · Cloud9</title>
+<meta property="og:title" content="Build your first AI agent — from your phone, in ~60 seconds"/>
+<meta property="og:description" content="Claude Cowork builds a working agent that emails you a personalized market brief every morning. No laptop, no code — one prompt."/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(106,168,255,.10),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
+  h1 em{font-style:normal;color:var(--g)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
+  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
+  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .step{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--g);color:#04130c;font-weight:900;font-size:14px;margin-right:10px}
+  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
+  .step p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0;padding-left:36px}
+  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px}
+  .note b{color:var(--mut)}
+  .code{position:relative;margin:14px 0 0;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:14px 14px 13px;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.6;color:#d8e6ff;white-space:pre-wrap;word-break:break-word}
+  .code .ph{color:var(--gold)}
+  .cp{position:absolute;top:8px;right:8px;font-size:11px;font-weight:700;color:var(--mut);background:var(--card2);border:1px solid var(--line2);border-radius:7px;padding:5px 9px;cursor:pointer}
+  .cp:active{color:var(--g)}
+  .promptCard{margin-top:22px;background:var(--card);border:1px solid rgba(22,224,138,.35);border-radius:18px;padding:18px}
+  .promptCard h3{font-size:17px;font-weight:800}
+  .promptCard .sub{font-size:13.5px;line-height:1.5;color:#cfd8e4;margin-top:8px}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.35);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Claude Cowork · Mobile</span></header>
+
+  <h1>Build your first AI agent — <em>from your phone.</em></h1>
+  <p class="lede">One prompt into <b>Claude's Cowork mode</b> and you get a working agent that researches the market and <b>emails you a personalized morning brief</b> — your holdings first — every weekday, automatically. No laptop. No code.</p>
+
+  <div class="agents">
+    <span class="chip">📱 Phone only</span>
+    <span class="chip">⏱ ~2 minutes</span>
+    <span class="chip">🧑‍💻 Zero code</span>
+    <span class="chip">☁️ Runs while you sleep</span>
+  </div>
+
+  <div class="sect">The Setup</div>
+
+  <div class="step">
+    <h3><span class="n">1</span>Get the Claude app</h3>
+    <p>Download <b>Claude</b> from the App Store or Google Play and sign in. Cowork is Claude's agent workspace — it can use tools, connect services and schedule work for you.</p>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">2</span>Open Cowork</h3>
+    <p>In the app, switch to the <b>Cowork</b> tab. This is the mode where Claude doesn't just chat — it <b>does the work</b>: research, building, sending, scheduling.</p>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">3</span>Copy the prompt below &amp; fill 4 blanks</h3>
+    <p>Your holdings, your email, your timezone, your delivery time. The <span style="color:var(--gold)">gold placeholders</span> are the only things you touch.</p>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">4</span>Paste, send, answer its questions</h3>
+    <p>Claude checks your connected tools for an email sender (it will help you connect <b>AgentMail</b> — a connector that can actually <b>send</b> mail, not just draft it), sends a live test brief to your inbox, then schedules it to run <b>every weekday in the cloud</b> — even with your phone off.</p>
+    <p class="note"><b>Heads-up:</b> the first email can land in spam / Promotions — mark it "not spam" and whitelist the sender. That's normal for any new sending address.</p>
+  </div>
+
+  <div class="promptCard">
+    <h3>📋 The prompt (copy it exactly)</h3>
+    <p class="sub">This is the full agent spec — delivery setup, the 8-section brief, email-safe design, a live test send, and the recurring schedule. Tap Copy.</p>
+    <div class="code"><button class="cp">Copy</button>Set up a recurring daily market morning brief for me, delivered by email.
+
+=== FILL THESE IN ===
+- My holdings: <span class="ph">{{HOLDINGS — e.g. AAPL, MSFT, NVDA, TSLA, JPM}}</span>
+- Send to: <span class="ph">{{YOUR_EMAIL}}</span>
+- Timezone: <span class="ph">{{TIMEZONE — e.g. US Eastern}}</span>
+- Delivery time: <span class="ph">{{TIME — e.g. 8:30 AM, weekdays only}}</span>
+=====================
+
+FIRST, ask me any clarifying questions, then:
+
+1) DELIVERY SETUP
+   I want this SENT to my inbox automatically (not left as a draft). Check my
+   connected tools for an email connector that can actually SEND (e.g. AgentMail,
+   Resend). If the only email tool can just draft (like the standard Gmail
+   connector), tell me and help me connect a send-capable one. Create/use a
+   dedicated sending inbox for these briefs.
+
+2) BUILD TODAY'S BRIEF (research fresh data every run — never reuse old numbers)
+   Include these sections, in this order:
+   • MY PORTFOLIO (put this FIRST — most important): for each of my holdings,
+     latest news, price action, and any upcoming catalyst (earnings, product
+     events). Flag which holding has an event coming up.
+   • MARKET SNAPSHOT: S&amp;P 500, Nasdaq, Dow — levels and % change.
+   • TOP MARKET NEWS: key global headlines (US, Europe, Asia), overnight action,
+     and the macro/Fed backdrop.
+   • ECONOMIC CALENDAR: today's + this week's key US data releases with times and
+     why they matter (CPI/PCE, jobs, ISM, jobless claims, Fed speakers/FOMC).
+   • EARNINGS: notable names that just reported (with the reaction) + who reports
+     today/this week.
+   • GLOBAL PRICES: major world indices, commodities (gold, WTI/Brent), crypto
+     (BTC, ETH), and FX (EUR/USD, DXY), with % change where available.
+   • TECHNICAL LEVELS: key support/resistance and setup for the S&amp;P 500 and
+     Nasdaq 100.
+   • MARKET SENTIMENT: CNN Fear &amp; Greed reading and what it implies.
+
+3) DESIGN
+   Make it a clean, mobile-friendly HTML email using inline CSS and a
+   table-based layout (email clients strip scripts and often block data-URI
+   images). Dark theme, a colored header, section headers, a portfolio bar view,
+   a sector snapshot, and a sentiment meter — all built with email-safe HTML/CSS
+   so they render in Gmail. Always add a footer: "Auto-generated for information
+   only — not investment advice. Verify live prices before acting."
+
+4) SEND today's brief now as a live test, and confirm it landed (watch spam /
+   Promotions on the first one — tell me to whitelist the sender).
+
+5) SCHEDULE it to run and SEND automatically every weekday at my chosen time and
+   timezone, using the recurring scheduled-task feature (so it runs in the cloud
+   even when my devices are off). Note that a fixed schedule can drift with
+   daylight-saving changes and offer to adjust at the changeover.
+
+Keep every brief tight and skimmable, and cite data sources at the end.</div>
+  </div>
+
+  <div class="sect">Why this works</div>
+  <div class="step">
+    <h3><span class="n">✓</span>It's a real agent, not a chat</h3>
+    <p>The prompt forces the three things that make an agent an agent: it <b>acts</b> (sends real email through a connector), it <b>verifies</b> (live test send before scheduling), and it <b>runs on a schedule in the cloud</b> — no open app required. Swap the brief for anything: news digests, price alerts, competitor watch — the skeleton is reusable.</p>
+  </div>
+
+  <div class="cta">
+    <h2>Want more builds like this?</h2>
+    <p>We publish AI × finance builds, trackers and research — free.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>© 2026 CLOUD9 MARKETS · EDUCATIONAL ONLY — NOT FINANCIAL ADVICE<br/>
+  Auto-generated briefs are for information only — verify live prices before acting.</footer>
+
+<script>
+document.querySelectorAll('.cp').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const block = btn.parentElement.cloneNode(true);
+    block.querySelector('.cp').remove();
+    navigator.clipboard.writeText(block.textContent.trim()).then(() => {
+      btn.textContent = 'Copied ✓';
+      setTimeout(() => btn.textContent = 'Copy', 1600);
+    });
+  });
+});
+</script>
+</body>
+</html>
