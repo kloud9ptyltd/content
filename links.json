@@ -82,5 +82,9 @@
  "021": {
   "name": "PINE INDICATORS",
   "page": "claude-pine-indicators.html"
+ },
+ "022": {
+  "name": "TV BACKTEST",
+  "page": "claude-tv-backtest.html"
  }
 }

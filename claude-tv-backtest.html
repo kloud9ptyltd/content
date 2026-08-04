@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Backtest Any Strategy in TradingView with Claude — Free · Cloud9</title>
+<meta property="og:title" content="Describe a strategy in English. AI backtests it in TradingView."/>
+<meta property="og:description" content="Claude Code writes the Pine Script strategy, compiles it, runs TradingView's Strategy Tester with real fees, and reads the results back — all on your machine, free."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/tv-backtest-stats.jpg"/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--red:#ff6a6a;--c9:#46a8ff}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(106,168,255,.10),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
+  h1 em{font-style:normal;color:var(--g)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
+  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
+  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .step{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--g);color:#04130c;font-weight:900;font-size:14px;margin-right:10px}
+  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
+  .step p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0;padding-left:36px}
+  .code{position:relative;margin:12px 0 0 36px;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:13px 44px 13px 14px;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;line-height:1.55;color:#d8e6ff;white-space:pre-wrap;word-break:break-word}
+  .cp{position:absolute;top:8px;right:8px;font-size:11px;font-weight:700;color:var(--mut);background:var(--card2);border:1px solid var(--line2);border-radius:7px;padding:5px 9px;cursor:pointer}
+  .cp:active{color:var(--g)}
+  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px}
+  .note b{color:var(--mut)}
+  .shot{display:block;width:100%;border-radius:14px;border:1px solid var(--line);margin-top:14px}
+  .cap{font-size:12.5px;color:var(--faint);margin-top:8px;text-align:center}
+  .demo{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .demo h3{font-size:17px;font-weight:800}
+  .demo p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0}
+  .demo .code{margin-left:0}
+  .demo .note{padding-left:0}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+  .stat{background:var(--card2);border:1px solid var(--line2);border-radius:13px;padding:12px 10px;text-align:center}
+  .stat .v{font-size:19px;font-weight:850;letter-spacing:-.3px}
+  .stat .v.up{color:var(--g)} .stat .v.dn{color:var(--red)} .stat .v.nt{color:var(--blu)}
+  .stat .k{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--faint);margin-top:4px}
+  .check{margin-top:10px;padding-left:0;list-style:none}
+  .check li{font-size:14px;line-height:1.55;color:#cfd8e4;padding:7px 0 7px 28px;position:relative;border-top:1px solid var(--line2)}
+  .check li:first-child{border-top:0}
+  .check li::before{content:"✓";position:absolute;left:2px;color:var(--g);font-weight:900}
+  .check li.x::before{content:"✕";color:var(--red)}
+  .check li b{color:#fff}
+  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.35);border-radius:20px;padding:22px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:8px 0 14px}
+  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
+  details{margin:12px 0 0 0}
+  details summary{cursor:pointer;font-size:13.5px;font-weight:800;color:var(--blu);padding:4px 0;list-style:none}
+  details summary::before{content:"▸ "} details[open] summary::before{content:"▾ "}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Backtest with AI</span></header>
+
+  <h1>Describe a strategy in English. <em>Claude backtests it</em> in TradingView.</h1>
+  <p class="lede">No Pine Script knowledge needed. You describe the rules — <b>Claude Code writes the strategy, compiles it, runs TradingView's own Strategy Tester with real fees, and reads the results back to you</b>: net profit, drawdown, profit factor, every single trade. All on your machine. Free.</p>
+
+  <div class="agents">
+    <span class="chip">🧠 English → Pine v6</span><span class="chip">🧪 Strategy Tester</span><span class="chip">💸 Real fees &amp; fills</span>
+    <span class="chip">📋 Trade list</span><span class="chip">🛡️ Overfit audit</span>
+  </div>
+
+  <div class="sect">Proof — the exact run from the reel</div>
+  <div class="demo">
+    <h3>🤖 My bitcoin bot's live strategy, verified in TradingView</h3>
+    <p>My bot trades a Donchian breakout system on BTC (4h). One prompt made Claude port the exact rules to Pine, apply them to the Hyperliquid BTC perp chart, and run the tester over ~17 months — with taker fees and next-bar fills, no lookahead.</p>
+    <div class="stats">
+      <div class="stat"><div class="v up">+11.8%</div><div class="k">Net profit</div></div>
+      <div class="stat"><div class="v up">+53.7%</div><div class="k">vs buy &amp; hold</div></div>
+      <div class="stat"><div class="v nt">1.32</div><div class="k">Profit factor</div></div>
+      <div class="stat"><div class="v nt">24</div><div class="k">Trades</div></div>
+      <div class="stat"><div class="v dn">25%</div><div class="k">Win rate</div></div>
+      <div class="stat"><div class="v dn">17.8%</div><div class="k">Max drawdown</div></div>
+    </div>
+    <div class="note" style="margin-top:12px">A 25% win rate that still makes money is what trend-following really looks like: many small losses, a few huge winners (best trade: <b>+15.6% in one short</b>). BTC itself was <i>down</i> over this window — the strategy beat holding by 53.7%. No cherry-picking: full stats below.</div>
+    <img class="shot" src="tv-backtest-stats.jpg" alt="TradingView Strategy Tester — key stats and equity curve of the AI-built Donchian strategy" loading="lazy"/>
+    <div class="cap">TradingView's Strategy Tester: equity curve, PnL, drawdown — computed by TV, not by the AI.</div>
+    <img class="shot" src="tv-backtest-trades.jpg" alt="TradingView list of trades generated by the backtest" loading="lazy"/>
+    <div class="cap">Every trade with entry/exit time, price, size and PnL. This is the receipt.</div>
+  </div>
+
+  <div class="sect">Setup — 5 minutes, once</div>
+
+  <div class="step">
+    <h3><span class="n">1</span> Get the two apps + the bridge</h3>
+    <p><b>TradingView Desktop</b> (the app, not the website — free account is fine) and <b>Claude Code</b>. Node.js 18+ if you don't have it. Then install the open-source MCP bridge:</p>
+    <div class="code"><button class="cp">Copy</button>git clone https://github.com/tradesdontlie/tradingview-mcp.git ~/tradingview-mcp
+cd ~/tradingview-mcp &amp;&amp; npm install
+claude mcp add --scope user tradingview -- node ~/tradingview-mcp/src/server.js</div>
+    <div class="note">→ <a href="https://www.tradingview.com/desktop/" target="_blank" rel="noopener">tradingview.com/desktop</a> · <a href="https://claude.com/code" target="_blank" rel="noopener">claude.com/code</a> · <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> · Full install walkthrough with screenshots: <a href="claude-tradingview-setup.html">the setup guide</a>.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">2</span> Start TradingView in debug mode</h3>
+    <p><b>Quit TradingView fully first</b> (this matters — a normally-launched instance blocks the bridge). Then either ask Claude to run <code>tv_launch</code>, or start it yourself:</p>
+    <div class="code"><button class="cp">Copy</button># macOS
+open -a TradingView --args --remote-debugging-port=9222</div>
+    <div class="note"><b>Windows:</b> run <code>scripts\launch_tv_debug.bat</code> from the repo. Verify with <code>curl http://127.0.0.1:9222/json/version</code> — it should print JSON.</div>
+  </div>
+
+  <div class="step">
+    <h3><span class="n">3</span> Sanity check</h3>
+    <p>New Claude Code session:</p>
+    <div class="code"><button class="cp">Copy</button>Use tv_health_check to verify TradingView is connected, then tell me what's on my chart.</div>
+  </div>
+
+  <div class="sect">The backtest prompt — copy, edit the rules, send</div>
+
+  <div class="demo">
+    <h3>📝 The master prompt</h3>
+    <p>This is the whole trick. Fill in your market, timeframe and rules in plain English — Claude handles Pine syntax, compiling, applying to the chart and reading the tester. The cost/fill lines at the bottom are what make the result honest; keep them.</p>
+    <div class="code"><button class="cp">Copy</button>Backtest this strategy in TradingView using the tradingview MCP tools:
+
+MARKET: BINANCE:BTCUSDT.P   TIMEFRAME: 4h
+
+RULES
+- Go LONG when the close breaks above the highest high of the
+  previous 80 bars AND the close is above the 600-bar EMA.
+- Go SHORT when the close breaks below the lowest low of the
+  previous 80 bars AND the close is below the 600-bar EMA.
+- EXIT a long when the close drops below the lowest low of the
+  previous 40 bars; mirror for shorts.
+- Also protect every trade with a stop at 3.5 × ATR(20) from entry.
+
+REALISM (keep these)
+- Pine Script v6 strategy(), initial_capital = 10000,
+  95% of equity per position, commission 0.045% per side.
+- Signals evaluate on CLOSED bars only and fill at the NEXT bar
+  open — no lookahead, no intrabar magic.
+
+DO
+1. Write the strategy, open the Pine editor, compile it, and add
+   it to the chart on that symbol + timeframe.
+2. Open the Strategy Tester.
+3. Report back: net profit %, max drawdown, profit factor,
+   win rate, total trades, average trade, and the 3 biggest
+   winners and losers with dates.
+4. Screenshot the Strategy Tester panel.
+If anything errors (compile error, panel not found, old TV
+instance running), debug it yourself and continue.</div>
+    <div class="note"><b>Swap the rules for anything:</b> "buy the pullback to the 20 EMA in an uptrend, stop under the last swing low, take profit at 2R" works exactly the same way. If you can say it, it can be tested.</div>
+  </div>
+
+  <div class="demo">
+    <h3>⚙️ What Claude actually does with it</h3>
+    <p>So you know what "working" looks like: it writes a Pine v6 <code>strategy()</code>, injects it into TradingView's Pine editor, hits compile, fixes its own compile errors, adds it to the chart, opens the Strategy Tester, and reads the Key stats + trade list straight off the panel. You watch it happen live on your chart — nothing is simulated outside TradingView.</p>
+    <details>
+      <summary>The exact Pine strategy from the run above (if you want to paste it manually)</summary>
+      <div class="code"><button class="cp">Copy</button>//@version=6
+strategy("Donchian 80/40 Breakout", overlay=true,
+     initial_capital=10000,
+     default_qty_type=strategy.percent_of_equity,
+     default_qty_value=95,
+     commission_type=strategy.commission.percent,
+     commission_value=0.045,
+     calc_on_every_tick=false,
+     process_orders_on_close=false,
+     margin_long=100, margin_short=100)
+
+entryLen = input.int(80,  "Entry lookback (Donchian)")
+exitLen  = input.int(40,  "Exit lookback (Donchian)")
+atrLen   = input.int(20,  "ATR period")
+atrMult  = input.float(3.5, "ATR stop multiple")
+emaLen   = input.int(600, "EMA trend filter")
+
+emaF      = ta.ema(close, emaLen)
+atrV      = ta.sma(ta.tr(true), atrLen)
+entryHigh = ta.highest(high, entryLen)[1]
+entryLow  = ta.lowest(low,  entryLen)[1]
+exitLo    = ta.lowest(low,  exitLen)[1]
+exitHi    = ta.highest(high, exitLen)[1]
+
+longSig  = close > entryHigh and close > emaF
+shortSig = close < entryLow  and close < emaF
+
+if longSig and strategy.position_size <= 0
+    strategy.entry("Long", strategy.long)
+    strategy.exit("L-stop", "Long", stop=close - atrV * atrMult)
+
+if shortSig and strategy.position_size >= 0
+    strategy.entry("Short", strategy.short)
+    strategy.exit("S-stop", "Short", stop=close + atrV * atrMult)
+
+if strategy.position_size > 0 and close < exitLo
+    strategy.close("Long", comment="Donchian exit")
+if strategy.position_size < 0 and close > exitHi
+    strategy.close("Short", comment="Donchian exit")
+
+plot(entryHigh, "80-bar high", color.new(color.teal, 40))
+plot(entryLow,  "80-bar low",  color.new(color.red, 40))
+plot(emaF,      "EMA filter",  color.new(color.orange, 0), linewidth=2)</div>
+    </details>
+  </div>
+
+  <div class="demo">
+    <h3>🛡️ Then make it attack its own result</h3>
+    <p>A green backtest is a hypothesis, not a green light. Send this straight after:</p>
+    <div class="code"><button class="cp">Copy</button>Now audit this backtest like a skeptical quant. Check: trade count
+(is 24 trades even significant?), whether performance came from 1-2
+outlier trades, how sensitive results are if the lookbacks change
+±20%, what the strategy does in a range vs a trend, costs I haven't
+modeled (funding, slippage, gaps), and any way the test flatters
+itself. Argue the bear case. Then tell me what you'd need to see
+before trusting it with real money.</div>
+    <div class="note"><b>This is the difference</b> between "AI made me a strategy" content and actually knowing what you own. My bot's own research pipeline rejected dozens of variants before promoting this one — one backtest proves nothing on its own.</div>
+  </div>
+
+  <div class="sect">Honesty checklist — read before you believe any backtest</div>
+  <div class="step">
+    <ul class="check" style="margin-left:2px">
+      <li><b>Costs on.</b> Commission + realistic fills (next-bar open) are in the prompt for a reason. A strategy that dies when you add 0.045% fees was never alive.</li>
+      <li><b>Closed bars only.</b> Signals on the current, still-forming bar = lookahead bias = fantasy money.</li>
+      <li><b>Enough trades.</b> Under ~30 trades the stats are noise. Zoom the timeframe down or the history back.</li>
+      <li class="x"><b>Don't tune until it's pretty.</b> Every parameter you nudge to improve the past steals from the future. If small changes to a lookback flip profit to loss, you fit noise.</li>
+      <li class="x"><b>Perps caveat:</b> TradingView doesn't model funding rates on perpetuals — on funding-heavy pairs the real result is a few % different. Test the spot pair as a cross-check.</li>
+      <li><b>Out-of-sample or it didn't happen.</b> Ask Claude to re-run the same rules on a different symbol or an earlier date range it wasn't built on.</li>
+    </ul>
+  </div>
+
+  <div class="sect">If something breaks</div>
+  <div class="step">
+    <p style="padding-left:2px">Honestly: <b>paste the error into Claude and tell it to fix it</b> — it can see the app and debug itself. The three snags that actually happen:</p>
+    <ul class="check" style="margin-left:2px">
+      <li><b>"CDP connection failed"</b> → a normally-launched TradingView is still running. Quit it fully (macOS: ⌘Q, check the Dock), relaunch in debug mode.</li>
+      <li><b>"Could not open Pine Editor"</b> → your Pine editor is docked to the side. Click its ⇱ icon to move it back to the bottom panel — or just tell Claude, it can work around it.</li>
+      <li><b>Existing scripts:</b> if the editor has one of your saved scripts open, tell Claude to <b>create a new script or "Make a copy"</b> first so it never saves over your work.</li>
+    </ul>
+  </div>
+
+  <div class="cta">
+    <h2>Watched the bot get verified live?</h2>
+    <p>Next up on @cloud9.markets: what happens when the backtested strategy runs for real. Follow so you don't miss the live results.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Educational guide · not affiliated with TradingView Inc. or Anthropic · backtested performance is hypothetical and does not guarantee future results · <b>not financial advice</b> · do your own research<br/>© Cloud9 Markets</footer>
+
+<script>
+  document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',function(){
+    var code=b.parentNode.textContent.replace('Copy','').trim();
+    navigator.clipboard&&navigator.clipboard.writeText(code);b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy';},1500);});});
+</script>
+</body>
+</html>
