@@ -84,6 +84,10 @@
   "page": "claude-pine-indicators.html"
  },
  "022": {
+  "name": "POCKET AGENT",
+  "page": "claude-mobile-agent.html"
+ },
+ "023": {
   "name": "TV BACKTEST",
   "page": "claude-tv-backtest.html"
  }
