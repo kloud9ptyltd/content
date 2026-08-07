@@ -223,6 +223,9 @@ const NODES=[
   {id:'skhynix',label:'SK Hynix',name:'SK Hynix',fam:'silicon',layer:'memory',kind:'public',mcap:'$100B+',tier:'A',ax:.96,ay:.20},
   {id:'mu',label:'MU',name:'Micron',fam:'silicon',layer:'memory',kind:'public',mcap:'$100B+',tier:'A',ax:.91,ay:.16},
   {id:'samsung',label:'Samsung',name:'Samsung Electronics',fam:'silicon',layer:'memory',kind:'public',mcap:'$100B+',tier:'A',ax:.97,ay:.32},
+{id:'sndk',label:'SNDK',name:'SanDisk (NAND / SSD)',fam:'silicon',layer:'memory',kind:'public',mcap:'$10B+',tier:'B',ax:.85,ay:.08},
+{id:'stx',label:'STX',name:'Seagate (HDD)',fam:'silicon',layer:'memory',kind:'public',mcap:'$10B+',tier:'B',ax:.84,ay:.26},
+{id:'wdc',label:'WDC',name:'Western Digital (HDD)',fam:'silicon',layer:'memory',kind:'public',mcap:'$10B+',tier:'B',ax:.90,ay:.04},
   {id:'tsm',label:'TSM',name:'TSMC',fam:'silicon',layer:'foundry',kind:'public',mcap:'$1T+',tier:'A',ax:.97,ay:.50},
   {id:'asml',label:'ASML',name:'ASML',fam:'silicon',layer:'foundry',kind:'public',mcap:'$100B+',tier:'B',ax:.99,ay:.60},
   {id:'amkr',label:'AMKR',name:'Amkor',fam:'silicon',layer:'foundry',kind:'public',mcap:'$1B+',tier:'B',ax:.95,ay:.66},
@@ -382,6 +385,10 @@ const LINKS=[
   {source:'lambda',target:'nvda',k:'supply',v:null,lbl:'GPU fleet',c:'ok'},
   {source:'msft',target:'ceg',k:'power',v:16,lbl:'Three Mile Island restart · $16B / 835MW',c:'ok'},
   {source:'amzn',target:'tln',k:'power',v:null,lbl:'Susquehanna nuclear · 1.92GW',c:'ok'},
+{source:'amzn',target:'stx',k:'supply',v:null,lbl:'AI storage — HDD prices "inflated" (Jassy, Q2 26)',c:'ok'},
+{source:'amzn',target:'sndk',k:'supply',v:null,lbl:'SSD / NAND for AI data — prices inflated',c:'ok'},
+{source:'amzn',target:'wdc',k:'supply',v:null,lbl:'HDD supply for AI data lakes',c:'est'},
+{source:'blk',target:'meta',k:'equity',v:null,lbl:'1GW El Paso DC venture (announced Q2 26 call)',c:'ok'},
   {source:'amzn',target:'vst',k:'power',v:null,lbl:'Comanche Peak · up to 1.2GW',c:'ok'},
   {source:'meta',target:'vst',k:'power',v:null,lbl:'2.6GW+ PPAs',c:'ok'},
   {source:'meta',target:'oklo',k:'power',v:null,lbl:'1.2GW SMR campus (Ohio)',c:'ok'},
@@ -498,7 +505,7 @@ function fmt(v){return Number.isInteger(v)?(''+v):v.toFixed(1);}
 function kindName(k){return {equity:'Equity stake',compute:'Compute spend',supply:'Hardware supply',power:'Power purchase',leasing:'Data-center lease'}[k]||k;}
 function kindShort(k){return {equity:'Equity',compute:'Compute',supply:'Supply',power:'Power',leasing:'Lease'}[k]||k;}
 function confName(c){return {ok:'confirmed',est:'estimated',loi:'letter of intent'}[c]||c;}
-function layerName(l){return {lab:'AI lab',cloud:'Hyperscale cloud',fund:'Capital / fund',neocloud:'Neocloud / GPU cloud',reit:'Data-center REIT',accel:'AI accelerator',memory:'HBM memory',foundry:'Foundry / packaging',optical:'Optical / networking',power:'Power / energy',finance:'Wall Street / private credit',misc:'Nvidia portfolio'}[l]||l;}
+function layerName(l){return {lab:'AI lab',cloud:'Hyperscale cloud',fund:'Capital / fund',neocloud:'Neocloud / GPU cloud',reit:'Data-center REIT',accel:'AI accelerator',memory:'Memory / storage',foundry:'Foundry / packaging',optical:'Optical / networking',power:'Power / energy',finance:'Wall Street / private credit',misc:'Nvidia portfolio'}[l]||l;}
 function kindLabel(k){return {public:'Public',private:'Private',fund:'Fund',person:'Individual'}[k]||k;}
 function famColor(n){return FAM[n.fam]||FAM.other;}
 
