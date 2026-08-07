@@ -94,5 +94,9 @@
  "024": {
   "name": "MAGNET TRADE",
   "page": "magnet-trade.html"
+ },
+ "025": {
+  "name": "CAPEX VAULT",
+  "page": "bigtech-capex-winners.html"
  }
 }
