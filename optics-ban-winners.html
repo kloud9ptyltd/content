@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Optics Ban — Cloud9 Markets Intel</title>
+<meta name="description" content="The FCC is drafting a ban on Chinese optical transceivers — the plugs of the AI buildout. Cloud9 Markets maps every US stock positioned to take the share, tier by tier, plus the one sleeper the market hasn't repriced." />
+<meta property="og:title" content="The Optics Ban — Cloud9 Markets" />
+<meta property="og:description" content="Half the plug supply of the AI buildout just landed on a ban list. The full beneficiary map, decoded." />
+<meta property="og:type" content="article" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06080D;--bg2:#080B12;--panel:rgba(255,255,255,.025);--panel2:rgba(255,255,255,.05);
+    --glass:rgba(20,28,44,.55);--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.055);
+    --text:#F1F4FA;--muted:#9AA7BD;--faint:#5E6B82;
+    --c9:#46A8FF;--c9deep:#1E6FE0;
+    --gold:#E6D2A8;--gold2:#C9AE76;
+    --bull:#43D6A0;--bear:#FF6B7A;--base:#E6B354;--violet:#B49BF5;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 620px at 78% -6%,rgba(180,155,245,.10),transparent 60%),
+      radial-gradient(820px 560px at -8% 8%,rgba(70,168,255,.08),transparent 55%),
+      radial-gradient(900px 700px at 50% 120%,rgba(230,210,168,.05),transparent 60%);
+    background-attachment:fixed;}
+  .serif{font-family:"Fraunces",Georgia,serif}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+  /* ---------- CODE GATE ---------- */
+  #gate{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
+    background:rgba(4,6,10,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .gatecard{width:min(420px,90vw);border:1px solid var(--line);border-radius:20px;background:var(--glass);
+    padding:38px 34px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .gatecard img{height:44px;border-radius:10px;margin-bottom:18px}
+  .gatecard h1{font-size:24px;margin:0 0 8px}
+  .gatecard p{color:var(--muted);font-size:14px;line-height:1.55;margin:0 0 22px}
+  .gatecard input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--line);
+    background:rgba(0,0,0,.35);color:var(--gold);font-family:"JetBrains Mono",monospace;font-size:18px;
+    letter-spacing:4px;text-align:center;text-transform:uppercase;outline:none}
+  .gatecard input:focus{border-color:var(--gold2)}
+  .gatecard button{margin-top:14px;width:100%;padding:14px;border:0;border-radius:12px;cursor:pointer;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));color:#14100a;font-weight:700;font-size:15px;
+    letter-spacing:.5px}
+  .gatecard .hint{margin-top:16px;font-size:12px;color:var(--faint)}
+  .gatecard .hint a{color:var(--c9);text-decoration:none}
+  .gatecard.shake{animation:shake .35s}
+  @keyframes shake{20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
+  #gate .err{color:var(--bear);font-size:12.5px;height:16px;margin-top:10px}
+  body.locked{overflow:hidden}
+  body.locked #content{filter:blur(14px);user-select:none;pointer-events:none}
+
+  /* ---------- PAGE ---------- */
+  header{padding:64px 0 8px}
+  .kicker{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:3px;color:var(--gold2);text-transform:uppercase}
+  h2.hero{font-family:"Fraunces",serif;font-size:clamp(34px,6vw,58px);line-height:1.06;margin:14px 0 14px;font-weight:600}
+  h2.hero em{font-style:normal;color:var(--gold)}
+  .sub{color:var(--muted);font-size:16.5px;line-height:1.65;max-width:760px}
+  .sub b{color:var(--text)}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .brand img{height:34px;border-radius:8px}
+  .brand a{color:var(--text);text-decoration:none;font-weight:600;letter-spacing:.4px}
+  .brand .at{color:var(--faint);font-size:13px}
+
+  section{margin:54px 0}
+  .sechead{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+  .sechead .n{font-family:"JetBrains Mono",monospace;color:var(--gold2);font-size:13px}
+  .sechead h3{font-family:"Fraunces",serif;font-size:26px;margin:0;font-weight:600}
+  .sechead .ln{flex:1;height:1px;background:var(--line2)}
+
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+  .fact{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:20px 22px;text-align:center}
+  .fact .big{font-family:"Fraunces",serif;font-size:34px;color:var(--gold)}
+  .fact .lbl{color:var(--muted);font-size:13px;line-height:1.5;margin-top:6px}
+
+  .insight{border:1px solid var(--line);border-left:3px solid var(--gold2);border-radius:14px;
+    background:var(--panel);padding:22px 24px;margin-bottom:14px}
+  .insight h4{margin:0 0 8px;font-size:17px}
+  .insight h4 .tag{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--gold2);margin-right:10px}
+  .insight p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.65}
+  .insight p b{color:var(--text)}
+  .insight .win{margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--bull)}
+  .insight.sleeper{border-left-color:var(--violet)}
+  .insight.sleeper h4 .tag{color:var(--violet)}
+
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--faint);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+  td{padding:12px;border-bottom:1px solid var(--line2);vertical-align:top;line-height:1.5}
+  td.t{font-family:"JetBrains Mono",monospace;color:var(--bull);white-space:nowrap}
+  td.m{font-family:"JetBrains Mono",monospace;white-space:nowrap}
+  .up{color:var(--bull)}.flat{color:var(--base)}
+  .tablewrap{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:6px 10px;overflow-x:auto}
+
+  .honest{border:1px dashed rgba(255,107,122,.4);border-radius:14px;padding:20px 24px;background:rgba(255,107,122,.04)}
+  .honest h4{margin:0 0 8px;color:var(--bear);font-size:15px}
+  .honest p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.65}
+  .honest p b{color:var(--text)}
+
+  .cta{border:1px solid var(--line);border-radius:20px;background:linear-gradient(160deg,rgba(230,210,168,.08),rgba(20,28,44,.5));
+    padding:34px;text-align:center}
+  .cta h3{font-family:"Fraunces",serif;font-size:26px;margin:0 0 10px}
+  .cta p{color:var(--muted);margin:0 0 20px}
+  .cta a.btn{display:inline-block;padding:14px 30px;border-radius:12px;text-decoration:none;font-weight:700;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));color:#14100a}
+  footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px;line-height:1.7;text-align:center}
+  footer a{color:var(--c9);text-decoration:none}
+</style>
+</head>
+<body class="locked">
+
+<div id="gate">
+  <div class="gatecard" id="gatecard">
+    <img src="cloud9-logo.png" alt="Cloud9 Markets">
+    <h1 class="serif">Members drop only</h1>
+    <p>This breakdown is unlocked with the access code from our Instagram DM.
+       Comment <b class="mono" style="color:var(--gold)">OPTICS</b> on the post and the code lands in your inbox.</p>
+    <input id="code" maxlength="12" placeholder="ACCESS CODE" autocomplete="off">
+    <button onclick="tryUnlock()">Unlock the map</button>
+    <div class="err" id="err"></div>
+    <div class="hint">No code yet? <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a></div>
+  </div>
+</div>
+
+<div id="content">
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <img src="cloud9-logo.png" alt="Cloud9 Markets logo">
+    <div><a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">CLOUD9 MARKETS</a><br>
+    <span class="at">@cloud9.markets · Policy Intel · August 2026</span></div>
+  </div>
+  <div class="kicker">FCC draft ban · Optical transceivers</div>
+  <h2 class="hero">The biggest buildup in history<br>just lost half its <em>plugs.</em></h2>
+  <p class="sub">Reuters broke it on August 4: the Trump administration is drafting an FCC ban on imports of new-model
+  <b>Chinese optical transceivers</b> — the laser modules that connect every AI chip to every other AI chip inside a data
+  center. China supplies roughly half the world's datacom transceivers. Primary target <b>Zhongji Innolight alone holds
+  ~27% of the global market</b> and makes ~90% of its revenue outside China — mostly from US hyperscalers. This is the
+  map of who takes that share.</p>
+</header>
+
+<section>
+  <div class="sechead"><span class="n">01</span><h3 class="serif">The policy in four numbers</h3><span class="ln"></span></div>
+  <div class="facts">
+    <div class="fact"><div class="big">~27%</div><div class="lbl">Innolight's share of the global data-center transceiver market — the single biggest vendor</div></div>
+    <div class="fact"><div class="big">~50%</div><div class="lbl">Rough Chinese share of world datacom transceiver supply (Innolight + Eoptolink + peers)</div></div>
+    <div class="fact"><div class="big">1.6T</div><div class="lbl">The ban covers NEW models — landing exactly on the 1.6-terabit generation Rubin-era clusters need</div></div>
+    <div class="fact"><div class="big">2026</div><div class="lbl">FCC aims to publish this year via the Covered List — same mechanism used against Huawei, drones and inverters</div></div>
+  </div>
+  <p class="sub" style="margin-top:18px">Mechanics that matter: existing models are grandfathered, non-Chinese suppliers get
+  exemptions, and the Covered List is <b>company-based</b> — moving production to Thailand doesn't get a listed company off it.
+  Innolight was added to the Pentagon's military-companies list in June. The escalation ladder is visible.</p>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">02</span><h3 class="serif">The tape has already voted</h3><span class="ln"></span></div>
+  <div class="tablewrap"><table>
+    <tr><th>Stock</th><th>Role</th><th>Move since the story broke*</th></tr>
+    <tr><td>Coherent</td><td>Biggest US pure-play module maker, owns its own lasers</td><td class="m up">COHR +32%</td></tr>
+    <tr><td>Fabrinet</td><td>Thai contract fab — builds optics for NVIDIA + every non-Chinese brand</td><td class="m up">FN +23%</td></tr>
+    <tr><td>Applied Opto</td><td>Small-cap US maker with Texas production</td><td class="m up">AAOI +23%</td></tr>
+    <tr><td>MACOM</td><td>Lasers, drivers &amp; TIAs inside whoever wins</td><td class="m up">MTSI +21%</td></tr>
+    <tr><td>Semtech</td><td>PAM4 chips for the same modules</td><td class="m up">SMTC +17%</td></tr>
+    <tr><td>Credo</td><td>Copper cables that replace scarce short-reach optics</td><td class="m up">CRDO +14%</td></tr>
+    <tr><td>Lumentum</td><td>Ramping 1.6T via Cloud Light; deep hyperscaler ties</td><td class="m up">LITE +14%</td></tr>
+    <tr><td>Marvell</td><td>The dominant transceiver DSP — sells to all sides</td><td class="m up">MRVL +13%</td></tr>
+    <tr><td>Broadcom</td><td>DSPs + its own co-packaged optics push</td><td class="m up">AVGO +9%</td></tr>
+    <tr><td><b>Viavi</b></td><td><b>Test gear for every new production line — the sleeper</b></td><td class="m flat">VIAV +4%</td></tr>
+  </table></div>
+  <p class="sub" style="margin-top:14px;font-size:13.5px">*Close of Aug 3 → Aug 7, 2026. COHR and LITE also reported earnings
+  inside this window, so their moves aren't purely ban-driven.</p>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">03</span><h3 class="serif">The beneficiary tiers</h3><span class="ln"></span></div>
+
+  <div class="insight"><h4><span class="tag">TIER 1</span>The share-takers — US &amp; allied module makers</h4>
+    <p>If Innolight's new models can't enter the US, hyperscalers re-source the exact same sockets. <b>Coherent</b> is the
+    biggest American pure-play and is vertically integrated down to the indium-phosphide laser. <b>Lumentum</b> bought its
+    way into hyperscaler module supply (Cloud Light) and is ramping 1.6T. <b>Fabrinet</b> is the quiet monopoly here: the
+    neutral Thai factory that already builds NVIDIA's optics — nearly every non-Chinese brand routes production through it.
+    <b>Applied Opto</b> is the lottery ticket: US production, thin margins, highest beta in the group.</p>
+    <div class="win">→ COHR · LITE · FN · AAOI</div></div>
+
+  <div class="insight"><h4><span class="tag">TIER 2</span>The arms dealers — components inside whoever wins</h4>
+    <p>A transceiver is a DSP, lasers, drivers and detectors in a metal shell. <b>Marvell</b> sells the dominant PAM4 DSPs,
+    <b>Broadcom</b> the rest — both currently ship into Innolight too, so a ban mostly reshuffles their customer list.
+    <b>MACOM</b> and <b>Semtech</b> sell the analog guts to the non-Chinese makers who'd ramp. Real winners, but diluted —
+    they win share shifts, not new demand.</p>
+    <div class="win">→ MRVL · AVGO · MTSI · SMTC</div></div>
+
+  <div class="insight"><h4><span class="tag">TIER 3</span>The workaround plays</h4>
+    <p>Scarce, pricier optics accelerate the alternatives. <b>Credo's</b> active electrical cables replace short-reach optics
+    inside the rack at a fraction of the cost. And every constraint on pluggable modules strengthens the long-game case for
+    <b>co-packaged optics</b> — Broadcom's and NVIDIA's push to fuse the optics onto the switch silicon itself.</p>
+    <div class="win">→ CRDO · AVGO · (NVDA co-packaged roadmap)</div></div>
+
+  <div class="insight sleeper"><h4><span class="tag">THE SLEEPER</span>Viavi — the one the market hasn't repriced</h4>
+    <p>Every re-sourced socket needs qualification, and every new non-Chinese production line needs test gear.
+    <b>Viavi</b> launched the first purpose-built 1.6T Ethernet test appliance (TestCenter D2) in March, bought Spirent's
+    high-speed-Ethernet test business, and just printed <b>+52% YoY revenue</b> on hyperscaler demand — its CEO says 1.6T
+    reaches parity with 800G next fiscal year. It sells the picks and shovels of the reshuffle itself, has zero Chinese
+    module revenue to lose — and it's up just ~4% since the story broke, versus +14–32% for everything else on this page.
+    Smaller torque than the module makers, but the only name here the ban trade hasn't already paid.</p>
+    <div class="win">→ VIAV ($9.7B cap · ~20× forward earnings)</div></div>
+</section>
+
+<section>
+  <div class="honest">
+    <h4>THE HONEST LINE</h4>
+    <p>Three things the hype will skip. <b>One:</b> it's a draft — Reuters' own sources say the FCC could still modify or
+    shelve it, and new-models-only means the bite lands with the 1.6T cycle, not tomorrow. <b>Two:</b> analysts are blunt
+    that US makers lack the scale to replace Chinese vendors near-term — year one this mostly means <b>higher transceiver
+    prices</b> (a margin tailwind for every name above, a capex tax on AWS, Microsoft, Google and Meta). <b>Three:</b> the
+    easy trade already happened — +14–32% in four sessions, some of it earnings-driven. This is a supply reshuffle, not new
+    demand. Size accordingly.</p>
+  </div>
+</section>
+
+<section>
+  <div class="cta">
+    <h3 class="serif">Want the next breakdown the night it drops?</h3>
+    <p>We publish policy intel, earnings decodes and AI-trading builds all week.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
+  </div>
+</section>
+
+<footer>
+  Sources: Reuters exclusive (Aug 4, 2026) and syndications; VIAVI investor releases and FQ4-2026 results;
+  company filings. Price moves via market data, close Aug 3 → Aug 7, 2026.<br>
+  Educational content only — not financial advice. Do your own research.
+  · <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Instagram</a>
+</footer>
+
+</div>
+</div>
+
+<script>
+  // Same gate mechanism as the hub (index.html): codes live only as SHA-256 hashes,
+  // unlock state shared via localStorage "c9vault2" so hub and page stay in sync.
+  var DROP_ID="026";
+  var PAGE_HASH="d1e5eb413d0454052516bad53f9b15eb5a07f16081d7430117a252daa2d84790";
+  var MASTER_HASH="30e7724015a1f378871306cc61d597224206a1233f1cc6eadf42b7ae4b0a2cc8";
+  var FREE_AFTER="2026-12-31";
+  function norm(s){return String(s||"").toUpperCase().replace(/[^A-Z0-9]/g,"").replace(/^C9/,"");}
+  function store(){try{var s=JSON.parse(localStorage.getItem("c9vault2")||"[]");return Array.isArray(s)?s:[]}catch(e){return[]}}
+  function unlock(remember){
+    if(remember){var s=store();if(s.indexOf(DROP_ID)<0){s.push(DROP_ID);try{localStorage.setItem("c9vault2",JSON.stringify(s))}catch(e){}}}
+    document.body.classList.remove("locked");document.getElementById("gate").style.display="none";
+  }
+  function sha256(t){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)).then(function(b){
+    return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("");});}
+  function tryUnlock(){
+    sha256(norm(document.getElementById("code").value)).then(function(h){
+      if(h===PAGE_HASH||h===MASTER_HASH){unlock(true);}
+      else{
+        var c=document.getElementById("gatecard");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake");
+        document.getElementById("err").textContent="Wrong code — check the DM and try again.";
+      }
+    });
+  }
+  document.getElementById("code").addEventListener("keydown",function(e){if(e.key==="Enter")tryUnlock();});
+  if(store().indexOf(DROP_ID)>=0 || Date.now()>Date.parse(FREE_AFTER+"T23:59:59")) unlock(false);
+</script>
+</body>
+</html>
