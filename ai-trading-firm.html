@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The 15-Cent Trading Firm — Cloud9 Markets Intel</title>
+<meta name="description" content="We hired an open-source AI trading firm — seven agents that research, debate and issue a verdict on any stock. The full setup guide, our real NVDA run, the exact costs, and where it embarrassed itself." />
+<meta property="og:title" content="The 15-Cent Trading Firm — Cloud9 Markets" />
+<meta property="og:description" content="Seven AI agents argued about NVDA. It cost 15 cents. Full setup + the honest verdict." />
+<meta property="og:type" content="article" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06080D;--bg2:#080B12;--panel:rgba(255,255,255,.025);--panel2:rgba(255,255,255,.05);
+    --glass:rgba(20,28,44,.55);--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.055);
+    --text:#F1F4FA;--muted:#9AA7BD;--faint:#5E6B82;
+    --c9:#46A8FF;--c9deep:#1E6FE0;
+    --gold:#E6D2A8;--gold2:#C9AE76;
+    --bull:#43D6A0;--bear:#FF6B7A;--base:#E6B354;--violet:#B49BF5;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1100px 620px at 78% -6%,rgba(180,155,245,.10),transparent 60%),
+      radial-gradient(820px 560px at -8% 8%,rgba(70,168,255,.08),transparent 55%),
+      radial-gradient(900px 700px at 50% 120%,rgba(230,210,168,.05),transparent 60%);
+    background-attachment:fixed;}
+  .serif{font-family:"Fraunces",Georgia,serif}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+
+  /* ---------- CODE GATE ---------- */
+  #gate{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
+    background:rgba(4,6,10,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .gatecard{width:min(420px,90vw);border:1px solid var(--line);border-radius:20px;background:var(--glass);
+    padding:38px 34px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .gatecard img{height:44px;border-radius:10px;margin-bottom:18px}
+  .gatecard h1{font-size:24px;margin:0 0 8px}
+  .gatecard p{color:var(--muted);font-size:14px;line-height:1.55;margin:0 0 22px}
+  .gatecard input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--line);
+    background:rgba(0,0,0,.35);color:var(--gold);font-family:"JetBrains Mono",monospace;font-size:18px;
+    letter-spacing:4px;text-align:center;text-transform:uppercase;outline:none}
+  .gatecard input:focus{border-color:var(--gold2)}
+  .gatecard button{margin-top:14px;width:100%;padding:14px;border:0;border-radius:12px;cursor:pointer;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));color:#14100a;font-weight:700;font-size:15px;
+    letter-spacing:.5px}
+  .gatecard .hint{margin-top:16px;font-size:12px;color:var(--faint)}
+  .gatecard .hint a{color:var(--c9);text-decoration:none}
+  .gatecard.shake{animation:shake .35s}
+  @keyframes shake{20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
+  #gate .err{color:var(--bear);font-size:12.5px;height:16px;margin-top:10px}
+  body.locked{overflow:hidden}
+  body.locked #content{filter:blur(14px);user-select:none;pointer-events:none}
+
+  /* ---------- PAGE ---------- */
+  header{padding:64px 0 8px}
+  .kicker{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:3px;color:var(--gold2);text-transform:uppercase}
+  h2.hero{font-family:"Fraunces",serif;font-size:clamp(34px,6vw,58px);line-height:1.06;margin:14px 0 14px;font-weight:600}
+  h2.hero em{font-style:normal;color:var(--gold)}
+  .sub{color:var(--muted);font-size:16.5px;line-height:1.65;max-width:760px}
+  .sub b{color:var(--text)}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .brand img{height:34px;border-radius:8px}
+  .brand a{color:var(--text);text-decoration:none;font-weight:600;letter-spacing:.4px}
+  .brand .at{color:var(--faint);font-size:13px}
+
+  section{margin:54px 0}
+  .sechead{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+  .sechead .n{font-family:"JetBrains Mono",monospace;color:var(--gold2);font-size:13px}
+  .sechead h3{font-family:"Fraunces",serif;font-size:26px;margin:0;font-weight:600}
+  .sechead .ln{flex:1;height:1px;background:var(--line2)}
+
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+  .fact{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:20px 22px;text-align:center}
+  .fact .big{font-family:"Fraunces",serif;font-size:34px;color:var(--gold)}
+  .fact .lbl{color:var(--muted);font-size:13px;line-height:1.5;margin-top:6px}
+
+  .insight{border:1px solid var(--line);border-left:3px solid var(--gold2);border-radius:14px;
+    background:var(--panel);padding:22px 24px;margin-bottom:14px}
+  .insight h4{margin:0 0 8px;font-size:17px}
+  .insight h4 .tag{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--gold2);margin-right:10px}
+  .insight p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.65}
+  .insight p b{color:var(--text)}
+  .insight .win{margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--bull)}
+  .insight.fail{border-left-color:var(--bear)}
+  .insight.fail h4 .tag{color:var(--bear)}
+
+  .steps{counter-reset:step}
+  .step{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px 24px;margin-bottom:12px;
+    display:flex;gap:18px;align-items:flex-start}
+  .step .num{font-family:"Fraunces",serif;font-size:26px;color:var(--gold);min-width:34px}
+  .step .body{flex:1}
+  .step h4{margin:0 0 6px;font-size:16px}
+  .step p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+  .step p b{color:var(--text)}
+  .code{display:block;background:rgba(0,0,0,.4);border:1px solid var(--line2);border-radius:10px;
+    padding:12px 16px;margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:13px;color:#9fe3d2;
+    overflow-x:auto;white-space:pre}
+
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--faint);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+  td{padding:12px;border-bottom:1px solid var(--line2);vertical-align:top;line-height:1.5}
+  td.t{font-family:"JetBrains Mono",monospace;color:var(--bull);white-space:nowrap}
+  .tablewrap{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:6px 10px;overflow-x:auto}
+
+  .honest{border:1px dashed rgba(255,107,122,.4);border-radius:14px;padding:20px 24px;background:rgba(255,107,122,.04)}
+  .honest h4{margin:0 0 8px;color:var(--bear);font-size:15px}
+  .honest p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.65}
+  .honest p b{color:var(--text)}
+
+  .cta{border:1px solid var(--line);border-radius:20px;background:linear-gradient(160deg,rgba(230,210,168,.08),rgba(20,28,44,.5));
+    padding:34px;text-align:center}
+  .cta h3{font-family:"Fraunces",serif;font-size:26px;margin:0 0 10px}
+  .cta p{color:var(--muted);margin:0 0 20px}
+  .cta a.btn{display:inline-block;padding:14px 30px;border-radius:12px;text-decoration:none;font-weight:700;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));color:#14100a}
+  footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px;line-height:1.7;text-align:center}
+  footer a{color:var(--c9);text-decoration:none}
+</style>
+</head>
+<body class="locked">
+
+<div id="gate">
+  <div class="gatecard" id="gatecard">
+    <img src="cloud9-logo.png" alt="Cloud9 Markets">
+    <h1 class="serif">Members drop only</h1>
+    <p>This build guide is unlocked with the access code from our Instagram DM.
+       Comment <b class="mono" style="color:var(--gold)">AGENT</b> on the post and the code lands in your inbox.</p>
+    <input id="code" maxlength="12" placeholder="ACCESS CODE" autocomplete="off">
+    <button onclick="tryUnlock()">Unlock the firm</button>
+    <div class="err" id="err"></div>
+    <div class="hint">No code yet? <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a></div>
+  </div>
+</div>
+
+<div id="content">
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <img src="cloud9-logo.png" alt="Cloud9 Markets logo">
+    <div><a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">CLOUD9 MARKETS</a><br>
+    <span class="at">@cloud9.markets · AI Builds · August 2026</span></div>
+  </div>
+  <div class="kicker">Seven agents · One verdict</div>
+  <h2 class="hero">We hired an AI<br>trading firm for <em>15 cents.</em></h2>
+  <p class="sub">TradingAgents is an open-source framework that spins up a full research desk out of AI agents —
+  <b>market, sentiment, news and fundamentals analysts, a bull and a bear who debate each other, a trader,
+  a risk team, and a portfolio manager who makes the final call.</b> We wired it to a dirt-cheap model,
+  pointed it at NVDA, and watched it argue with itself. This is the exact setup, what it decided, what it costs —
+  and where it embarrassed itself.</p>
+</header>
+
+<section>
+  <div class="sechead"><span class="n">01</span><h3 class="serif">The run, in four numbers</h3><span class="ln"></span></div>
+  <div class="facts">
+    <div class="fact"><div class="big">7</div><div class="lbl">agent roles — analysts, debaters, trader, risk, portfolio manager</div></div>
+    <div class="fact"><div class="big">~15¢</div><div class="lbl">per full analysis on a budget model via OpenRouter</div></div>
+    <div class="fact"><div class="big">~350k</div><div class="lbl">tokens burned per run — the reports get re-read at every desk</div></div>
+    <div class="fact"><div class="big">BUY</div><div class="lbl">its verdict on NVDA — Overweight, 3–5% position, dollar-cost average in</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">02</span><h3 class="serif">Build it — the exact setup</h3><span class="ln"></span></div>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><div class="body">
+      <h4>Clone and install</h4>
+      <p>Python 3.12+ and five minutes. The repo is TauricResearch/TradingAgents on GitHub.</p>
+      <span class="code">git clone https://github.com/TauricResearch/TradingAgents.git
+cd TradingAgents
+python3 -m venv .venv && .venv/bin/pip install .</span>
+    </div></div>
+    <div class="step"><div class="num">2</div><div class="body">
+      <h4>One key runs every brain</h4>
+      <p>Skip juggling OpenAI/Anthropic/Google keys — one <b>OpenRouter</b> key reaches all of them,
+      including the cheap DeepSeek models that make runs cost cents. Create a <code class="mono">.env</code> in the repo folder:</p>
+      <span class="code">OPENROUTER_API_KEY=sk-or-v1-your-key
+TRADINGAGENTS_LLM_PROVIDER=openrouter
+TRADINGAGENTS_DEEP_THINK_LLM=deepseek/deepseek-chat
+TRADINGAGENTS_QUICK_THINK_LLM=deepseek/deepseek-chat
+TRADINGAGENTS_MAX_DEBATE_ROUNDS=2
+TRADINGAGENTS_MAX_RISK_ROUNDS=2</span>
+    </div></div>
+    <div class="step"><div class="num">3</div><div class="body">
+      <h4>Free macro data (optional but worth it)</h4>
+      <p>Stock data comes from yfinance with no key. Add a free <b>FRED</b> key (fred.stlouisfed.org) to the
+      <code class="mono">.env</code> as <code class="mono">FRED_API_KEY=...</code> and the macro analyst gets real
+      Federal Reserve data — rates, inflation, labor.</p>
+    </div></div>
+    <div class="step"><div class="num">4</div><div class="body">
+      <h4>Run the firm</h4>
+      <p>Launch from the repo folder (that's where the <code class="mono">.env</code> is found). Pick a ticker and date,
+      then watch each desk light up live in the terminal.</p>
+      <span class="code">.venv/bin/python -m cli.main</span>
+    </div></div>
+    <div class="step"><div class="num">5</div><div class="body">
+      <h4>Upgrade the brain when it matters</h4>
+      <p>Swap one line to put a frontier model in the chair — same firm, sharper analysts, ~20× the price.</p>
+      <span class="code">TRADINGAGENTS_DEEP_THINK_LLM=openai/gpt-5.6-sol</span>
+    </div></div>
+  </div>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">03</span><h3 class="serif">What it costs per verdict</h3><span class="ln"></span></div>
+  <div class="tablewrap"><table>
+    <tr><th>Brain</th><th>OpenRouter model</th><th>Cost per full analysis*</th></tr>
+    <tr><td>Budget desk</td><td class="t">deepseek/deepseek-chat</td><td>~$0.10–0.15</td></tr>
+    <tr><td>Frontier desk</td><td class="t">openai/gpt-5.6-sol</td><td>~$2.50–4.00</td></tr>
+  </table></div>
+  <p class="sub" style="margin-top:14px;font-size:13.5px">*One ticker, one date, 2 debate rounds, ~350k tokens.
+  The token count barely changes with the model — only the price per token does.</p>
+</section>
+
+<section>
+  <div class="sechead"><span class="n">04</span><h3 class="serif">The honest findings</h3><span class="ln"></span></div>
+
+  <div class="insight"><h4><span class="tag">WORKS</span>The process is genuinely impressive to watch</h4>
+    <p>Four analysts pull real data (our run cited NVIDIA's actual fundamentals — the multi-trillion market cap,
+    forward P/E, PEG, margins, the debt load), then a bull and a bear argue the case before a trader and risk team
+    weigh in. As a <b>research workflow demo</b>, it's the best free show in AI finance.</p>
+    <div class="win">→ film the terminal. the debate IS the content.</div></div>
+
+  <div class="insight fail"><h4><span class="tag">FAILS</span>It placed a stop-loss at the current price</h4>
+    <p>The portfolio manager recommended a stop at a level that was, at that moment, <b>roughly where NVDA was
+    trading</b>. Why? The technical analyst had flagged that number as resistance — and the cheap model recycled it
+    as a stop without ever checking it against spot. A human risk manager catches that in one glance.
+    <b>This is the cheap-model tax:</b> numbers get moved around confidently but not sanity-checked.</p></div>
+
+  <div class="insight fail"><h4><span class="tag">MISSING</span>No price target — by design</h4>
+    <p>No agent in the chain does valuation math. There's no DCF, no comps model, no earnings build. The framework
+    outputs a desk-style <b>decision</b> (buy/hold/sell + sizing + risk framing), not an analyst's target. If you want
+    "12-month PT $X", this tool structurally cannot give it to you — no matter which model you pay for.</p></div>
+
+  <div class="insight"><h4><span class="tag">LESSON</span>The framework is a chassis. The model is the engine.</h4>
+    <p>Two runs on the same cheap brain gave us near-identical generic conclusions — the blandness is systematic,
+    not unlucky. The interesting experiment is holding the ticker and date fixed and <b>swapping only the brain</b>:
+    does a frontier model catch the stop-loss blunder the cheap one made? That A/B costs about $3 to run yourself
+    with the setup above.</p></div>
+</section>
+
+<section>
+  <div class="honest">
+    <h4>THE HONEST LINE</h4>
+    <p>This is a research toy with a firm-shaped costume — brilliant for learning how a desk reasons, dangerous if
+    you trade its output raw. It has no valuation engine, its risk checks are only as sharp as the model you pay for,
+    and its confidence never wavers even when its numbers should. <b>Treat every verdict as a first draft from a
+    very cheap intern.</b> Educational content only — not financial advice.</p>
+  </div>
+</section>
+
+<section>
+  <div class="cta">
+    <h3 class="serif">Want the next build the night it drops?</h3>
+    <p>We wire up AI trading tools, backtest the hype, and publish the receipts all week.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
+  </div>
+</section>
+
+<footer>
+  Setup verified on TradingAgents v0.3.1 (Aug 2026) · run costs measured via OpenRouter usage metering ·
+  NVDA run analyzed as of 2026-08-07. Educational content only — not financial advice. Do your own research.
+  · <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Instagram</a>
+</footer>
+
+</div>
+</div>
+
+<script>
+  var DROP_ID="027";
+  var PAGE_HASH="6b9966be10edb7207085bb7101bd9c3bfeba2df95a32d9edf6bbeb4adfceae83";
+  var MASTER_HASH="30e7724015a1f378871306cc61d597224206a1233f1cc6eadf42b7ae4b0a2cc8";
+  var FREE_AFTER="2026-12-31";
+  function norm(s){return String(s||"").toUpperCase().replace(/[^A-Z0-9]/g,"").replace(/^C9/,"");}
+  function store(){try{var s=JSON.parse(localStorage.getItem("c9vault2")||"[]");return Array.isArray(s)?s:[]}catch(e){return[]}}
+  function unlock(remember){
+    if(remember){var s=store();if(s.indexOf(DROP_ID)<0){s.push(DROP_ID);try{localStorage.setItem("c9vault2",JSON.stringify(s))}catch(e){}}}
+    document.body.classList.remove("locked");document.getElementById("gate").style.display="none";
+  }
+  function sha256(t){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)).then(function(b){
+    return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("");});}
+  function tryUnlock(){
+    sha256(norm(document.getElementById("code").value)).then(function(h){
+      if(h===PAGE_HASH||h===MASTER_HASH){unlock(true);}
+      else{
+        var c=document.getElementById("gatecard");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake");
+        document.getElementById("err").textContent="Wrong code — check the DM and try again.";
+      }
+    });
+  }
+  document.getElementById("code").addEventListener("keydown",function(e){if(e.key==="Enter")tryUnlock();});
+  if(store().indexOf(DROP_ID)>=0 || Date.now()>Date.parse(FREE_AFTER+"T23:59:59")) unlock(false);
+</script>
+</body>
+</html>
