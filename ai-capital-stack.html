@@ -150,7 +150,7 @@ body.subhide .sub{display:none}
       <button class="tab on" data-view="graph">Network</button>
       <button class="tab" data-view="rank">Exposure ranking</button>
       <button class="tab" data-view="flows">Money flows</button>
-      <button class="tab" data-view="gbb">Good · Better · Best</button>
+      <button class="tab" data-view="gbb">AI Stock Ratings</button>
     </div>
     <div class="spacer"></div>
     <div class="legend" id="legend">
@@ -198,8 +198,15 @@ body.subhide .sub{display:none}
         .gbbrow .co{font-weight:700;font-size:14px}
         .gbbrow .co .tk{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);margin-left:7px}
         .gbbrow .why{font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:2px}
+        .gbbfield{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line)}
+        .gbbfield .fhead{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+        .frow{padding:7px 0;border-bottom:1px solid rgba(255,255,255,.03)}
+        .frow:last-child{border-bottom:none}
+        .frow .co{font-weight:600;font-size:12.5px}
+        .frow .co .tk{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--muted);margin-left:6px}
+        .frow .why{font-size:11.5px;color:var(--muted);line-height:1.5;margin-top:1px}
       </style>
-      <h2 class="vhead disp">Good · Better · Best — the AI stack in four picks-per-layer</h2>
+      <h2 class="vhead disp">AI Stock Ratings — Good · Better · Best</h2>
       <p class="vintro">The reel format, with the reasoning attached. <b>Good</b> = the accessible on-ramp,
       <b>Better</b> = more torque per dollar of AI news, <b>Best</b> = the name we'd defend hardest — each tied to the
       exposure map in the other tabs. This is a ranking of <i>narrative leverage</i>, not a portfolio: sizes, risk and
@@ -209,21 +216,44 @@ body.subhide .sub{display:none}
           <div class="gbbrow"><span class="gbbtier t-good">GOOD</span><div><div class="co">AMD<span class="tk">AMD</span></div><div class="why">The credible challenger — MI-series actually shipping into hyperscaler racks.</div></div></div>
           <div class="gbbrow"><span class="gbbtier t-better">BETTER</span><div><div class="co">Broadcom<span class="tk">AVGO</span></div><div class="why">The quiet winner: custom AI silicon for Google and Meta plus the networking layer around every cluster.</div></div></div>
           <div class="gbbrow"><span class="gbbtier t-best">BEST</span><div><div class="co">Nvidia<span class="tk">NVDA</span></div><div class="why">Still the king — demand called "parabolic" by its own CEO, supply-constrained through the entire next chip generation.</div></div></div>
+          <div class="gbbfield"><div class="fhead">The rest of the field — honest reads</div>
+            <div class="frow"><div class="co">TSMC<span class="tk">TSM</span></div><div class="why">Everyone's foundry — wins whichever chip designer wins. The boring answer that has quietly beaten most of the flashy ones. Taiwan risk is the only reason it's not "Best."</div></div>
+            <div class="frow"><div class="co">Marvell<span class="tk">MRVL</span></div><div class="why">Custom-silicon #2 behind Broadcom and the DSP inside most optical modules — genuinely spans two rounds. The knock: custom-chip wins are lumpy and contested, and the stock pays for perfection.</div></div>
+            <div class="frow"><div class="co">Micron<span class="tk">MU</span></div><div class="why">HBM sold out years ahead, name-checked by Musk, ran to a trillion-plus. Honest read: memory is still cyclical — the booms end abruptly, and you're buying closer to the top of the sentiment cycle than the bottom.</div></div>
+            <div class="frow"><div class="co">Intel<span class="tk">INTC</span></div><div class="why">The politics trade: Washington holds a stake, Terafab leans on its 14A process, and famous portfolios have been buying. As a business it's still losing the process race — you're betting on subsidies plus turnaround, not on today's products.</div></div>
+          </div>
         </div>
         <div class="gbbcard"><div class="cat">Round 2</div><h3>AI Cloud</h3>
           <div class="gbbrow"><span class="gbbtier t-good">GOOD</span><div><div class="co">Microsoft<span class="tk">MSFT</span></div><div class="why">The safe giant — added a gigawatt of capacity in a single quarter, doubling its footprint in two years.</div></div></div>
           <div class="gbbrow"><span class="gbbtier t-better">BETTER</span><div><div class="co">CoreWeave<span class="tk">CRWV</span></div><div class="why">The neocloud the giants themselves rent from when they run out — #1 host for China's open-weight models too.</div></div></div>
           <div class="gbbrow"><span class="gbbtier t-best">BEST</span><div><div class="co">Nebius<span class="tk">NBIS</span></div><div class="why">Smallest of the three, most torque — hyperscalers renting third-party GPU capacity puts a demand floor under the pure-plays.</div></div></div>
+          <div class="gbbfield"><div class="fhead">The rest of the field — honest reads</div>
+            <div class="frow"><div class="co">Alphabet<span class="tk">GOOGL</span></div><div class="why">The most vertically integrated AI company on earth — TPUs, frontier models, data, distribution — at the cheapest multiple of the giants. The catch that keeps it out of the trio: AI answers eat the search cash cow that funds everything.</div></div>
+            <div class="frow"><div class="co">Amazon<span class="tk">AMZN</span></div><div class="why">AWS plus Trainium plus the Anthropic stake, and management says capacity won't catch demand for years. Honest read: the AI story is diluted across a retail conglomerate with strained free cash flow — great business, blunt instrument.</div></div>
+            <div class="frow"><div class="co">Oracle<span class="tk">ORCL</span></div><div class="why">The most explosive backlog in software history. Also: debt-funded, capex-swallowed, and heavily exposed to one customer's ability to pay its bills. The highest-beta big cloud — in both directions.</div></div>
+          </div>
         </div>
         <div class="gbbcard"><div class="cat">Round 3</div><h3>AI Power</h3>
           <div class="gbbrow"><span class="gbbtier t-good">GOOD</span><div><div class="co">Oklo<span class="tk">OKLO</span></div><div class="why">The SMR moonshot — pre-revenue, pure story. Highest ceiling, least under it.</div></div></div>
           <div class="gbbrow"><span class="gbbtier t-better">BETTER</span><div><div class="co">Vistra<span class="tk">VST</span></div><div class="why">Real fleet, real earnings, maximum torque per megawatt of data-center news.</div></div></div>
           <div class="gbbrow"><span class="gbbtier t-best">BEST</span><div><div class="co">Constellation Energy<span class="tk">CEG</span></div><div class="why">The biggest US nuclear fleet and the Microsoft power deal — the most reliable way to own the electron shortage.</div></div></div>
+          <div class="gbbfield"><div class="fhead">The rest of the field — honest reads</div>
+            <div class="frow"><div class="co">GE Vernova<span class="tk">GEV</span></div><div class="why">The real arms dealer — gas turbines effectively sold out for years. Less romantic than nuclear, more certain than SMRs. Arguably belongs in the trio; it lost on name recognition, not on fundamentals.</div></div>
+            <div class="frow"><div class="co">Vertiv<span class="tk">VRT</span></div><div class="why">Not power generation — power handling: cooling and distribution inside the data center. The most defensible business on this row, and the market knows it; you're paying a full price.</div></div>
+            <div class="frow"><div class="co">Talen Energy<span class="tk">TLN</span></div><div class="why">The AWS nuclear deal proved the direct-to-data-center model. Smaller fleet than Constellation, chunkier single-asset risk.</div></div>
+            <div class="frow"><div class="co">Bloom Energy<span class="tk">BE</span></div><div class="why">Fuel cells as bridge power while grid queues stretch — real data-center orders, and it shows up in Trump's disclosed trades. Honest read: two decades public and durable profitability still unproven; it rallies on announcements and fades on margins.</div></div>
+            <div class="frow"><div class="co">NuScale<span class="tk">SMR</span></div><div class="why">The other SMR bet, with an NRC design approval Oklo doesn't have — but its anchor project already collapsed once on costs. Pre-revenue. Size it like an option, because it is one.</div></div>
+          </div>
         </div>
         <div class="gbbcard"><div class="cat">Round 4</div><h3>AI Photonics</h3>
           <div class="gbbrow"><span class="gbbtier t-good">GOOD</span><div><div class="co">Marvell<span class="tk">MRVL</span></div><div class="why">Its DSP chips sit inside nearly every AI optical module shipped — it wins whoever makes the module.</div></div></div>
           <div class="gbbrow"><span class="gbbtier t-better">BETTER</span><div><div class="co">Lumentum<span class="tk">LITE</span></div><div class="why">Ramping the 1.6-terabit modules the next generation of clusters is built on.</div></div></div>
           <div class="gbbrow"><span class="gbbtier t-best">BEST</span><div><div class="co">Coherent<span class="tk">COHR</span></div><div class="why">The biggest US pure-play, vertically integrated down to the lasers — and first in line if the ban on Chinese transceivers lands.</div></div></div>
+          <div class="gbbfield"><div class="fhead">The rest of the field — honest reads</div>
+            <div class="frow"><div class="co">Fabrinet<span class="tk">FN</span></div><div class="why">The neutral Thai factory nearly every non-Chinese optics brand builds through — cut from the reel for name recognition, not quality. The quiet compounder of the category.</div></div>
+            <div class="frow"><div class="co">Credo<span class="tk">CRDO</span></div><div class="why">The workaround play: copper cables that replace short-reach optics when modules get scarce or pricey. Wins from the same shortage, from the other side.</div></div>
+            <div class="frow"><div class="co">Applied Optoelectronics<span class="tk">AAOI</span></div><div class="why">The lottery ticket — US production and violent moves in both directions on thin financials. A trade, not a holding.</div></div>
+          </div>
         </div>
       </div>
       <p class="foot">Picks tie back to the exposure ranking and money-flow tabs — same map, condensed to twelve names.
