@@ -150,6 +150,7 @@ body.subhide .sub{display:none}
       <button class="tab on" data-view="graph">Network</button>
       <button class="tab" data-view="rank">Exposure ranking</button>
       <button class="tab" data-view="flows">Money flows</button>
+      <button class="tab" data-view="gbb">Good · Better · Best</button>
     </div>
     <div class="spacer"></div>
     <div class="legend" id="legend">
@@ -181,6 +182,52 @@ body.subhide .sub{display:none}
       <div class="flowgrid" id="flowGrid"></div>
       <div class="gap" id="gapNote"></div>
       <p class="foot">Sources: OpenAI / Anthropic / partner announcements, Microsoft &amp; Amazon filings, CNBC, Reuters, Bloomberg, FT, Fortune, DCD and others, through ~Jun 2026. Figures are the largest publicly reported values; many deals disclose only ceilings ("up to") or nothing. Not investment advice.</p>
+    </div></div></div>
+    <div class="view" id="v-gbb"><div class="scroll"><div class="wrap">
+      <style>
+        .gbbgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:18px}
+        .gbbcard{border:1px solid var(--line);border-radius:14px;background:var(--panel2);padding:18px 20px}
+        .gbbcard h3{font-family:"Space Grotesk";font-size:16px;font-weight:700;margin:0 0 4px;letter-spacing:-.02em}
+        .gbbcard .cat{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:2.5px;color:var(--muted);text-transform:uppercase}
+        .gbbrow{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+        .gbbrow:last-child{border-bottom:none}
+        .gbbtier{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.5px;padding:3px 8px;border-radius:6px;min-width:58px;text-align:center;margin-top:2px}
+        .t-good{background:rgba(148,163,184,.15);color:#94A3B8}
+        .t-better{background:rgba(56,189,248,.15);color:#38BDF8}
+        .t-best{background:rgba(250,204,21,.16);color:#FACC15}
+        .gbbrow .co{font-weight:700;font-size:14px}
+        .gbbrow .co .tk{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);margin-left:7px}
+        .gbbrow .why{font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:2px}
+      </style>
+      <h2 class="vhead disp">Good · Better · Best — the AI stack in four picks-per-layer</h2>
+      <p class="vintro">The reel format, with the reasoning attached. <b>Good</b> = the accessible on-ramp,
+      <b>Better</b> = more torque per dollar of AI news, <b>Best</b> = the name we'd defend hardest — each tied to the
+      exposure map in the other tabs. This is a ranking of <i>narrative leverage</i>, not a portfolio: sizes, risk and
+      time horizons are yours. Not investment advice.</p>
+      <div class="gbbgrid">
+        <div class="gbbcard"><div class="cat">Round 1</div><h3>AI Chips</h3>
+          <div class="gbbrow"><span class="gbbtier t-good">GOOD</span><div><div class="co">AMD<span class="tk">AMD</span></div><div class="why">The credible challenger — MI-series actually shipping into hyperscaler racks.</div></div></div>
+          <div class="gbbrow"><span class="gbbtier t-better">BETTER</span><div><div class="co">Broadcom<span class="tk">AVGO</span></div><div class="why">The quiet winner: custom AI silicon for Google and Meta plus the networking layer around every cluster.</div></div></div>
+          <div class="gbbrow"><span class="gbbtier t-best">BEST</span><div><div class="co">Nvidia<span class="tk">NVDA</span></div><div class="why">Still the king — demand called "parabolic" by its own CEO, supply-constrained through the entire next chip generation.</div></div></div>
+        </div>
+        <div class="gbbcard"><div class="cat">Round 2</div><h3>AI Cloud</h3>
+          <div class="gbbrow"><span class="gbbtier t-good">GOOD</span><div><div class="co">Microsoft<span class="tk">MSFT</span></div><div class="why">The safe giant — added a gigawatt of capacity in a single quarter, doubling its footprint in two years.</div></div></div>
+          <div class="gbbrow"><span class="gbbtier t-better">BETTER</span><div><div class="co">CoreWeave<span class="tk">CRWV</span></div><div class="why">The neocloud the giants themselves rent from when they run out — #1 host for China's open-weight models too.</div></div></div>
+          <div class="gbbrow"><span class="gbbtier t-best">BEST</span><div><div class="co">Nebius<span class="tk">NBIS</span></div><div class="why">Smallest of the three, most torque — hyperscalers renting third-party GPU capacity puts a demand floor under the pure-plays.</div></div></div>
+        </div>
+        <div class="gbbcard"><div class="cat">Round 3</div><h3>AI Power</h3>
+          <div class="gbbrow"><span class="gbbtier t-good">GOOD</span><div><div class="co">Oklo<span class="tk">OKLO</span></div><div class="why">The SMR moonshot — pre-revenue, pure story. Highest ceiling, least under it.</div></div></div>
+          <div class="gbbrow"><span class="gbbtier t-better">BETTER</span><div><div class="co">Vistra<span class="tk">VST</span></div><div class="why">Real fleet, real earnings, maximum torque per megawatt of data-center news.</div></div></div>
+          <div class="gbbrow"><span class="gbbtier t-best">BEST</span><div><div class="co">Constellation Energy<span class="tk">CEG</span></div><div class="why">The biggest US nuclear fleet and the Microsoft power deal — the most reliable way to own the electron shortage.</div></div></div>
+        </div>
+        <div class="gbbcard"><div class="cat">Round 4</div><h3>AI Photonics</h3>
+          <div class="gbbrow"><span class="gbbtier t-good">GOOD</span><div><div class="co">Marvell<span class="tk">MRVL</span></div><div class="why">Its DSP chips sit inside nearly every AI optical module shipped — it wins whoever makes the module.</div></div></div>
+          <div class="gbbrow"><span class="gbbtier t-better">BETTER</span><div><div class="co">Lumentum<span class="tk">LITE</span></div><div class="why">Ramping the 1.6-terabit modules the next generation of clusters is built on.</div></div></div>
+          <div class="gbbrow"><span class="gbbtier t-best">BEST</span><div><div class="co">Coherent<span class="tk">COHR</span></div><div class="why">The biggest US pure-play, vertically integrated down to the lasers — and first in line if the ban on Chinese transceivers lands.</div></div></div>
+        </div>
+      </div>
+      <p class="foot">Picks tie back to the exposure ranking and money-flow tabs — same map, condensed to twelve names.
+      Analytical content, not investment advice.</p>
     </div></div></div>
   </main>
 </div>
