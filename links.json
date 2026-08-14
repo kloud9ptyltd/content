@@ -1,102 +1,106 @@
 {
- "001": {
-  "name": "NIMBUS DESK",
-  "page": "nimbus-desk.html"
- },
- "002": {
-  "name": "CLAUDE \u00d7 TRADINGVIEW",
-  "page": "claude-tradingview-setup.html"
- },
- "003": {
-  "name": "KRONOS",
-  "page": "kronos-market-ai.html"
- },
- "004": {
-  "name": "PELOSI TRACKER",
-  "page": "nancy-pelosi-tracker.html"
- },
- "005": {
-  "name": "TRUMP TRACKER",
-  "page": "trump-trade-tracker.html"
- },
- "006": {
-  "name": "WORLD MONITOR",
-  "page": "worldmonitor-warroom.html"
- },
- "007": {
-  "name": "FUNDAMENTALS DB",
-  "page": "fundamentals-db.html"
- },
- "008": {
-  "name": "CLAUDE FINANCE AGENTS",
-  "page": "claude-finance-agents.html"
- },
- "009": {
-  "name": "QUANT BIBLE",
-  "page": "quant-bible.html"
- },
- "010": {
-  "name": "AI CAPITAL STACK",
-  "page": "ai-capital-stack.html"
- },
- "011": {
-  "name": "THE $35M WHALE",
-  "page": "whale-58bro.html"
- },
- "012": {
-  "name": "SAAS REPRICING MAP",
-  "page": "saas-repricing-map.html"
- },
- "013": {
-  "name": "VIX PLAYBOOK",
-  "page": "vix-playbook.html"
- },
- "014": {
-  "name": "QUANTUM $2B LIST",
-  "page": "quantum-2b-plays.html"
- },
- "015": {
-  "name": "CLAUDE MONEY PROMPTS",
-  "page": "claude-money-prompts.html"
- },
- "016": {
-  "name": "FABLE 5 PROMPTS",
-  "page": "fable5-prompts.html"
- },
- "017": {
-  "name": "MICRON THESIS",
-  "page": "micron-thesis.html"
- },
- "018": {
-  "name": "TRI-AGENT DESK",
-  "page": "tri-agent-desk-v2.html"
- },
- "019": {
-  "name": "VIBE TRADING",
-  "page": "vibe-trading-setup.html"
- },
- "020": {
-  "name": "HERMES BRIEF",
-  "page": "hermes-daily-brief.html"
- },
- "021": {
-  "name": "PINE INDICATORS",
-  "page": "claude-pine-indicators.html"
- },
- "022": {
-  "name": "POCKET AGENT",
-  "page": "claude-mobile-agent.html"
- },
- "023": {
-  "name": "TV BACKTEST",
-  "page": "claude-tv-backtest.html"
- },
- "024": {
-  "name": "MAGNET TRADE",
-  "page": "magnet-trade.html"
- },
- "025": {
-  "name": "CAPEX VAULT",
-  "page": "bigtech-capex-winners.html"
- }
+  "001": {
+    "name": "NIMBUS DESK",
+    "page": "nimbus-desk.html"
+  },
+  "002": {
+    "name": "CLAUDE × TRADINGVIEW",
+    "page": "claude-tradingview-setup.html"
+  },
+  "003": {
+    "name": "KRONOS",
+    "page": "kronos-market-ai.html"
+  },
+  "004": {
+    "name": "PELOSI TRACKER",
+    "page": "nancy-pelosi-tracker.html"
+  },
+  "005": {
+    "name": "TRUMP TRACKER",
+    "page": "trump-trade-tracker.html"
+  },
+  "006": {
+    "name": "WORLD MONITOR",
+    "page": "worldmonitor-warroom.html"
+  },
+  "007": {
+    "name": "FUNDAMENTALS DB",
+    "page": "fundamentals-db.html"
+  },
+  "008": {
+    "name": "CLAUDE FINANCE AGENTS",
+    "page": "claude-finance-agents.html"
+  },
+  "009": {
+    "name": "QUANT BIBLE",
+    "page": "quant-bible.html"
+  },
+  "010": {
+    "name": "AI CAPITAL STACK",
+    "page": "ai-capital-stack.html"
+  },
+  "011": {
+    "name": "THE $35M WHALE",
+    "page": "whale-58bro.html"
+  },
+  "012": {
+    "name": "SAAS REPRICING MAP",
+    "page": "saas-repricing-map.html"
+  },
+  "013": {
+    "name": "VIX PLAYBOOK",
+    "page": "vix-playbook.html"
+  },
+  "014": {
+    "name": "QUANTUM $2B LIST",
+    "page": "quantum-2b-plays.html"
+  },
+  "015": {
+    "name": "CLAUDE MONEY PROMPTS",
+    "page": "claude-money-prompts.html"
+  },
+  "016": {
+    "name": "FABLE 5 PROMPTS",
+    "page": "fable5-prompts.html"
+  },
+  "017": {
+    "name": "MICRON THESIS",
+    "page": "micron-thesis.html"
+  },
+  "018": {
+    "name": "TRI-AGENT DESK",
+    "page": "tri-agent-desk-v2.html"
+  },
+  "019": {
+    "name": "VIBE TRADING",
+    "page": "vibe-trading-setup.html"
+  },
+  "020": {
+    "name": "HERMES BRIEF",
+    "page": "hermes-daily-brief.html"
+  },
+  "021": {
+    "name": "PINE INDICATORS",
+    "page": "claude-pine-indicators.html"
+  },
+  "022": {
+    "name": "POCKET AGENT",
+    "page": "claude-mobile-agent.html"
+  },
+  "023": {
+    "name": "TV BACKTEST",
+    "page": "claude-tv-backtest.html"
+  },
+  "024": {
+    "name": "MAGNET TRADE",
+    "page": "magnet-trade.html"
+  },
+  "025": {
+    "name": "CAPEX VAULT",
+    "page": "bigtech-capex-winners.html"
+  },
+  "026": {
+    "name": "THE QUANT VAULT",
+    "page": "quant-vault.html"
+  }
 }
