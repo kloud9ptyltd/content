@@ -102,5 +102,9 @@
   "026": {
     "name": "THE QUANT VAULT",
     "page": "quant-vault.html"
+  },
+  "027": {
+    "name": "THE WHALE TRACKER",
+    "page": "whale-tracker.html"
   }
 }
