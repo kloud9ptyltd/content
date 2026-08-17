@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>The Gap — Australia vs USA, 10 years of investing · Cloud9</title>
+<meta property="og:title" content="The Gap — $10K in Australia vs the USA over 10 years"/>
+<meta property="og:description" content="Same $10K, ten years: ASX 200 → $21.5K, S&P 500 → $39.4K. What each index actually owns, the currency angle, and the cheapest ETFs on both sides."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff;--red:#ff6a6a;--grn:#4ade80}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(74,222,128,.08),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(70,168,255,.08),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  .badge{margin-top:22px;display:inline-flex;align-items:center;gap:8px;background:rgba(70,168,255,.1);border:1px solid rgba(70,168,255,.35);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--c9)}
+  h1{font-size:33px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:16px 0 10px}
+  h1 em{font-style:normal;color:var(--gold)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .sect{margin:34px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .duel{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .side{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center}
+  .side.au{border-color:rgba(74,222,128,.35)}
+  .side.us{border-color:rgba(106,168,255,.4)}
+  .side .fl{font-size:26px}
+  .side .nm{font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--mut);margin-top:4px}
+  .side .amt{font-size:30px;font-weight:850;margin-top:8px}
+  .au .amt{color:var(--grn)}.us .amt{color:var(--blu)}
+  .side .pct{font-size:14px;font-weight:700;color:#cfd8e4;margin-top:2px}
+  .side .sub{font-size:11.5px;color:var(--faint);margin-top:6px}
+  .donuts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .dcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center}
+  .dcard h3{font-size:13px;font-weight:800;letter-spacing:.6px;margin-bottom:10px}
+  .legend{margin-top:10px;text-align:left;font-size:12px;line-height:1.8;color:#cfd8e4}
+  .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+  .call{margin-top:14px;background:var(--card);border:1px solid rgba(230,200,120,.35);border-radius:16px;padding:17px}
+  .call h3{font-size:16px;font-weight:850;color:var(--gold)}
+  .call p{font-size:14px;line-height:1.55;color:#cfd8e4;margin-top:8px}
+  .call p b{color:#fff}
+  .step{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .step h3{font-size:15.5px;font-weight:800}
+  .step p{font-size:13.5px;line-height:1.55;color:#cfd8e4;margin-top:7px}
+  .step p b{color:#fff}
+  table.t{width:100%;border-collapse:collapse;margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  table.t td,table.t th{padding:11px 12px;border-top:1px solid var(--line2);font-size:13.5px;text-align:left}
+  table.t th{font-size:10.5px;letter-spacing:1.1px;text-transform:uppercase;color:var(--mut);border-top:none}
+  table.t .f{font-weight:800;color:#fff;font-family:"SF Mono",ui-monospace,Menlo,monospace;white-space:nowrap}
+  table.t .v{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-weight:700;text-align:right;white-space:nowrap}
+  .pos{color:var(--g)}.hot{color:var(--gold)}.blue{color:var(--blu)}.green{color:var(--grn)}
+  .warn{margin-top:18px;background:rgba(255,106,106,.07);border:1px solid rgba(255,106,106,.3);border-radius:16px;padding:16px}
+  .warn h3{font-size:14px;font-weight:800;color:var(--red)}
+  .warn p{font-size:13.5px;line-height:1.55;color:#cfd8e4;margin-top:8px}
+  .more{margin-top:14px;background:linear-gradient(180deg,rgba(230,200,120,.10),var(--card));border:1px solid rgba(230,200,120,.35);border-radius:16px;padding:18px;display:block;text-decoration:none}
+  .more h3{font-size:16.5px;font-weight:850;color:#fff}
+  .more p{font-size:13.5px;color:#cfd8e4;margin-top:6px;line-height:1.45}
+  .more .go{display:inline-block;margin-top:9px;font-size:13px;font-weight:800;color:var(--gold)}
+  .cta{margin-top:34px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.4);border-radius:20px;padding:24px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:9px 0 15px;line-height:1.5}
+  .btn{display:inline-block;background:var(--c9);color:#03111f;font-weight:850;font-size:16px;padding:14px 28px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+  footer a{color:var(--mut)}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">The Gap</span></header>
+
+  <div class="badge">🇦🇺 vs 🇺🇸 · 10 years · same $10K</div>
+  <h1>Same $10K. Ten years. <em>An $18,000 gap.</em></h1>
+  <p class="lede">Both markets went up. Both paid dividends. But <b>what each index actually owns</b> — and <b>which currency it earns in</b> — produced wildly different endings. Here's the whole picture, with the honest caveats.</p>
+
+  <div class="duel">
+    <div class="side au"><div class="fl">🇦🇺</div><div class="nm">ASX 200 · USD ADJ.</div><div class="amt">$21.5K</div><div class="pct">+115%</div><div class="sub">dividends reinvested</div></div>
+    <div class="side us"><div class="fl">🇺🇸</div><div class="nm">S&amp;P 500</div><div class="amt">$39.4K</div><div class="pct">+294%</div><div class="sub">dividends reinvested</div></div>
+  </div>
+
+  <div class="sect">What you actually own — sector split</div>
+  <div class="donuts">
+    <div class="dcard"><h3>🇦🇺 ASX 200</h3>
+      <svg width="120" height="120" viewBox="0 0 42 42" style="transform:rotate(-90deg)">
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#1a2130" stroke-width="7"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#4ade80" stroke-width="7" stroke-dasharray="31 69" stroke-dashoffset="0"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#e6c878" stroke-width="7" stroke-dasharray="19 81" stroke-dashoffset="-31"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#ff6a6a" stroke-width="7" stroke-dasharray="9 91" stroke-dashoffset="-50"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#6aa8ff" stroke-width="7" stroke-dasharray="7 93" stroke-dashoffset="-59"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#b58cf0" stroke-width="7" stroke-dasharray="7 93" stroke-dashoffset="-66"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#54617a" stroke-width="7" stroke-dasharray="27 73" stroke-dashoffset="-73"/>
+      </svg>
+      <div class="legend">
+        <span class="sw" style="background:#4ade80"></span>Financials (banks) ~31%<br/>
+        <span class="sw" style="background:#e6c878"></span>Materials (miners) ~19%<br/>
+        <span class="sw" style="background:#ff6a6a"></span>Health care ~9%<br/>
+        <span class="sw" style="background:#6aa8ff"></span>Industrials ~7%<br/>
+        <span class="sw" style="background:#b58cf0"></span>Real estate ~7%<br/>
+        <span class="sw" style="background:#54617a"></span>Everything else ~27%
+      </div>
+    </div>
+    <div class="dcard"><h3>🇺🇸 S&amp;P 500</h3>
+      <svg width="120" height="120" viewBox="0 0 42 42" style="transform:rotate(-90deg)">
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#1a2130" stroke-width="7"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#6aa8ff" stroke-width="7" stroke-dasharray="34 66" stroke-dashoffset="0"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#4ade80" stroke-width="7" stroke-dasharray="13 87" stroke-dashoffset="-34"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#e6c878" stroke-width="7" stroke-dasharray="10 90" stroke-dashoffset="-47"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#b58cf0" stroke-width="7" stroke-dasharray="10 90" stroke-dashoffset="-57"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#ff6a6a" stroke-width="7" stroke-dasharray="10 90" stroke-dashoffset="-67"/>
+        <circle cx="21" cy="21" r="15.9155" fill="none" stroke="#54617a" stroke-width="7" stroke-dasharray="23 77" stroke-dashoffset="-77"/>
+      </svg>
+      <div class="legend">
+        <span class="sw" style="background:#6aa8ff"></span>Technology ~34%<br/>
+        <span class="sw" style="background:#4ade80"></span>Financials ~13%<br/>
+        <span class="sw" style="background:#e6c878"></span>Comm. services ~10%<br/>
+        <span class="sw" style="background:#b58cf0"></span>Consumer disc. ~10%<br/>
+        <span class="sw" style="background:#ff6a6a"></span>Health care ~10%<br/>
+        <span class="sw" style="background:#54617a"></span>Everything else ~23%
+      </div>
+    </div>
+  </div>
+
+  <div class="call"><h3>The gap, explained in one line</h3>
+    <p><b>Banks + miners ≈ half the ASX.</b> <b>Tech + the AI economy ≈ half the S&amp;P.</b> The last decade belonged to AI, cloud and software — Australia's index simply doesn't own much of it (~3–4% tech). You weren't picking countries; you were picking <b>industries</b>.</p></div>
+
+  <div class="sect">The currency angle most people miss</div>
+  <div class="step"><h3>💱 US investing doubles as a currency hedge</h3>
+    <p>An unhedged US ETF pays you in <b>US dollars</b>. Over the past decade the Aussie dollar slid from ~78¢ to ~65¢ US — so AUD investors in US assets got the market's return <b>plus</b> a currency kicker. And because so much of what Australians buy (tech, travel, fuel, iPhones) is priced in USD, holding USD assets hedges your own cost of living.</p></div>
+  <div class="step"><h3>⚖️ …but it cuts both ways</h3>
+    <p>If the AUD <b>strengthens</b>, unhedged US returns shrink for an Aussie holder. That's why both hedged and unhedged versions of the big US ETFs exist on the ASX. All-Australia portfolios have zero currency diversification — 100% AUD exposure is itself a bet.</p></div>
+
+  <div class="sect">The cheapest tickets on each side</div>
+  <table class="t">
+    <tr><th>ETF</th><th>Tracks</th><th style="text-align:right">Fee</th><th style="text-align:right">10yr ≈</th></tr>
+    <tr><td class="f blue">SPYM</td><td>S&amp;P 500 (US-listed)</td><td class="v">0.02%</td><td class="v pos">+294%</td></tr>
+    <tr><td class="f blue">VOO</td><td>S&amp;P 500 (US-listed)</td><td class="v">0.03%</td><td class="v pos">+294%</td></tr>
+    <tr><td class="f blue">IQQ</td><td>Nasdaq-100 (US-listed, new 2026)</td><td class="v">0.10%*</td><td class="v hot">+460%†</td></tr>
+    <tr><td class="f blue">QQQM</td><td>Nasdaq-100 (US-listed)</td><td class="v">0.15%</td><td class="v hot">+460%†</td></tr>
+    <tr><td class="f green">IVV.AX</td><td>S&amp;P 500 — on the ASX</td><td class="v">0.04%</td><td class="v pos">+294%</td></tr>
+    <tr><td class="f green">NDQ.AX</td><td>Nasdaq-100 — on the ASX</td><td class="v">0.48%</td><td class="v hot">+460%†</td></tr>
+    <tr><td class="f green">A200.AX</td><td>ASX 200</td><td class="v">0.04%</td><td class="v">+135% (AUD)</td></tr>
+    <tr><td class="f green">VAS.AX</td><td>ASX 300</td><td class="v">0.07%</td><td class="v">+130% (AUD)</td></tr>
+    <tr><td class="f green">IOZ.AX</td><td>ASX 200</td><td class="v">0.05%</td><td class="v">+133% (AUD)</td></tr>
+  </table>
+  <p style="font-size:11.5px;color:var(--faint);margin-top:8px">*IQQ fee waived to 0.10% to Jul 2027 (0.12% after). †Index-level, dividends reinvested, approximate. AUD returns are in local currency (not USD-adjusted). Returns approximate as of mid-2026 — always check the current factsheet/PDS.</p>
+
+  <div class="call"><h3>The detail Aussies miss</h3>
+    <p>You don't need a US broker to own America. <b>IVV and NDQ trade on the ASX</b> in AUD, inside your normal broker and tax setup — same S&amp;P 500 / Nasdaq-100 exposure, no W-8BEN wrangling. The fee is a touch higher than US-listed twins; the convenience is the trade-off.</p></div>
+
+  <div class="sect">The honest other side</div>
+  <div class="warn"><h3>⚠ Before you sell everything Australian</h3>
+    <p><b>1) That was the last decade — not the next one.</b> The S&amp;P now trades near double the ASX's valuation, and the whole world is already crowded into US stocks (see The Flow below). Winners rotate.<br/><br/>
+    <b>2) Franking credits are real.</b> Australian dividends carry tax credits that can add ~1.3–1.5%/yr after tax for local investors — none of which shows in these charts.<br/><br/>
+    <b>3) Concentration cuts both ways.</b> Half the S&amp;P is a bet on tech/AI staying dominant. If that trade stumbles, the "boring" banks-and-miners index is the diversifier.<br/><br/>
+    Past performance is not indicative of future returns. Educational only — not financial advice, and nothing here considers your personal situation.</p></div>
+
+  <div class="sect">Goes with this page</div>
+  <a class="more" href="https://cloud9markets.com/the-flow.html"><h3>The Flow →</h3><p>Why the gap may keep feeding itself: foreigners bought a record $904B of US stocks in 12 months — more since 2024 than in the entire prior decade. Full data + sources.</p><span class="go">Open The Flow →</span></a>
+
+  <div class="cta">
+    <h2>Team 🇦🇺 or team 🇺🇸?</h2>
+    <p>Tell us in the comments on the reel — and follow for a new data drop every week. Everything free, everything from public data.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
+  </div>
+
+  <footer>
+    <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a> · Cloud9 Markets<br/>
+    Sector weights and returns are approximate (index providers, mid-2026). For educational purposes only. Not financial advice — general information that doesn't consider your objectives, financial situation or needs.
+  </footer>
+</body>
+</html>
