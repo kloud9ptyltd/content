@@ -25,6 +25,11 @@
   .lede b{color:#fff}
   .sect{margin:34px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
   .duel{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+  .duel.three{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .duel.three .amt{font-size:22px}
+  .duel.three .side{padding:13px 8px}
+  .side.nq{border-color:rgba(230,200,120,.45)}
+  .nq .amt{color:var(--gold)}
   .side{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center}
   .side.au{border-color:rgba(74,222,128,.35)}
   .side.us{border-color:rgba(106,168,255,.4)}
@@ -76,9 +81,10 @@
   <h1>Same $10K. Ten years. <em>An $18,000 gap.</em></h1>
   <p class="lede">Both markets went up. Both paid dividends. But <b>what each index actually owns</b> — and <b>which currency it earns in</b> — produced wildly different endings. Here's the whole picture, with the honest caveats.</p>
 
-  <div class="duel">
-    <div class="side au"><div class="fl">🇦🇺</div><div class="nm">ASX 200 · USD ADJ.</div><div class="amt">$21.5K</div><div class="pct">+115%</div><div class="sub">dividends reinvested</div></div>
-    <div class="side us"><div class="fl">🇺🇸</div><div class="nm">S&amp;P 500</div><div class="amt">$39.4K</div><div class="pct">+294%</div><div class="sub">dividends reinvested</div></div>
+  <div class="duel three">
+    <div class="side au"><div class="fl">🇦🇺</div><div class="nm">ASX 200 · USD</div><div class="amt">$21.5K</div><div class="pct">+115%</div><div class="sub">divs reinvested</div></div>
+    <div class="side us"><div class="fl">🇺🇸</div><div class="nm">S&amp;P 500</div><div class="amt">$39.4K</div><div class="pct">+294%</div><div class="sub">divs reinvested</div></div>
+    <div class="side nq"><div class="fl">🇺🇸</div><div class="nm">NASDAQ-100</div><div class="amt">$56.0K</div><div class="pct">+460%</div><div class="sub">divs reinvested</div></div>
   </div>
 
   <div class="sect">What you actually own — sector split</div>
@@ -149,6 +155,18 @@
 
   <div class="call"><h3>The detail Aussies miss</h3>
     <p>You don't need a US broker to own America. <b>IVV and NDQ trade on the ASX</b> in AUD, inside your normal broker and tax setup — same S&amp;P 500 / Nasdaq-100 exposure, no W-8BEN wrangling. The fee is a touch higher than US-listed twins; the convenience is the trade-off.</p></div>
+
+  <div class="sect">The 30-year view — USD only, full transparency</div>
+  <div class="duel three">
+    <div class="side au"><div class="fl">🇦🇺</div><div class="nm">ASX 200 · USD</div><div class="amt">≈$110K</div><div class="pct">≈+1,000%</div><div class="sub">~8.4%/yr</div></div>
+    <div class="side us"><div class="fl">🇺🇸</div><div class="nm">S&amp;P 500</div><div class="amt">≈$200K</div><div class="pct">≈+1,900%</div><div class="sub">~10.5%/yr</div></div>
+    <div class="side nq"><div class="fl">🇺🇸</div><div class="nm">NASDAQ-100</div><div class="amt">≈$460K</div><div class="pct">≈+4,500%</div><div class="sub">~13.6%/yr</div></div>
+  </div>
+  <div class="call"><h3>The 30-year twist nobody expects</h3>
+    <p>Split the 30 years in half and the story flips: <b>from 1996 to about 2016, Australia was WINNING in USD terms</b> — the commodities supercycle plus dodging the worst of the dot-com bust and the GFC beat America's "lost decade." <b>The entire gap you see today was built in the last ten years</b> — the AI, cloud and software era that Australia's index barely owns.</p></div>
+  <div class="call"><h3>What the Nasdaq number really costs</h3>
+    <p>That ≈$460K came with a price: the Nasdaq-100 <b>fell ~80% in 2000–02</b> and took about <b>15 years</b> to reclaim its dot-com high. Almost nobody held through that. The highest 30-year return belonged to the index that was hardest to keep holding — that's the real lesson, not the number.</p></div>
+  <p style="font-size:11.5px;color:var(--faint);margin-top:8px">30-year figures are approximate index-level total returns (dividends reinvested), converted to USD, ~Aug 1996 → Aug 2026, rounded. Built from index-provider long-run data; exact figures vary by start date and source.</p>
 
   <div class="sect">The honest other side</div>
   <div class="warn"><h3>⚠ Before you sell everything Australian</h3>
