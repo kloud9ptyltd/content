@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>The Buildout — the $7.6T AI capex boom, in charts · Cloud9</title>
+<meta property="og:title" content="AI is the biggest buildout in history — $7.6 trillion"/>
+<meta property="og:description" content="AI capex vs every boom before it, where the $7.6T flows, and the honest warning history gives. Full data + Goldman/NVIDIA/Columbia sources."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<style>
+ :root{--bg:#06080f;--card:#11161f;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);--tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff;--red:#ff6a6a}
+ *{margin:0;padding:0;box-sizing:border-box}
+ html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+ body{max-width:600px;margin:0 auto;padding:0 18px 80px;background:radial-gradient(900px 500px at 80% -5%,rgba(230,200,120,.11),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(70,168,255,.08),transparent 55%),var(--bg)}
+ a{color:var(--c9)}
+ header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+ .c9logo{height:34px;width:auto}.hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+ .badge{margin-top:22px;display:inline-flex;align-items:center;gap:8px;background:rgba(230,200,120,.1);border:1px solid rgba(230,200,120,.35);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold)}
+ .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--g)}
+ h1{font-size:33px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:16px 0 10px}h1 em{font-style:normal;color:var(--gold)}
+ .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}.lede b{color:#fff}
+ .sect{margin:34px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+ table.t{width:100%;border-collapse:collapse;margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+ table.t td,table.t th{padding:11px 14px;border-top:1px solid var(--line2);font-size:14px;text-align:left}
+ table.t th{font-size:11px;letter-spacing:1.1px;text-transform:uppercase;color:var(--mut);border-top:none}
+ table.t .f{font-weight:700;color:#fff}table.t .v{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-weight:700;text-align:right}
+ .hot{color:var(--gold)}.pos{color:var(--g)}
+ .call{margin-top:14px;background:linear-gradient(180deg,rgba(230,200,120,.12),var(--card));border:1px solid rgba(230,200,120,.35);border-radius:16px;padding:17px}
+ .call h3{font-size:16px;font-weight:850;color:var(--gold)}.call p{font-size:14px;line-height:1.55;color:#cfd8e4;margin-top:8px}.call p b{color:#fff}
+ .step{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+ .step h3{font-size:15.5px;font-weight:800}.step p{font-size:13.5px;line-height:1.55;color:#cfd8e4;margin-top:7px}.step p b{color:#fff}
+ .warn{margin-top:18px;background:rgba(255,106,106,.07);border:1px solid rgba(255,106,106,.3);border-radius:16px;padding:16px}
+ .warn h3{font-size:14px;font-weight:800;color:var(--red)}.warn p{font-size:13.5px;line-height:1.5;color:#cfd8e4;margin-top:8px}
+ .src{margin-top:14px;background:var(--card);border:1px solid var(--line2);border-radius:14px;padding:15px;font-size:13px;line-height:1.7;color:var(--mut)}
+ .cta{margin-top:34px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.4);border-radius:20px;padding:24px;text-align:center}
+ .cta h2{font-size:21px;font-weight:850}.cta p{font-size:14px;color:#cfd8e4;margin:9px 0 15px;line-height:1.5}
+ .btn{display:inline-block;background:var(--c9);color:#03111f;font-weight:850;font-size:16px;padding:14px 28px;border-radius:999px;text-decoration:none}
+ footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}footer a{color:var(--mut)}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head><body>
+ <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">The Buildout</span></header>
+ <div class="badge"><span class="dot"></span> Public data · Goldman · NVIDIA · Columbia</div>
+ <h1>The biggest buildout in history — <em>$7.6 trillion.</em></h1>
+ <p class="lede">Between 2026 and 2031, an estimated <b>$7.6 trillion</b> of AI compute capex — over $1T in 2026 alone. Measured against GDP, it's the <b>largest capex-driven boom ever recorded</b>. Here are the charts, and the part the charts don't say out loud.</p>
+
+ <div class="sect">Capex as % of GDP — every boom, measured the same way</div>
+ <table class="t">
+  <tr><th>Era</th><th></th><th style="text-align:right">% of GDP</th></tr>
+  <tr><td class="f">Canals</td><td>1836–41</td><td class="v">0.6%</td></tr>
+  <tr><td class="f">Railroads</td><td>1870–90</td><td class="v">2.2%</td></tr>
+  <tr><td class="f">Electrification</td><td>1905–25</td><td class="v">0.5%</td></tr>
+  <tr><td class="f">Highways</td><td>1956–73</td><td class="v">1.1%</td></tr>
+  <tr><td class="f">Telecom &amp; fibre</td><td>1996–2003</td><td class="v">1.0%</td></tr>
+  <tr><td class="f">AI buildout</td><td>2025–32</td><td class="v hot">3.7%</td></tr>
+ </table>
+ <div class="call"><h3>The scale, in one line</h3><p>AI at <b>~3.7% of GDP</b> is nearly double the railroad boom — the prior record — and it dwarfs electrification, highways and the internet. Goldman now puts 2026 global AI investment above <b>$1.019 trillion</b>.</p></div>
+
+ <div class="sect">Where the $7.6T flows (approx.)</div>
+ <table class="t">
+  <tr><td class="f">Chips &amp; compute</td><td class="v">~45%</td></tr>
+  <tr><td class="f">Data-center construction</td><td class="v">~20%</td></tr>
+  <tr><td class="f">Power &amp; grid</td><td class="v">~15%</td></tr>
+  <tr><td class="f">Cooling</td><td class="v">~8%</td></tr>
+  <tr><td class="f">Networking</td><td class="v">~7%</td></tr>
+  <tr><td class="f">Land &amp; other</td><td class="v">~5%</td></tr>
+ </table>
+ <p style="font-size:11.5px;color:var(--faint);margin-top:8px">Layer shares are approximate industry estimates — the point is that over half the money is not chips.</p>
+
+ <div class="sect">The part the chart doesn't say out loud</div>
+ <div class="step"><h3>The two next-biggest booms both busted</h3><p><b>Railroads</b> (1870s over-building) → mass bankruptcies. <b>Telecom &amp; fibre</b> (1996–2003 dark-fibre glut) → the dot-com bust. The infrastructure got built and stayed — but much of the money that financed it did not survive.</p></div>
+
+ <div class="sect">Bubble or boom? Both.</div>
+ <div class="step"><h3>▲ The boom is real</h3><p>$7.6T of compute has to be physically built — chips, power and data centres are real assets that will exist and produce.</p></div>
+ <div class="step"><h3>▼ The financing is the risk</h3><p>Much is debt-funded against fast-depreciating GPUs. If demand digests, the leverage — not the buildings — is where it breaks.</p></div>
+ <div class="step"><h3>◆ Different clocks</h3><p>The economy gets built AND the money gets stress-tested — just not on the same timeline. Own the real layer; respect the leverage.</p></div>
+
+ <div class="warn"><h3>⚠ Read carefully</h3><p>This is macro context, not a call. Capex projections are estimates and change; the historical analogues are illustrative, not predictive. Educational only — not financial advice.</p></div>
+
+ <div class="sect">Primary sources — check us</div>
+ <div class="src">
+  · Goldman Sachs Global Institute / Global Investment Research — AI capex estimates &amp; the $1.019T 2026 figure<br/>
+  · NVIDIA — compute capex projections<br/>
+  · Stijn Van Nieuwerburgh, Columbia Business School — capex as % of GDP, historical comparison<br/>
+  · As surfaced via Goldman Sachs Briefings &amp; ABC News.
+ </div>
+
+ <div class="cta"><h2>We track where the money goes</h2><p>The macro, the flows, the physical layer — new data drop every week, all from public sources.</p><a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a></div>
+ <footer><a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a> · Cloud9 Markets<br/>For educational purposes only. Not financial advice.</footer>
+</body></html>
