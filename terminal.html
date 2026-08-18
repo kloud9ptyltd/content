@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>The $0 Terminal — replace a $24k Bloomberg for $20/mo · Cloud9</title>
+<meta property="og:title" content="Build a $24,000 Bloomberg Terminal for $20/mo"/>
+<meta property="og:description" content="Charts, live data, every SEC filing, fundamentals, and what funds own — the free tools that replace a Bloomberg terminal, and how Claude ties them together."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff;--red:#ff6a6a}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(70,168,255,.12),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  .badge{margin-top:22px;display:inline-flex;align-items:center;gap:8px;background:rgba(70,168,255,.1);border:1px solid rgba(70,168,255,.35);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--c9)}
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--g)}
+  h1{font-size:33px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:16px 0 10px}
+  h1 em{font-style:normal;color:var(--gold)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .sect{margin:34px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  table.stack{width:100%;border-collapse:collapse;margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  table.stack td{padding:12px 14px;border-top:1px solid var(--line2);font-size:14px;vertical-align:top}
+  table.stack tr:first-child td{border-top:none}
+  table.stack .f{font-weight:700;color:#fff;white-space:nowrap}
+  table.stack .d{color:var(--mut);font-size:12.5px}
+  table.stack .p{font-family:"SF Mono",ui-monospace,Menlo,monospace;color:var(--g);font-weight:800;text-align:right;white-space:nowrap}
+  .verdict{margin-top:14px;background:linear-gradient(180deg,rgba(230,200,120,.12),var(--card));border:1px solid rgba(230,200,120,.35);border-radius:16px;padding:18px;text-align:center}
+  .verdict .big{font-size:15px;color:#cfd8e4}
+  .verdict .big b{color:#fff}
+  .verdict .row{display:flex;justify-content:space-between;margin-top:10px;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:15px}
+  .verdict .row .red{color:var(--red);font-weight:700}
+  .verdict .row .grn{color:var(--g);font-weight:800}
+  .step{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .step h3{font-size:15.5px;font-weight:800}
+  .step p{font-size:13.5px;line-height:1.55;color:#cfd8e4;margin-top:7px}
+  .step p b{color:#fff}
+  .more{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;display:block;text-decoration:none}
+  .more:hover{border-color:rgba(70,168,255,.4)}
+  .more h3{font-size:15px;font-weight:800;color:#fff}
+  .more p{font-size:12.5px;color:var(--mut);margin-top:4px;line-height:1.4}
+  .more .go{font-size:12px;font-weight:800;color:var(--gold);margin-top:6px;display:inline-block}
+  .warn{margin-top:18px;background:rgba(255,106,106,.07);border:1px solid rgba(255,106,106,.3);border-radius:16px;padding:16px}
+  .warn h3{font-size:14px;font-weight:800;color:var(--red)}
+  .warn p{font-size:13.5px;line-height:1.5;color:#cfd8e4;margin-top:8px}
+  .cta{margin-top:34px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.4);border-radius:20px;padding:24px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:9px 0 15px;line-height:1.5}
+  .btn{display:inline-block;background:var(--c9);color:#03111f;font-weight:850;font-size:16px;padding:14px 28px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+  footer a{color:var(--mut)}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">The $0 Terminal</span></header>
+
+  <div class="badge"><span class="dot"></span> Free tools + one Claude subscription</div>
+  <h1>Replace a <em>$24,000</em> Bloomberg Terminal for $20/mo.</h1>
+  <p class="lede">A Bloomberg terminal costs about <b>$24,000 a year</b>. For 99% of what a retail investor actually needs — charts, live prices, every SEC filing, fundamentals, and what the big funds own — the tools are <b>free</b>, and Claude is the glue. Here's the exact stack from the video.</p>
+
+  <div class="sect">The stack — what it costs</div>
+  <table class="stack">
+    <tr><td class="f">TradingView</td><td class="d">charts, indicators, alerts</td><td class="p">$0</td></tr>
+    <tr><td class="f">Finnhub</td><td class="d">live quotes, news, fundamentals API</td><td class="p">$0</td></tr>
+    <tr><td class="f">SEC EDGAR</td><td class="d">every filing — 10-K, 10-Q, 8-K, 13F</td><td class="p">$0</td></tr>
+    <tr><td class="f">yfinance</td><td class="d">price history + fundamentals in Python</td><td class="p">$0</td></tr>
+    <tr><td class="f">Your own SQLite DB</td><td class="d">the filings, stored + queryable</td><td class="p">$0</td></tr>
+    <tr><td class="f">13F data</td><td class="d">what the big funds report owning</td><td class="p">$0</td></tr>
+    <tr><td class="f">Claude Code</td><td class="d">connects it all — you describe, it builds</td><td class="p">$20/mo</td></tr>
+  </table>
+
+  <div class="verdict">
+    <div class="big">Same core capability. <b>1,200× cheaper.</b></div>
+    <div class="row"><span>Bloomberg Terminal</span><span class="red">$24,000 / yr</span></div>
+    <div class="row"><span>This stack</span><span class="grn">$240 / yr</span></div>
+  </div>
+
+  <div class="sect">How it fits together</div>
+  <div class="step"><h3>1 · The data is all free and public</h3>
+    <p>Prices (Finnhub/yfinance), filings (SEC EDGAR), and fund holdings (13F) are <b>free, machine-readable feeds</b>. Bloomberg's moat isn't the data — it's packaging it in one place. You can do the packaging yourself.</p></div>
+  <div class="step"><h3>2 · A database is your terminal's memory</h3>
+    <p>Pull the feeds into your own <b>SQLite database</b> and you can ask questions across everything at once — instead of clicking one ticker at a time on a free website.</p></div>
+  <div class="step"><h3>3 · Claude is the interface</h3>
+    <p>You don't write the plumbing — you describe what you want ("download these filings, store them, chart this, flag that") and <b>Claude Code writes the scripts</b>. That's genuinely how ours is built. It also drives TradingView directly for the charting layer.</p></div>
+
+  <div class="sect">The pieces, already built — free</div>
+  <a class="more" href="https://cloud9markets.com/claude-tradingview-setup.html"><h3>Claude × TradingView →</h3><p>The charting layer: Claude reads and drives your real TradingView charts.</p><span class="go">Get the setup →</span></a>
+  <a class="more" href="https://cloud9markets.com/fundamentals-db.html"><h3>The Fundamentals DB →</h3><p>A 3,000-stock quant database built from EDGAR + free APIs — the "memory" layer.</p><span class="go">See the build →</span></a>
+  <a class="more" href="https://cloud9markets.com/whale-tracker.html"><h3>The Whale Tracker →</h3><p>The 13F layer: track what the big funds report owning, from free SEC data.</p><span class="go">Open it →</span></a>
+  <a class="more" href="https://cloud9markets.com/nancy-pelosi-tracker.html"><h3>The Pelosi Tracker →</h3><p>Congressional trades, charted live — same $0-data philosophy.</p><span class="go">Open it →</span></a>
+
+  <div class="warn"><h3>⚠ Where a real Bloomberg still wins</h3>
+    <p>This isn't a 1:1 Bloomberg replacement — you don't get institutional-grade real-time depth, the messaging network, fixed-income/derivatives coverage, or millisecond data. For a retail investor doing research on stocks, it covers the ~90% that matters for ~1% of the cost. Educational only — not financial advice.</p></div>
+
+  <div class="cta">
+    <h2>We build these in the open</h2>
+    <p>New $0 build every week — all from free, public data. Follow along and grab each one.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
+  </div>
+
+  <footer>
+    <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a> · Cloud9 Markets<br/>
+    For educational purposes only. Not financial advice. All tools are free and publicly available; links go to their original authors.
+  </footer>
+</body>
+</html>
