@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>The Free Model — AI is following the Linux playbook · Cloud9</title>
+<meta property="og:title" content="The AI model is going to be free — here's where the money actually goes"/>
+<meta property="og:description" content="Chinese open-weight models are commoditizing AI the way Linux commoditized Unix. The token races to $0 — profit migrates to the scarce layers. The historical playbook, and where it points."/>
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<style>
+  :root{--bg:#06080f;--card:#11161f;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
+    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff;--red:#ff6a6a}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
+    background:radial-gradient(900px 500px at 80% -5%,rgba(70,168,255,.12),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
+  a{color:var(--c9)}
+  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+  .c9logo{height:34px;width:auto;display:block}
+  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+  .badge{margin-top:22px;display:inline-flex;align-items:center;gap:8px;background:rgba(70,168,255,.1);border:1px solid rgba(70,168,255,.35);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--c9)}
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--g)}
+  h1{font-size:33px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:16px 0 10px}
+  h1 em{font-style:normal;color:var(--gold)}
+  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
+  .lede b{color:#fff}
+  .sect{margin:34px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+  .two{display:flex;gap:10px;margin-top:14px}
+  .mini{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px}
+  .mini .t{font-size:12px;font-weight:800;letter-spacing:.4px;color:var(--mut);text-transform:uppercase}
+  .mini .v{font-size:26px;font-weight:850;margin-top:6px}
+  .mini .v.red{color:var(--red)} .mini .v.g{color:var(--g)}
+  .mini .d{font-size:12px;color:var(--mut);margin-top:5px;line-height:1.4}
+  table.stack{width:100%;border-collapse:collapse;margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  table.stack td{padding:12px 14px;border-top:1px solid var(--line2);font-size:14px;vertical-align:top}
+  table.stack tr:first-child td{border-top:none}
+  table.stack .f{font-weight:700;color:#fff}
+  table.stack .d{color:var(--mut);font-size:12.5px}
+  .step{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .step h3{font-size:15.5px;font-weight:800}
+  .step h3 .n{color:var(--gold)}
+  .step p{font-size:13.5px;line-height:1.55;color:#cfd8e4;margin-top:7px}
+  .step p b{color:#fff}
+  .call{margin-top:14px;background:linear-gradient(180deg,rgba(230,200,120,.1),var(--card));border:1px solid rgba(230,200,120,.3);border-radius:16px;padding:18px}
+  .call h3{font-size:16px;font-weight:850;color:var(--gold)}
+  .call p{font-size:14px;line-height:1.55;color:#cfd8e4;margin-top:8px}
+  .call p b{color:#fff}
+  .warn{margin-top:18px;background:rgba(255,106,106,.07);border:1px solid rgba(255,106,106,.3);border-radius:16px;padding:16px}
+  .warn h3{font-size:14px;font-weight:800;color:var(--red)}
+  .warn p{font-size:13.5px;line-height:1.5;color:#cfd8e4;margin-top:8px}
+  .cta{margin-top:34px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.4);border-radius:20px;padding:24px;text-align:center}
+  .cta h2{font-size:21px;font-weight:850}
+  .cta p{font-size:14px;color:#cfd8e4;margin:9px 0 15px;line-height:1.5}
+  .btn{display:inline-block;background:var(--c9);color:#03111f;font-weight:850;font-size:16px;padding:14px 28px;border-radius:999px;text-decoration:none}
+  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+  footer a{color:var(--mut)}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">The Free Model</span></header>
+
+  <div class="badge"><span class="dot"></span> Cloud9 thesis · contrarian</div>
+  <h1>The AI model is going to be <em>free</em>. Here's where the money actually goes.</h1>
+  <p class="lede">Everyone's betting on <b>who has the best model</b>. History says that's the wrong bet. AI is following the exact playbook that turned proprietary software, encyclopedias and steel into commodities — <b>the thing everyone's paying for today races to zero</b>, and the profit migrates one layer over. Here's the pattern, the receipts, and where it points.</p>
+
+  <div class="sect">The tell — two charts, both true</div>
+  <div class="two">
+    <div class="mini"><div class="t">LLM token cost</div><div class="v red">−50%</div><div class="d">Silicon Data index halved since May '26 — at all-time lows. The price of intelligence is collapsing.</div></div>
+    <div class="mini"><div class="t">Frontier GPU rental</div><div class="v g">$5→$8</div><div class="d">Blackwell hourly rates rising, supply-tight. The compute underneath stays scarce.</div></div>
+  </div>
+  <div class="step"><p style="margin-top:0">Input (compute) firm-to-rising, output (tokens) collapsing. The gap is <b>throughput</b> — each GPU now spits out far more tokens, and competition passes it to users. Cheaper intelligence isn't a blip. It's the trend.</p></div>
+
+  <div class="sect">The disruptor — good enough, and free</div>
+  <div class="step"><p style="margin-top:0">Chinese open-weight models (DeepSeek, Qwen, Kimi) already do <b>50–80% of everyday tasks</b> — running <b>free on your own hardware</b>, or at <b>1/5–1/10 the price</b> of frontier models. For most users, and even most power users, that's <b>good enough</b>. Enterprises keep frontier for the hard 20%. Sound familiar? It should.</p></div>
+
+  <div class="sect">This already happened — five times</div>
+  <table class="stack">
+    <tr><td class="f">Proprietary Unix → Linux</td><td class="d">Free "good enough" OS ate the market. Sun collapsed. <b style="color:#fff">Red Hat</b> got rich selling support & reliability <i>on top</i>.</td></tr>
+    <tr><td class="f">Britannica → Wikipedia</td><td class="d">Free-and-good-enough killed a $2,000 product that was <i>more</i> accurate. Quality didn't save it.</td></tr>
+    <tr><td class="f">Steel → minimills</td><td class="d">Incumbents "retreated upmarket" to the complex stuff — a comfortable-feeling death march as minimills climbed.</td></tr>
+    <tr><td class="f">Mainframe → PC</td><td class="d">The box commoditized. Money moved to chips (Intel) and software (Microsoft).</td></tr>
+    <tr><td class="f">Telecom bandwidth</td><td class="d">Per-bit price → ~0. Selling the pipe got brutal; selling what runs through it got huge.</td></tr>
+  </table>
+
+  <div class="call"><h3>The one law under all of them</h3>
+    <p><b>Conservation of Attractive Profits:</b> when a layer commoditizes, profit doesn't vanish — it migrates to the adjacent layer that's still <b>scarce</b>. Every time. The commodity layer's revenue can even keep growing (more usage) while its <b>margins</b> get gutted. Great for integrated players, fatal for anyone selling only the commodity.</p></div>
+
+  <div class="sect">Where the money goes in AI</div>
+  <div class="step"><h3><span class="n">↓</span> Below — the scarce input</h3>
+    <p>Chips, memory, <b>energy</b>, data-center capacity. The GPU chart proves it: Blackwell firm-to-rising while tokens collapse. This is the safest profit pool — the picks-and-shovels layer stays scarce.</p></div>
+  <div class="step"><h3><span class="n">↑</span> Above — the "Red Hat of intelligence"</h3>
+    <p>The <b>application & agent layer</b>: reliability, security, compliance, vertical workflows, distribution, and the last 20% for high-stakes code/legal/medical/finance. Monetized by <b>subscriptions and seats</b> — which decouple revenue from per-token cost. That's where switching costs and real margin live.</p></div>
+  <div class="step"><h3><span class="n">✕</span> The middle — the raw token</h3>
+    <p>Selling commodity tokens by the million is the Sun-Microsystems seat. Even the labs know it — that's why usage limits keep getting <b>extended, not tightened</b>: subsidize usage, defend the workflow, accept margin compression on the commodity.</p></div>
+
+  <div class="warn"><h3>⚠ Read carefully</h3>
+    <p>This is a framework and our opinion — not a stock call. Open weights aren't literally "free" at enterprise scale (that's the gap Red Hat monetized), a real capability frontier can hold a premium in a shrinking niche, and timing commoditization is hard. Educational only, not financial advice. Do your own research.</p></div>
+
+  <div class="cta">
+    <h2>We map the money, not the hype</h2>
+    <p>New contrarian, receipts-backed breakdown every week — where the profit pool actually moves, before the retail narrative catches up. Follow along.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
+  </div>
+
+  <footer>
+    <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a> · Cloud9 Markets<br/>
+    For educational purposes only. Not financial advice. Our analysis and opinion; sources cited in-post.
+  </footer>
+</body>
+</html>
