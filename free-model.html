@@ -41,6 +41,12 @@
   .step h3 .n{color:var(--gold)}
   .step p{font-size:13.5px;line-height:1.55;color:#cfd8e4;margin-top:7px}
   .step p b{color:#fff}
+  .chartcard{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 14px 12px}
+  .chartcard .ct{font-size:13.5px;font-weight:800;color:#fff;letter-spacing:.2px}
+  .chartcard .ct .pct{float:right;font-family:"SF Mono",ui-monospace,monospace;font-weight:800}
+  .chartcard .ct .pct.red{color:var(--red)} .chartcard .ct .pct.g{color:var(--g)}
+  .chartcard svg{width:100%;height:auto;display:block;margin-top:12px}
+  .chartcard .cs{font-size:11px;color:var(--faint);margin-top:9px;line-height:1.4}
   .call{margin-top:14px;background:linear-gradient(180deg,rgba(230,200,120,.1),var(--card));border:1px solid rgba(230,200,120,.3);border-radius:16px;padding:18px}
   .call h3{font-size:16px;font-weight:850;color:var(--gold)}
   .call p{font-size:14px;line-height:1.55;color:#cfd8e4;margin-top:8px}
@@ -60,14 +66,55 @@
 <body>
   <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">The Free Model</span></header>
 
-  <div class="badge"><span class="dot"></span> Cloud9 thesis · contrarian</div>
+  <div class="badge"><span class="dot"></span> My thesis · contrarian</div>
   <h1>The AI model is going to be <em>free</em>. Here's where the money actually goes.</h1>
   <p class="lede">Everyone's betting on <b>who has the best model</b>. History says that's the wrong bet. AI is following the exact playbook that turned proprietary software, encyclopedias and steel into commodities — <b>the thing everyone's paying for today races to zero</b>, and the profit migrates one layer over. Here's the pattern, the receipts, and where it points.</p>
 
   <div class="sect">The tell — two charts, both true</div>
-  <div class="two">
-    <div class="mini"><div class="t">LLM token cost</div><div class="v red">−50%</div><div class="d">Silicon Data index halved since May '26 — at all-time lows. The price of intelligence is collapsing.</div></div>
-    <div class="mini"><div class="t">Frontier GPU rental</div><div class="v g">$5→$8</div><div class="d">Blackwell hourly rates rising, supply-tight. The compute underneath stays scarce.</div></div>
+  <div class="chartcard">
+    <div class="ct">LLM inference cost <span class="pct red">−50%</span></div>
+    <svg viewBox="0 0 520 230" role="img" aria-label="LLM token cost index falling 50% from its May 2026 peak to all-time lows">
+      <defs><linearGradient id="tk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46a8ff" stop-opacity=".26"/><stop offset="1" stop-color="#46a8ff" stop-opacity="0"/></linearGradient></defs>
+      <line x1="44" y1="42.2" x2="506" y2="42.2" stroke="rgba(255,255,255,.06)"/>
+      <line x1="44" y1="176.5" x2="506" y2="176.5" stroke="rgba(255,255,255,.06)"/>
+      <text x="38" y="46" text-anchor="end" font-size="11" fill="#5d6b7e" font-family="monospace">2.0</text>
+      <text x="38" y="180" text-anchor="end" font-size="11" fill="#5d6b7e" font-family="monospace">1.0</text>
+      <path d="M44,173.9 L95.3,62.3 L146.7,136.2 L198,102.6 L249.3,55.6 L300.7,34.1 L352,75.8 L403.3,116.1 L454.7,156.4 L506,173.9 L506,190 L44,190 Z" fill="url(#tk)"/>
+      <path d="M44,173.9 L95.3,62.3 L146.7,136.2 L198,102.6 L249.3,55.6 L300.7,34.1 L352,75.8 L403.3,116.1 L454.7,156.4 L506,173.9" fill="none" stroke="#6aa8ff" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="300.7" cy="34.1" r="4" fill="#e6c878"/>
+      <text x="300.7" y="26" text-anchor="middle" font-size="12" font-weight="800" fill="#e6c878" font-family="monospace">2.06</text>
+      <circle cx="506" cy="173.9" r="4.5" fill="#ff6a6a"/>
+      <text x="500" y="167" text-anchor="end" font-size="12" font-weight="800" fill="#ff6a6a" font-family="monospace">1.02</text>
+      <text x="44" y="207" text-anchor="start" font-size="11" fill="#5d6b7e" font-family="monospace">Dec '25</text>
+      <text x="300.7" y="207" text-anchor="middle" font-size="11" fill="#5d6b7e" font-family="monospace">May '26</text>
+      <text x="506" y="207" text-anchor="end" font-size="11" fill="#5d6b7e" font-family="monospace">Aug '26</text>
+    </svg>
+    <div class="cs">Silicon Data LLM Token Expenditure Index (Bloomberg: SDLLMTK) — peaked 2.06 in May '26, now 1.02, at all-time lows. The price of intelligence is collapsing.</div>
+  </div>
+
+  <div class="chartcard">
+    <div class="ct">GPU rental, $/hr <span class="pct g">firm ↑</span></div>
+    <svg viewBox="0 0 520 230" role="img" aria-label="GPU rental prices: frontier B200 rising to over 8 dollars while H100 stays flat and A100 fades">
+      <line x1="44" y1="40.7" x2="506" y2="40.7" stroke="rgba(255,255,255,.06)"/>
+      <line x1="44" y1="78" x2="506" y2="78" stroke="rgba(255,255,255,.06)"/>
+      <line x1="44" y1="115.3" x2="506" y2="115.3" stroke="rgba(255,255,255,.06)"/>
+      <line x1="44" y1="152.7" x2="506" y2="152.7" stroke="rgba(255,255,255,.06)"/>
+      <text x="38" y="44" text-anchor="end" font-size="11" fill="#5d6b7e" font-family="monospace">$8</text>
+      <text x="38" y="81" text-anchor="end" font-size="11" fill="#5d6b7e" font-family="monospace">$6</text>
+      <text x="38" y="119" text-anchor="end" font-size="11" fill="#5d6b7e" font-family="monospace">$4</text>
+      <text x="38" y="156" text-anchor="end" font-size="11" fill="#5d6b7e" font-family="monospace">$2</text>
+      <path d="M44,150.8 L110,152.7 L176,153.6 L242,154.5 L308,155.5 L374,155.5 L440,156 L506,156.4" fill="none" stroke="#5d6b7e" stroke-width="2"/>
+      <path d="M44,134 L110,134 L176,134 L242,134 L308,134 L374,132.9 L440,131.9 L506,131.2" fill="none" stroke="#6aa8ff" stroke-width="2.5"/>
+      <path d="M44,89.2 L110,87.3 L176,89.2 L242,91.1 L308,87.3 L374,76.1 L440,48.1 L506,36.9" fill="none" stroke="#ff6a6a" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="506" cy="36.9" r="4.5" fill="#ff6a6a"/>
+      <text x="500" y="30" text-anchor="end" font-size="12" font-weight="800" fill="#ff6a6a" font-family="monospace">$8+</text>
+      <g font-family="monospace" font-size="11">
+        <rect x="44" y="213" width="11" height="4" rx="1" fill="#ff6a6a"/><text x="61" y="219" fill="#aab6cc">B200 · frontier</text>
+        <rect x="188" y="213" width="11" height="4" rx="1" fill="#6aa8ff"/><text x="205" y="219" fill="#aab6cc">H100 · workhorse</text>
+        <rect x="348" y="213" width="11" height="4" rx="1" fill="#5d6b7e"/><text x="365" y="219" fill="#aab6cc">A100 · last-gen</text>
+      </g>
+    </svg>
+    <div class="cs">Cloud GPU rental, monthly median (AIMultiple), Dec '25–Jul '26 — frontier Blackwell (B200) climbing to $8+ while last-gen fades. The compute underneath stays scarce.</div>
   </div>
   <div class="step"><p style="margin-top:0">Input (compute) firm-to-rising, output (tokens) collapsing. The gap is <b>throughput</b> — each GPU now spits out far more tokens, and competition passes it to users. Cheaper intelligence isn't a blip. It's the trend.</p></div>
 
@@ -95,17 +142,17 @@
     <p>Selling commodity tokens by the million is the Sun-Microsystems seat. Even the labs know it — that's why usage limits keep getting <b>extended, not tightened</b>: subsidize usage, defend the workflow, accept margin compression on the commodity.</p></div>
 
   <div class="warn"><h3>⚠ Read carefully</h3>
-    <p>This is a framework and our opinion — not a stock call. Open weights aren't literally "free" at enterprise scale (that's the gap Red Hat monetized), a real capability frontier can hold a premium in a shrinking niche, and timing commoditization is hard. Educational only, not financial advice. Do your own research.</p></div>
+    <p>This is a framework and my opinion — not a stock call. Open weights aren't literally "free" at enterprise scale (that's the gap Red Hat monetized), a real capability frontier can hold a premium in a shrinking niche, and timing commoditization is hard. Educational only, not financial advice. Do your own research.</p></div>
 
   <div class="cta">
-    <h2>We map the money, not the hype</h2>
+    <h2>I map the money, not the hype</h2>
     <p>New contrarian, receipts-backed breakdown every week — where the profit pool actually moves, before the retail narrative catches up. Follow along.</p>
     <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
   </div>
 
   <footer>
     <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a> · Cloud9 Markets<br/>
-    For educational purposes only. Not financial advice. Our analysis and opinion; sources cited in-post.
+    For educational purposes only. Not financial advice. My analysis and opinion; sources cited in-post.
   </footer>
 </body>
 </html>
