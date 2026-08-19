@@ -41,6 +41,12 @@
   .step h3 .n{color:var(--gold)}
   .step p{font-size:13.5px;line-height:1.55;color:#cfd8e4;margin-top:7px}
   .step p b{color:#fff}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+  .tag{font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#cfd8e4;white-space:nowrap}
+  .tag.g{color:#16e08a;border-color:rgba(22,224,138,.3);background:rgba(22,224,138,.08)}
+  .tag.blu{color:#6aa8ff;border-color:rgba(70,168,255,.3);background:rgba(70,168,255,.08)}
+  .tag.red{color:#ff6a6a;border-color:rgba(255,106,106,.28);background:rgba(255,106,106,.07)}
+  .tlab{font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--faint);margin-top:13px}
   .chartcard{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 14px 12px}
   .chartcard .ct{font-size:13.5px;font-weight:800;color:#fff;letter-spacing:.2px}
   .chartcard .ct .pct{float:right;font-family:"SF Mono",ui-monospace,monospace;font-weight:800}
@@ -135,11 +141,17 @@
 
   <div class="sect">Where the money goes in AI</div>
   <div class="step"><h3><span class="n">↓</span> Below — the scarce input</h3>
-    <p>Chips, memory, <b>energy</b>, data-center capacity. The GPU chart proves it: Blackwell firm-to-rising while tokens collapse. This is the safest profit pool — the picks-and-shovels layer stays scarce.</p></div>
+    <p>Chips, memory, <b>energy</b>, data-center capacity. The GPU chart proves it: Blackwell firm-to-rising while tokens collapse. This is the safest profit pool — the picks-and-shovels layer stays scarce.</p>
+    <div class="tlab">Examples</div>
+    <div class="tags"><span class="tag g">Nvidia</span><span class="tag g">TSMC</span><span class="tag g">Broadcom</span><span class="tag g">Micron · SK Hynix (HBM)</span><span class="tag g">Vertiv (power/cooling)</span><span class="tag g">Vistra · GE Vernova (energy)</span><span class="tag g">nuclear / SMRs</span></div></div>
   <div class="step"><h3><span class="n">↑</span> Above — the "Red Hat of intelligence"</h3>
-    <p>The <b>application & agent layer</b>: reliability, security, compliance, vertical workflows, distribution, and the last 20% for high-stakes code/legal/medical/finance. Monetized by <b>subscriptions and seats</b> — which decouple revenue from per-token cost. That's where switching costs and real margin live.</p></div>
+    <p>The <b>application & agent layer</b>: reliability, security, compliance, vertical workflows, distribution, and the last 20% for high-stakes code/legal/medical/finance. Monetized by <b>subscriptions and seats</b> — which decouple revenue from per-token cost. That's where switching costs and real margin live.</p>
+    <div class="tlab">Examples</div>
+    <div class="tags"><span class="tag blu">Claude Code</span><span class="tag blu">OpenAI Codex</span><span class="tag blu">Cursor</span><span class="tag blu">GitHub Copilot</span><span class="tag blu">Palantir</span><span class="tag blu">ServiceNow</span><span class="tag blu">the labs' own subs (ChatGPT, Claude)</span><span class="tag blu">Harvey · Abridge (verticals)</span></div></div>
   <div class="step"><h3><span class="n">✕</span> The middle — the raw token</h3>
-    <p>Selling commodity tokens by the million is the Sun-Microsystems seat. Even the labs know it — that's why usage limits keep getting <b>extended, not tightened</b>: subsidize usage, defend the workflow, accept margin compression on the commodity.</p></div>
+    <p>Selling commodity tokens by the million is the Sun-Microsystems seat. Even the labs know it — that's why usage limits keep getting <b>extended, not tightened</b>: subsidize usage, defend the workflow, accept margin compression on the commodity.</p>
+    <div class="tlab">The squeezed seat</div>
+    <div class="tags"><span class="tag red">raw inference APIs</span><span class="tag red">commodity token resale</span><span class="tag red">thin AI wrappers</span><span class="tag red">open-weight hosts racing to $0</span></div></div>
 
   <div class="warn"><h3>⚠ Read carefully</h3>
     <p>This is a framework and my opinion — not a stock call. Open weights aren't literally "free" at enterprise scale (that's the gap Red Hat monetized), a real capability frontier can hold a premium in a shrinking niche, and timing commoditization is hard. Educational only, not financial advice. Do your own research.</p></div>
