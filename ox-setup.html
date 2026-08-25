@@ -72,6 +72,18 @@ curl https://openrouter.ai/api/v1/chat/completions \
  <div class=prompt><div class=h><span class=num>05</span><span class=title>Train like a quant</span></div>
   <div class=p>"Ask me 5 quant-interview brainteasers, one at a time. Wait for my answer, then grade it and show the elegant solution. Start with an easy probability one."</div></div>
 
+ <h2>Level up: run it inside your AI agents</h2>
+ <div class=sub>One OpenRouter key works everywhere. The model speaks the standard API, so any agent tool that lets you set a custom endpoint can run on it — free.</div>
+ <pre>Base URL:  https://openrouter.ai/api/v1
+API key:   your OpenRouter key
+Model:     &lt;the-free-model-id&gt;</pre>
+ <ol class=steps>
+  <li><b>Hermes / Nous agents</b> — already run on OpenRouter. Just swap the model id in the config to the free one and your whole agent runs on it.</li>
+  <li><b>Claude Code &amp; other CLI agents</b> — route them through OpenRouter with a tool like <code>claude-code-router</code>: set your OpenRouter key + the free model, and your coding agent is now free.</li>
+  <li><b>Codex CLI</b> — add a custom provider in the config, with <code>base_url</code> pointed at OpenRouter and the free model id.</li>
+ </ol>
+ <div class=note>Same key, every tool. Now you've got agents that research, code, and analyze the market — for $0 while it lasts.</div>
+
  <div class=cta>
   <h3>This is Lesson 0.</h3>
   <p>The full free course — quant career, trading, using AI on the markets — is Cloud9 Academy.</p>
