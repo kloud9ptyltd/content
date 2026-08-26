@@ -1,0 +1,71 @@
+<!doctype html><html lang=en><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>The AI Trading Floor — a pixel office of 9 agents · Cloud9</title>
+<meta property="og:title" content="The AI Trading Floor — 9 AI agents run a live trading desk"/>
+<meta property="og:description" content="An open-source pixel-art office where a team of AI agents work a trading floor. Reskinned as the Cloud9 desk — fork it and make it yours."/>
+<meta property="og:image" content="https://www.cloud9markets.com/cloud9-logo.png"/>
+<style>
+:root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{max-width:620px;margin:0 auto;padding:0 18px 70px;
+ background:radial-gradient(900px 520px at 80% -5%,rgba(106,168,255,.10),transparent 60%),radial-gradient(700px 500px at 0% 10%,rgba(22,224,138,.06),transparent 55%),var(--bg)}
+header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+header img{height:32px}.hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+header a{margin-left:auto;color:var(--c9);text-decoration:none;font-size:13px}
+.badge{display:inline-block;margin-top:22px;background:#0e2a1c;color:var(--g);border:1px solid #1c5a3c;font-size:11px;font-weight:800;letter-spacing:.12em;padding:5px 11px;border-radius:20px;text-transform:uppercase}
+h1{font-size:34px;font-weight:850;line-height:1.1;letter-spacing:-.5px;margin:14px 0 10px}
+h1 em{font-style:normal;color:var(--g)}
+.lede{font-size:16.5px;line-height:1.55;color:#cfd8e4;font-weight:500}.lede b{color:#fff}
+.sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+.card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.card h3{font-size:17px;font-weight:800}.card p{font-size:14.5px;line-height:1.55;color:#cfd8e4;margin-top:9px}.card p b{color:#fff}
+ul.cast{list-style:none;margin:12px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ul.cast li{background:var(--card2);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:9px 12px;font-size:13px;color:#cfd8e4}
+ul.cast li b{color:#fff}
+.cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.35);border-radius:20px;padding:24px;text-align:center}
+.cta h2{font-size:21px;font-weight:850}.cta p{font-size:14px;color:#cfd8e4;margin:8px 0 16px}
+.btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:4px}
+.btn.ghost{background:transparent;color:var(--c9);border:1px solid rgba(70,168,255,.5)}
+.note{font-size:12.5px;color:var(--faint);margin-top:12px;line-height:1.6}
+footer{margin-top:28px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style></head><body>
+<header><img src="https://www.cloud9markets.com/cloud9-logo.png" onerror="this.style.display='none'"><span class="hsub">The AI Trading Floor</span></header>
+
+<span class=badge>Free · open source</span>
+<h1>A pixel office where <em>nine AI agents</em> run your trading floor.</h1>
+<p class=lede>Not a dashboard — an actual <b>living office</b>. A team of AI agents sit at their desks, talk to each other, hand off work, and run the desk while you watch. We reskinned it into the <b>Cloud9 Trading Desk</b> — same open-source engine, our cast of agents.</p>
+
+<div class="sect">The desk — nine specialists</div>
+<div class="card">
+  <p>A coordinator runs the floor and delegates to nine agents across three wings:</p>
+  <ul class=cast>
+    <li><b>Athena</b> · fundamentals</li>
+    <li><b>Chartist</b> · charts &amp; levels</li>
+    <li><b>Oracle</b> · quant &amp; models</li>
+    <li><b>Atlas</b> · macro</li>
+    <li><b>Capitol</b> · Congress &amp; 13F</li>
+    <li><b>Scout</b> · movers &amp; catalysts</li>
+    <li><b>Sentinel</b> · risk (the gate)</li>
+    <li><b>Pilot</b> · execution (paper)</li>
+    <li><b>Ledger</b> · the book &amp; P&amp;L</li>
+  </ul>
+  <p style="margin-top:12px">Each agent is a real CLI coding agent (Claude, Codex or Gemini) — they read files, run commands, and work autonomously toward a goal. <b>Sentinel gates every trade; execution is paper-only.</b></p>
+</div>
+
+<div class="sect">It's open source — make it yours</div>
+<div class="card">
+  <h3>🛠️ Built on an open engine, tuned for Cloud9</h3>
+  <p>The floor runs on the open-source <b>Munder Difflin</b> multi-agent harness (MIT, by Chaitanya Giri). We <b>fine-tuned it into the Cloud9 Trading Desk</b> — renamed the cast, added a live ticker and market signage, wired the agents to finance data. <b>You can do the same:</b> fork it and shape the agents, roles and goals around <b>your</b> workflow — coding team, research desk, content studio, whatever you run.</p>
+</div>
+
+<div class="cta">
+  <h2>Grab the open-source repo.</h2>
+  <p>Clone it, run it, and reskin it for your own AI team. Free forever.</p>
+  <a class="btn" href="https://github.com/chaitanyagiri/munder-difflin" target="_blank" rel="noopener">Open the repo on GitHub →</a>
+  <a class="btn ghost" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
+  <div class=note>Credit to <b>Chaitanya Giri</b> for the open-source harness (MIT). The Cloud9 version is a reskin/config on top — you bring your own AI CLI + keys.</div>
+</div>
+
+<footer>Educational · a demo/creative setup, not a live trading system · agents run paper-only behind a risk gate · <b>not financial advice</b><br>© Cloud9 Markets</footer>
+</body></html>
