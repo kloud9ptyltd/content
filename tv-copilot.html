@@ -1,0 +1,97 @@
+<!doctype html><html lang=en><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Talk to your chart — TradingView's AI Copilot (free) · Cloud9</title>
+<meta property="og:title" content="Talk to your chart — TradingView's AI Chart Copilot (free)"/>
+<meta property="og:description" content="Install the free browser extension, sign in, and ask your chart anything — it draws the levels for you. Cloud9's quick guide to TradingView's AI Chart Copilot."/>
+<meta property="og:image" content="https://www.cloud9markets.com/cloud9-logo.png"/>
+<style>
+:root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{max-width:620px;margin:0 auto;padding:0 18px 70px;
+ background:radial-gradient(900px 520px at 80% -5%,rgba(106,168,255,.10),transparent 60%),radial-gradient(700px 500px at 0% 10%,rgba(22,224,138,.06),transparent 55%),var(--bg)}
+header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
+header img{height:32px}.hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
+.badge{display:inline-block;margin-top:22px;background:#0e2a1c;color:var(--g);border:1px solid #1c5a3c;font-size:11px;font-weight:800;letter-spacing:.12em;padding:5px 11px;border-radius:20px;text-transform:uppercase}
+h1{font-size:34px;font-weight:850;line-height:1.1;letter-spacing:-.5px;margin:14px 0 10px}
+h1 em{font-style:normal;color:var(--g)}
+.lede{font-size:16.5px;line-height:1.55;color:#cfd8e4;font-weight:500}.lede b{color:#fff}
+.sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
+.card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.card h3{font-size:17px;font-weight:800}.card p{font-size:14.5px;line-height:1.55;color:#cfd8e4;margin-top:9px}.card p b{color:#fff}
+.steps{counter-reset:s;list-style:none;margin:4px 0 0;padding:0}
+.steps li{position:relative;padding:11px 0 11px 42px;font-size:15px;color:#eaf1fb;border-bottom:1px solid var(--line)}
+.steps li:last-child{border-bottom:0}
+.steps li small{display:block;color:var(--mut);font-size:13px;margin-top:2px;font-weight:400}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:10px;width:28px;height:28px;border-radius:50%;background:rgba(70,168,255,.14);border:1px solid rgba(70,168,255,.4);color:var(--c9);font-weight:800;font-size:14px;display:grid;place-items:center}
+.steps li b{color:#fff}
+.tag{display:inline-block;margin:12px 6px 0 0;font-size:11.5px;color:var(--gold);background:rgba(230,200,120,.08);border:1px solid rgba(230,200,120,.28);border-radius:20px;padding:4px 10px;font-weight:700}
+.prompts{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+.prompts li{background:var(--card2);border:1px solid var(--line);border-left:3px solid var(--c9);border-radius:10px;padding:11px 14px;font-size:14.5px;color:#eaf1fb}
+.prompts li span{display:block;color:var(--mut);font-size:12px;margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+figure{margin:14px 0 0}
+figure img{width:100%;border-radius:14px;border:1px solid var(--line);display:block}
+.shotph{width:100%;border-radius:14px;border:1px dashed rgba(255,255,255,.18);background:var(--card2);padding:34px 18px;text-align:center;color:var(--faint);font-size:13px}
+figcaption{font-size:12.5px;color:var(--faint);margin-top:9px;text-align:center;line-height:1.5}
+ul.f{list-style:none;margin:12px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ul.f li{background:var(--card2);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:10px 12px;font-size:13px;color:#cfd8e4}
+ul.f li b{color:#fff;display:block;margin-bottom:2px}
+.cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.35);border-radius:20px;padding:24px;text-align:center}
+.cta h2{font-size:21px;font-weight:850}.cta p{font-size:14px;color:#cfd8e4;margin:8px 0 16px}
+.btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:4px}
+.btn.ghost{background:transparent;color:var(--c9);border:1px solid rgba(70,168,255,.5)}
+.note{font-size:12.5px;color:var(--faint);margin-top:12px;line-height:1.6}
+footer{margin-top:28px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+</style></head><body>
+<header><img src="https://www.cloud9markets.com/cloud9-logo.png" onerror="this.style.display='none'"><span class="hsub">Free tool · quick guide</span></header>
+
+<span class=badge>Free · open for all · no code</span>
+<h1>Just <em>talk to your chart.</em></h1>
+<p class=lede>I spent months wiring an AI into my charts the hard way — Claude plugged into TradingView through a custom bridge. <b>TradingView just shipped it as a one-click browser copilot.</b> Ask your chart a question and it reads your indicators, thinks, and <b>draws the answer right on the candles.</b></p>
+
+<div class="sect">Set it up — 5 steps</div>
+<div class="card">
+  <ol class=steps>
+    <li><b>Install the extension</b> — add <b>TradingView Chart Copilot</b> from the link at the bottom (it's a browser extension, in public beta).</li>
+    <li><b>Open any TradingView chart</b><small>Go to <b>tradingview.com</b> and open a symbol — no desktop app install needed.</small></li>
+    <li><b>Click the extension icon</b><small>The copilot docks as a panel on the right of your chart.</small></li>
+    <li><b>Sign in to your Copilot account</b><small>Sign in when prompted to activate it.</small></li>
+    <li><b>Start your analysis</b> — type in the <b>“Ask anything…”</b> box and it goes to work.</li>
+  </ol>
+  <div><span class=tag>Chrome / Edge / Brave / Opera</span><span class=tag>Works on the free tier</span><span class=tag>Beta — daily usage may be limited</span></div>
+</div>
+
+<div class="sect">Example prompts to try</div>
+<ul class=prompts>
+  <li>“Top opportunities for today?”<span>Watchlist scan</span></li>
+  <li>“Is Nvidia bullish? Draw the key supply &amp; demand levels using ICT concepts on the chart.”<span>Draws on the chart</span></li>
+  <li>“Give me a technical breakdown — moving averages, RSI, MACD, key support &amp; resistance.”<span>Technical read</span></li>
+  <li>“Set alerts at the key support and resistance levels.”<span>Creates alerts by chat</span></li>
+  <li>“List my current alerts and clean up the ones that already triggered.”<span>Manages alerts</span></li>
+  <li>“What's driving the price today — any news or earnings?”<span>Catalysts</span></li>
+  <li>“Scan my watchlist for stocks at 52-week highs, filtered by volume.”<span>Screener in chat</span></li>
+</ul>
+
+<div class="sect">Sample output</div>
+<figure>
+  <img src="tv-copilot-demo.png" alt="TradingView AI Chart Copilot marking supply/demand and FVG levels on an NVDA chart" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+  <div class="shotph" style="display:none">📊 Ask “draw supply &amp; demand using ICT” → the copilot marks the order blocks, FVGs and liquidity right on the candles.</div>
+  <figcaption>Ask in plain English on the right; the copilot marks the supply/demand order blocks, fair-value gaps and liquidity directly on the NVDA chart.</figcaption>
+</figure>
+
+<div class="sect">Why this is a big deal</div>
+<div class="card">
+  <h3>🧩 It replaces a whole DIY AI rig</h3>
+  <p>Getting an AI to <b>see and draw on a live chart</b> used to mean running a local model bridge, an MCP server, API keys and a desktop app all talking to each other. Now it's a <b>browser extension</b> — no install beyond the add-on, and it works on the <b>free tier.</b> The barrier just went to zero.</p>
+</div>
+
+<div class="cta">
+  <h2>Try the AI Chart Copilot — free.</h2>
+  <p>Straight from TradingView. Install the extension, open a chart, start asking.</p>
+  <a class="btn" href="https://www.tradingview.com/blog/en/tradingview-ai-chart-copilot-beta-57730/" target="_blank" rel="noopener">Get it on TradingView →</a>
+  <a class="btn ghost" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
+  <div class=note>AI Chart Copilot is a <b>TradingView</b> product (currently in public beta) — not affiliated with Cloud9. I just think it's the fastest way to get AI onto your chart, so I'm pointing you to it.</div>
+</div>
+
+<footer>Educational only · AI chart analysis can be wrong — verify before you trade · <b>not financial advice</b><br>© Cloud9 Markets</footer>
+</body></html>
