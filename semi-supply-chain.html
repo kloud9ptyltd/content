@@ -1,0 +1,413 @@
+<!doctype html><html lang=en><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>The AI Semiconductor Supply Chain — field map · Cloud9</title>
+<meta property="og:title" content="The AI Semiconductor Supply Chain — interactive field map"/>
+<meta property="og:description" content="78 companies from sand to superchip as a living force graph. Trace every bottleneck; click any company to see who it supplies. A Cloud9 field map."/>
+<meta property="og:image" content="https://www.cloud9markets.com/cloud9-logo.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fdfcfa; --canvas:#f1ece2; --text:#201e1d; --accent:#0088b0; --accent2:#d6006c;
+  --accent-700:#006786; --accent-100:#e9f8ff; --accent2-100:#fff1f4;
+  --n100:#f8f4f4; --n200:#eae7e7; --n300:#d7d3d3; --n400:#bab6b6; --n500:#9b9797; --n600:#7d7979; --n700:#605d5d;
+  --shadow-lg:0 12px 32px color-mix(in srgb,#2d2b2b 22%,transparent);
+  --shadow-sm:0 1px 2px color-mix(in srgb,#2d2b2b 14%,transparent);
+  --font-heading:"Source Serif 4",Georgia,serif; --font-body:"Source Serif 4",Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--paper);color:var(--text);font-family:var(--font-body);font-size:15px}
+a{color:var(--accent-700)}a:hover{color:var(--accent)}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-thumb{background:var(--n300);border-radius:5px}
+@keyframes panelIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+#root{height:100vh;display:grid;grid-template-rows:auto 1fr}
+header{display:flex;align-items:baseline;gap:20px;padding:14px 24px 12px;border-bottom:3px solid var(--text);position:relative;z-index:20}
+header .brand{display:flex;align-items:baseline;gap:12px;min-width:0}
+header .brand img{height:22px;align-self:center}
+header .ttl{font-family:var(--font-heading);font-size:25px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+header .kick{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--n500);white-space:nowrap}
+nav.tabs{display:flex;gap:2px;margin-left:6px}
+nav.tabs button{font-family:var(--font-body);font-size:14px;background:none;border:none;cursor:pointer;padding:6px 12px;color:var(--n500);border-bottom:3px solid transparent}
+nav.tabs button.on{color:var(--text);border-bottom-color:var(--accent);font-weight:600}
+header .spacer{flex:1}
+header label.cb{display:flex;align-items:baseline;gap:8px;font-size:13px;font-style:italic;color:var(--n600)}
+header select,header input{font-family:var(--font-body);font-size:13px;background:transparent;border:none;border-bottom:1px solid var(--n400);color:var(--text);padding:3px 2px;outline:none;font-style:normal}
+header select{cursor:pointer}
+header .search{position:relative}
+header .search input{width:220px}
+#results{position:absolute;top:30px;right:0;width:260px;background:var(--paper);box-shadow:var(--shadow-lg);border-top:2px solid var(--text);z-index:50}
+#results .r{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 12px;cursor:pointer;font-size:13px}
+#results .r:hover{background:var(--accent-100)}
+#results .r b{font-weight:600}#results .r span{color:var(--n500);font-size:11px}
+.body{display:grid;grid-template-columns:250px 1fr;min-height:0;border-top:1px solid var(--text)}
+aside{overflow-y:auto;padding:20px 12px 32px 24px;font-size:13px}
+aside .gh{display:flex;justify-content:space-between;align-items:baseline;margin:24px 0 8px}
+aside .grp:first-child .gh{margin-top:0}
+aside .gh .lbl{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--n500)}
+aside .gh .all{font-family:var(--font-body);font-size:10px;letter-spacing:.15em;background:none;border:none;color:var(--accent-700);cursor:pointer;padding:0}
+aside .gh .all:hover{color:var(--accent)}
+aside .row{display:flex;align-items:center;gap:9px;padding:5px 8px;margin:0 -8px;cursor:pointer;user-select:none}
+aside .row:hover{background:var(--n100)}
+aside .row.off{opacity:.35}
+aside .row .dot{width:10px;height:10px;border-radius:50%;flex:none}
+aside .row .dash{width:14px;height:3px;flex:none}
+aside .row .nm{flex:1}
+aside .row .cnt{color:var(--n400);font-size:11px}
+main{position:relative;min-width:0;border-left:1px solid var(--n200)}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hint{position:absolute;top:14px;left:20px;font-style:italic;font-size:13px;color:var(--n500);pointer-events:none}
+.stats{position:absolute;bottom:14px;left:20px;font-size:13px;color:var(--n600);pointer-events:none}
+.stats b{color:var(--text)}.stats b.bn{color:var(--accent2)}
+.ctrls{position:absolute;bottom:16px;right:16px;display:flex;flex-direction:column;gap:8px}
+.ctrls button{width:38px;height:38px;border:1px solid var(--n300);background:var(--paper);font-family:var(--font-body);cursor:pointer;color:var(--text);box-shadow:var(--shadow-sm)}
+.ctrls button.zin,.ctrls button.zout{font-size:18px}.ctrls button.fit{font-size:11px;letter-spacing:.08em}
+.side{position:absolute;top:16px;right:16px;bottom:16px;width:330px;background:var(--paper);box-shadow:var(--shadow-lg);padding:22px;overflow-y:auto;animation:panelIn .25s ease}
+#panel{border-top:3px solid var(--text)}
+#bnpanel{border-top:3px solid var(--accent2)}
+.side .phead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.side .pname{font-family:var(--font-heading);font-size:24px;font-weight:700;line-height:1.1}
+.side .ptk{font-size:12px;letter-spacing:.12em;color:var(--n500);margin-top:4px}
+.side .x{font-family:var(--font-body);background:none;border:none;font-size:20px;line-height:1;color:var(--n500);cursor:pointer;padding:2px}.side .x:hover{color:var(--text)}
+.side .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.side .tag{font-size:11px;padding:3px 8px;background:var(--n100);color:var(--n700)}
+.side .sect{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--n500);margin:20px 0 4px}
+.side .role{font-size:14px;font-weight:600}
+.side .desc{font-size:13.5px;line-height:1.55;text-wrap:pretty}
+.side .rel{padding:7px 8px;margin:0 -8px;cursor:pointer}.side .rel:hover{background:var(--n100)}
+.side .rel .r1{display:flex;align-items:baseline;gap:8px}
+.side .rel .arr{color:var(--n400)}.side .rel .rn{font-weight:600;font-size:13px;flex:1}
+.side .rel .rl{font-size:12px;color:var(--n600);margin-left:20px;font-style:italic}
+.side .crit{font-size:10px;letter-spacing:.08em;text-transform:uppercase;flex:none}
+#bnpanel .bhead{font-family:var(--font-heading);font-size:22px;font-weight:700}
+#bnpanel .bsub{font-size:13px;font-style:italic;color:var(--n600);margin-top:4px;line-height:1.45}
+#bnpanel .bn{padding:9px 8px;margin:0 -8px;cursor:pointer;border-bottom:1px solid var(--n100)}
+#bnpanel .bn:hover{background:var(--n100)}
+#bnpanel .bn .b1{display:flex;align-items:baseline;gap:6px;font-size:13px}#bnpanel .bn b{font-weight:600}
+#bnpanel .bn .b2{display:flex;justify-content:space-between;align-items:baseline;margin-top:2px}
+#bnpanel .bn .bl{font-size:12px;font-style:italic;color:var(--n600)}
+.hidden{display:none!important}
+</style></head><body>
+<div id="root">
+  <header>
+    <span class="brand"><img src="https://www.cloud9markets.com/cloud9-logo.png" onerror="this.style.display='none'"><span class="ttl">AI Semiconductor Supply Chain</span><span class="kick">Field map</span></span>
+    <nav class="tabs"><button id="tabGraph" class="on">Graph</button><button id="tabBn">Bottlenecks</button></nav>
+    <span class="spacer"></span>
+    <label class="cb">color by <select id="colorby"><option value="region">Region</option><option value="type">Company type</option><option value="tier">Tier</option></select></label>
+    <span class="search"><input id="search" placeholder="Search company or ticker…"><div id="results" class="hidden"></div></span>
+  </header>
+  <div class="body">
+    <aside>
+      <div class="grp"><div class="gh"><span class="lbl">Region</span><button class="all" data-reset="r:">ALL</button></div><div id="f-region"></div></div>
+      <div class="grp"><div class="gh"><span class="lbl">Company type</span><button class="all" data-reset="t:">ALL</button></div><div id="f-type"></div></div>
+      <div class="grp"><div class="gh"><span class="lbl">Tier</span><button class="all" data-reset="tier:">ALL</button></div><div id="f-tier"></div></div>
+      <div class="grp"><div class="gh"><span class="lbl">Edge criticality</span><button class="all" data-reset="c:">ALL</button></div><div id="f-crit"></div></div>
+    </aside>
+    <main>
+      <canvas id="cv"></canvas>
+      <div class="hint">drag to pan · scroll to zoom · click a node for its dossier · drag a node to stir the jelly</div>
+      <div class="stats"><b id="statNodes">0</b> companies · <b id="statLinks">0</b> supply links · <b class="bn" id="statBn">0</b> bottlenecks</div>
+      <div class="ctrls"><button class="zin" id="zin">+</button><button class="zout" id="zout">−</button><button class="fit" id="fit">FIT</button></div>
+      <div class="side hidden" id="panel"></div>
+      <div class="side hidden" id="bnpanel"></div>
+    </main>
+  </div>
+</div>
+<script>
+/* ============ DATA (ported from supply-data.js) ============ */
+const NODES=[
+{id:'tsmc',name:'TSMC',ticker:'2330.TW',region:'Taiwan',type:'Foundry',tier:1,role:'Foundry (leading-edge logic + CoWoS)',desc:'Pure-play foundry and world’s largest contract chipmaker. Holds ~90% of sub-7nm output and most CoWoS capacity; nearly every NVIDIA, AMD and Google AI chip is built here.'},
+{id:'samsungf',name:'Samsung Foundry',ticker:'005930.KS',region:'South Korea',type:'Foundry',tier:1,role:'Foundry (GAA logic)',desc:'Second-largest leading-edge foundry; first to ship gate-all-around transistors at 3nm. Second source for mobile SoCs and select AI accelerators.'},
+{id:'intelf',name:'Intel Foundry',ticker:'INTC',region:'US',type:'Foundry',tier:1,role:'Foundry (18A, advanced packaging)',desc:'Intel’s external foundry arm. Ramping 18A with backside power; the only US-owned leading-edge logic manufacturer.'},
+{id:'gf',name:'GlobalFoundries',ticker:'GFS',region:'US',type:'Foundry',tier:2,role:'Foundry (specialty nodes)',desc:'Specialty foundry for RF, automotive and secure US-sourced silicon on mature nodes.'},
+{id:'umc',name:'UMC',ticker:'2303.TW',region:'Taiwan',type:'Foundry',tier:2,role:'Foundry (mature nodes)',desc:'Taiwanese foundry focused on 22–40nm logic, display drivers and MCU wafers.'},
+{id:'smic',name:'SMIC',ticker:'0981.HK',region:'China',type:'Foundry',tier:2,role:'Foundry (China leading edge)',desc:'China’s most advanced foundry; produces 7nm-class logic on DUV multi-patterning despite export controls.'},
+{id:'sonysemi',name:'Sony Semiconductor',ticker:'6758.T',region:'Japan',type:'Foundry',tier:2,role:'Image sensors',desc:'Dominant CMOS image-sensor maker; fabs in Kumamoto co-located with TSMC’s JASM.'},
+{id:'nvidia',name:'NVIDIA',ticker:'NVDA',region:'US',type:'Fabless',tier:1,role:'AI accelerators (GPU)',desc:'Designs the GPUs that power most AI training and inference; demand for its Blackwell parts sets the pace for the whole chain.'},
+{id:'amd',name:'AMD',ticker:'AMD',region:'US',type:'Fabless',tier:1,role:'CPUs + AI accelerators',desc:'Chiplet-based CPUs and Instinct accelerators; the principal merchant alternative to NVIDIA.'},
+{id:'qualcomm',name:'Qualcomm',ticker:'QCOM',region:'US',type:'Fabless',tier:1,role:'Mobile SoCs',desc:'Leading mobile and edge-AI SoC designer; dual-sources leading-edge wafers.'},
+{id:'broadcom',name:'Broadcom',ticker:'AVGO',region:'US',type:'Fabless',tier:1,role:'Custom ASICs + networking',desc:'Builds hyperscalers’ custom AI ASICs (TPUs among them) and the networking silicon that ties clusters together.'},
+{id:'mediatek',name:'MediaTek',ticker:'2454.TW',region:'Taiwan',type:'Fabless',tier:2,role:'Mobile + edge SoCs',desc:'Taiwan’s largest fabless designer; mobile SoCs and a growing edge-AI line.'},
+{id:'marvell',name:'Marvell',ticker:'MRVL',region:'US',type:'Fabless',tier:2,role:'Custom silicon + interconnect',desc:'Custom AI silicon, electro-optics and interconnect for data centers.'},
+{id:'hisilicon',name:'HiSilicon',ticker:'—',region:'China',type:'Fabless',tier:2,role:'Ascend AI chips',desc:'Huawei’s chip arm; designs Ascend AI accelerators built domestically at SMIC.'},
+{id:'stmicro',name:'STMicroelectronics',ticker:'STM',region:'Europe',type:'Fabless',tier:2,role:'MCUs + power',desc:'European IDM for microcontrollers, sensors and silicon-carbide power devices.'},
+{id:'renesas',name:'Renesas',ticker:'6723.T',region:'Japan',type:'Fabless',tier:2,role:'Automotive MCUs',desc:'Automotive and industrial MCU leader; outsources advanced logic to foundries.'},
+{id:'infineon',name:'Infineon',ticker:'IFX.DE',region:'Europe',type:'Fabless',tier:2,role:'Power semiconductors',desc:'Power semiconductors that feed AI server racks; automotive chip leader.'},
+{id:'nxp',name:'NXP',ticker:'NXPI',region:'Europe',type:'Fabless',tier:2,role:'Automotive + edge',desc:'Automotive networking and secure edge processors on specialty foundry nodes.'},
+{id:'adi',name:'Analog Devices',ticker:'ADI',region:'US',type:'Fabless',tier:2,role:'Precision analog',desc:'High-performance analog and power management surrounding every AI board.'},
+{id:'ti',name:'Texas Instruments',ticker:'TXN',region:'US',type:'Fabless',tier:2,role:'Analog + embedded',desc:'Broadest analog catalog in the industry; owns its own 300mm mature-node fabs.'},
+{id:'micron',name:'Micron',ticker:'MU',region:'US',type:'Memory',tier:1,role:'DRAM + HBM',desc:'Only US-based DRAM maker; HBM3E supplier to NVIDIA and holder of leading-edge 1γ DRAM.'},
+{id:'skhynix',name:'SK Hynix',ticker:'000660.KS',region:'South Korea',type:'Memory',tier:1,role:'HBM leader',desc:'First to ship HBM3E at scale; supplies the majority of memory stacked on NVIDIA accelerators.'},
+{id:'samsungmem',name:'Samsung Memory',ticker:'005930.KS',region:'South Korea',type:'Memory',tier:1,role:'DRAM + NAND',desc:'World’s largest memory maker across DRAM and NAND; qualifying HBM for AI accelerators.'},
+{id:'nanya',name:'Nanya Technology',ticker:'2408.TW',region:'Taiwan',type:'Memory',tier:3,role:'Specialty DRAM',desc:'Taiwanese DRAM maker focused on specialty and consumer densities.'},
+{id:'asml',name:'ASML',ticker:'ASML',region:'Netherlands',type:'Equipment',tier:1,role:'Lithography (EUV monopoly)',desc:'The only maker of EUV lithography machines on earth. Every sub-7nm chip depends on its scanners; High-NA tools now shipping.'},
+{id:'amat',name:'Applied Materials',ticker:'AMAT',region:'US',type:'Equipment',tier:1,role:'Deposition + etch',desc:'Broadest wafer-fab equipment portfolio: deposition, implant, CMP and metrology.'},
+{id:'lam',name:'Lam Research',ticker:'LRCX',region:'US',type:'Equipment',tier:1,role:'Etch leader',desc:'Dominant in high-aspect-ratio etch — critical for 3D NAND and HBM through-silicon vias.'},
+{id:'kla',name:'KLA',ticker:'KLAC',region:'US',type:'Equipment',tier:1,role:'Process control',desc:'Near-monopoly in wafer inspection and metrology; yield at the leading edge runs on KLA data.'},
+{id:'tel',name:'Tokyo Electron',ticker:'8035.T',region:'Japan',type:'Equipment',tier:1,role:'Coat/develop + etch',desc:'Japan’s largest equipment maker; near-monopoly in EUV coat/develop tracks.'},
+{id:'screen',name:'SCREEN',ticker:'7735.T',region:'Japan',type:'Equipment',tier:2,role:'Wet clean',desc:'Leader in single-wafer wet cleaning systems used hundreds of times per wafer.'},
+{id:'advantest',name:'Advantest',ticker:'6857.T',region:'Japan',type:'Equipment',tier:2,role:'Test systems',desc:'Dominant SoC and memory test systems; every AI accelerator passes its testers.'},
+{id:'disco',name:'DISCO',ticker:'6146.T',region:'Japan',type:'Equipment',tier:2,role:'Dicing + grinding',desc:'Near-monopoly in the blades and grinders that thin and singulate every wafer.'},
+{id:'axcelis',name:'Axcelis',ticker:'ACLS',region:'US',type:'Equipment',tier:3,role:'Ion implant',desc:'Ion implantation specialist for power and mature-node fabs.'},
+{id:'trumpf',name:'TRUMPF',ticker:'private',region:'Europe',type:'Equipment',tier:2,role:'EUV light source',desc:'Builds the 40kW CO₂ lasers that fire ASML’s tin-droplet EUV light source — sole source.'},
+{id:'zeiss',name:'ZEISS SMT',ticker:'private',region:'Europe',type:'Equipment',tier:2,role:'EUV optics',desc:'Grinds the mirror optics inside every EUV scanner — the most precise objects ever manufactured. Sole source to ASML.'},
+{id:'vat',name:'VAT Group',ticker:'VACN.SW',region:'Europe',type:'Equipment',tier:3,role:'Vacuum valves',desc:'Dominant supplier of the ultra-clean vacuum valves inside nearly every fab tool.'},
+{id:'asmi',name:'ASM International',ticker:'ASM.AS',region:'Europe',type:'Equipment',tier:2,role:'ALD leader',desc:'Atomic layer deposition leader — the technique that makes gate-all-around transistors possible.'},
+{id:'onto',name:'Onto Innovation',ticker:'ONTO',region:'US',type:'Equipment',tier:3,role:'Packaging inspection',desc:'Inspection and lithography for advanced packaging lines.'},
+{id:'lasertec',name:'Lasertec',ticker:'6920.T',region:'Japan',type:'Equipment',tier:2,role:'EUV mask inspection',desc:'The world’s only maker of actinic EUV mask-blank inspection tools.'},
+{id:'besi',name:'BE Semiconductor',ticker:'BESI.AS',region:'Europe',type:'Equipment',tier:2,role:'Hybrid bonding',desc:'Leader in hybrid bonding — the die-stacking step behind next-gen chiplets.'},
+{id:'hanmi',name:'Hanmi Semiconductor',ticker:'042700.KS',region:'South Korea',type:'Equipment',tier:2,role:'HBM bonders',desc:'Makes the thermo-compression bonders that stack HBM dies; capacity tracks HBM ramps.'},
+{id:'acm',name:'ACM Research',ticker:'ACMR',region:'China',type:'Equipment',tier:3,role:'Cleaning tools',desc:'Shanghai-based wafer-cleaning equipment maker serving Chinese fabs.'},
+{id:'amec',name:'AMEC',ticker:'688012.SS',region:'China',type:'Equipment',tier:3,role:'Etch tools',desc:'China’s leading domestic etch-tool maker.'},
+{id:'smee',name:'SMEE',ticker:'private',region:'China',type:'Equipment',tier:3,role:'Domestic lithography',desc:'China’s lithography hope; DUV tools generations behind ASML but strategically vital.'},
+{id:'coherent',name:'Coherent',ticker:'COHR',region:'US',type:'Equipment',tier:3,role:'Lasers + optics',desc:'Lasers, optics and optical transceivers threaded through fab tools and AI clusters.'},
+{id:'shinetsu',name:'Shin-Etsu',ticker:'4063.T',region:'Japan',type:'Materials',tier:1,role:'Silicon wafers + photomask blanks',desc:'World’s largest silicon-wafer maker and dominant in EUV photomask blanks.'},
+{id:'sumco',name:'SUMCO',ticker:'3436.T',region:'Japan',type:'Materials',tier:2,role:'Silicon wafers',desc:'Second-largest 300mm prime wafer supplier; with Shin-Etsu, a near-duopoly.'},
+{id:'globalwafers',name:'GlobalWafers',ticker:'6488.TW',region:'Taiwan',type:'Materials',tier:2,role:'Silicon wafers',desc:'Third-largest wafer maker, expanding US and European capacity.'},
+{id:'soitec',name:'Soitec',ticker:'SOI.PA',region:'Europe',type:'Materials',tier:2,role:'Engineered substrates',desc:'Near-monopoly in engineered SOI substrates for RF and low-power silicon.'},
+{id:'corning',name:'Corning',ticker:'GLW',region:'US',type:'Materials',tier:3,role:'Glass + optics',desc:'Ultra-flat glass for mask blanks, carriers and the fiber tying clusters together.'},
+{id:'ibiden',name:'Ibiden',ticker:'4062.T',region:'Japan',type:'Materials',tier:2,role:'IC substrates',desc:'Premier ABF package-substrate maker; every large AI package sits on one.'},
+{id:'entegris',name:'Entegris',ticker:'ENTG',region:'US',type:'Materials',tier:2,role:'Filters + FOUPs',desc:'Contamination control — filters, wafer carriers and specialty chemistries fab-wide.'},
+{id:'fujifilm',name:'Fujifilm Electronic Materials',ticker:'4901.T',region:'Japan',type:'Materials',tier:2,role:'Resists + CMP',desc:'Photoresists, CMP slurries and post-CMP cleans for advanced logic.'},
+{id:'ajinomoto',name:'Ajinomoto',ticker:'2802.T',region:'Japan',type:'Materials',tier:2,role:'ABF film (sole source)',desc:'A food company whose Build-up Film insulates virtually every advanced package substrate on earth.'},
+{id:'photronics',name:'Photronics',ticker:'PLAB',region:'US',type:'Materials',tier:3,role:'Photomasks',desc:'Largest merchant photomask maker for foundries without captive mask shops.'},
+{id:'jsr',name:'JSR',ticker:'4185.T',region:'Japan',type:'Chemicals',tier:2,role:'EUV photoresist',desc:'Leading EUV photoresist maker; Japan controls ~90% of this market.'},
+{id:'tok',name:'Tokyo Ohka Kogyo',ticker:'4186.T',region:'Japan',type:'Chemicals',tier:2,role:'Photoresist',desc:'Photoresist pioneer; with JSR and Shin-Etsu forms the resist oligopoly.'},
+{id:'merck',name:'Merck KGaA',ticker:'MRK.DE',region:'Europe',type:'Chemicals',tier:2,role:'Specialty chemistry',desc:'Spin-on dielectrics, specialty gases and delivery systems via EMD Electronics.'},
+{id:'fujimi',name:'Fujimi',ticker:'5384.T',region:'Japan',type:'Chemicals',tier:3,role:'CMP slurries',desc:'Precision abrasives and CMP slurries that planarize every wafer layer.'},
+{id:'linde',name:'Linde',ticker:'LIN',region:'Europe',type:'Gas',tier:2,role:'Industrial gases',desc:'Bulk and specialty gases piped into fabs — nitrogen, hydrogen, neon, argon.'},
+{id:'airliquide',name:'Air Liquide',ticker:'AI.PA',region:'Europe',type:'Gas',tier:2,role:'Industrial gases',desc:'With Linde, a near-duopoly in the ultra-pure gases fabs consume around the clock.'},
+{id:'synopsys',name:'Synopsys',ticker:'SNPS',region:'US',type:'EDA',tier:1,role:'EDA (design software)',desc:'Largest EDA vendor; no advanced chip tapes out without its tools. With Cadence, a US duopoly.'},
+{id:'cadence',name:'Cadence',ticker:'CDNS',region:'US',type:'EDA',tier:1,role:'EDA (design software)',desc:'The other half of the EDA duopoly; analog, digital and packaging design flows.'},
+{id:'arm',name:'Arm',ticker:'ARM',region:'Europe',type:'IP',tier:1,role:'CPU architecture IP',desc:'The instruction set inside most mobile SoCs and, via Grace and custom server CPUs, AI datacenters.'},
+{id:'ase',name:'ASE Technology',ticker:'3711.TW',region:'Taiwan',type:'Packaging',tier:1,role:'OSAT leader',desc:'World’s largest outsourced assembly & test house; overflow advanced packaging for TSMC.'},
+{id:'amkor',name:'Amkor',ticker:'AMKR',region:'US',type:'Packaging',tier:2,role:'OSAT (US + Asia)',desc:'Second-largest OSAT; building US advanced packaging in Arizona beside TSMC.'},
+{id:'jcet',name:'JCET',ticker:'600584.SS',region:'China',type:'Packaging',tier:3,role:'OSAT (China)',desc:'China’s largest OSAT, packaging domestic AI and mobile silicon.'},
+{id:'powertech',name:'Powertech',ticker:'6239.TW',region:'Taiwan',type:'Packaging',tier:3,role:'Memory packaging',desc:'Memory packaging and test specialist in Taiwan.'},
+{id:'unimicron',name:'Unimicron',ticker:'3037.TW',region:'Taiwan',type:'Packaging',tier:2,role:'IC substrates',desc:'Major ABF substrate maker feeding advanced logic packages.'},
+{id:'supermicro',name:'Super Micro',ticker:'SMCI',region:'US',type:'Systems',tier:2,role:'AI servers',desc:'Fast-turn AI server builder; among the first to rack each new GPU generation.'},
+{id:'dell',name:'Dell',ticker:'DELL',region:'US',type:'Systems',tier:2,role:'Servers + infrastructure',desc:'Enterprise AI factories and the servers that carry accelerators into datacenters.'}
+];
+const LINKS=[
+{s:'zeiss',t:'asml',c:'sole',label:'EUV mirror optics'},{s:'trumpf',t:'asml',c:'sole',label:'EUV light-source lasers'},{s:'vat',t:'asml',c:'near',label:'Vacuum valves'},
+{s:'asml',t:'tsmc',c:'sole',label:'EUV scanners'},{s:'asml',t:'samsungf',c:'sole',label:'EUV scanners'},{s:'asml',t:'intelf',c:'sole',label:'High-NA EUV'},{s:'asml',t:'smic',c:'std',label:'DUV immersion (restricted)'},{s:'asml',t:'micron',c:'sole',label:'EUV for 1γ DRAM'},
+{s:'shinetsu',t:'tsmc',c:'near',label:'300mm prime wafers'},{s:'shinetsu',t:'samsungf',c:'near',label:'300mm wafers'},{s:'shinetsu',t:'lasertec',c:'std',label:'EUV mask blanks'},
+{s:'sumco',t:'tsmc',c:'near',label:'300mm wafers'},{s:'sumco',t:'micron',c:'std',label:'DRAM wafers'},{s:'globalwafers',t:'umc',c:'std',label:'Silicon wafers'},{s:'globalwafers',t:'nanya',c:'std',label:'DRAM wafers'},
+{s:'soitec',t:'gf',c:'near',label:'RF-SOI wafers'},{s:'soitec',t:'stmicro',c:'near',label:'FD-SOI wafers'},{s:'corning',t:'photronics',c:'near',label:'Mask-blank glass'},{s:'corning',t:'tsmc',c:'std',label:'Glass carriers'},
+{s:'amat',t:'tsmc',c:'std',label:'Deposition + implant'},{s:'amat',t:'samsungf',c:'std',label:'Deposition'},{s:'amat',t:'intelf',c:'std',label:'Deposition + CMP'},{s:'amat',t:'micron',c:'std',label:'Deposition'},
+{s:'lam',t:'tsmc',c:'std',label:'Etch systems'},{s:'lam',t:'skhynix',c:'near',label:'HBM TSV etch'},{s:'lam',t:'micron',c:'std',label:'Etch systems'},
+{s:'kla',t:'tsmc',c:'near',label:'Process control'},{s:'kla',t:'intelf',c:'near',label:'Inspection + metrology'},
+{s:'tel',t:'tsmc',c:'near',label:'EUV coat/develop'},{s:'tel',t:'skhynix',c:'std',label:'Etch + clean'},{s:'tel',t:'samsungf',c:'std',label:'Coat/develop'},
+{s:'screen',t:'tsmc',c:'near',label:'Wet clean'},{s:'screen',t:'samsungf',c:'std',label:'Wet clean'},{s:'asmi',t:'tsmc',c:'near',label:'ALD systems'},{s:'asmi',t:'intelf',c:'std',label:'ALD (GAA)'},
+{s:'axcelis',t:'gf',c:'std',label:'Ion implant'},{s:'axcelis',t:'smic',c:'std',label:'Ion implant'},{s:'disco',t:'ase',c:'near',label:'Dicing + grinding'},{s:'disco',t:'powertech',c:'std',label:'Wafer thinning'},
+{s:'advantest',t:'ase',c:'near',label:'SoC test systems'},{s:'advantest',t:'micron',c:'std',label:'Memory test'},{s:'onto',t:'ase',c:'std',label:'Packaging inspection'},{s:'besi',t:'ase',c:'near',label:'Hybrid bonding'},
+{s:'hanmi',t:'skhynix',c:'near',label:'HBM TC bonders'},{s:'hanmi',t:'samsungmem',c:'std',label:'TC bonders'},{s:'lasertec',t:'photronics',c:'sole',label:'EUV mask inspection'},{s:'lasertec',t:'tsmc',c:'sole',label:'Actinic blank inspection'},
+{s:'coherent',t:'amat',c:'std',label:'Lasers + optics'},{s:'acm',t:'smic',c:'std',label:'Cleaning tools'},{s:'amec',t:'smic',c:'std',label:'Etch tools'},{s:'smee',t:'smic',c:'near',label:'Domestic DUV litho'},
+{s:'photronics',t:'umc',c:'near',label:'Photomasks'},{s:'photronics',t:'gf',c:'std',label:'Photomasks'},
+{s:'jsr',t:'tsmc',c:'near',label:'EUV photoresist'},{s:'jsr',t:'samsungf',c:'std',label:'Photoresist'},{s:'tok',t:'tsmc',c:'near',label:'Photoresist'},{s:'tok',t:'micron',c:'std',label:'Photoresist'},
+{s:'fujifilm',t:'tsmc',c:'std',label:'Slurries + resist'},{s:'fujimi',t:'gf',c:'std',label:'CMP slurries'},{s:'merck',t:'intelf',c:'std',label:'Spin-on dielectrics'},{s:'merck',t:'samsungf',c:'std',label:'Specialty chemistry'},
+{s:'entegris',t:'tsmc',c:'near',label:'Filters + FOUPs'},{s:'entegris',t:'skhynix',c:'std',label:'Contamination control'},
+{s:'linde',t:'tsmc',c:'std',label:'Bulk gases'},{s:'linde',t:'intelf',c:'std',label:'Bulk gases'},{s:'airliquide',t:'samsungf',c:'std',label:'Ultra-pure gases'},{s:'airliquide',t:'micron',c:'std',label:'Ultra-pure gases'},
+{s:'ajinomoto',t:'ibiden',c:'sole',label:'ABF build-up film'},{s:'ajinomoto',t:'unimicron',c:'sole',label:'ABF build-up film'},{s:'ibiden',t:'intelf',c:'near',label:'ABF substrates'},{s:'ibiden',t:'ase',c:'near',label:'AI package substrates'},{s:'unimicron',t:'ase',c:'std',label:'Substrates'},
+{s:'tsmc',t:'nvidia',c:'sole',label:'N4/N3 wafers + CoWoS'},{s:'tsmc',t:'amd',c:'sole',label:'Chiplets (N5/N4)'},{s:'tsmc',t:'qualcomm',c:'near',label:'N4 mobile SoCs'},{s:'tsmc',t:'broadcom',c:'near',label:'Networking ASICs'},{s:'tsmc',t:'mediatek',c:'near',label:'Mobile SoC wafers'},{s:'tsmc',t:'marvell',c:'near',label:'Custom silicon wafers'},{s:'tsmc',t:'sonysemi',c:'std',label:'JASM sensor logic'},{s:'tsmc',t:'infineon',c:'std',label:'Fine-pitch logic'},{s:'tsmc',t:'adi',c:'std',label:'Precision analog wafers'},
+{s:'samsungf',t:'qualcomm',c:'duo',label:'4nm second source'},{s:'gf',t:'nxp',c:'near',label:'Mixed-signal wafers'},{s:'umc',t:'renesas',c:'std',label:'MCU wafers'},{s:'smic',t:'hisilicon',c:'near',label:'N+2 7nm Ascend'},
+{s:'synopsys',t:'nvidia',c:'duo',label:'EDA flows'},{s:'synopsys',t:'qualcomm',c:'duo',label:'EDA flows'},{s:'synopsys',t:'intelf',c:'duo',label:'EDA flows'},{s:'cadence',t:'amd',c:'duo',label:'EDA flows'},{s:'cadence',t:'broadcom',c:'duo',label:'EDA flows'},{s:'cadence',t:'mediatek',c:'duo',label:'EDA flows'},
+{s:'arm',t:'qualcomm',c:'near',label:'CPU IP'},{s:'arm',t:'mediatek',c:'near',label:'CPU IP'},{s:'arm',t:'nvidia',c:'near',label:'Grace CPU IP'},
+{s:'skhynix',t:'nvidia',c:'near',label:'HBM3E stacks'},{s:'micron',t:'nvidia',c:'std',label:'HBM3E second source'},{s:'samsungmem',t:'amd',c:'std',label:'HBM3 stacks'},{s:'samsungmem',t:'dell',c:'std',label:'DRAM + SSD'},
+{s:'ase',t:'qualcomm',c:'std',label:'Assembly + test'},{s:'ase',t:'amd',c:'near',label:'Advanced packaging'},{s:'amkor',t:'nvidia',c:'near',label:'Packaging + test'},{s:'amkor',t:'qualcomm',c:'std',label:'Assembly + test'},{s:'jcet',t:'hisilicon',c:'std',label:'Domestic packaging'},{s:'powertech',t:'micron',c:'std',label:'Memory packaging'},
+{s:'nvidia',t:'supermicro',c:'near',label:'GPU modules'},{s:'nvidia',t:'dell',c:'near',label:'GPU modules'},{s:'amd',t:'supermicro',c:'std',label:'Instinct modules'},{s:'intelf',t:'dell',c:'std',label:'Server CPUs'},{s:'broadcom',t:'dell',c:'std',label:'NICs + switches'},{s:'ti',t:'supermicro',c:'std',label:'Power management'}
+];
+
+/* ============ APP (ported from the Claude-Design DCLogic component) ============ */
+const MOTION=0.6, EDGE_ARROWS=true, LABEL_DENSITY='normal';
+const REGIONS=['United States','Taiwan','Japan','Europe','South Korea','China','Netherlands'];
+const RCOLOR={'United States':'#005f9e','Taiwan':'#0a7a4d','Japan':'#b3261e','Europe':'#5b3bb5','South Korea':'#00707e','China':'#a86200','Netherlands':'#c30061'};
+const TYPES=['Foundry','Fabless','Memory','Equipment','Materials','Chemicals','Gas','EDA','IP','Packaging','Systems'];
+const TCOLOR={Foundry:'#0a7a4d',Fabless:'#005f9e',Memory:'#2c4a66',Equipment:'#5b3bb5',Materials:'#a86200',Chemicals:'#b3261e',Gas:'#4c6b4e',EDA:'#c30061',IP:'#7d3cad',Packaging:'#93470f',Systems:'#3c3733'};
+const TIERC={1:'#003c50',2:'#00708f',3:'#5da4b8'};
+const CRITS=[['sole','Sole source'],['near','Near monopoly'],['duo','Duopoly'],['std','Standard']];
+const CCOLOR={sole:'#d6006c',near:'#c07b00',duo:'#0088b0',std:'#9b958e'};
+const CRITLABEL={sole:'Sole source',near:'Near monopoly',duo:'Duopoly',std:''};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+class App{
+  constructor(){
+    this.state={mode:'graph',colorBy:'region',off:{},sel:null,q:'',results:[]};
+    this.tf={x:0,y:0,k:1};
+    const regionFix={US:'United States'};
+    const W=1400,H=1000; this.world={w:W,h:H};
+    const angles={}; REGIONS.forEach((r,i)=>{angles[r]=-Math.PI/2+i*(2*Math.PI/REGIONS.length);});
+    this.nodes=NODES.map(n=>{const region=regionFix[n.region]||n.region;
+      const a=angles[region]??0,rad=180+Math.random()*160,ja=(Math.random()-0.5)*0.9;
+      return {...n,region,x:W/2+Math.cos(a+ja)*rad,y:H/2+Math.sin(a+ja)*rad,vx:0,vy:0,deg:0,r:8,h:0,
+        f1:0.14+Math.random()*0.26,p1:Math.random()*6.28,f2:0.11+Math.random()*0.22,p2:Math.random()*6.28};});
+    this.byId={}; this.nodes.forEach(n=>this.byId[n.id]=n);
+    this.links=LINKS.map(l=>({...l,sn:this.byId[l.s],tn:this.byId[l.t]})).filter(l=>l.sn&&l.tn);
+    this.links.forEach(l=>{l.sn.deg++;l.tn.deg++;});
+    this.nodes.forEach(n=>{n.r=(n.tier===1?24:n.tier===2?16:12)+Math.min(n.deg*1.3,26);});
+    this.centroids={}; REGIONS.forEach(r=>{const a=angles[r]; this.centroids[r]={x:W/2+Math.cos(a)*260,y:H/2+Math.sin(a)*260};});
+    this.alpha=1; this.t0=performance.now();
+    for(let i=0;i<500;i++) this.step(1/60,true);
+    this.snapHomes(); this.alpha=0;               // settle the layout, then freeze the force sim
+    this.setupCanvas(); this.fitNow(false); this.bindUI(); this.renderUI(); this.loop();
+  }
+  step(dt,warm){
+    const ns=this.nodes,ls=this.links,m=MOTION;
+    const alpha=warm?this.alpha:Math.max(0.004,this.alpha*0.985); this.alpha=alpha;
+    const time=(performance.now()-this.t0)/1000;
+    for(const l of ls){const a=l.sn,b=l.tn; let dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1;
+      const L=30+(a.r+b.r)*1.1,f=(d-L)/d*0.015*alpha*2; dx*=f;dy*=f;
+      const wa=b.deg/(a.deg+b.deg),wb=1-wa; a.vx+=dx*wa;a.vy+=dy*wa;b.vx-=dx*wb;b.vy-=dy*wb;}
+    for(let i=0;i<ns.length;i++){const a=ns[i];
+      for(let j=i+1;j<ns.length;j++){const b=ns[j];let dx=b.x-a.x,dy=b.y-a.y;let d2=dx*dx+dy*dy;
+        if(d2<1){dx=(Math.random()-0.5);dy=(Math.random()-0.5);d2=1;} if(d2>40000)continue;
+        const d=Math.sqrt(d2);let f=-700*alpha/d2;const minD=a.r+b.r+6; if(d<minD)f-=(minD-d)*0.16/d;
+        dx*=f;dy*=f;a.vx+=dx;a.vy+=dy;b.vx-=dx;b.vy-=dy;}}
+    const cx=this.world.w/2,cy=this.world.h/2;
+    for(const n of ns){const c=this.centroids[n.region]||{x:cx,y:cy};
+      n.vx+=(c.x-n.x)*0.011*alpha+(cx-n.x)*0.010*alpha; n.vy+=(c.y-n.y)*0.011*alpha+(cy-n.y)*0.010*alpha;
+      if(!warm&&m>0){n.vx+=Math.sin(time*n.f1+n.p1)*0.022*m; n.vy+=Math.cos(time*n.f2+n.p2)*0.022*m;}
+      if(n===this.dragN){n.vx=0;n.vy=0;continue;} n.vx*=0.90;n.vy*=0.90;n.x+=n.vx;n.y+=n.vy;}
+  }
+  /* smooth drift: each node floats on a slow sine around its settled home — no force feedback, so no jitter */
+  snapHomes(){const time=(performance.now()-this.t0)/1000;
+    for(const n of this.nodes){ if(n.amp==null)n.amp=3+Math.random()*4;
+      n.hx=n.x-Math.sin(time*n.f1+n.p1)*n.amp; n.hy=n.y-Math.cos(time*n.f2+n.p2)*n.amp; }}
+  drift(){const time=(performance.now()-this.t0)/1000;
+    for(const n of this.nodes){ if(n===this.dragN)continue;
+      n.x=n.hx+Math.sin(time*n.f1+n.p1)*n.amp; n.y=n.hy+Math.cos(time*n.f2+n.p2)*n.amp; }}
+  loop=()=>{this.raf=requestAnimationFrame(this.loop); if(!this.canvas)return;
+    if(this.dragN||this.forceSettle){ this.step(1/60,false); if(!this.dragN&&this.alpha<0.02){this.snapHomes();this.forceSettle=false;} }
+    else { this.drift(); }
+    if(this.anim){const p=Math.min(1,(performance.now()-this.anim.start)/this.anim.dur),e=1-Math.pow(1-p,3),f=this.anim.from,t=this.anim.to;
+      this.tf={x:f.x+(t.x-f.x)*e,y:f.y+(t.y-f.y)*e,k:f.k+(t.k-f.k)*e}; if(p>=1)this.anim=null;} this.draw();};
+  nodeColor(n){const cb=this.state.colorBy; if(cb==='type')return TCOLOR[n.type]||'#666'; if(cb==='tier')return TIERC[n.tier]; return RCOLOR[n.region]||'#8a857f';}
+  nodeVisible(n){const o=this.state.off; return !o['r:'+n.region]&&!o['t:'+n.type]&&!o['tier:'+n.tier];}
+  linkVisible(l){return this.nodeVisible(l.sn)&&this.nodeVisible(l.tn)&&!this.state.off['c:'+l.c];}
+  draw(){
+    const cv=this.canvas,ctx=this.ctx,dpr=window.devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;
+    if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);}
+    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.fillStyle='#f1ece2'; ctx.fillRect(0,0,w,h);
+    const tf=this.tf; ctx.setTransform(dpr*tf.k,0,0,dpr*tf.k,dpr*tf.x,dpr*tf.y);
+    const bn=this.state.mode==='bn';
+    const focus=this.hoverN||(this.state.sel?this.byId[this.state.sel]:null);
+    let nbr=null; if(focus){nbr=new Set([focus.id]); this.links.forEach(l=>{if(l.s===focus.id)nbr.add(l.t); if(l.t===focus.id)nbr.add(l.s);});}
+    for(const l of this.links){ if(!this.linkVisible(l))continue; const a=l.sn,b=l.tn;
+      const dim=nbr&&!(l.s===focus.id||l.t===focus.id); let col,alpha,lw;
+      if(bn){col=CCOLOR[l.c];alpha=l.c==='std'?0.10:(dim?0.25:0.8);lw=l.c==='sole'?2.2:l.c==='near'?1.6:1;}
+      else{col=this.nodeColor(a);alpha=dim?0.04:0.22;lw=1;if(nbr&&!dim){alpha=0.9;lw=1.8;}}
+      const ang=Math.atan2(b.y-a.y,b.x-a.x); const ax=a.x+Math.cos(ang)*(a.r+2),ay=a.y+Math.sin(ang)*(a.r+2);
+      const bx=b.x-Math.cos(ang)*(b.r+4),by=b.y-Math.sin(ang)*(b.r+4);
+      ctx.globalAlpha=alpha;ctx.strokeStyle=col;ctx.lineWidth=lw/Math.sqrt(tf.k);
+      ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();
+      if(EDGE_ARROWS&&(!nbr||!dim)){const s=Math.min(Math.max(6/tf.k,(b.r+4)*0.4),b.r+6);
+        ctx.globalAlpha=Math.min(1,alpha+0.3); ctx.beginPath();ctx.moveTo(bx,by);
+        ctx.lineTo(bx-Math.cos(ang-0.38)*s,by-Math.sin(ang-0.38)*s);
+        ctx.lineTo(bx-Math.cos(ang+0.38)*s,by-Math.sin(ang+0.38)*s);
+        ctx.closePath();ctx.fillStyle=col;ctx.fill();}}
+    const bnNodes=bn?new Set(this.links.filter(l=>l.c==='sole'||l.c==='near').flatMap(l=>[l.s,l.t])):null;
+    for(const n of this.nodes){ if(!this.nodeVisible(n))continue;
+      const dim=nbr?!nbr.has(n.id):(bn&&!bnNodes.has(n.id));
+      const ht=(this.hoverN===n||this.state.sel===n.id)?1:0; n.h+=(ht-n.h)*0.15;
+      const r=n.r*(1+0.18*n.h),col=this.nodeColor(n); ctx.globalAlpha=dim?0.14:1;
+      if(r>18&&!dim){const off=r*0.07+0.6; ctx.globalAlpha=0.16;
+        ctx.fillStyle='#0088b0';ctx.beginPath();ctx.arc(n.x-off,n.y-off*0.6,r,0,6.284);ctx.fill();
+        ctx.fillStyle='#d6006c';ctx.beginPath();ctx.arc(n.x+off,n.y+off*0.6,r,0,6.284);ctx.fill();
+        ctx.globalAlpha=dim?0.14:1;}
+      ctx.fillStyle=col;ctx.beginPath();ctx.arc(n.x,n.y,r,0,6.284);ctx.fill();
+      ctx.strokeStyle='#fdfcfa';ctx.lineWidth=Math.max(3.2/tf.k,r*0.09);ctx.stroke();
+      if(this.state.sel===n.id){ctx.strokeStyle='#201e1d';ctx.lineWidth=2/tf.k;ctx.beginPath();ctx.arc(n.x,n.y,r+5/tf.k,0,6.284);ctx.stroke();}
+      else if(bn&&bnNodes.has(n.id)&&!nbr){ctx.globalAlpha=0.7;ctx.strokeStyle='#d6006c';ctx.lineWidth=1.1/tf.k;ctx.beginPath();ctx.arc(n.x,n.y,r+3/tf.k,0,6.284);ctx.stroke();}}
+    const thr=LABEL_DENSITY==='dense'?18:LABEL_DENSITY==='sparse'?42:30; ctx.textAlign='center';
+    for(const n of this.nodes){ if(!this.nodeVisible(n))continue; const dim=nbr?!nbr.has(n.id):false;
+      const show=(!dim)&&(n.r*tf.k>=thr||n.h>0.05||(nbr&&nbr.has(n.id))||this.state.sel===n.id); if(!show)continue;
+      const big=n.r>=22,fs=Math.max((big?15:12)/tf.k,big?n.r*0.42:n.r*0.5);
+      ctx.font=(big?'600 ':'400 ')+fs+'px "Source Serif 4",Georgia,serif'; ctx.globalAlpha=1;
+      ctx.strokeStyle='rgba(241,236,226,0.85)';ctx.lineWidth=4/tf.k; const ly=n.y-n.r-Math.max(7/tf.k,4);
+      ctx.strokeText(n.name,n.x,ly);ctx.fillStyle='#201e1d';ctx.fillText(n.name,n.x,ly);}
+    ctx.globalAlpha=1;
+  }
+  setupCanvas(){
+    const el=$('#cv'); this.canvas=el; this.ctx=el.getContext('2d');
+    const md=(e)=>{const p=this.toWorld(e),n=this.hit(p); this.pd={x:e.clientX,y:e.clientY,moved:false,node:n,tf0:{...this.tf}}; if(n){this.dragN=n;this.forceSettle=true;this.alpha=Math.max(this.alpha,0.35);} el.style.cursor='grabbing'; e.preventDefault();};
+    const mm=(e)=>{ if(this.pd){const dx=e.clientX-this.pd.x,dy=e.clientY-this.pd.y; if(Math.abs(dx)+Math.abs(dy)>4)this.pd.moved=true;
+        if(this.dragN){const p=this.toWorld(e);this.dragN.x=p.x;this.dragN.y=p.y;this.alpha=Math.max(this.alpha,0.35);}
+        else{this.tf={x:this.pd.tf0.x+dx,y:this.pd.tf0.y+dy,k:this.pd.tf0.k};}}
+      else{const p=this.toWorld(e),n=this.hit(p); if(n!==this.hoverN){this.hoverN=n;el.style.cursor=n?'pointer':'grab';}}};
+    const mu=(e)=>{ if(this.pd&&!this.pd.moved){const n=this.pd.node; this.setState({sel:n?n.id:null,q:'',results:[]}); $('#search').value='';}
+      if(this.dragN)this.alpha=Math.max(this.alpha,0.5); this.dragN=null;this.pd=null;el.style.cursor='grab';};
+    const wh=(e)=>{e.preventDefault();const rect=el.getBoundingClientRect();const px=e.clientX-rect.left,py=e.clientY-rect.top;
+      const k2=Math.min(8,Math.max(0.15,this.tf.k*Math.exp(-e.deltaY*0.0016))),f=k2/this.tf.k; this.anim=null;
+      this.tf={x:px-(px-this.tf.x)*f,y:py-(py-this.tf.y)*f,k:k2};};
+    el.addEventListener('mousedown',md); el.addEventListener('wheel',wh,{passive:false});
+    window.addEventListener('mousemove',mm); window.addEventListener('mouseup',mu);
+    el.style.cursor='grab'; new ResizeObserver(()=>{if(this.nodes)this.fitNow(false);}).observe(el);
+  }
+  toWorld(e){const r=this.canvas.getBoundingClientRect(); return {x:(e.clientX-r.left-this.tf.x)/this.tf.k,y:(e.clientY-r.top-this.tf.y)/this.tf.k};}
+  hit(p){let best=null,bd=1e9; for(const n of this.nodes){if(!this.nodeVisible(n))continue;const d=Math.hypot(p.x-n.x,p.y-n.y);if(d<n.r+5/this.tf.k&&d<bd){best=n;bd=d;}} return best;}
+  fitNow(animate){const w=this.canvas.clientWidth,h=this.canvas.clientHeight; if(!w||!h)return;
+    let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9; for(const n of this.nodes){if(!this.nodeVisible(n))continue;x0=Math.min(x0,n.x-n.r);y0=Math.min(y0,n.y-n.r);x1=Math.max(x1,n.x+n.r);y1=Math.max(y1,n.y+n.r);}
+    if(x0>x1)return; const pad=90,k=Math.min((w-pad*2)/(x1-x0),(h-pad*2)/(y1-y0),1.8);
+    const to={k,x:w/2-k*(x0+x1)/2,y:h/2-k*(y0+y1)/2}; if(animate)this.anim={from:{...this.tf},to,start:performance.now(),dur:600}; else this.tf=to;}
+  centerOn(n){const w=this.canvas.clientWidth,h=this.canvas.clientHeight,k=Math.max(this.tf.k,1.6);
+    this.anim={from:{...this.tf},to:{k,x:w/2-k*n.x,y:h/2-k*n.y},start:performance.now(),dur:600};}
+  zoomBy(f){const w=this.canvas.clientWidth,h=this.canvas.clientHeight,k2=Math.min(8,Math.max(0.15,this.tf.k*f)),g=k2/this.tf.k;
+    this.anim={from:{...this.tf},to:{k:k2,x:w/2-(w/2-this.tf.x)*g,y:h/2-(h/2-this.tf.y)*g},start:performance.now(),dur:250};}
+  setState(patch){Object.assign(this.state,patch); this.renderUI();}
+  toggle(key){const off={...this.state.off}; off[key]=!off[key]; this.setState({off});}
+  resetGroup(prefix){const off={...this.state.off}; Object.keys(off).forEach(k=>{if(k.startsWith(prefix))delete off[k];}); this.setState({off});}
+  bindUI(){
+    $('#tabGraph').onclick=()=>this.setState({mode:'graph'});
+    $('#tabBn').onclick=()=>this.setState({mode:'bn',sel:null});
+    $('#colorby').onchange=e=>this.setState({colorBy:e.target.value});
+    $('#zin').onclick=()=>this.zoomBy(1.45); $('#zout').onclick=()=>this.zoomBy(1/1.45); $('#fit').onclick=()=>this.fitNow(true);
+    document.querySelectorAll('button.all').forEach(b=>b.onclick=()=>this.resetGroup(b.dataset.reset));
+    $('#search').oninput=e=>{const q=e.target.value,ql=q.toLowerCase();
+      this.setState({q,results:q?this.nodes.filter(n=>n.name.toLowerCase().includes(ql)||String(n.ticker).toLowerCase().includes(ql)).slice(0,7):[]});};
+    const grp=(cid,items)=>{$(cid).innerHTML=items.map(it=>
+      `<div class="row" data-key="${it.key}"><span class="${it.dash?'dash':'dot'}" style="background:${it.color}"></span><span class="nm">${esc(it.label)}</span><span class="cnt">${it.count}</span></div>`).join('');};
+    grp('#f-region',REGIONS.map(r=>({key:'r:'+r,label:r,color:RCOLOR[r],count:this.nodes.filter(n=>n.region===r).length})));
+    grp('#f-type',TYPES.map(t=>({key:'t:'+t,label:t,color:TCOLOR[t],count:this.nodes.filter(n=>n.type===t).length})));
+    grp('#f-tier',[1,2,3].map(t=>({key:'tier:'+t,label:'Tier '+t,color:TIERC[t],count:this.nodes.filter(n=>n.tier===t).length})));
+    grp('#f-crit',CRITS.map(([c,l])=>({key:'c:'+c,label:l,color:CCOLOR[c],dash:1,count:this.links.filter(x=>x.c===c).length})));
+    document.querySelectorAll('aside .row').forEach(row=>row.onclick=()=>this.toggle(row.dataset.key));
+  }
+  renderUI(){
+    const s=this.state;
+    $('#tabGraph').classList.toggle('on',s.mode==='graph'); $('#tabBn').classList.toggle('on',s.mode==='bn');
+    document.querySelectorAll('aside .row').forEach(row=>row.classList.toggle('off',!!s.off[row.dataset.key]));
+    const visN=this.nodes.filter(n=>this.nodeVisible(n)),visL=this.links.filter(l=>this.linkVisible(l));
+    $('#statNodes').textContent=visN.length; $('#statLinks').textContent=visL.length;
+    $('#statBn').textContent=visL.filter(l=>l.c==='sole'||l.c==='near').length;
+    const rz=$('#results'); if(s.results&&s.results.length){rz.classList.remove('hidden');
+      rz.innerHTML=s.results.map(n=>`<div class="r" data-id="${n.id}"><b>${esc(n.name)}</b><span>${esc(n.ticker)}</span></div>`).join('');
+      rz.querySelectorAll('.r').forEach(r=>r.onclick=()=>{const n=this.byId[r.dataset.id]; this.setState({sel:n.id,q:'',results:[]}); $('#search').value=''; this.centerOn(n);});
+    } else rz.classList.add('hidden');
+    const p=$('#panel'), sel=s.sel?this.byId[s.sel]:null;
+    if(sel){const critTag=c=>`font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:${c==='std'?'var(--n400)':CCOLOR[c]}`;
+      const rel=(l,other,dir)=>`<div class="rel" data-id="${other.id}"><div class="r1"><span class="arr">${dir==='out'?'→':'←'}</span><span class="rn">${esc(other.name)}</span><span class="crit" style="${critTag(l.c)}">${CRITLABEL[l.c]}</span></div><div class="rl">${esc(l.label)}</div></div>`;
+      const supplies=this.links.filter(l=>l.s===sel.id).map(l=>rel(l,l.tn,'out'));
+      const suppliers=this.links.filter(l=>l.t===sel.id).map(l=>rel(l,l.sn,'in'));
+      p.innerHTML=`<div class="phead"><div><div class="pname">${esc(sel.name)}</div><div class="ptk">${esc(sel.ticker)}</div></div><button class="x">×</button></div>
+        <div class="tags"><span class="tag" style="background:${RCOLOR[sel.region]}1a;color:${RCOLOR[sel.region]};font-weight:600">${esc(sel.region)}</span><span class="tag">${esc(sel.type)}</span><span class="tag">Tier ${sel.tier}</span></div>
+        <div class="sect">Role</div><div class="role">${esc(sel.role)}</div>
+        <div class="sect">Description</div><div class="desc">${esc(sel.desc)}</div>
+        ${supplies.length?`<div class="sect">Supplies (${supplies.length})</div>${supplies.join('')}`:''}
+        ${suppliers.length?`<div class="sect">Supplied by (${suppliers.length})</div>${suppliers.join('')}`:''}`;
+      p.classList.remove('hidden');
+      p.querySelector('.x').onclick=()=>this.setState({sel:null});
+      p.querySelectorAll('.rel').forEach(r=>r.onclick=()=>{const n=this.byId[r.dataset.id]; this.setState({sel:n.id}); this.centerOn(n);});
+    } else p.classList.add('hidden');
+    const bp=$('#bnpanel');
+    if(s.mode==='bn'&&!sel){
+      const bnList=this.links.filter(l=>l.c==='sole'||l.c==='near').sort((a,b)=>(a.c==='sole'?0:1)-(b.c==='sole'?0:1));
+      bp.innerHTML=`<div class="bhead">Bottlenecks</div><div class="bsub">Sole-source and near-monopoly links — the places where the whole chain narrows to one or two suppliers.</div>`+
+        bnList.map(l=>`<div class="bn" data-id="${l.s}"><div class="b1"><b>${esc(l.sn.name)}</b><span class="arr" style="color:var(--n400)">→</span><b>${esc(l.tn.name)}</b></div><div class="b2"><span class="bl">${esc(l.label)}</span><span class="crit" style="color:${CCOLOR[l.c]}">${l.c==='sole'?'Sole source':'Near monopoly'}</span></div></div>`).join('');
+      bp.classList.remove('hidden');
+      bp.querySelectorAll('.bn').forEach(r=>r.onclick=()=>{const n=this.byId[r.dataset.id]; this.setState({sel:n.id}); this.centerOn(n);});
+    } else bp.classList.add('hidden');
+  }
+}
+document.fonts&&document.fonts.ready?document.fonts.ready.then(()=>{window.__app=new App();}):window.addEventListener('load',()=>{window.__app=new App();});
+</script>
+</body></html>
