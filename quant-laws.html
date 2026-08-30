@@ -1,9 +1,9 @@
 <!doctype html><html lang=en><head><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<title>The 12 Laws of Quant Trading — Cloud9 Research</title>
-<meta name="description" content="The 12 laws every quant eventually learns — not from textbooks, from the tape. Every model breaks, every edge decays, and risk management is the only alpha that compounds. Free handbook.">
-<meta property="og:title" content="The 12 Laws of Quant Trading">
-<meta property="og:description" content="The principles every quant learns the hard way — models, risk, edge decay, costs, sizing, survival. Free handbook by Cloud9 Research.">
+<title>The Cloud9 Quant Handbook — roadmap, resources & the 12 laws</title>
+<meta name="description" content="Everything you need to break into quant: the 8-subject math roadmap, the best free resources and books, project ideas, and the 12 laws every quant learns the hard way. Free.">
+<meta property="og:title" content="The Cloud9 Quant Handbook">
+<meta property="og:description" content="The quant math roadmap, best resources, projects to build, and the 12 laws of quant trading. Free handbook by Cloud9 Research.">
 <meta property="og:image" content="https://www.cloud9markets.com/cloud9-logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -12,7 +12,7 @@
 html{scroll-behavior:smooth}
 body{background:
   radial-gradient(900px 520px at 88% -2%,rgba(217,180,91,.12),transparent 60%),
-  radial-gradient(760px 640px at -6% 40%,rgba(70,168,255,.05),transparent 55%),
+  radial-gradient(760px 640px at -6% 30%,rgba(70,168,255,.05),transparent 55%),
   linear-gradient(180deg,#0b0c10,#08090c);
   color:var(--ink);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;
   line-height:1.6;min-height:100vh}
@@ -22,88 +22,165 @@ header{display:flex;align-items:center;gap:11px;padding:26px 2px 6px}
 header img{height:28px}
 header .hh{font-size:12px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
 .badge{display:inline-block;margin-top:26px;background:rgba(217,180,91,.08);color:var(--gold);border:1px solid rgba(217,180,91,.4);font-size:11px;font-weight:800;letter-spacing:.14em;padding:6px 12px;border-radius:20px;text-transform:uppercase}
-h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(40px,10vw,68px);line-height:1.0;letter-spacing:.3px;margin:16px 0 6px}
-h1 .g{background:linear-gradient(180deg,#e7cd86,#c9a227);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(40px,10vw,64px);line-height:1.0;letter-spacing:.3px;margin:16px 0 6px}
+h1 .g,h2 .g{background:linear-gradient(180deg,#e7cd86,#c9a227);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(26px,6vw,36px);line-height:1.1;margin:6px 0 4px}
 .lede{font-size:19px;color:#d7d4dc;font-weight:400;margin-top:14px}
 .by{margin-top:14px;font-size:15px;color:var(--mut)}.by b{color:var(--gold);font-weight:700}
+nav.jump{position:sticky;top:0;z-index:10;display:flex;gap:8px;flex-wrap:wrap;padding:12px 0;margin-top:22px;background:linear-gradient(180deg,#0b0c10 72%,transparent)}
+nav.jump a{flex:1;text-align:center;min-width:92px;font-size:12.5px;font-weight:700;color:var(--gold);background:rgba(15,18,24,.72);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-decoration:none}
 .chart{margin:22px 0 6px;background:rgba(15,18,24,.72);border:1px solid var(--line);border-radius:14px;padding:14px 16px 10px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
 .chart .ct{font-size:12px;letter-spacing:1.4px;color:var(--faint);font-weight:600;text-transform:uppercase;margin-bottom:4px}
 .chart img{width:100%;display:block}
-.cap{font-size:13.5px;color:var(--faint);margin:8px 2px 0;font-style:italic}
 .intro{font-size:18px;color:#d3d0d9;margin-top:26px;border-left:3px solid var(--gold);padding-left:18px}
-.law{margin-top:38px;scroll-margin-top:20px}
+.section{margin-top:52px;scroll-margin-top:66px}
+.eyebrow{color:var(--gold);font-weight:700;font-size:13px;letter-spacing:3px;text-transform:uppercase}
+.sublede{font-size:17px;color:#cfccd6;margin-top:10px}
+.subj{margin-top:18px;border-left:3px solid var(--gold);padding-left:18px}
+.subj .sn{font-family:'Playfair Display',serif;color:var(--gold);font-weight:700;font-size:14px;letter-spacing:1px}
+.subj h3{font-family:'Playfair Display',serif;font-size:22px;margin:2px 0 5px}
+.subj p{font-size:16px;color:#cfccd6}
+.subj .res{margin-top:6px;font-size:14.5px;color:var(--mut)}.subj .res b{color:var(--blue);font-weight:600}
+.law{margin-top:36px;scroll-margin-top:20px}
 .law .n{font-family:'Playfair Display',serif;color:var(--gold);font-weight:700;font-size:15px;letter-spacing:2px}
-.law h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(25px,6vw,33px);line-height:1.12;margin:4px 0 12px;color:var(--ink)}
-.law p{font-size:17px;color:#cfccd6}
-.law p+p{margin-top:12px}
-.law b{color:var(--ink);font-weight:600}
-.divider{height:1px;background:var(--line);margin:34px 0 0}
-.close{margin-top:46px;background:linear-gradient(180deg,rgba(217,180,91,.09),rgba(15,18,24,.5));border:1px solid rgba(217,180,91,.35);border-radius:18px;padding:26px 24px;text-align:center}
+.law h3{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(24px,6vw,31px);line-height:1.12;margin:4px 0 12px;color:var(--ink)}
+.law p{font-size:17px;color:#cfccd6}.law b{color:var(--ink);font-weight:600}
+.reslist{margin-top:16px;display:flex;flex-direction:column;gap:12px}
+.book{background:rgba(15,18,24,.6);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.book .bt{font-weight:700;font-size:17px;color:var(--ink)}.book .ba{font-size:14px;color:var(--mut);margin-top:2px}
+.steps{margin-top:16px;display:flex;flex-direction:column;gap:16px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step .stn{font-family:'Playfair Display',serif;color:var(--gold);font-weight:700;font-size:26px;min-width:40px;line-height:1}
+.step .stt{font-size:17px;color:#cfccd6}.step .stt b{color:var(--ink)}
+.divider{height:1px;background:var(--line);margin:52px 0 0}
+.close{margin-top:52px;background:linear-gradient(180deg,rgba(217,180,91,.09),rgba(15,18,24,.5));border:1px solid rgba(217,180,91,.35);border-radius:18px;padding:26px 24px;text-align:center}
 .close h3{font-family:'Playfair Display',serif;font-weight:700;font-size:26px;margin-bottom:8px}
 .close p{color:#cfccd6;font-size:16px;margin-bottom:16px}
 .btn{display:inline-block;background:transparent;color:var(--gold);border:1px solid rgba(217,180,91,.5);font-weight:700;font-size:15px;padding:11px 24px;border-radius:999px;text-decoration:none}
 footer{margin-top:32px;text-align:center;color:var(--faint);font-size:12px;line-height:1.7}
-footer a{color:var(--blue);text-decoration:none}
+a{color:var(--blue);text-decoration:none}
 </style></head>
 <body>
 <div class="wrap">
 <header><img src="https://www.cloud9markets.com/cloud9-logo.png" onerror="this.style.display='none'"><span class="hh">The Quant Handbook</span></header>
 <span class="badge">Free · Cloud9 Research</span>
-<h1 class="serif">The 12 Laws of<br><span class="g">Quant Trading</span></h1>
-<p class="lede">The principles every quantitative researcher eventually learns — not from textbooks, not from lectures. From the tape.</p>
+<h1 class="serif">The Cloud9<br><span class="g">Quant Handbook</span></h1>
+<p class="lede">Everything you need to break into quant — the math roadmap, the best free resources, project ideas, and the 12 laws that separate the quants who last from the ones who blow up.</p>
 <p class="by">By <b>Cloud9 Research</b></p>
 
-<div class="chart"><div class="ct">200 simulated futures · the cone of outcomes</div><img src="quant-laws/monte_carlo.png" alt="Monte Carlo simulation of equity paths"></div>
-<p class="intro">The market is a game of survival, not prediction. You will never out-forecast the crowd for long. The quants who last don't predict harder — they manage risk, respect costs, and let uncertainty pay them. These are the laws that survive out-of-sample.</p>
+<nav class="jump">
+  <a href="#roadmap">🧮 Roadmap</a>
+  <a href="#laws">⚖️ The 12 Laws</a>
+  <a href="#books">📚 Books</a>
+  <a href="#projects">🛠️ Projects</a>
+  <a href="#breakin">🚪 Break In</a>
+</nav>
 
-<div class="law"><div class="n">LAW 01</div><h2 class="serif">Every model is wrong. A few are useful — briefly.</h2>
-<p>A model is a compression of reality, and compression always throws information away. The best you can hope for is one that's useful in the regime you built it for — and even then, only until the regime changes. Treat every model as a <b>hypothesis with an expiry date</b>, never a truth.</p></div>
+<div class="chart"><div class="ct">200 simulated futures · the cone of outcomes</div><img src="quant-laws/monte_carlo.png" alt="Monte Carlo simulation"></div>
+<p class="intro">The market is a game of survival, not prediction. The quants who last don't predict harder — they master the math, respect costs, and manage risk. This handbook is the map: what to learn, what to read, what to build, and the laws to live by.</p>
 
-<div class="law"><div class="n">LAW 02</div><h2 class="serif">Reality is always messier than the mathematics.</h2>
-<p>Markets are made of people, incentives, liquidity and reflexivity — none of which fit into a closed-form equation. Elegant math earns academic points; it doesn't survive contact with a thin order book at 3pm on a Friday. <b>When your model and the market disagree, the market is right.</b></p></div>
+<!-- ROADMAP -->
+<div class="section" id="roadmap">
+  <div class="eyebrow">Part 1 · The Roadmap</div>
+  <h2 class="serif">The 8 subjects quant is built on</h2>
+  <p class="sublede">Quant finance is <b style="color:#e9e6df">mathematics first</b> — not Python, not dashboards. Master these eight, and the code is the easy part.</p>
 
-<div class="law"><div class="n">LAW 03</div><h2 class="serif">Risk is what hasn't happened yet.</h2>
-<p>Volatility measures the past. Real risk is the fat-tailed event your sample never contained — the 2008, the 2020, the flash crash. If your risk model only knows what already happened, it will be blindsided by what hasn't. <b>Size for the drawdown you haven't seen.</b></p></div>
+  <div class="subj"><div class="sn">01</div><h3>Probability Theory</h3><p>The language of uncertainty — the foundation of every pricing and risk model.</p><div class="res"><b>Start:</b> Blitzstein &amp; Hwang, <i>Introduction to Probability</i> (Harvard Stat 110 — free lectures on YouTube)</div></div>
+  <div class="subj"><div class="sn">02</div><h3>Statistics</h3><p>Telling a real effect from a lucky streak — estimation and hypothesis testing.</p><div class="res"><b>Start:</b> MIT 18.650 <i>Statistics for Applications</i> (free OCW) · Casella &amp; Berger, <i>Statistical Inference</i></div></div>
+  <div class="subj"><div class="sn">03</div><h3>Linear Algebra</h3><p>The engine of portfolios — covariances, factors, PCA, and risk decomposition.</p><div class="res"><b>Start:</b> Gilbert Strang, MIT 18.06 (free OCW) · 3Blue1Brown, <i>Essence of Linear Algebra</i></div></div>
+  <div class="subj"><div class="sn">04</div><h3>Optimization</h3><p>Building the best portfolio for the risk you take — under real constraints.</p><div class="res"><b>Start:</b> Boyd &amp; Vandenberghe, <i>Convex Optimization</i> (free PDF + Stanford EE364A lectures)</div></div>
+  <div class="subj"><div class="sn">05</div><h3>Machine Learning</h3><p>Finding structure in data too complex to hand-code — and not overfitting it.</p><div class="res"><b>Start:</b> Andrew Ng, <i>Machine Learning</i> (free audit) · Hastie et al., <i>Elements of Statistical Learning</i> (free PDF)</div></div>
+  <div class="subj"><div class="sn">06</div><h3>Numerical Methods</h3><p>Solving the models that have no closed-form answer — root-finding and simulation.</p><div class="res"><b>Start:</b> MIT 18.330 <i>Numerical Analysis</i> (free OCW) · <i>Numerical Recipes</i></div></div>
+  <div class="subj"><div class="sn">07</div><h3>Random Processes</h3><p>How prices evolve through time under continuous uncertainty.</p><div class="res"><b>Start:</b> Sheldon Ross, <i>Introduction to Probability Models</i> · MIT 6.262 (free OCW)</div></div>
+  <div class="subj"><div class="sn">08</div><h3>Stochastic Calculus</h3><p>Calculus for randomness — the math behind Black-Scholes and derivatives pricing.</p><div class="res"><b>Start:</b> Steven Shreve, <i>Stochastic Calculus for Finance I &amp; II</i> (the standard)</div></div>
+</div>
 
-<div class="law"><div class="n">LAW 04</div><h2 class="serif">The market pays you to bear uncertainty, not to be right.</h2>
-<p>Returns are compensation for holding risk that others won't. Being "right" about direction is worthless if you're not paid to carry the uncertainty around it. <b>The edge is in the risk premium, not the prediction.</b></p></div>
+<!-- THE 12 LAWS -->
+<div class="section" id="laws">
+  <div class="eyebrow">Part 2 · The Wisdom</div>
+  <h2 class="serif">The 12 Laws of Quant Trading</h2>
+  <p class="sublede">The principles every quant eventually learns — not from textbooks, from the tape.</p>
 
-<div class="chart"><div class="ct">Backtest vs Live</div><img src="quant-laws/backtest_live.png" alt="Backtest in-sample vs live out-of-sample"></div>
-<div class="law"><div class="n">LAW 05</div><h2 class="serif">A backtest measures the past. It cannot promise the future.</h2>
-<p>A backtest describes a path that already happened — one draw from a distribution. It tells you what <i>would</i> have worked, not what <i>will</i>. Overfit it and you're just memorising history. <b>The only honest backtest is out-of-sample, walk-forward, and paranoid about lookahead bias.</b></p></div>
+  <div class="law"><div class="n">LAW 01</div><h3 class="serif">Every model is wrong. A few are useful — briefly.</h3>
+  <p>A model is a compression of reality, and compression always throws information away. Treat every model as a <b>hypothesis with an expiry date</b>, never a truth.</p></div>
+  <div class="law"><div class="n">LAW 02</div><h3 class="serif">Reality is always messier than the mathematics.</h3>
+  <p>Markets are people, incentives, liquidity and reflexivity — none of which fit a closed-form equation. <b>When your model and the market disagree, the market is right.</b></p></div>
+  <div class="law"><div class="n">LAW 03</div><h3 class="serif">Risk is what hasn't happened yet.</h3>
+  <p>Volatility measures the past. Real risk is the fat-tailed event your sample never contained. <b>Size for the drawdown you haven't seen.</b></p></div>
+  <div class="law"><div class="n">LAW 04</div><h3 class="serif">The market pays you to bear uncertainty, not to be right.</h3>
+  <p>Returns are compensation for holding risk others won't. <b>The edge is in the risk premium, not the prediction.</b></p></div>
+  <div class="chart"><div class="ct">Backtest vs Live</div><img src="quant-laws/backtest_live.png" alt=""></div>
+  <div class="law"><div class="n">LAW 05</div><h3 class="serif">A backtest measures the past. It cannot promise the future.</h3>
+  <p>A backtest is one draw from a distribution. Overfit it and you're memorising history. <b>The only honest backtest is out-of-sample and paranoid about lookahead.</b></p></div>
+  <div class="chart"><div class="ct">Signal Decay</div><img src="quant-laws/signal_decay.png" alt=""></div>
+  <div class="law"><div class="n">LAW 06</div><h3 class="serif">Every edge decays the day it's discovered.</h3>
+  <p>An edge exists because it isn't arbitraged yet. Once it's known, the return-to-risk erodes. Alpha is a <b>depleting resource</b>.</p></div>
+  <div class="chart"><div class="ct">Net of Costs</div><img src="quant-laws/cost_decay.png" alt=""></div>
+  <div class="law"><div class="n">LAW 07</div><h3 class="serif">Costs and slippage quietly kill most "profitable" strategies.</h3>
+  <p>Gross returns are a fantasy. Commissions, spread, impact and taxes scale with turnover — a 20% gross strategy can be <b>flat after costs</b>.</p></div>
+  <div class="law"><div class="n">LAW 08</div><h3 class="serif">Capacity is finite — size destroys the best edges.</h3>
+  <p>The sharpest edges live in small, illiquid corners. The best ones are often <b>too small to matter to a large fund</b> — which is why they persist.</p></div>
+  <div class="chart"><div class="ct">Assumptions vs Robustness</div><img src="quant-laws/robustness.png" alt=""></div>
+  <div class="law"><div class="n">LAW 09</div><h3 class="serif">The more parameters a model needs, the less it survives out-of-sample.</h3>
+  <p>Every free parameter is a degree of freedom to fit noise. <b>Prefer the boring, robust model</b> over the intricate, perfect one.</p></div>
+  <div class="chart"><div class="ct">Correlation Matrix</div><img src="quant-laws/heatmap.png" alt=""></div>
+  <div class="law"><div class="n">LAW 10</div><h3 class="serif">Correlation isn't diversification — it vanishes when you need it most.</h3>
+  <p>Uncorrelated assets converge toward 1 in a crisis. <b>Real diversification comes from different risk drivers</b>, not a historical matrix.</p></div>
+  <div class="law"><div class="n">LAW 11</div><h3 class="serif">Position sizing matters more than the signal.</h3>
+  <p>Same signal, opposite outcomes, depending on sizing. The signal decides direction; <b>sizing decides survival</b>.</p></div>
+  <div class="chart"><div class="ct">Equity Curve</div><img src="quant-laws/equity.png" alt=""></div>
+  <div class="law"><div class="n">LAW 12</div><h3 class="serif">Risk management is the only alpha that compounds.</h3>
+  <p>Returns are noisy and edges decay, but not blowing up is permanent. <b>In the long run, staying alive is the strategy.</b></p></div>
+</div>
 
-<div class="chart"><div class="ct">Signal Decay</div><img src="quant-laws/signal_decay.png" alt="Edge decaying after publication"></div>
-<div class="law"><div class="n">LAW 06</div><h2 class="serif">Every edge decays the day it's discovered.</h2>
-<p>An edge exists because someone hasn't arbitraged it away yet. The moment it's known — published, copied, crowded — the return-to-risk erodes. Alpha is a <b>depleting resource</b>. The question isn't whether it decays, but how fast — and whether you exit before it's gone.</p></div>
+<!-- BOOKS -->
+<div class="section" id="books">
+  <div class="eyebrow">Part 3 · The Bookshelf</div>
+  <h2 class="serif">Best books &amp; resources</h2>
+  <div class="reslist">
+    <div class="book"><div class="bt">Options, Futures &amp; Other Derivatives — John Hull</div><div class="ba">The industry bible for derivatives and pricing.</div></div>
+    <div class="book"><div class="bt">Stochastic Calculus for Finance I &amp; II — Steven Shreve</div><div class="ba">The standard path from random processes to Black-Scholes.</div></div>
+    <div class="book"><div class="bt">Active Portfolio Management — Grinold &amp; Kahn</div><div class="ba">Alpha, risk, and the fundamental law of active management.</div></div>
+    <div class="book"><div class="bt">Advances in Financial Machine Learning — López de Prado</div><div class="ba">How to apply ML to markets without fooling yourself.</div></div>
+    <div class="book"><div class="bt">Quantitative Trading — Ernest Chan</div><div class="ba">A practical, honest intro to building and testing strategies.</div></div>
+    <div class="book"><div class="bt">A Practical Guide to Quant Finance Interviews — Xinfeng Zhou</div><div class="ba">The "green book" — brainteasers, probability, and the interview map.</div></div>
+  </div>
+</div>
 
-<div class="chart"><div class="ct">Net of Costs</div><img src="quant-laws/cost_decay.png" alt="Gross return vs net of costs as turnover rises"></div>
-<div class="law"><div class="n">LAW 07</div><h2 class="serif">Costs and slippage quietly kill most "profitable" strategies.</h2>
-<p>Gross returns are a fantasy. Commissions, spread, market impact, borrow and taxes are the tax the tape charges — and they scale with turnover. A strategy printing 20% gross that trades daily can be <b>flat after costs</b>. Model the friction before you fall in love with the curve.</p></div>
+<!-- PROJECTS -->
+<div class="section" id="projects">
+  <div class="eyebrow">Part 4 · Prove It</div>
+  <h2 class="serif">Projects to build</h2>
+  <p class="sublede">Nothing signals "hire me" like a public portfolio of working projects.</p>
+  <div class="reslist">
+    <div class="book"><div class="bt">1 · Backtest a momentum + mean-reversion strategy</div><div class="ba">With realistic costs and slippage — prove it survives out-of-sample.</div></div>
+    <div class="book"><div class="bt">2 · Build a Markowitz portfolio optimizer</div><div class="ba">Trace the efficient frontier and find the max-Sharpe portfolio.</div></div>
+    <div class="book"><div class="bt">3 · Price a European option two ways</div><div class="ba">Black-Scholes vs Monte Carlo — and explain why they agree.</div></div>
+    <div class="book"><div class="bt">4 · Build a pairs-trading cointegration scanner</div><div class="ba">Find and test statistically-linked pairs across a universe.</div></div>
+    <div class="book"><div class="bt">5 · Run a PCA / factor model on a basket of stocks</div><div class="ba">Compress the market into its few real drivers of risk.</div></div>
+    <div class="book"><div class="bt">6 · Construct an implied-volatility surface</div><div class="ba">From real options data — the quant's favourite 3D chart.</div></div>
+  </div>
+</div>
 
-<div class="law"><div class="n">LAW 08</div><h2 class="serif">Capacity is finite — size destroys the best edges.</h2>
-<p>The sharpest edges live in small, illiquid corners that can't absorb size. Double your capital and your own market impact eats the very inefficiency you found. Every strategy has a capacity ceiling — and the best ones are often <b>too small to matter to a large fund</b>, which is exactly why they persist.</p></div>
-
-<div class="chart"><div class="ct">Assumptions vs Robustness</div><img src="quant-laws/robustness.png" alt="More assumptions, lower out-of-sample Sharpe"></div>
-<div class="law"><div class="n">LAW 09</div><h2 class="serif">The more parameters a model needs, the less it survives out-of-sample.</h2>
-<p>Every free parameter is a degree of freedom to fit noise. A model with ten knobs will always look brilliant in-sample and fall apart live. <b>Prefer the boring, few-parameter model that's robust</b> over the intricate one that's perfect — parsimony is a form of risk management.</p></div>
-
-<div class="chart"><div class="ct">Correlation Matrix</div><img src="quant-laws/heatmap.png" alt="Cross-asset correlation matrix"></div>
-<div class="law"><div class="n">LAW 10</div><h2 class="serif">Correlation isn't diversification — it vanishes when you need it most.</h2>
-<p>Assets that look uncorrelated in calm markets converge toward 1 in a crisis — exactly when you're counting on the diversification. Correlation is a fair-weather friend. <b>True diversification comes from different risk drivers and different liquidity</b>, not from a historical correlation matrix.</p></div>
-
-<div class="law"><div class="n">LAW 11</div><h2 class="serif">Position sizing matters more than the signal.</h2>
-<p>Two traders with the same signal can end up rich or ruined depending on how they size. Bet too big and one bad streak ends the game; bet too small and the edge never compounds. The signal decides direction; <b>sizing decides survival</b> — and survival is what compounds.</p></div>
-
-<div class="chart"><div class="ct">Equity Curve</div><img src="quant-laws/equity.png" alt="Long-run compounding equity curve"></div>
-<div class="law"><div class="n">LAW 12</div><h2 class="serif">Risk management is the only alpha that compounds.</h2>
-<p>Returns are noisy and edges decay, but not blowing up is permanent. The trader who avoids the catastrophic loss keeps their capital in the game long enough for small edges to compound into large ones. <b>In the long run, staying alive is the strategy.</b></p></div>
+<!-- BREAK IN -->
+<div class="section" id="breakin">
+  <div class="eyebrow">Part 5 · The Path</div>
+  <h2 class="serif">How to break in</h2>
+  <div class="steps">
+    <div class="step"><div class="stn">1</div><div class="stt"><b>Master the math.</b> Work through the 8 subjects above — depth beats breadth.</div></div>
+    <div class="step"><div class="stn">2</div><div class="stt"><b>Code it.</b> Python + NumPy, pandas and SciPy. Turn the math into working projects.</div></div>
+    <div class="step"><div class="stn">3</div><div class="stt"><b>Prove it.</b> A public portfolio of notebooks and honest, out-of-sample backtests.</div></div>
+    <div class="step"><div class="stn">4</div><div class="stt"><b>Practice interviews.</b> Probability brainteasers and the green book, until they're reflex.</div></div>
+    <div class="step"><div class="stn">5</div><div class="stt"><b>Target the role.</b> Quant Researcher, Quant Trader, or Quant Developer — pick your lane.</div></div>
+  </div>
+</div>
 
 <div class="divider"></div>
 <div class="close">
   <h3 class="serif">That's the handbook.</h3>
-  <p>Save it. Re-read it the next time a backtest looks too good to be true. And follow along for the next one.</p>
+  <p>Save it. Come back to it. And follow along for the next one.</p>
   <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
 </div>
-<footer>Educational only · <b>not financial advice</b> · not a recommendation to buy or sell any security · all charts are illustrative.<br>© Cloud9 Markets · Research</footer>
+<footer>Educational only · <b>not financial advice</b> · not a recommendation to buy or sell any security · charts are illustrative · book/resource mentions are not endorsements.<br>© Cloud9 Markets · Research</footer>
 </div>
 </body></html>
