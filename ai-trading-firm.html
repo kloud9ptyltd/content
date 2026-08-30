@@ -163,7 +163,7 @@
     <div class="fact"><div class="big">7</div><div class="lbl">agent roles — analysts, debaters, trader, risk, portfolio manager</div></div>
     <div class="fact"><div class="big">~15¢</div><div class="lbl">per full analysis on a budget model via OpenRouter</div></div>
     <div class="fact"><div class="big">~350k</div><div class="lbl">tokens burned per run — the reports get re-read at every desk</div></div>
-    <div class="fact"><div class="big">BUY</div><div class="lbl">its verdict on NVDA — Overweight, 3–5% position, dollar-cost average in</div></div>
+    <div class="fact"><div class="big" style="color:var(--bear)">UNDERWEIGHT</div><div class="lbl">the frontier (GPT-sol) desk's call on NVDA — trim; the $0.15 desk said the opposite (see the flip ↓)</div></div>
   </div>
 </section>
 
@@ -204,6 +204,29 @@ TRADINGAGENTS_MAX_RISK_ROUNDS=2</span>
       <h4>Upgrade the brain when it matters</h4>
       <p>Swap one line to put a frontier model in the chair — same firm, sharper analysts, ~20× the price.</p>
       <span class="code">TRADINGAGENTS_DEEP_THINK_LLM=openai/gpt-5.6-sol</span>
+    </div></div>
+    <div class="step"><div class="num">6</div><div class="body">
+      <h4>A real run, start to finish — our NVDA example</h4>
+      <p>The CLI walks you through a few prompts, then every desk lights up live in the terminal. Here's the
+      <b>exact frontier run</b> behind this page — NVDA, as of 2026-08-10:</p>
+      <span class="code"><b style="color:var(--gold)">Step 1 · Ticker</b>           NVDA
+<b style="color:var(--gold)">Step 2 · Analysis date</b>    2026-08-10
+<b style="color:var(--gold)">Step 3 · Output language</b>  English (default)
+<b style="color:var(--gold)">Step 4 · Analysts team</b>    market · social · news · fundamentals   <span style="color:var(--faint)">(space toggles, enter = done)</span>
+<span style="color:var(--bull)">✓</span> Research depth  2 debate / 2 risk rounds        <span style="color:var(--faint)">(from .env)</span>
+<span style="color:var(--bull)">✓</span> LLM provider    openrouter · openai/gpt-5.6-sol  <span style="color:var(--faint)">(from .env)</span>
+
+  Analyst Team    market · sentiment · news · fundamentals    <span style="color:var(--bull)">completed</span>
+  Research Team   bull · bear · research manager               <span style="color:var(--bull)">completed</span>
+  Trading Team    trader                                       <span style="color:var(--bull)">completed</span>
+
+<span style="color:var(--bear)">Action: Sell</span> — "Trim NVDA to an <b>underweight</b> allocation: at $223.96 the
+17.37× forward P/E leans on unfavourable near-term risk/reward."</span>
+      <p class="sub" style="margin-top:14px"><b>⚠ Heads-up on Reddit:</b> the social/sentiment analyst pulls Reddit's
+      public RSS, which now rate-limits aggressively — our run threw <code class="mono">HTTP 429 · Too Many Requests</code>
+      on r/stocks and r/investing and backed off. Sentiment still finishes (it leans on the other sources), but for
+      <b>reliable</b> social data you'll want a proper scraper wired in as an extra tool — e.g. an
+      <b>Apify</b> Reddit actor — rather than the bare RSS feed. Same goes for any source that gates bots.</p>
     </div></div>
   </div>
 </section>
