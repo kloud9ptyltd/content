@@ -123,20 +123,7 @@
   footer a{color:var(--c9);text-decoration:none}
 </style>
 </head>
-<body class="locked">
-
-<div id="gate">
-  <div class="gatecard" id="gatecard">
-    <img src="cloud9-logo.png" alt="Cloud9 Markets">
-    <h1 class="serif">Members drop only</h1>
-    <p>This build guide is unlocked with the access code from our Instagram DM.
-       Comment <b class="mono" style="color:var(--gold)">AGENT</b> on the post and the code lands in your inbox.</p>
-    <input id="code" maxlength="12" placeholder="ACCESS CODE" autocomplete="off">
-    <button onclick="tryUnlock()">Unlock the firm</button>
-    <div class="err" id="err"></div>
-    <div class="hint">No code yet? <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a></div>
-  </div>
-</div>
+<body>
 
 <div id="content">
 <div class="wrap">
@@ -317,30 +304,5 @@ TRADINGAGENTS_MAX_RISK_ROUNDS=2</span>
 </div>
 </div>
 
-<script>
-  var DROP_ID="027";
-  var PAGE_HASH="6b9966be10edb7207085bb7101bd9c3bfeba2df95a32d9edf6bbeb4adfceae83";
-  var MASTER_HASH="30e7724015a1f378871306cc61d597224206a1233f1cc6eadf42b7ae4b0a2cc8";
-  var FREE_AFTER="2026-12-31";
-  function norm(s){return String(s||"").toUpperCase().replace(/[^A-Z0-9]/g,"").replace(/^C9/,"");}
-  function store(){try{var s=JSON.parse(localStorage.getItem("c9vault2")||"[]");return Array.isArray(s)?s:[]}catch(e){return[]}}
-  function unlock(remember){
-    if(remember){var s=store();if(s.indexOf(DROP_ID)<0){s.push(DROP_ID);try{localStorage.setItem("c9vault2",JSON.stringify(s))}catch(e){}}}
-    document.body.classList.remove("locked");document.getElementById("gate").style.display="none";
-  }
-  function sha256(t){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)).then(function(b){
-    return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("");});}
-  function tryUnlock(){
-    sha256(norm(document.getElementById("code").value)).then(function(h){
-      if(h===PAGE_HASH||h===MASTER_HASH){unlock(true);}
-      else{
-        var c=document.getElementById("gatecard");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake");
-        document.getElementById("err").textContent="Wrong code — check the DM and try again.";
-      }
-    });
-  }
-  document.getElementById("code").addEventListener("keydown",function(e){if(e.key==="Enter")tryUnlock();});
-  if(store().indexOf(DROP_ID)>=0 || Date.now()>Date.parse(FREE_AFTER+"T23:59:59")) unlock(false);
-</script>
 </body>
 </html>
