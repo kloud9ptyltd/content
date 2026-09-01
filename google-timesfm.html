@@ -93,6 +93,65 @@ print(f"Last close ${close.iloc[-1]:.2f} -> 30-day median "
 </div>
 
 <div class="section">
+  <div class="eyebrow">Bonus · TradingView</div>
+  <h2 class="serif">Draw the forecast on your chart.</h2>
+  <p>This is my favourite part. The script below draws the TimesFM forecast <b style="color:#e9e6df">into the future of a live TradingView chart</b> — the gold cone is the q10–q90 band, the dashed gold line is the model's <b style="color:#e9e6df">30-day price target</b> (its median endpoint), with the % move on the label. Open <b style="color:#e9e6df">Pine Editor</b> (bottom panel of TradingView) → paste → <b style="color:#e9e6df">Add to chart</b>. That's it.</p>
+
+<span class="code">//@version=6
+indicator(&quot;TimesFM 2.5 · 30-day forecast cone&quot;, overlay = true)
+
+// ---- forecast data (generated 2026-09-01 · TimesFM 2.5 · Apache-2.0) ----
+var int[]   f_t   = array.from(1788134400000, 1788220800000, 1788307200000, 1788393600000, 1788480000000, 1788739200000, 1788825600000, 1788912000000, 1788998400000, 1789084800000, 1789344000000, 1789430400000, 1789516800000, 1789603200000, 1789689600000, 1789948800000, 1790035200000, 1790121600000, 1790208000000, 1790294400000, 1790553600000, 1790640000000, 1790726400000, 1790812800000, 1790899200000, 1791158400000, 1791244800000, 1791331200000, 1791417600000, 1791504000000, 1791763200000)
+var float[] f_q50 = array.from(220.77999877929688, 220.48, 219.43, 219.35, 219.16, 219.13, 219.26, 218.82, 218.38, 218.77, 218.61, 218.07, 218.14, 217.61, 217.04, 217.52, 216.63, 217.15, 216.25, 215.79, 215.46, 214.84, 215.19, 215.22, 215.48, 215.77, 215.43, 215.11, 215.37, 215.32, 215.38)
+var float[] f_q10 = array.from(220.77999877929688, 210.07, 207.62, 205.63, 204.24, 203.59, 202.48, 200.69, 199.28, 199.16, 197.96, 196.54, 196.14, 196.68, 195.21, 194.86, 194.16, 194.82, 193.64, 191.06, 189.45, 189.46, 189.04, 188.86, 189.2, 187.48, 185.65, 184.73, 185.68, 184.94, 184.17)
+var float[] f_q90 = array.from(220.77999877929688, 230.16, 231.37, 233.04, 233.63, 234.92, 235.72, 236.02, 236.97, 237.72, 237.95, 237.65, 238.42, 239.13, 238.06, 239.1, 238.65, 241.03, 239.77, 241.4, 240.52, 240.75, 241.29, 241.36, 242.91, 244.16, 245.15, 244.2, 246.18, 246.4, 247.03)
+
+color GOLD  = color.new(#d9b45b, 0)
+color BAND  = color.new(#d9b45b, 82)
+color EDGE  = color.new(#d9b45b, 55)
+
+if barstate.islast
+    // band: one translucent box per forecast day
+    for i = 0 to array.size(f_t) - 2
+        box.new(array.get(f_t, i), math.max(array.get(f_q90, i), array.get(f_q90, i + 1)),
+                array.get(f_t, i + 1), math.min(array.get(f_q10, i), array.get(f_q10, i + 1)),
+                xloc = xloc.bar_time, bgcolor = BAND, border_color = color.new(color.white, 100))
+    // polylines: median + band edges
+    med = array.new&lt;chart.point&gt;()
+    lo  = array.new&lt;chart.point&gt;()
+    hi  = array.new&lt;chart.point&gt;()
+    for i = 0 to array.size(f_t) - 1
+        array.push(med, chart.point.from_time(array.get(f_t, i), array.get(f_q50, i)))
+        array.push(lo,  chart.point.from_time(array.get(f_t, i), array.get(f_q10, i)))
+        array.push(hi,  chart.point.from_time(array.get(f_t, i), array.get(f_q90, i)))
+    polyline.new(med, xloc = xloc.bar_time, line_color = GOLD, line_width = 3)
+    polyline.new(lo,  xloc = xloc.bar_time, line_color = EDGE, line_width = 1, line_style = line.style_dashed)
+    polyline.new(hi,  xloc = xloc.bar_time, line_color = EDGE, line_width = 1, line_style = line.style_dashed)
+    // price target: dashed line at the 30-day median endpoint
+    n = array.size(f_t) - 1
+    float tgt = array.get(f_q50, n)
+    float chg = (tgt / array.get(f_q50, 0) - 1) * 100
+    line.new(array.get(f_t, 0), tgt, array.get(f_t, n), tgt,
+             xloc = xloc.bar_time, color = GOLD, style = line.style_dashed, width = 2)
+    label.new(array.get(f_t, n), tgt,
+              text = &quot;🎯 AI 30-day target  $&quot; + str.tostring(tgt, &quot;#.##&quot;) +
+                     &quot;  (&quot; + (chg &gt;= 0 ? &quot;+&quot; : &quot;&quot;) + str.tostring(chg, &quot;#.#&quot;) + &quot;%)&quot; +
+                     &quot;\nq10–q90 band  $&quot; + str.tostring(array.get(f_q10, n), &quot;#&quot;) + &quot;–$&quot; + str.tostring(array.get(f_q90, n), &quot;#&quot;),
+              xloc = xloc.bar_time, style = label.style_label_left,
+              color = color.new(#0b0c10, 20), textcolor = GOLD, size = size.normal)</span>
+
+  <p style="margin-top:16px"><b style="color:#e9e6df">Make it yours:</b> the four <span style="font-family:'JetBrains Mono',monospace;font-size:15px">array.from(...)</span> rows are my Sep 1 NVDA run (TimesFM 2.5). To regenerate them for any ticker, add this to the end of your Colab cell and paste what it prints over those four rows:</p>
+
+<span class="code">j = lambda v: ", ".join(f"{x:.2f}" for x in v)
+print("var int[]   f_t   = array.from(" + ", ".join(str(int(d.timestamp()*1000)) for d in dates) + ")")
+print("var float[] f_q50 = array.from(" + f"{close.iloc[-1]:.2f}, " + j(median) + ")")
+print("var float[] f_q10 = array.from(" + f"{close.iloc[-1]:.2f}, " + j(q10) + ")")
+print("var float[] f_q90 = array.from(" + f"{close.iloc[-1]:.2f}, " + j(q90) + ")")</span>
+
+  <p style="margin-top:16px"><b style="color:#e9e6df">Power move:</b> if you use Claude, you can skip the copy-paste entirely — connect Claude to TradingView with an MCP server and it writes the Pine and pushes it onto your chart itself. I wrote a full free setup guide: <a href="https://www.cloud9markets.com/claude-tradingview-setup.html" target="_blank" rel="noopener" style="color:var(--gold)">Claude Code × TradingView Desktop</a>. (Tip from my own setup: keep the Pine editor docked at the <i>bottom</i>, not the right, or the editor tools misbehave.)</p>
+</div>
+
+<div class="section">
   <div class="eyebrow">The fine print, in plain English</div>
   <h2 class="serif">What the 3.0 license lets you do.</h2>
   <div class="lic">
