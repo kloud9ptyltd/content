@@ -1,0 +1,114 @@
+<!doctype html><html lang=en><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Google's new forecasting AI — run TimesFM 3.0 on any stock, free · Cloud9</title>
+<meta name="description" content="Google just released TimesFM 3.0 — a 330M-parameter foundation model that forecasts any time series, zero-shot. Here's what it is, what it said about NVDA, and how to run it yourself in Google Colab in 5 minutes, free.">
+<meta property="og:title" content="Google's new AI forecasts any chart — run it yourself, free">
+<meta property="og:description" content="TimesFM 3.0: 330M parameters, trained on 1 trillion+ time points, #1 on every major forecasting benchmark. The exact Colab code to run it on any stock is on this page.">
+<meta property="og:image" content="https://www.cloud9markets.com/timesfm-nvda-forecast.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-editorial.css">
+<style>
+.spec{margin-top:20px;background:rgba(15,18,24,.6);border:1px solid var(--line);border-radius:16px;padding:8px 22px}
+.srow{display:flex;align-items:baseline;gap:14px;padding:13px 0;border-bottom:1px dashed rgba(255,255,255,.06)}
+.srow:last-child{border-bottom:none}
+.srow .k{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:var(--gold);min-width:118px;flex:none}
+.srow .v{color:#e9e6df;font-size:16px;line-height:1.45}
+.srow .v b{color:var(--gold)}
+.chart{margin-top:24px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#06060e}
+.chart img{width:100%;display:block}
+.lic{margin-top:26px;background:linear-gradient(180deg,rgba(217,180,91,.10),rgba(15,18,24,.6));border:1px solid rgba(217,180,91,.4);border-radius:18px;padding:24px 26px}
+.lic .lbl{font-size:13px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700}
+.lic p{margin-top:12px;font-size:16px;line-height:1.55;color:#e9e6df}
+.ok{color:#57d9a3;font-weight:700}.no{color:#ef476f;font-weight:700}
+.step{display:flex;gap:16px;margin-top:22px}
+.step .n{font-family:'Playfair Display',serif;font-weight:800;font-size:30px;color:var(--gold);line-height:1;flex:none;width:34px}
+.step .b{flex:1}.step .b .t{font-weight:700;color:#fff;font-size:18px}.step .b p{margin-top:6px}
+</style></head>
+<body>
+<div class="wrap">
+<header><img src="https://www.cloud9markets.com/cloud9-logo.png" onerror="this.style.display='none'"><span class="hh">Google TimesFM 3.0</span></header>
+<span class="badge">Free · Cloud9 Research</span>
+<h1 class="serif">Google just released an AI<br><span class="g">that forecasts any chart.</span></h1>
+<p class="lede">On August 31, Google Research dropped <b style="color:#e9e6df">TimesFM&nbsp;3.0</b> — a foundation model that does for time series what GPT did for text. Feed it any sequence of numbers — a stock price, sales data, crypto, your own metrics — and it forecasts what comes next, <b style="color:#e9e6df">zero-shot, no training</b>. This page: what it is, what its predecessor said about NVDA, and the exact code to run 3.0 yourself in 5 minutes, free.</p>
+<p class="by">By <b>Cloud9 Research</b></p>
+
+<div class="section">
+  <div class="eyebrow">What dropped · Aug 31, 2026</div>
+  <h2 class="serif">The release, in numbers.</h2>
+  <div class="spec">
+    <div class="srow"><span class="k">330M</span><span class="v">parameters — small enough to run on a free Colab CPU in seconds.</span></div>
+    <div class="srow"><span class="k">1T+</span><span class="v">time points in its training corpus, from real-world and synthetic series.</span></div>
+    <div class="srow"><span class="k">#1</span><span class="v">ranked pre-trained foundation model on <b>all three</b> major forecasting benchmarks — GIFT-Eval, FEV-Bench and the Time leaderboard — ahead of Amazon's Chronos-2 and Datadog's Toto&nbsp;2.0.</span></div>
+    <div class="srow"><span class="k">NEW</span><span class="v">native <b>multivariate</b> forecasting — earlier versions could only look at one series at a time; 3.0 forecasts related series together and can use side information, including events it knows are coming.</span></div>
+    <div class="srow"><span class="k">1 PASS</span><span class="v">the whole forecast horizon comes out in a single forward pass, with 9 quantile bands so you get uncertainty, not just a line.</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="eyebrow">What it looks like on a real stock</div>
+  <h2 class="serif">We ran the TimesFM family on NVDA.</h2>
+  <p>Below is a 30-day NVDA forecast from <b>TimesFM&nbsp;2.5</b> — the previous generation, whose weights are fully open (Apache-2.0). White is the actual price; the band is the model's own 10th–90th percentile uncertainty.</p>
+  <div class="chart"><img src="timesfm-nvda-forecast.png" alt="TimesFM 2.5 30-day NVDA forecast with quantile bands"></div>
+  <p style="margin-top:16px"><b style="color:#e9e6df">Why we're showing 2.5 and not 3.0:</b> the new 3.0 weights ship under a <b>non-commercial license</b>, so we don't publish 3.0's outputs on this site. That restriction is on <i>us</i>, not on you — your own private experiments are exactly what the license allows, and the code below runs the real 3.0.</p>
+</div>
+
+<div class="section">
+  <div class="eyebrow">Run it yourself · free · ~5 minutes</div>
+  <h2 class="serif">TimesFM 3.0 on any stock, in Colab.</h2>
+
+  <div class="step"><div class="n">1</div><div class="b"><div class="t">Open a fresh notebook</div><p>Go to <b style="color:#e9e6df">colab.research.google.com</b> → New notebook. Free tier is plenty — no GPU needed.</p></div></div>
+  <div class="step"><div class="n">2</div><div class="b"><div class="t">Paste this into one cell and run it</div><p>First run downloads the model (~1.2&nbsp;GB) from Google's official Hugging Face repo, then forecasts in seconds. Change <b style="color:#e9e6df">TICKER</b> to anything yfinance knows.</p></div></div>
+
+<span class="code">!pip install -q timesfm yfinance
+
+import numpy as np, pandas as pd, yfinance as yf
+import matplotlib.pyplot as plt
+from timesfm3 import TimesFM3Evaluator, ModelConfig
+
+TICKER, HORIZON = "NVDA", 30
+
+close = yf.download(TICKER, period="3y", auto_adjust=True,
+                    progress=False)["Close"].squeeze().dropna()
+context = close.values.astype(np.float32)[-1000:]
+
+model = TimesFM3Evaluator(ModelConfig(
+    checkpoint_path="google/timesfm-3.0-pytorch", device="cpu"))
+out = list(model.predict_batch(contexts=[context], horizon=HORIZON,
+                               return_quantiles=True))[0]
+median, q10, q90 = out.quantiles[:,4], out.quantiles[:,0], out.quantiles[:,8]
+
+dates = pd.bdate_range(close.index[-1] + pd.Timedelta(days=1), periods=HORIZON)
+plt.figure(figsize=(12,6))
+plt.plot(close.index[-120:], close.values[-120:], color="w", label="actual")
+plt.plot(dates, median, color="cyan", label="TimesFM 3.0 median")
+plt.fill_between(dates, q10, q90, color="cyan", alpha=.18, label="q10–q90")
+plt.gca().set_facecolor("#06060e"); plt.gcf().set_facecolor("#06060e")
+plt.legend(); plt.title(f"{TICKER} — TimesFM 3.0 · {HORIZON}-day forecast",
+                        color="w"); plt.tick_params(colors="w"); plt.show()
+
+print(f"Last close ${close.iloc[-1]:.2f} -> 30-day median "
+      f"${median[-1]:.2f} ({(median[-1]/close.iloc[-1]-1)*100:+.1f}%)")</span>
+
+  <div class="step"><div class="n">3</div><div class="b"><div class="t">Read it like a quant, not a fortune teller</div><p>The median line is the model's central guess — the <b style="color:#e9e6df">band is the honest part</b>. A wide band means the model itself is telling you the future is uncertain. No forecasting model, Google's included, predicts the market reliably — that's precisely why the uncertainty bands are the feature to respect.</p></div></div>
+</div>
+
+<div class="section">
+  <div class="eyebrow">The fine print, in plain English</div>
+  <h2 class="serif">What the 3.0 license lets you do.</h2>
+  <div class="lic">
+    <div class="lbl">timesfm-non-commercial-license v1.0</div>
+    <p><span class="ok">You can:</span> run it privately, experiment on any data, benchmark it, learn from it, and share what you found non-commercially. Personal research is exactly the intended use.</p>
+    <p><span class="no">You can't:</span> use the model or its forecasts for anything commercial or production — trading products, paid services, client work, business decisions — or redistribute the weights.</p>
+    <p>Need it for something commercial? Use <b>TimesFM&nbsp;2.5</b> (fully open, Apache-2.0 — the model in our chart above), or get a commercial license from Google.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+<div class="close">
+  <h3 class="serif">You now run the same class of model the pros do.</h3>
+  <p>Follow for the next free institutional-grade tool, decoded the day it drops.</p>
+  <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+</div>
+<footer>Based on Google Research's public TimesFM 3.0 announcement, repo and model card. Forecast chart generated with TimesFM 2.5 (Apache-2.0); no TimesFM 3.0 outputs are published on this page. Educational only · <b>not financial advice</b> · model forecasts are statistical estimates, not predictions of actual prices · do your own research.<br>© Cloud9 Markets · Research</footer>
+</div>
+</body></html>
