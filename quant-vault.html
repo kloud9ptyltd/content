@@ -7,97 +7,95 @@
 <meta property="og:title" content="The Quant Vault — the free path to a $400K quant job"/>
 <meta property="og:description" content="The repos, the interview puzzles, and the real comp behind quant jobs at Jane Street, Citadel & Two Sigma. All free, all in one place."/>
 <meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-editorial.css">
 <style>
-  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
-    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff;--red:#ff6a6a}
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html{scroll-behavior:smooth}
-  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
-    background:radial-gradient(900px 500px at 80% -5%,rgba(230,200,120,.10),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(106,168,255,.08),transparent 55%),var(--bg)}
-  a{color:var(--c9)}
-  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
-  .c9logo{height:34px;width:auto;display:block}
-  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
-  .badge{margin-top:22px;display:inline-flex;align-items:center;gap:8px;background:rgba(70,168,255,.1);border:1px solid rgba(70,168,255,.35);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--c9)}
-  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--g)}
-  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:16px 0 10px}
-  h1 em{font-style:normal;color:var(--gold)}
-  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
-  .lede b{color:#fff}
-  nav{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 2px}
-  nav a{font-size:12.5px;font-weight:800;padding:9px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut);text-decoration:none}
-  nav a:hover{color:#fff;border-color:var(--line)}
-  .sect{margin:40px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut);scroll-margin-top:16px}
-  .sect .k{color:var(--gold)}
-  .lead{font-size:15px;line-height:1.5;color:#cfd8e4;margin-top:8px}
-  .repo{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;display:block;text-decoration:none}
-  .repo:hover{border-color:rgba(70,168,255,.4)}
-  .repo .top{display:flex;align-items:baseline;gap:8px}
-  .repo .nm{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:15.5px;font-weight:700;color:#fff}
-  .repo .nm .u{color:var(--mut)}
-  .repo .st{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--gold);white-space:nowrap}
-  .repo .ds{font-size:13.5px;line-height:1.45;color:var(--mut);margin-top:6px}
-  .q{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px}
-  .q .firm{font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--blu)}
-  .q h3{font-size:16px;font-weight:800;line-height:1.4;margin-top:8px}
-  .q details{margin-top:12px}
-  .q summary{cursor:pointer;font-size:13px;font-weight:800;color:var(--g);list-style:none}
-  .q summary::before{content:"▸ "}
-  .q details[open] summary::before{content:"▾ "}
-  .q .ans{font-size:14px;line-height:1.55;color:#cfd8e4;margin-top:9px;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:13px 14px}
-  .q .ans b{color:var(--g)}
-  table.pay{width:100%;border-collapse:collapse;margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-  table.pay td{padding:13px 15px;border-top:1px solid var(--line2);font-size:14.5px}
-  table.pay tr:first-child td{border-top:none}
-  table.pay .f{font-weight:700;color:#fff}
-  table.pay .r{font-family:"SF Mono",ui-monospace,Menlo,monospace;color:var(--gold);font-weight:700;text-align:right;white-space:nowrap}
-  .link-card{margin-top:14px;background:linear-gradient(180deg,rgba(230,200,120,.12),var(--card));border:1px solid rgba(230,200,120,.35);border-radius:16px;padding:18px;display:block;text-decoration:none}
-  .link-card h3{font-size:17px;font-weight:850;color:#fff}
-  .link-card p{font-size:13.5px;color:#cfd8e4;margin-top:6px;line-height:1.45}
-  .link-card .go{display:inline-block;margin-top:10px;font-size:13px;font-weight:800;color:var(--gold)}
-  .cta{margin-top:40px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.4);border-radius:20px;padding:24px;text-align:center}
-  .cta h2{font-size:21px;font-weight:850}
-  .cta p{font-size:14px;color:#cfd8e4;margin:9px 0 15px;line-height:1.5}
-  .btn{display:inline-block;background:var(--c9);color:#03111f;font-weight:850;font-size:16px;padding:14px 28px;border-radius:999px;text-decoration:none}
-  .cta .sub{font-size:12px;color:var(--faint);margin:12px 0 0}
-  .disc{margin-top:22px;font-size:12px;line-height:1.55;color:var(--faint)}
-  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
-  footer a{color:var(--mut)}
+/* nav pills */
+nav.pillnav{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+nav.pillnav a{font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:999px;background:rgba(15,18,24,.7);border:1px solid var(--line);color:var(--mut);text-decoration:none}
+nav.pillnav a:hover{color:var(--gold);border-color:rgba(217,180,91,.45)}
+
+/* repo cards */
+.repobox{margin-top:16px;background:rgba(15,18,24,.6);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.repo{display:block;padding:14px 16px;border-bottom:1px dashed rgba(255,255,255,.07);text-decoration:none}
+.repo:last-child{border-bottom:none}
+.repo:hover{background:rgba(217,180,91,.06)}
+.repo .top{display:flex;align-items:baseline;gap:8px}
+.repo .nm{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14.5px;color:#fff}
+.repo .nm .u{color:var(--mut)}
+.repo .st{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--gold);white-space:nowrap}
+.repo .ds{font-size:13.5px;line-height:1.5;color:var(--mut);margin-top:5px}
+
+/* puzzle cards */
+.q{margin-top:14px;background:rgba(15,18,24,.6);border:1px solid var(--line);border-radius:14px;padding:18px}
+.q .firm{font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--blue)}
+.q h3{font-family:'Playfair Display',serif;font-weight:700;font-size:17px;line-height:1.4;color:#fff;margin-top:10px}
+.q details{margin-top:12px}
+.q summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--gold);list-style:none}
+.q summary::before{content:"▸ "}
+.q details[open] summary::before{content:"▾ "}
+.q .ans{font-size:14.5px;line-height:1.6;color:#cfccd6;margin-top:10px;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:10px;padding:14px 15px}
+.q .ans b{color:var(--gold)}
+
+/* pay table */
+table.pay{width:100%;border-collapse:collapse}
+table.pay td{padding:13px 6px;border-bottom:1px dashed rgba(255,255,255,.08);font-size:14.5px;text-align:left;color:#cfccd6}
+table.pay tr:last-child td{border-bottom:none}
+table.pay .f{font-weight:700;color:#fff}
+table.pay .r{font-family:'JetBrains Mono',monospace;color:var(--gold);font-weight:700;text-align:right;white-space:nowrap}
+
+/* bible link card */
+.link-card{margin-top:14px;display:block;text-decoration:none;border:1px solid rgba(217,180,91,.45);border-radius:16px;padding:20px 22px;background:linear-gradient(180deg,rgba(217,180,91,.12),rgba(15,18,24,.6))}
+.link-card h3{font-family:'Playfair Display',serif;font-weight:700;font-size:20px;color:#fff}
+.link-card p{font-size:14.5px;color:#e9e6df;margin-top:8px;line-height:1.55}
+.link-card .go{display:inline-block;margin-top:12px;font-size:13px;font-weight:700;color:var(--gold)}
+
+/* misc */
+.disc{margin-top:14px;font-size:13px;line-height:1.55;color:var(--faint)}
+.close .sub{font-size:12px;color:var(--faint);margin-top:12px}
 </style>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">The Quant Vault</span></header>
+<div class="wrap">
+<header><img src="https://www.cloud9markets.com/cloud9-logo.png" onerror="this.style.display='none'"><span class="hh">The Quant Vault</span></header>
 
-  <div class="badge"><span class="dot"></span>Free · Public · Updated</div>
-  <h1><em>$400K</em> quant career. $0 tuition. Here's the exact path.</h1>
-  <p class="lede">Everyone thinks you need an MIT degree to break into quant. You need three things: <b>the math the firms test</b>, <b>the code to prove it</b>, and <b>the discipline to backtest</b>. All of it is below — open-source, no paywall.</p>
+<span class="badge">Free · Public · Updated</span>
+<h1 class="serif"><span class="g">$400K</span> quant career. $0 tuition. Here's the exact path.</h1>
+<p class="lede">Everyone thinks you need an MIT degree to break into quant. You need three things: <b>the math the firms test</b>, <b>the code to prove it</b>, and <b>the discipline to backtest</b>. All of it is below — open-source, no paywall.</p>
 
-  <nav>
-    <a href="#degree">◆ The $0 Degree</a>
-    <a href="#stack">◆ The Stack</a>
-    <a href="#puzzles">◆ The Puzzles</a>
-    <a href="#janestreet">◆ Jane Street</a>
-    <a href="#pay">◆ The Pay</a>
-    <a href="#bible">◆ The Bible</a>
-  </nav>
+<nav class="pillnav">
+  <a href="#degree">◆ The $0 Degree</a>
+  <a href="#stack">◆ The Stack</a>
+  <a href="#puzzles">◆ The Puzzles</a>
+  <a href="#janestreet">◆ Jane Street</a>
+  <a href="#pay">◆ The Pay</a>
+  <a href="#bible">◆ The Bible</a>
+</nav>
 
-  <!-- ===== DEGREE ===== -->
-  <div class="sect" id="degree">The $0 Degree — <span class="k">the quant masters syllabus, free</span></div>
-  <p class="lead">Top quant masters programs run six figures. The syllabus underneath them is largely free and public — this is the sequence I'd follow, in order.</p>
+<!-- ===== DEGREE ===== -->
+<div class="section" id="degree">
+  <div class="eyebrow">the quant masters syllabus, free</div>
+  <h2 class="serif">The $0 Degree</h2>
+  <p>Top quant masters programs run six figures. The syllabus underneath them is largely free and public — this is the sequence I'd follow, in order.</p>
 
+  <div class="repobox">
   <a class="repo" href="https://ocw.mit.edu/courses/18-600-probability-and-random-variables-fall-2019/" target="_blank" rel="noopener"><div class="top"><span class="nm">1 · MIT 18.600 — Probability</span><span class="st">$0</span></div><div class="ds">The foundation of everything quant. Full MIT course on OpenCourseWare — lectures, notes, exams.</div></a>
   <a class="repo" href="https://ocw.mit.edu/courses/18-s096-topics-in-mathematics-with-applications-in-finance-fall-2013/" target="_blank" rel="noopener"><div class="top"><span class="nm">2 · MIT 18.S096 — Math w/ Applications in Finance</span><span class="st">$0</span></div><div class="ds">The famous MIT quant-finance course — stochastic processes, portfolio theory, options — every lecture free, several taught by practitioners from Morgan Stanley.</div></a>
   <a class="repo" href="https://quantecon.org/" target="_blank" rel="noopener"><div class="top"><span class="nm">3 · QuantEcon</span><span class="st">$0</span></div><div class="ds">Economics, math and Python as one curriculum — co-founded by Nobel laureate Tom Sargent. The bridge from theory to code.</div></a>
   <a class="repo" href="https://www.kaggle.com/learn" target="_blank" rel="noopener"><div class="top"><span class="nm">4 · Kaggle Learn</span><span class="st">$0</span></div><div class="ds">Hands-on Python, pandas and machine learning in the browser — the coding reps that make the theory stick.</div></a>
   <a class="repo" href="https://github.com/quantopian/research_public" target="_blank" rel="noopener"><div class="top"><span class="nm">5 · Quantopian lecture archive</span><span class="st">$0</span></div><div class="ds">50+ quant-finance lectures as runnable notebooks — the closest thing to a buy-side training program in public.</div></a>
   <a class="repo" href="https://github.com/je-suis-tm/quant-trading" target="_blank" rel="noopener"><div class="top"><span class="nm">6 · quant-trading (je-suis-tm)</span><span class="st">$0</span></div><div class="ds">Real strategies in Python to backtest and break — the capstone project, self-assigned.</div></a>
+  </div>
+</div>
 
-  <!-- ===== STACK ===== -->
-  <div class="sect" id="stack">The Stack — <span class="k">10 free repos</span></div>
-  <p class="lead">A full quant curriculum on GitHub. Star them, then work top to bottom: math → backtest → AI → data.</p>
+<!-- ===== STACK ===== -->
+<div class="section" id="stack">
+  <div class="eyebrow">10 free repos</div>
+  <h2 class="serif">The Stack</h2>
+  <p>A full quant curriculum on GitHub. Star them, then work top to bottom: math → backtest → AI → data.</p>
 
+  <div class="repobox">
   <a class="repo" href="https://github.com/cybergeekgyan/Quant-Developers-Resources" target="_blank" rel="noopener"><div class="top"><span class="nm">Quant-Developers-Resources</span><span class="st">interview prep</span></div><div class="ds">Probability, statistics & brain-teasers — the question bank the firms screen with.</div></a>
   <a class="repo" href="https://github.com/dcajasn/Riskfolio-Lib" target="_blank" rel="noopener"><div class="top"><span class="nm">dcajasn / <span class="u"></span>Riskfolio-Lib</span><span class="st">3.4k★</span></div><div class="ds">Portfolio optimization, risk parity & mean-variance — the allocation-desk math.</div></a>
   <a class="repo" href="https://github.com/EliteQuant/EliteQuant" target="_blank" rel="noopener"><div class="top"><span class="nm">EliteQuant</span><span class="st">resources</span></div><div class="ds">A curated map of quant concepts, books and modeling references. The syllabus, for $0.</div></a>
@@ -108,10 +106,14 @@
   <a class="repo" href="https://github.com/AI4Finance-Foundation/FinRL" target="_blank" rel="noopener"><div class="top"><span class="nm">AI4Finance / <span class="u"></span>FinRL</span><span class="st">9k★</span></div><div class="ds">Deep reinforcement-learning agents that learn to trade. The frontier, with tutorials.</div></a>
   <a class="repo" href="https://github.com/OpenBB-finance/OpenBB" target="_blank" rel="noopener"><div class="top"><span class="nm">OpenBB-finance / <span class="u"></span>OpenBB</span><span class="st">33k★</span></div><div class="ds">The free Bloomberg terminal — equities, options, crypto, macro, with an AI layer.</div></a>
   <a class="repo" href="https://github.com/wilsonfreitas/awesome-quant" target="_blank" rel="noopener"><div class="top"><span class="nm">wilsonfreitas / <span class="u"></span>awesome-quant</span><span class="st">the index</span></div><div class="ds">The master list — every quant library, dataset and tool worth knowing, in one page.</div></a>
+  </div>
+</div>
 
-  <!-- ===== PUZZLES ===== -->
-  <div class="sect" id="puzzles">The Puzzles — <span class="k">real interview questions</span></div>
-  <p class="lead">The firms don't test memory — they test how you reason under uncertainty. Try before you open the answer.</p>
+<!-- ===== PUZZLES ===== -->
+<div class="section" id="puzzles">
+  <div class="eyebrow">real interview questions</div>
+  <h2 class="serif">The Puzzles</h2>
+  <p>The firms don't test memory — they test how you reason under uncertainty. Try before you open the answer.</p>
 
   <div class="q"><div class="firm">Jane Street · probability</div><h3>100 passengers board a full flight. The first sits in a random seat; everyone else takes their own seat if free, else a random one. What's the probability the 100th passenger gets their own seat?</h3>
     <details><summary>Show the answer</summary><div class="ans"><b>Exactly ½.</b> The last open seat can only ever be seat 1 or seat 100. Every random pick is even-handed between those two, and the process ends the moment one is taken — so they're a coin flip. Works for 100 passengers or 100 million. They want the symmetry argument, not the number.</div></details></div>
@@ -121,21 +123,30 @@
 
   <div class="q"><div class="firm">Optiver · mental math</div><h3>A bat and a ball cost $1.10 together. The bat costs $1.00 more than the ball. How much is the ball?</h3>
     <details><summary>Show the answer</summary><div class="ans"><b>$0.05.</b> Not $0.10 — that's the trap. Ball = x, bat = x+1, so 2x+1 = 1.10 → x = 0.05. Firms use fast questions like this to see if you slow down when your gut is confidently wrong.</div></details></div>
+</div>
 
-  <!-- ===== JANE STREET ===== -->
-  <div class="sect" id="janestreet">The Jane Street Shortlist — <span class="k">train like their hires</span></div>
-  <p class="lead">The six things that actually move the needle for the top market-making firms — every one of them free, several built by Jane Street itself.</p>
+<!-- ===== JANE STREET ===== -->
+<div class="section" id="janestreet">
+  <div class="eyebrow">train like their hires</div>
+  <h2 class="serif">The Jane Street Shortlist</h2>
+  <p>The six things that actually move the needle for the top market-making firms — every one of them free, several built by Jane Street itself.</p>
 
+  <div class="repobox">
   <a class="repo" href="https://ocw.mit.edu/courses/18-600-probability-and-random-variables-fall-2019/" target="_blank" rel="noopener"><div class="top"><span class="nm">MIT 18.600 · Probability</span><span class="st">$0</span></div><div class="ds">The full MIT probability course, free on OpenCourseWare. Probability intuition is their #1 filter — start here.</div></a>
   <a class="repo" href="https://www.figgie.com/" target="_blank" rel="noopener"><div class="top"><span class="nm">Figgie</span><span class="st">$0</span></div><div class="ds">Jane Street's OWN card game, built to teach market-making instincts. Playing it is the closest thing to sitting their interview.</div></a>
   <a class="repo" href="https://www.janestreet.com/puzzles/" target="_blank" rel="noopener"><div class="top"><span class="nm">Jane Street puzzle archive</span><span class="st">$0</span></div><div class="ds">Their monthly puzzles, going back years. Solve one and mention it in your application — it signals exactly what they hire for.</div></a>
   <a class="repo" href="https://arithmetic.zetamac.com/" target="_blank" rel="noopener"><div class="top"><span class="nm">Zetamac</span><span class="st">$0</span></div><div class="ds">Timed mental arithmetic sprints. Trading interviews expect fast, accurate numbers under pressure — this is the gym.</div></a>
   <a class="repo" href="https://signalsandthreads.com/" target="_blank" rel="noopener"><div class="top"><span class="nm">Signals &amp; Threads</span><span class="st">$0</span></div><div class="ds">Jane Street's podcast — their own engineers on systems, ML and markets. Learn how they think before you meet them.</div></a>
   <a class="repo" href="https://www.janestreet.com/join-jane-street/" target="_blank" rel="noopener"><div class="top"><span class="nm">The interview itself</span><span class="st">$0</span></div><div class="ds">Their hiring hub. Know the format: the interview IS a market-making game — "give me a bid-ask on X" — they watch how you update, not whether you're right.</div></a>
+  </div>
+</div>
 
-  <!-- ===== PAY ===== -->
-  <div class="sect" id="pay">The Pay — <span class="k">first-year comp</span></div>
-  <p class="lead">Reported/approximate total comp for a new-grad quant — age 22, no MBA. This is why the filter is so brutal.</p>
+<!-- ===== PAY ===== -->
+<div class="section" id="pay">
+  <div class="eyebrow">first-year comp</div>
+  <h2 class="serif">The Pay</h2>
+  <p>Reported/approximate total comp for a new-grad quant — age 22, no MBA. This is why the filter is so brutal.</p>
+  <div class="card">
   <table class="pay">
     <tr><td class="f">Jane Street</td><td>quant trader</td><td class="r">$450K+</td></tr>
     <tr><td class="f">Citadel Securities</td><td>quant researcher</td><td class="r">$420K+</td></tr>
@@ -145,23 +156,29 @@
     <tr><td class="f">Optiver · SIG</td><td>trader</td><td class="r">$300K+</td></tr>
     <tr><td class="f">Summer interns</td><td>per month</td><td class="r">$16K+</td></tr>
   </table>
-  <p class="disc">Figures are reported/approximate ranges (levels.fyi, community reports) — not offers, guarantees, or advice. Comp varies widely by firm, desk and performance.</p>
-
-  <!-- ===== BIBLE ===== -->
-  <div class="sect" id="bible">The Bible — <span class="k">the 50-page doc</span></div>
-  <a class="link-card" href="https://cloud9markets.com/quant-bible.html"><h3>MIT's Quant Bible →</h3><p>The 50-page manual MIT students pass around to break into quant — probability, stats, market-making, real interview questions and the full courseroad.</p><span class="go">Open the Bible →</span></a>
-
-  <!-- ===== CTA ===== -->
-  <div class="cta">
-    <h2>Want it as one pack?</h2>
-    <p>Comment the keyword on the post and I'll DM you the whole vault — the repos in order, 20 interview puzzles with worked answers, and the full comp map.</p>
-    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
-    <p class="sub">New quant drop every week.</p>
   </div>
+  <p class="disc">Figures are reported/approximate ranges (levels.fyi, community reports) — not offers, guarantees, or advice. Comp varies widely by firm, desk and performance.</p>
+</div>
 
-  <footer>
-    <p>Educational only — not financial or career advice. All resources are free and publicly available; links go to their original authors.</p>
-    <p style="margin-top:8px"><a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a> · <a href="https://cloud9markets.com">cloud9markets.com</a></p>
-  </footer>
+<!-- ===== BIBLE ===== -->
+<div class="section" id="bible">
+  <div class="eyebrow">the 50-page doc</div>
+  <h2 class="serif">The Bible</h2>
+  <a class="link-card" href="https://cloud9markets.com/quant-bible.html"><h3>MIT's Quant Bible →</h3><p>The 50-page manual MIT students pass around to break into quant — probability, stats, market-making, real interview questions and the full courseroad.</p><span class="go">Open the Bible →</span></a>
+</div>
+
+<div class="divider"></div>
+<div class="close">
+  <h3 class="serif">Want it as one pack?</h3>
+  <p>Comment the keyword on the post and I'll DM you the whole vault — the repos in order, 20 interview puzzles with worked answers, and the full comp map.</p>
+  <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
+  <p class="sub">New quant drop every week.</p>
+</div>
+
+<footer>
+  <p>Educational only — not financial or career advice. All resources are free and publicly available; links go to their original authors.</p>
+  <p style="margin-top:8px"><a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a> · <a href="https://cloud9markets.com">cloud9markets.com</a></p>
+</footer>
+</div>
 </body>
 </html>
