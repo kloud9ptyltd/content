@@ -1,71 +1,115 @@
 <!doctype html><html lang=en><head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>The AI Trading Floor — a pixel office of 9 agents · Cloud9</title>
-<meta property="og:title" content="The AI Trading Floor — 9 AI agents run a live trading desk"/>
-<meta property="og:description" content="An open-source pixel-art office where a team of AI agents work a trading floor. Reskinned as the Cloud9 desk — fork it and make it yours."/>
-<meta property="og:image" content="https://www.cloud9markets.com/cloud9-logo.png"/>
+<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The AI Trading Floor — a pixel office of agents · Cloud9</title>
+<meta name="description" content="I run an office of AI clones — a pixel-art floor where real coding agents sit at desks, message each other, and work while I'm away. Built on the open-source Munder Difflin harness. Here's what it is and exactly how to install and run your own.">
+<meta property="og:title" content="The AI Trading Floor — an office of AI clones">
+<meta property="og:description" content="A living pixel office where real AI agents work, message, and remember — coordinated by a clone of you. Free, open source, and it runs on the AI subscriptions you already pay for. Install steps inside.">
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-editorial.css">
 <style>
-:root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-body{max-width:620px;margin:0 auto;padding:0 18px 70px;
- background:radial-gradient(900px 520px at 80% -5%,rgba(106,168,255,.10),transparent 60%),radial-gradient(700px 500px at 0% 10%,rgba(22,224,138,.06),transparent 55%),var(--bg)}
-header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
-header img{height:32px}.hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
-header a{margin-left:auto;color:var(--c9);text-decoration:none;font-size:13px}
-.badge{display:inline-block;margin-top:22px;background:#0e2a1c;color:var(--g);border:1px solid #1c5a3c;font-size:11px;font-weight:800;letter-spacing:.12em;padding:5px 11px;border-radius:20px;text-transform:uppercase}
-h1{font-size:34px;font-weight:850;line-height:1.1;letter-spacing:-.5px;margin:14px 0 10px}
-h1 em{font-style:normal;color:var(--g)}
-.lede{font-size:16.5px;line-height:1.55;color:#cfd8e4;font-weight:500}.lede b{color:#fff}
-.sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
-.card{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
-.card h3{font-size:17px;font-weight:800}.card p{font-size:14.5px;line-height:1.55;color:#cfd8e4;margin-top:9px}.card p b{color:#fff}
-ul.cast{list-style:none;margin:12px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
-ul.cast li{background:var(--card2);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:9px 12px;font-size:13px;color:#cfd8e4}
-ul.cast li b{color:#fff}
-.cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.35);border-radius:20px;padding:24px;text-align:center}
-.cta h2{font-size:21px;font-weight:850}.cta p{font-size:14px;color:#cfd8e4;margin:8px 0 16px}
-.btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:4px}
-.btn.ghost{background:transparent;color:var(--c9);border:1px solid rgba(70,168,255,.5)}
-.note{font-size:12.5px;color:var(--faint);margin-top:12px;line-height:1.6}
-footer{margin-top:28px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
-</style></head><body>
-<header><img src="https://www.cloud9markets.com/cloud9-logo.png" onerror="this.style.display='none'"><span class="hsub">The AI Trading Floor</span></header>
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:999px;background:rgba(15,18,24,.7);border:1px solid var(--line);color:var(--mut)}
+.wingname{margin:22px 0 4px;font-size:12px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px}
+.wingname::after{content:"";flex:1;height:1px;background:var(--line)}
+.seat{display:flex;gap:14px;align-items:flex-start;background:rgba(15,18,24,.6);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:10px}
+.dot{width:11px;height:11px;border-radius:50%;flex:none;margin-top:5px;box-shadow:0 0 12px currentColor;background:currentColor}
+.seat h4{font-size:16px;font-weight:800;color:#fff;letter-spacing:.4px}
+.seat h4 span{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--faint);font-size:11px;letter-spacing:1.5px;margin-left:8px}
+.seat p{font-size:14.5px;color:#c9d2df;line-height:1.5;margin-top:4px}
+.seat.master{background:linear-gradient(180deg,rgba(217,180,91,.12),rgba(15,18,24,.6));border-color:rgba(217,180,91,.45)}
+.step{display:flex;gap:16px;margin-top:22px}
+.step .n{font-family:'Playfair Display',serif;font-weight:800;font-size:30px;color:var(--gold);line-height:1;flex:none;width:34px}
+.step .b{flex:1}.step .b .t{font-weight:700;color:#fff;font-size:18px}.step .b p{font-size:14.5px;color:#c9d2df;line-height:1.55;margin-top:6px}
+.code{margin-top:10px;background:#0a0c11;border:1px solid var(--line);border-radius:10px;padding:13px 15px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.8;color:#e9e6df;overflow-x:auto;white-space:pre}
+.code b{color:var(--gold);font-weight:700}
+.code i{font-style:normal;color:var(--faint)}
+.fable{margin-top:24px;border:1px solid rgba(217,180,91,.45);border-radius:14px;padding:16px 18px;background:linear-gradient(180deg,rgba(217,180,91,.10),rgba(15,18,24,.5))}
+.fable .tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#0b0c10;background:var(--gold);padding:3px 10px;border-radius:999px;margin-bottom:9px}
+.fable p{font-size:14.5px;color:#e9e6df;line-height:1.55}
+.fable b{color:var(--gold)}
+</style>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<div class="wrap">
+<header><img src="https://www.cloud9markets.com/cloud9-logo.png" onerror="this.style.display='none'"><span class="hh">Cloud9 × The Floor</span></header>
+<span class="badge">Free · Open source · MIT</span>
+<h1 class="serif">I run an office<br><span class="g">of AI clones.</span></h1>
+<p class="lede">Not a dashboard — a <b style="color:#e9e6df">living pixel office</b>. Real AI agents sit at desks, message each other, hand off work, and keep working while I'm away — coordinated by <b style="color:#e9e6df">a clone of me</b> sitting in the corner office. It runs on the AI subscriptions you already pay for (Claude Code, Codex, Gemini and friends), it's free, and this page has the exact steps to run your own.</p>
+<p class="by">By <b>Cloud9 Research</b></p>
 
-<span class=badge>Free · open source</span>
-<h1>A pixel office where <em>nine AI agents</em> run your trading floor.</h1>
-<p class=lede>Not a dashboard — an actual <b>living office</b>. A team of AI agents sit at their desks, talk to each other, hand off work, and run the desk while you watch. We reskinned it into the <b>Cloud9 Trading Desk</b> — same open-source engine, our cast of agents.</p>
-
-<div class="sect">The desk — nine specialists</div>
-<div class="card">
-  <p>A coordinator runs the floor and delegates to nine agents across three wings:</p>
-  <ul class=cast>
-    <li><b>Athena</b> · fundamentals</li>
-    <li><b>Chartist</b> · charts &amp; levels</li>
-    <li><b>Oracle</b> · quant &amp; models</li>
-    <li><b>Atlas</b> · macro</li>
-    <li><b>Capitol</b> · Congress &amp; 13F</li>
-    <li><b>Scout</b> · movers &amp; catalysts</li>
-    <li><b>Sentinel</b> · risk (the gate)</li>
-    <li><b>Pilot</b> · execution (paper)</li>
-    <li><b>Ledger</b> · the book &amp; P&amp;L</li>
-  </ul>
-  <p style="margin-top:12px">Each agent is a real CLI coding agent (Claude, Codex or Gemini) — they read files, run commands, and work autonomously toward a goal. <b>Sentinel gates every trade; execution is paper-only.</b></p>
+<div class="chips">
+  <span class="chip">🏢 A real office, rendered live</span><span class="chip">🤖 12+ agent CLIs supported</span>
+  <span class="chip">💬 Agents message &amp; route</span><span class="chip">🧠 Persistent memory</span>
+  <span class="chip">⏰ Scheduled triggers</span><span class="chip">🆓 MIT licensed</span>
 </div>
 
-<div class="sect">It's open source — make it yours</div>
-<div class="card">
-  <h3>🛠️ Built on an open engine, tuned for Cloud9</h3>
-  <p>The floor runs on the open-source <b>Munder Difflin</b> multi-agent harness (MIT, by Chaitanya Giri). We <b>fine-tuned it into the Cloud9 Trading Desk</b> — renamed the cast, added a live ticker and market signage, wired the agents to finance data. <b>You can do the same:</b> fork it and shape the agents, roles and goals around <b>your</b> workflow — coding team, research desk, content studio, whatever you run.</p>
+<div class="section">
+  <div class="eyebrow">What it actually is</div>
+  <h2 class="serif">Your terminal agents, given desks.</h2>
+  <p style="margin-top:12px;font-size:15px;color:#c9d2df;line-height:1.6">The engine is <b style="color:#fff">Munder Difflin</b> — an open-source multi-agent harness (MIT, by Chaitanya Giri). It wraps the coding CLI you already run — Claude Code, Codex, Gemini CLI, Grok, Copilot, Cursor and more — into a team: each agent gets a seat, a terminal, a memory, and a manager. The manager is <b style="color:#fff">Michael</b>, a clone of you that routes work, checks in on agents, and keeps the office moving on your hourly limits while you sleep. I tuned my copy into the Cloud9 Trading Desk — renamed the cast, added the ticker and market signage, pointed the agents at finance work.</p>
 </div>
 
-<div class="cta">
-  <h2>Grab the open-source repo.</h2>
-  <p>Clone it, run it, and reskin it for your own AI team. Free forever.</p>
+<div class="section">
+  <div class="eyebrow">My floor · the Cloud9 cast</div>
+
+  <div class="seat master"><span class="dot" style="color:#d9b45b"></span><div><h4>MICHAEL <span>THE CLONE</span></h4><p>The orchestrator — my stand-in. Assigns work, reads the room, nudges idle agents, and answers for the office when I'm gone.</p></div></div>
+
+  <div class="wingname">Intelligence</div>
+  <div class="seat"><span class="dot" style="color:#7b8cff"></span><div><h4>ATLAS <span>MACRO</span></h4><p>Rates, the Fed, the tide everything floats on.</p></div></div>
+  <div class="seat"><span class="dot" style="color:#ffd54d"></span><div><h4>CAPITOL <span>SMART MONEY</span></h4><p>Congress trades, insider filings, 13F moves.</p></div></div>
+  <div class="seat"><span class="dot" style="color:#ffb84d"></span><div><h4>SCOUT <span>RECON</span></h4><p>What's moving and why — before the feed knows.</p></div></div>
+
+  <div class="wingname">Analysis</div>
+  <div class="seat"><span class="dot" style="color:#2fd6c4"></span><div><h4>ATHENA <span>FUNDAMENTALS</span></h4><p>Filings, earnings, the ten-year view.</p></div></div>
+  <div class="seat"><span class="dot" style="color:#3fe9ff"></span><div><h4>CHARTIST <span>LEVELS</span></h4><p>The charts — where to buy, where to run.</p></div></div>
+  <div class="seat"><span class="dot" style="color:#b57bff"></span><div><h4>ORACLE <span>QUANT</span></h4><p>Models and probabilities, never promises.</p></div></div>
+
+  <div class="wingname">Execution</div>
+  <div class="seat"><span class="dot" style="color:#ef476f"></span><div><h4>SENTINEL <span>RISK · THE GATE</span></h4><p>Veto power over everything. Paper-only, always.</p></div></div>
+  <div class="seat"><span class="dot" style="color:#ff6bd6"></span><div><h4>PILOT <span>EXECUTION</span></h4><p>Acts only after Sentinel signs off.</p></div></div>
+  <div class="seat"><span class="dot" style="color:#aab6cc"></span><div><h4>LEDGER <span>THE BOOK</span></h4><p>Journals every call — especially the bad ones.</p></div></div>
+</div>
+
+<div class="section">
+  <div class="eyebrow">Install &amp; run · the actual steps</div>
+  <h2 class="serif">Your own office, in ten minutes.</h2>
+
+  <div class="step"><div class="n">1</div><div class="b"><div class="t">Check the prerequisites</div>
+    <p><b style="color:#fff">Node.js 18+</b> and npm, plus a C/C++ toolchain for the terminal engine. On a Mac that's one line:</p>
+    <div class="code">xcode-select --install</div>
+    <p>Works on macOS, Windows and Linux.</p></div></div>
+
+  <div class="step"><div class="n">2</div><div class="b"><div class="t">Have at least one agent CLI installed</div>
+    <p>Any one of the 12+ supported CLIs on your PATH is enough — <b style="color:#fff">Claude Code</b> (<span style="font-family:'JetBrains Mono',monospace">claude</span>) is the default; Codex, Gemini CLI, Grok, Qwen, OpenCode, Copilot and Cursor all work. Missing CLIs mostly self-heal — the harness runs the installer in the terminal for you. Your existing subscription is the fuel; no extra API bill required (your own keys and local models via Ollama/LM Studio are optional).</p></div></div>
+
+  <div class="step"><div class="n">3</div><div class="b"><div class="t">Clone, install, run</div>
+    <div class="code"><i># three commands, that's the whole install</i>
+git clone https://github.com/chaitanyagiri/munder-difflin.git
+cd munder-difflin
+npm install   <i># rebuilds the terminal engine for Electron</i>
+npm run dev   <i># the office opens</i></div></div></div>
+
+  <div class="step"><div class="n">4</div><div class="b"><div class="t">Walk the floor</div>
+    <p>First launch runs an onboarding wizard, then you land on the floor. Hit <b style="color:#fff">Add agent</b> to spawn your first session — your clone seats itself in Michael's office automatically and starts coordinating. Set <b style="color:#fff">triggers</b> (time-of-day, weekday-aware) so the office works on a schedule, and give agents goals in plain English.</p></div></div>
+
+  <div class="step"><div class="n">5</div><div class="b"><div class="t">Make it yours</div>
+    <p>The cast, roles, and goals are all config. I turned mine into a trading floor — yours can be a coding team, a research desk, a content studio. Rename the agents, change the signage, point them at your work.</p></div></div>
+</div>
+
+<div class="fable">
+  <span class="tag">Straight talk</span>
+  <p>Credit where it's due: the harness is <b>open-source work by Chaitanya Giri</b> (MIT). My trading floor is a reskin and configuration on top — you bring your own AI CLI and accounts. And the desk is a <b>demo/creative setup, not a live trading system</b>: agents run paper-only behind Sentinel's gate.</p>
+</div>
+
+<div class="divider"></div>
+<div class="close">
+  <h3 class="serif">Grab the repo. Build your office.</h3>
+  <p>Clone it, run it, reskin it for your own AI team — free forever. Then follow <b style="color:var(--gold)">@cloud9.markets</b> to watch what my floor gets up to.</p>
   <a class="btn" href="https://github.com/chaitanyagiri/munder-difflin" target="_blank" rel="noopener">Open the repo on GitHub →</a>
-  <a class="btn ghost" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
-  <div class=note>Credit to <b>Chaitanya Giri</b> for the open-source harness (MIT). The Cloud9 version is a reskin/config on top — you bring your own AI CLI + keys.</div>
+  <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener" style="margin-left:8px">Follow @cloud9.markets →</a>
 </div>
-
-<footer>Educational · a demo/creative setup, not a live trading system · agents run paper-only behind a risk gate · <b>not financial advice</b><br>© Cloud9 Markets</footer>
+<footer>Educational · a demo/creative setup, not a live trading system · agents run paper-only behind a risk gate · <b>not financial advice</b> · do your own research.<br>© Cloud9 Markets · Research</footer>
+</div>
 </body></html>
