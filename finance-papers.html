@@ -6,7 +6,7 @@
 <title>10 Papers That Built Modern Finance · Cloud9</title>
 <meta name="description" content="Ten academic papers, five Nobel Prizes, all free to read. Markowitz to Almgren-Chriss — what every finance interview quotes, and the five papers the actual desk runs on.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="cloud9-luxe.css">
 <style>
 /* page-specific additions — no media queries here, cloud9-luxe.css already handles mobile */
@@ -37,6 +37,17 @@
 .paywall-note{border:1px solid var(--gold-dim);background:rgba(200,162,78,.06);padding:16px 18px;font-size:13px;font-style:italic;font-family:'Playfair Display',serif;line-height:1.6;color:var(--ink)}
 .paywall-note b{font-style:normal;color:var(--gold-hi)}
 
+.pcard .practice{border-left:2px solid var(--gold-dim);padding-left:14px;margin-top:2px}
+.pcard .practice .plabel{display:block;font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.pcard .practice p{font-size:13.5px;font-weight:300;line-height:1.65;letter-spacing:.01em;color:var(--dim2);margin:0}
+.steal{margin-top:6px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.045);padding:20px 22px}
+.steal .lbl{font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.steal .lbl span:first-child{white-space:nowrap}
+.steal pre{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.65;color:var(--ink);white-space:pre-wrap;word-break:break-word;margin:0 0 14px;background:rgba(0,0,0,.25);border:1px solid var(--gold-faint);padding:14px 16px}
+.copybtn{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi);background:transparent;border:1px solid var(--gold-dim);padding:8px 16px;cursor:pointer}
+.copybtn:hover{border-color:var(--gold-hi);color:#fff}
+.copybtn.done{color:#8fd6a8;border-color:#8fd6a8}
+
 .startbox{border:1px solid var(--gold-dim);background:rgba(200,162,78,.06);padding:30px clamp(22px,4vw,40px);margin:8px 0 30px}
 .startbox .lbl{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
 .startbox p{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.55;margin:0;color:var(--ink)}
@@ -63,6 +74,7 @@
   <h1>10 Papers That Built Modern Finance</h1>
   <div class="free">Ten papers. Five Nobel Prizes. All free.</div>
   <p class="sub">Everything from CAPM to your broker's execution algo traces back to these. Read the originals — not the LinkedIn summary of the originals.</p>
+  <p class="sub" style="margin-top:14px;font-size:13px;color:var(--dim)">Each paper below has an <b style="color:var(--gold-hi);font-weight:500">In Practice</b> note and a copy-paste <b style="color:var(--gold-hi);font-weight:500">AI prompt</b> so you can actually apply the idea, not just read about it.</p>
 </header>
 
 <main>
@@ -88,6 +100,11 @@
         <div class="pactions">
           <a class="readbtn" href="https://finance.martinsewell.com/capm/Markowitz1952.pdf" target="_blank" rel="noopener">Read the paper →</a>
         </div>
+        <div class="practice"><span class="plabel">In practice</span><p>Build a mean-variance view of your own book. Don't ask "is this a good stock" — ask "what does adding this position do to my portfolio's covariance." A basket of 40 stocks that all fall together in a drawdown is still one bet, no matter how diversified it looks on paper.</p></div>
+        <div class="steal">
+          <div class="lbl"><span>Prompt to steal — paste into Claude/ChatGPT</span><button class="copybtn" data-target="p1">Copy</button></div>
+          <pre id="p1">I hold these positions: [list your tickers and weights]. Pull daily returns for each over the last 3 years, build the covariance matrix, and plot the mean-variance efficient frontier. Show me where my current portfolio sits relative to that frontier, and suggest one reallocation that would reduce my risk for the same expected return.</pre>
+        </div>
       </div>
 
       <div class="pcard">
@@ -103,6 +120,11 @@
         </div>
         <div class="pactions">
           <a class="readbtn" href="https://www.aeaweb.org/aer/top20/48.3.261-297.pdf" target="_blank" rel="noopener">Read the paper →</a>
+        </div>
+        <div class="practice"><span class="plabel">In practice</span><p>When you're sizing up a company, don't over-weight its debt/equity mix in isolation. Ask what the capital-structure choice is actually doing to taxes, distress risk and cash flow — the real-world frictions MM assumed away on purpose, which is exactly where the useful analysis lives.</p></div>
+        <div class="steal">
+          <div class="lbl"><span>Prompt to steal — paste into Claude/ChatGPT</span><button class="copybtn" data-target="p2">Copy</button></div>
+          <pre id="p2">Pull [ticker]'s debt and equity issuance from its last 3 annual reports. Explain in plain English how its capital structure has changed, then estimate — given today's interest rate environment — whether its current leverage is helping or hurting its cost of capital.</pre>
         </div>
       </div>
 
@@ -120,6 +142,11 @@
         <div class="pactions">
           <a class="readbtn" href="https://finance.martinsewell.com/capm/Sharpe1964.pdf" target="_blank" rel="noopener">Read the paper →</a>
         </div>
+        <div class="practice"><span class="plabel">In practice</span><p>Use beta as a starting point for the return you should demand from a stock relative to the market — not the whole answer. It's the common language every cost-of-equity number and DCF discount rate is built on, so you need to speak it even while doubting it.</p></div>
+        <div class="steal">
+          <div class="lbl"><span>Prompt to steal — paste into Claude/ChatGPT</span><button class="copybtn" data-target="p3">Copy</button></div>
+          <pre id="p3">Calculate the 3-year rolling beta of [ticker] against the S&P 500. Using CAPM with the current 10-year Treasury yield as the risk-free rate and a 5% equity risk premium, tell me what expected return the model implies — then compare that to the stock's actual realized return over the same period and explain the gap.</pre>
+        </div>
       </div>
 
       <div class="pcard">
@@ -136,6 +163,11 @@
         <div class="pactions">
           <a class="readbtn" href="http://www.e-m-h.org/Fama70.pdf" target="_blank" rel="noopener">Read the paper →</a>
         </div>
+        <div class="practice"><span class="plabel">In practice</span><p>Before you trust an "edge," ask which form of efficiency it claims to beat — weak (chart patterns), semi-strong (public news) or strong (insider information). That single question tells you exactly how skeptical to be, and how much competition you're actually up against.</p></div>
+        <div class="steal">
+          <div class="lbl"><span>Prompt to steal — paste into Claude/ChatGPT</span><button class="copybtn" data-target="p4">Copy</button></div>
+          <pre id="p4">I think [describe your signal or strategy] might be a market edge. Classify it as exploiting weak-form, semi-strong-form or strong-form market inefficiency, then give me the 3 most likely reasons this edge either doesn't really exist or has already been arbitraged away by now.</pre>
+        </div>
       </div>
 
       <div class="pcard">
@@ -151,6 +183,11 @@
         </div>
         <div class="pactions">
           <a class="readbtn" href="https://www.cs.princeton.edu/courses/archive/fall09/cos323/papers/black_scholes73.pdf" target="_blank" rel="noopener">Read the paper →</a>
+        </div>
+        <div class="practice"><span class="plabel">In practice</span><p>Use it to sanity-check an option's price and to understand implied volatility — but remember its constant-volatility assumption is exactly what the market's volatility smile is telling you is wrong. The model is the baseline; the smile is the market's correction to it.</p></div>
+        <div class="steal">
+          <div class="lbl"><span>Prompt to steal — paste into Claude/ChatGPT</span><button class="copybtn" data-target="p5">Copy</button></div>
+          <pre id="p5">Pull the current option chain for [ticker]. Calculate the Black-Scholes theoretical price for the nearest-expiry at-the-money call and put, then compare that to the market's actual prices. Describe how implied volatility changes across strikes — the volatility smile — and explain in plain English what that tells us Black-Scholes gets wrong.</pre>
         </div>
       </div>
 
@@ -183,6 +220,11 @@
         <div class="pactions">
           <a class="readbtn" href="https://www.princeton.edu/~wbialek/rome/refs/kelly_56.pdf" target="_blank" rel="noopener">Read the paper →</a>
         </div>
+        <div class="practice"><span class="plabel">In practice</span><p>Before sizing any position, estimate your real edge honestly — win probability and payoff ratio, not vibes. Compute full Kelly, then size at a fraction of it. Most professional desks run a quarter to a half Kelly, because full Kelly is mathematically optimal but psychologically unbearable.</p></div>
+        <div class="steal">
+          <div class="lbl"><span>Prompt to steal — paste into Claude/ChatGPT</span><button class="copybtn" data-target="p6">Copy</button></div>
+          <pre id="p6">My historical win rate on [describe your strategy] is X% with an average win/loss payoff ratio of Y. Calculate the full Kelly position size as a percentage of capital, then simulate the equity curve difference between full Kelly, half Kelly and quarter Kelly sizing over my last 100 trades — I want to see the drawdown difference, not just the average return.</pre>
+        </div>
       </div>
 
       <div class="pcard">
@@ -198,6 +240,11 @@
         </div>
         <div class="pactions">
           <a class="readbtn" href="http://www.e-m-h.org/GrSt80.pdf" target="_blank" rel="noopener">Read the paper →</a>
+        </div>
+        <div class="practice"><span class="plabel">In practice</span><p>Use this as your reality check on any "free" signal. If a piece of information were truly costless to find and instantly priced in, nobody would be paid to look for it. So ask what it actually costs you — time, data, compute — to find your edge, and whether that cost is still worth paying.</p></div>
+        <div class="steal">
+          <div class="lbl"><span>Prompt to steal — paste into Claude/ChatGPT</span><button class="copybtn" data-target="p7">Copy</button></div>
+          <pre id="p7">Explain the Grossman-Stiglitz paradox applied to [describe your strategy or signal]. What would have to be true about the cost of finding this information for it to still be profitable after transaction costs? Give me a checklist I can use to judge whether this signal is likely already arbitraged away.</pre>
         </div>
       </div>
 
@@ -216,6 +263,11 @@
         <div class="pactions">
           <a class="readbtn" href="https://www.aeaweb.org/articles?id=10.1257/0895330042162430" target="_blank" rel="noopener">Read the 2004 open-access version →</a>
         </div>
+        <div class="practice"><span class="plabel">In practice</span><p>Before calling a return "alpha," check whether it's actually just size or value factor exposure you haven't measured. Run your portfolio or backtest through a three-factor regression first — a lot of "skill" quietly disappears once you control for size and value.</p></div>
+        <div class="steal">
+          <div class="lbl"><span>Prompt to steal — paste into Claude/ChatGPT</span><button class="copybtn" data-target="p8">Copy</button></div>
+          <pre id="p8">Take the daily returns of [my portfolio or strategy] over the last 5 years. Run a Fama-French three-factor regression against the market, SMB (size) and HML (value) factors — Ken French's data library has the factor returns. Tell me my factor loadings and whether my alpha is still statistically significant after controlling for size and value.</pre>
+        </div>
       </div>
 
       <div class="pcard">
@@ -231,6 +283,11 @@
         </div>
         <div class="pactions">
           <a class="readbtn" href="http://www.e-m-h.org/JeTi93.pdf" target="_blank" rel="noopener">Read the paper →</a>
+        </div>
+        <div class="practice"><span class="plabel">In practice</span><p>A simple momentum sleeve — rank stocks by trailing 12-month return, skip the most recent month, hold the top decile — is one of the most replicated results in finance. Size it small: momentum crashes hard and fast, usually right when the broader market is turning.</p></div>
+        <div class="steal">
+          <div class="lbl"><span>Prompt to steal — paste into Claude/ChatGPT</span><button class="copybtn" data-target="p9">Copy</button></div>
+          <pre id="p9">Build a simple 12-month momentum backtest on S&P 500 constituents: rank by trailing 12-month return skipping the most recent month, go long the top decile, rebalance monthly. Show me the equity curve, max drawdown and the worst 3 individual months — I want to see the crash risk clearly, not just the average annual return.</pre>
         </div>
       </div>
 
@@ -249,6 +306,11 @@
         <div class="pactions">
           <a class="readbtn" href="https://web.archive.org/web/20170811231537/http://www.cims.nyu.edu/~almgren/papers/optliq.pdf" target="_blank" rel="noopener">Read the paper →</a>
         </div>
+        <div class="practice"><span class="plabel">In practice</span><p>If you're ever trading a size the market can't absorb in one clip, don't just fire a market order. Think in terms of the tradeoff between market impact (trading fast) and price risk (trading slow) — that tradeoff is exactly what every VWAP and TWAP execution algo is automating for you.</p></div>
+        <div class="steal">
+          <div class="lbl"><span>Prompt to steal — paste into Claude/ChatGPT</span><button class="copybtn" data-target="p10">Copy</button></div>
+          <pre id="p10">I need to buy $[amount] of [ticker], which trades about $[average daily volume] a day. Using a simple Almgren-Chriss-style execution framework, suggest how I should split this order across the trading day to balance market impact against price risk, and compare that plan to just using a straight TWAP.</pre>
+        </div>
       </div>
 
     </div>
@@ -263,6 +325,29 @@
   <span><a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">instagram.com/cloud9.markets</a></span>
   <span>Education, not investment advice.</span>
 </footer>
+
+<script>
+document.querySelectorAll('.copybtn').forEach(function(btn){
+  btn.addEventListener('click', async function(){
+    var target = document.getElementById(btn.getAttribute('data-target'));
+    if (!target) return;
+    try {
+      await navigator.clipboard.writeText(target.textContent.trim());
+      var original = btn.textContent;
+      btn.textContent = 'Copied ✓';
+      btn.classList.add('done');
+      setTimeout(function(){ btn.textContent = original; btn.classList.remove('done'); }, 1800);
+    } catch (e) {
+      // clipboard API blocked (e.g. non-HTTPS or permissions) — select text as a fallback
+      var range = document.createRange();
+      range.selectNodeContents(target);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  });
+});
+</script>
 
 </body>
 </html>
