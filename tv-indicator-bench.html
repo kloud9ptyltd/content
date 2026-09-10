@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>I backtested the 13 most popular TradingView indicators — 2 made money · Cloud9</title>
+<meta name="description" content="We backtested the 13 most popular TradingView indicators on real Binance perp fees, 14 months, long-only. Two made money. Both are trailing stops. Full scoreboard, the repaint exposé, and 7 copy-paste Pine scripts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+/* page-specific additions — no media queries here, cloud9-luxe.css already handles mobile */
+.section{max-width:980px;margin:0 auto;padding:64px 0}
+.section + .section{border-top:1px solid var(--gold-faint)}
+.section .kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.section h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.18;margin:0 0 20px;text-wrap:pretty}
+.section h2 i{font-style:italic;color:var(--gold-hi)}
+.section p.lead{font-size:16px;font-weight:300;line-height:1.75;letter-spacing:.01em;color:#DDD2BE;max-width:760px;margin:0 0 18px}
+.section p.lead b{color:var(--ink);font-weight:500}
+
+.benchbar{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;border:1px solid var(--gold-dim);background:rgba(200,162,78,.06);padding:26px 30px;margin:26px 0 34px}
+.benchbar .l{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim2)}
+.benchbar .v{font-family:'Playfair Display',serif;font-size:clamp(34px,4.5vw,50px);color:var(--gold-hi);line-height:1}
+.benchbar .s{font-size:13px;color:var(--dim);letter-spacing:.02em;max-width:420px}
+
+.tblwrap{overflow-x:auto;border:1px solid var(--gold-faint);margin:8px 0 10px}
+table.lux{width:100%;border-collapse:collapse;min-width:640px}
+table.lux th{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);font-weight:500;text-align:left;padding:14px 16px;border-bottom:1px solid var(--gold-dim);white-space:nowrap}
+table.lux td{font-family:'Jost',sans-serif;font-size:14.5px;color:var(--ink);padding:13px 16px;border-bottom:1px solid var(--gold-faint);white-space:nowrap}
+table.lux tr:last-child td{border-bottom:none}
+table.lux td.name{font-family:'Playfair Display',serif;font-size:16px;color:var(--ink);white-space:normal}
+table.lux td.num{font-variant-numeric:tabular-nums}
+table.lux .pos{color:var(--gold-hi);font-weight:500}
+table.lux .neg{color:#C97B6B}
+table.lux tr.win td{background:rgba(200,162,78,.06)}
+table.lux tr.repaint td{background:rgba(200,162,78,.09);border-top:1px dashed var(--gold-dim)}
+.tblcap{font-size:11px;letter-spacing:.1em;color:var(--dim);margin:0 0 28px;font-style:italic;font-family:'Playfair Display',serif}
+
+.quote{margin:36px auto;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:32px 38px;text-align:center}
+.quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(19px,2.4vw,25px);line-height:1.5;margin:0;color:var(--ink)}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:26px 0}
+.stat{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:28px 26px}
+.stat .tag{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+.stat .big{font-family:'Playfair Display',serif;font-size:clamp(32px,4.4vw,46px);color:var(--gold-hi);line-height:1;margin-bottom:12px}
+.stat .big.rd{color:#C97B6B}
+.stat ul{margin:0;padding-left:18px}
+.stat li{font-size:13.5px;line-height:1.7;color:var(--dim2);margin-bottom:5px}
+.stat li b{color:var(--ink);font-weight:500}
+
+.repaint-box{border:1px solid var(--gold-dim);background:rgba(200,162,78,.045);padding:34px clamp(20px,4vw,44px);position:relative}
+.repaint-box .flag{display:inline-block;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:6px 14px;margin-bottom:18px}
+.repaint-box .nodist{margin-top:26px;border-top:1px solid var(--gold-faint);padding-top:18px;font-size:13px;color:var(--dim);font-style:italic;font-family:'Playfair Display',serif;line-height:1.6}
+
+.railbox{border:1px solid var(--gold-dim);background:rgba(200,162,78,.05);padding:30px 34px;margin-bottom:16px}
+.railbox .lbl{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.railbox ul{margin:0;padding-left:20px}
+.railbox li{font-size:15px;line-height:1.75;color:#DDD2BE;margin-bottom:10px;font-weight:300}
+.railbox li b{color:var(--ink);font-weight:500}
+.railbox li i{color:var(--gold-hi);font-style:italic}
+
+.codeblock{border:1px solid var(--gold-faint);background:#0E0C08;margin-bottom:24px}
+.codeblock .head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;border-bottom:1px solid var(--gold-faint)}
+.codeblock .head .t{font-family:'Playfair Display',serif;font-size:15px;color:var(--gold-hi)}
+.codeblock .head .m{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:3px}
+.copybtn{font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-hi);background:transparent;border:1px solid var(--gold-dim);padding:9px 16px;cursor:pointer;flex:none}
+.copybtn:hover{border-color:var(--gold-hi);color:#fff}
+.copybtn.copied{color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));border-color:transparent}
+pre.code{margin:0;padding:20px 22px;overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#D9CFB8;white-space:pre}
+.runnote{font-size:13px;color:var(--dim);margin:0 0 28px;font-style:italic;font-family:'Playfair Display',serif}
+
+.mono-eyebrow{font-family:'Jost',sans-serif}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <img class="logo" src="cloud9-logo-gold.png" alt="Cloud9">
+    <span class="wm">Cloud9 <b>Research</b></span>
+    <span class="tag">The Indicator Bench</span>
+  </div>
+  <div class="right">
+    <a class="ig" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">13 Indicators · Real Fees · One Bench</div>
+  <h1>I backtested the 13 most popular TradingView indicators.</h1>
+  <div class="free">Two made money.</div>
+  <p class="sub">freqtrade · Binance futures BTC/ETH/SOL perps · 1-hour candles · real fees · 2025-06-26 → 2026-08-22 (~14 months) · $10K wallet, 3×$1K stakes · long-only · canonical settings · signal-in / signal-out (no stops, no tuning).</p>
+</header>
+
+<main>
+
+  <section class="section" id="scoreboard">
+    <div class="kicker">Episode 1 · The Scoreboard</div>
+    <h2>Eight classics. Profit after fees.</h2>
+    <div class="benchbar">
+      <div>
+        <div class="l">Buy &amp; hold benchmark</div>
+        <div class="s">Average of BTC/ETH/SOL over the same window. This is the line everything below is measured against.</div>
+      </div>
+      <div class="v">−20.20%</div>
+    </div>
+    <div class="tblwrap">
+      <table class="lux">
+        <thead><tr><th>Indicator</th><th>Total P&amp;L</th><th>CAGR</th><th>Trades</th><th>Win%</th><th>PF</th><th>MaxDD</th></tr></thead>
+        <tbody>
+          <tr class="win"><td class="name">SuperTrend (10, 3)</td><td class="num pos">+1.41%</td><td class="num pos">+1.22%</td><td class="num">353</td><td class="num">38.0</td><td class="num">1.03</td><td class="num">14.31%</td></tr>
+          <tr><td class="name">Squeeze Momentum (LazyBear)</td><td class="num neg">−2.07%</td><td class="num neg">−1.80%</td><td class="num">453</td><td class="num">30.5</td><td class="num">0.91</td><td class="num">6.69%</td></tr>
+          <tr><td class="name">Hull Suite (55)</td><td class="num neg">−2.23%</td><td class="num neg">−1.94%</td><td class="num">713</td><td class="num">33.4</td><td class="num">0.97</td><td class="num">19.75%</td></tr>
+          <tr><td class="name">Ichimoku Cloud (9/26/52 TK+cloud)</td><td class="num neg">−5.35%</td><td class="num neg">−4.65%</td><td class="num">191</td><td class="num">27.2</td><td class="num">0.81</td><td class="num">14.64%</td></tr>
+          <tr><td class="name">WaveTrend (LazyBear, ±53)</td><td class="num neg">−5.78%</td><td class="num neg">−5.03%</td><td class="num">387</td><td class="num">36.2</td><td class="num">0.82</td><td class="num">7.70%</td></tr>
+          <tr><td class="name">RSI (14) 30/70</td><td class="num neg">−9.29%</td><td class="num neg">−8.10%</td><td class="num">114</td><td class="num pos">64.0</td><td class="num">0.72</td><td class="num">16.20%</td></tr>
+          <tr><td class="name">UT Bot Alerts (1, 10)</td><td class="num neg">−11.28%</td><td class="num neg">−9.85%</td><td class="num">1655</td><td class="num">34.3</td><td class="num">0.90</td><td class="num">20.76%</td></tr>
+          <tr><td class="name">MACD (12/26/9) cross</td><td class="num neg">−15.60%</td><td class="num neg">−13.68%</td><td class="num">1160</td><td class="num">33.1</td><td class="num">0.84</td><td class="num">22.79%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tblcap">Bench: freqtrade, binance futures BTC/ETH/SOL:USDT perps, 1h candles, real fees, long-only, canonical settings, signal-in / signal-out (stoploss &amp; ROI disabled — pure indicator logic).</p>
+  </section>
+
+  <section class="section" id="twotwist">
+    <div class="kicker">The Two-Twist Story</div>
+    <h2>7 of 8 lost money. <i>All 8 beat the market.</i></h2>
+    <p class="lead">The only "winner," SuperTrend, made <b>+1.41%</b> in fourteen months — a savings account beat it. And yet every single one of these eight scripts beat buy-and-hold (<b>−20.2%</b>). In a falling market, even bad long-only timing beats full exposure. The indicators' real, mostly accidental value was keeping you <b>out</b>.</p>
+    <div class="quote"><p>&ldquo;They all beat the market. Seven still lost money. Both things are true.&rdquo;</p></div>
+  </section>
+
+  <section class="section" id="ep1b">
+    <div class="kicker">Episode 1b · More Classics, Same 1h Window</div>
+    <h2>Two survivors join the board.</h2>
+    <div class="tblwrap">
+      <table class="lux">
+        <thead><tr><th>Indicator</th><th>Total P&amp;L</th><th>Trades</th><th>Win%</th><th>PF</th><th>MaxDD</th></tr></thead>
+        <tbody>
+          <tr class="win"><td class="name">Golden Cross SMA 50/200 (1h)</td><td class="num pos">+1.67%</td><td class="num">101</td><td class="num">36.6</td><td class="num">1.08</td><td class="num">12.98%</td></tr>
+          <tr class="win"><td class="name">Bollinger Breakout (20,2)</td><td class="num pos">+1.49%</td><td class="num">567</td><td class="num">31.7</td><td class="num">1.03</td><td class="num">11.21%</td></tr>
+          <tr><td class="name">Bollinger MeanRev (20,2)</td><td class="num neg">−10.92%</td><td class="num">562</td><td class="num pos">62.6</td><td class="num">0.78</td><td class="num">17.00%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2 style="margin-top:44px">The Golden Cross, run daily, through a real crash.</h2>
+    <p class="lead">Full 1d history, 2020-07-29 → 2026-09-06 (~6 years, through BTC's −77% 2022 crash): <b>+31.30%</b> total, CAGR 4.56%, 17 trades, 52.9% win, PF 2.68.</p>
+    <div class="twocol">
+      <div class="stat">
+        <div class="tag">Golden Cross · Daily</div>
+        <div class="big">6.98%</div>
+        <ul><li>max drawdown, six years, one full crypto cycle</li><li>+31.30% total &middot; CAGR 4.56% &middot; 17 trades &middot; 52.9% win &middot; PF 2.68</li></ul>
+      </div>
+      <div class="stat">
+        <div class="tag">Buy &amp; Hold · Same Window</div>
+        <div class="big rd">−77%</div>
+        <ul><li>the 2022 drawdown the cross sat out</li><li>market change over the full window: +1491%</li></ul>
+      </div>
+    </div>
+    <p class="lead">This is the honest frame: <b>7% drawdown vs. a −77% heart attack</b>, not the 31%-vs-1491% ratio on its own — this bench uses fixed $1K stakes with no compounding, which overstates the buy-hold gap. The cross isn't alpha. It's <b>insurance</b>: in a crash it "wins" by being out of the market; in a six-year bull run it charges you most of the upside for the seatbelt.</p>
+  </section>
+
+  <section class="section" id="winratelie">
+    <div class="kicker">Exhibit · Win Rate Is A Lie</div>
+    <h2>They won <i>most</i> of their trades. They still lost money.</h2>
+    <div class="twocol">
+      <div class="stat">
+        <div class="tag">RSI (14) 30/70</div>
+        <div class="big">64.0%</div>
+        <ul><li>win rate</li><li>final P&amp;L: <b style="color:#C97B6B">−9.29%</b></li><li>wins are small; the losers are falling knives</li></ul>
+      </div>
+      <div class="stat">
+        <div class="tag">Bollinger MeanRev (20,2) — "buy the dip"</div>
+        <div class="big">62.6%</div>
+        <ul><li>win rate</li><li>final P&amp;L: <b style="color:#C97B6B">−10.92%</b></li><li>THE trade taught to every beginner</li></ul>
+      </div>
+    </div>
+    <p class="lead">Same bands, opposite philosophy: Bollinger MeanRev's uncool sibling, Bollinger <b>Breakout</b>, was profitable (+1.49%). A twelve-point spread between two reads of the same indicator. Win rate is a feeling. Expectancy is money.</p>
+  </section>
+
+  <section class="section" id="ep2">
+    <div class="kicker">Episode 2 · Community All-Time Legends</div>
+    <h2>Ranked by verified boosts, not by returns.</h2>
+    <p class="lead">Lineup: SMC LuxAlgo <b>164,661</b> boosts (untestable — no fixed rules) · Lorentzian ML <b>36,175</b> · Nadaraya-Watson Envelope <b>34,302</b> · Chandelier Exit <b>28,871</b> · QQE MOD <b>13,590</b>.</p>
+    <div class="tblwrap">
+      <table class="lux">
+        <thead><tr><th>Script (boosts)</th><th>Total P&amp;L</th><th>Trades</th><th>Win%</th><th>PF</th><th>MaxDD</th></tr></thead>
+        <tbody>
+          <tr class="win"><td class="name">Chandelier Exit (28.9K)</td><td class="num pos">+2.08%</td><td class="num">484</td><td class="num">36.2</td><td class="num">1.04</td><td class="num">14.73%</td></tr>
+          <tr><td class="name">Lorentzian ML (36.2K)</td><td class="num neg">−1.70%</td><td class="num">442</td><td class="num">45.5</td><td class="num">0.92</td><td class="num pos">4.17%</td></tr>
+          <tr><td class="name">Nadaraya-Watson honest (34.3K)</td><td class="num neg">−5.62%</td><td class="num">198</td><td class="num">55.6</td><td class="num">0.62</td><td class="num">7.30%</td></tr>
+          <tr><td class="name">QQE (13.6K)</td><td class="num neg">−17.73%</td><td class="num">1361</td><td class="num">37.8</td><td class="num">0.83</td><td class="num">25.84%</td></tr>
+          <tr class="repaint"><td class="name">NW with its repaint (lookahead)</td><td class="num pos">+35.30%</td><td class="num">218</td><td class="num pos">91.7</td><td class="num pos">31.59</td><td class="num pos">0.51%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tblcap">SMC LuxAlgo, the #1 script of all time by boosts, cannot be backtested — its concepts have no fixed, mechanical rules. Make that make sense.</p>
+  </section>
+
+  <section class="section" id="repaint">
+    <div class="kicker">The Repaint Exposé</div>
+    <h2>Same envelope. Same rules. <i>One time machine.</i></h2>
+    <div class="repaint-box">
+      <span class="flag">Nadaraya-Watson Envelope</span>
+      <p class="lead" style="margin-top:0">Identical indicator, identical entry/exit rules, identical window (2025-07-17 → 2026-08-22, market −35.6%). The only difference: which window of candles the indicator is allowed to look at.</p>
+      <div class="twocol">
+        <div class="stat">
+          <div class="tag">Tested honestly (causal)</div>
+          <div class="big rd">−5.62%</div>
+          <ul><li>win rate <b>55.6%</b> · PF <b>0.62</b> · MaxDD <b>7.30%</b></li><li>the indicator only ever sees the past</li></ul>
+        </div>
+        <div class="stat" style="border-color:var(--gold-dim)">
+          <div class="tag">As it draws on your chart (repaints)</div>
+          <div class="big">+35.30%</div>
+          <ul><li>win rate <b>91.7%</b> · PF <b>31.59</b> · MaxDD <b>0.51%</b></li><li>uses the centered, future-using window the indicator actually paints</li></ul>
+        </div>
+      </div>
+      <p class="lead">The version drawn on your live chart quietly recalculates the past using candles that haven't happened yet when you'd need to act on them. That's why it looks perfect — the perfect indicator, powered by a time machine.</p>
+      <div class="nodist">The lookahead-by-design code that produces the +35.30% number is deliberately not distributed here. Anyone who ran it would see a 91.7%-win-rate "system" and think they'd found the holy grail. They'd have found a clock, not an edge.</div>
+    </div>
+  </section>
+
+  <section class="section" id="verdict">
+    <div class="kicker">The Verdict</div>
+    <h2>Across all 13 tested, only two scripts made money.</h2>
+    <p class="lead">SuperTrend <b>+1.41%</b> and Chandelier Exit <b>+2.08%</b> — the only two profitable scripts across everything on this bench. Both are pure ATR trailing stops. No oscillator survived. No machine learning survived. No community legend survived, except the one built from the same primitive.</p>
+    <div class="quote"><p>&ldquo;Entries don't survive. Exits do.&rdquo;</p></div>
+  </section>
+
+  <section class="section" id="runit">
+    <div class="kicker">Run It Yourself</div>
+    <h2>Seven Pine v5 strategies, paste-ready.</h2>
+    <p class="runnote">Chart: BTCUSDT.P (Binance), 1h — to mirror this bench. For the Golden Cross, flip the chart to 1D or 1W. Paste ONE strategy at a time into the Pine Editor; each block is standalone.</p>
+
+    <div class="codeblock">
+      <div class="head"><div><div class="t">1 · RSI 30/70 (the meme baseline)</div><div class="m">−9.29% on this bench</div></div><button class="copybtn" data-target="code1">Copy</button></div>
+      <pre class="code" id="code1">//@version=5
+strategy("C9 Bench: RSI 30/70", overlay=false, initial_capital=10000, default_qty_type=strategy.percent_of_equity, default_qty_value=100, commission_type=strategy.commission.percent, commission_value=0.05)
+r = ta.rsi(close, 14)
+if ta.crossover(r, 30)
+    strategy.entry("L", strategy.long)
+if r > 70
+    strategy.close("L")
+plot(r)
+hline(30), hline(70)</pre>
+    </div>
+
+    <div class="codeblock">
+      <div class="head"><div><div class="t">2 · MACD Cross (the default)</div><div class="m">−15.60% on this bench</div></div><button class="copybtn" data-target="code2">Copy</button></div>
+      <pre class="code" id="code2">//@version=5
+strategy("C9 Bench: MACD Cross", overlay=false, initial_capital=10000, default_qty_type=strategy.percent_of_equity, default_qty_value=100, commission_type=strategy.commission.percent, commission_value=0.05)
+[m, s, _] = ta.macd(close, 12, 26, 9)
+if ta.crossover(m, s)
+    strategy.entry("L", strategy.long)
+if ta.crossunder(m, s)
+    strategy.close("L")
+plot(m, color=color.blue), plot(s, color=color.orange)</pre>
+    </div>
+
+    <div class="codeblock">
+      <div class="head"><div><div class="t">3 · Bollinger Mean Reversion (20,2)</div><div class="m">−10.92% on this bench</div></div><button class="copybtn" data-target="code3">Copy</button></div>
+      <pre class="code" id="code3">//@version=5
+strategy("C9 Bench: BB Mean Reversion", overlay=true, initial_capital=10000, default_qty_type=strategy.percent_of_equity, default_qty_value=100, commission_type=strategy.commission.percent, commission_value=0.05)
+basis = ta.sma(close, 20)
+dev = 2.0 * ta.stdev(close, 20)
+lower = basis - dev
+if ta.crossunder(close, lower)
+    strategy.entry("L", strategy.long)
+if close >= basis
+    strategy.close("L")
+plot(basis), plot(lower)</pre>
+    </div>
+
+    <div class="codeblock">
+      <div class="head"><div><div class="t">4 · Bollinger Breakout (20,2)</div><div class="m">+1.49% on this bench</div></div><button class="copybtn" data-target="code4">Copy</button></div>
+      <pre class="code" id="code4">//@version=5
+strategy("C9 Bench: BB Breakout", overlay=true, initial_capital=10000, default_qty_type=strategy.percent_of_equity, default_qty_value=100, commission_type=strategy.commission.percent, commission_value=0.05)
+basis2 = ta.sma(close, 20)
+dev2 = 2.0 * ta.stdev(close, 20)
+upper2 = basis2 + dev2
+if ta.crossover(close, upper2)
+    strategy.entry("L", strategy.long)
+if ta.crossunder(close, basis2)
+    strategy.close("L")
+plot(basis2), plot(upper2)</pre>
+    </div>
+
+    <div class="codeblock">
+      <div class="head"><div><div class="t">5 · Golden Cross SMA 50/200</div><div class="m">+1.67% (1h) · +31.30% (daily) on this bench</div></div><button class="copybtn" data-target="code5">Copy</button></div>
+      <pre class="code" id="code5">//@version=5
+strategy("C9 Bench: Golden Cross 50/200", overlay=true, initial_capital=10000, default_qty_type=strategy.percent_of_equity, default_qty_value=100, commission_type=strategy.commission.percent, commission_value=0.05)
+fast = ta.sma(close, 50)
+slow = ta.sma(close, 200)
+if ta.crossover(fast, slow)
+    strategy.entry("L", strategy.long)
+if ta.crossunder(fast, slow)
+    strategy.close("L")
+plot(fast, color=color.yellow), plot(slow, color=color.red)</pre>
+    </div>
+
+    <div class="codeblock">
+      <div class="head"><div><div class="t">6 · SuperTrend (10,3)</div><div class="m">+1.41% on this bench · Ep1 champion</div></div><button class="copybtn" data-target="code6">Copy</button></div>
+      <pre class="code" id="code6">//@version=5
+strategy("C9 Bench: SuperTrend 10x3", overlay=true, initial_capital=10000, default_qty_type=strategy.percent_of_equity, default_qty_value=100, commission_type=strategy.commission.percent, commission_value=0.05)
+[st, dir] = ta.supertrend(3.0, 10)
+if ta.change(dir) < 0
+    strategy.entry("L", strategy.long)
+if ta.change(dir) > 0
+    strategy.close("L")
+plot(st, color = dir < 0 ? color.green : color.red)</pre>
+    </div>
+
+    <div class="codeblock">
+      <div class="head"><div><div class="t">7 · Chandelier Exit (22,3)</div><div class="m">+2.08% on this bench · overall champion</div></div><button class="copybtn" data-target="code7">Copy</button></div>
+      <pre class="code" id="code7">//@version=5
+strategy("C9 Bench: Chandelier Exit 22x3", overlay=true, initial_capital=10000, default_qty_type=strategy.percent_of_equity, default_qty_value=100, commission_type=strategy.commission.percent, commission_value=0.05)
+atr = 3.0 * ta.atr(22)
+longStopBase = ta.highest(close, 22) - atr
+shortStopBase = ta.lowest(close, 22) + atr
+var float ls = na
+var float ss = na
+ls := close[1] > nz(ls[1], longStopBase) ? math.max(longStopBase, nz(ls[1], longStopBase)) : longStopBase
+ss := close[1] < nz(ss[1], shortStopBase) ? math.min(shortStopBase, nz(ss[1], shortStopBase)) : shortStopBase
+var int dir2 = 1
+dir2 := dir2 == 1 ? (close < ls ? -1 : 1) : (close > ss ? 1 : -1)
+if ta.change(dir2) > 0
+    strategy.entry("L", strategy.long)
+if ta.change(dir2) < 0
+    strategy.close("L")
+plot(ls, color=color.green), plot(ss, color=color.red)</pre>
+    </div>
+  </section>
+
+  <section class="section" id="honesty">
+    <div class="kicker">Honesty Rails</div>
+    <h2>What this bench is — and what it isn't.</h2>
+    <div class="railbox">
+      <div class="lbl">Read this before you trade any of it</div>
+      <ul>
+        <li>This is crypto perps, 1h candles, <b>one 14-month window</b> that happened to be a down market (−20.2%). A different window, timeframe, or market gives different numbers.</li>
+        <li>Say <i>"on this test"</i> — not <i>"these never work."</i></li>
+        <li>Every strategy above is <b>long-only</b>, canonical default settings, <b>signal exits only</b> — no stop-loss, no tuning, no shorting. Any of those would change the results.</li>
+        <li>This is the same bench and the same fee model that has already killed <b>180+ of our own AI-built strategies</b>. It isn't rigged against TradingView's indicators — it's just consistent.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>Cloud9 Research © 2026</span>
+  <span><a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">instagram.com/cloud9.markets</a></span>
+  <span>Education, not investment advice.</span>
+</footer>
+
+<script>
+document.querySelectorAll('.copybtn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var id = btn.getAttribute('data-target');
+    var el = document.getElementById(id);
+    var text = el.textContent;
+    function done(){
+      var prev = btn.textContent;
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent = prev; btn.classList.remove('copied'); }, 1500);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  });
+});
+function fallbackCopy(text, cb){
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try { document.execCommand('copy'); } catch(e){}
+  document.body.removeChild(ta);
+  if(cb) cb();
+}
+</script>
+
+</body>
+</html>
