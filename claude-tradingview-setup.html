@@ -1,169 +1,396 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Connect Claude Code to TradingView Desktop — Free Setup · Cloud9</title>
-<meta property="og:title" content="Let AI drive your TradingView charts — free setup"/>
-<meta property="og:description" content="Connect Claude Code to TradingView Desktop: scan your watchlist, draw trade plans with Pine Script, set alerts — all by prompting."/>
-<meta property="og:image" content="https://kloud9ptyltd.github.io/content/tv-guide-tsla-plan.jpg"/>
+<meta name="description" content="Connect Claude Code to TradingView Desktop for free: scan your watchlist, draw trade plans with Pine Script, backtest and audit strategies — then run our two head-to-head tests, Fable 5.1 vs GPT-6 Astra, yourself.">
+<meta property="og:title" content="Let AI drive your TradingView charts — free setup">
+<meta property="og:description" content="Connect Claude Code to TradingView Desktop: scan your watchlist, draw trade plans with Pine Script, set alerts — all by prompting. Plus: test Fable 5.1 vs GPT-6 Astra yourself.">
+<meta property="og:image" content="https://kloud9ptyltd.github.io/content/tv-guide-tsla-plan.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
 <style>
-  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
-    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff}
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
-    background:radial-gradient(900px 500px at 80% -5%,rgba(106,168,255,.10),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
-  a{color:var(--c9)}
-  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
-  .c9logo{height:34px;width:auto;display:block}
-  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
-  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
-  h1 em{font-style:normal;color:var(--g)}
-  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
-  .lede b{color:#fff}
-  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
-  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
-  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
-  .step{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
-  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--g);color:#04130c;font-weight:900;font-size:14px;margin-right:10px}
-  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
-  .step p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0;padding-left:36px}
-  .code{position:relative;margin:12px 0 0 36px;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:13px 44px 13px 14px;
-    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;line-height:1.55;color:#d8e6ff;white-space:pre-wrap;word-break:break-word}
-  .cp{position:absolute;top:8px;right:8px;font-size:11px;font-weight:700;color:var(--mut);background:var(--card2);border:1px solid var(--line2);border-radius:7px;padding:5px 9px;cursor:pointer}
-  .cp:active{color:var(--g)}
-  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px}
-  .note b{color:var(--mut)}
-  .shot{display:block;width:100%;border-radius:14px;border:1px solid var(--line);margin-top:14px}
-  .cap{font-size:12.5px;color:var(--faint);margin-top:8px;text-align:center}
-  .demo{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
-  .demo h3{font-size:17px;font-weight:800}
-  .demo p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0}
-  .demo .code{margin-left:0}
-  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.35);border-radius:20px;padding:22px;text-align:center}
-  .cta h2{font-size:21px;font-weight:850}
-  .cta p{font-size:14px;color:#cfd8e4;margin:8px 0 14px}
-  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
-  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+main{max-width:900px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:60px;padding-top:38px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:46px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(24px,3.2vw,34px);line-height:1.2;margin:0 0 14px;text-wrap:pretty}
+.tdesc{font-size:15px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);margin:0 0 8px}
+.tdesc b{color:var(--ink);font-weight:500}
+
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
+.chip{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.1em;padding:8px 14px;border:1px solid var(--gold-faint);color:var(--dim2);background:rgba(200,162,78,.03)}
+
+.flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:18px;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.flow .tag{border:1px solid var(--gold-faint);padding:8px 13px;color:var(--dim2)}
+.flow .tag.hi{border-color:var(--gold-dim);color:var(--gold-hi)}
+.flow .arrow{color:var(--dim)}
+
+.stepcard{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:26px 28px;margin-top:20px}
+.stepcard .sh{display:flex;align-items:center;gap:14px;margin-bottom:2px}
+.stepcard .sn{font-family:'Playfair Display',serif;font-weight:600;font-size:15px;width:32px;height:32px;flex:none;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--gold),var(--gold-hi));color:var(--bg)}
+.stepcard h3{font-family:'Playfair Display',serif;font-weight:500;font-size:19px;margin:0;color:var(--ink)}
+.stepcard p{font-size:14px;font-weight:300;line-height:1.65;color:var(--dim2);margin:12px 0 0}
+.stepcard p b{color:var(--ink);font-weight:500}
+.stepcard .fine{font-size:12.5px;color:var(--dim);margin-top:10px;line-height:1.7}
+.stepcard .fine b{color:var(--dim2)}
+.stepcard .fine a{text-decoration:underline;text-underline-offset:3px}
+.stepcard img.shot{display:block;width:100%;border:1px solid var(--gold-faint);margin-top:16px}
+.stepcard .cap{font-size:11.5px;color:var(--dim);margin-top:8px;text-align:center;font-style:italic}
+
+.demo{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:26px 28px;margin-top:20px}
+.demo h3{font-family:'Playfair Display',serif;font-weight:500;font-size:18px;margin:0 0 10px;color:var(--ink)}
+.demo p{font-size:14px;font-weight:300;line-height:1.65;color:var(--dim2);margin:0 0 14px}
+.demo p b,.demo p i{color:var(--ink);font-style:normal;font-weight:500}
+.demo img.shot{display:block;width:100%;border:1px solid var(--gold-faint);margin-top:4px}
+.demo .cap{font-size:11.5px;color:var(--dim);margin-top:8px;text-align:center;font-style:italic}
+
+.codeblock{border:1px solid var(--gold-faint);background:#0E0C08;margin-top:16px}
+.codeblock .head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:14px 18px;border-bottom:1px solid var(--gold-faint)}
+.codeblock .head .t{font-family:'Playfair Display',serif;font-size:15px;color:var(--gold-hi)}
+.codeblock .head .m{font-size:11px;letter-spacing:.03em;color:var(--dim);margin-top:5px;max-width:520px;line-height:1.5}
+.copybtn{font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-hi);background:transparent;border:1px solid var(--gold-dim);padding:9px 16px;cursor:pointer;flex:none}
+.copybtn:hover{border-color:var(--gold-hi);color:#fff}
+.copybtn.copied{color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));border-color:transparent}
+pre.code{margin:0;padding:18px;overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65;color:#D9CFB8;white-space:pre-wrap}
+
+.subhead{font-family:'Playfair Display',serif;font-weight:500;font-size:22px;margin:38px 0 6px;color:var(--gold-hi)}
+.subnote{font-size:13px;color:var(--dim);margin:0 0 16px;line-height:1.6}
+.steps{margin:0;padding-left:22px}
+.steps li{font-size:14.5px;font-weight:300;line-height:1.75;color:var(--dim2);margin-bottom:10px}
+.steps li b{color:var(--ink);font-weight:500}
+.steps li code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--gold-hi)}
+
+.callout{border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:18px 22px;margin-top:20px;font-size:13px;color:var(--dim2);line-height:1.7}
+.callout b{color:var(--gold-hi)}
+
+.tip{border-left:2px solid var(--gold-dim);padding-left:16px;margin-top:18px;font-size:13px;color:var(--dim2);line-height:1.65;font-style:italic}
+
+.gotchas{margin:18px 0 0;padding:0;list-style:none}
+.gotchas li{font-size:13px;font-weight:300;line-height:1.7;color:var(--dim2);margin-bottom:10px;padding-left:18px;position:relative}
+.gotchas li::before{content:'—';position:absolute;left:0;color:var(--gold)}
+.gotchas li b{color:var(--ink);font-weight:500}
+
+.honest{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--gold-hi);line-height:1.6;margin-top:26px;text-wrap:pretty}
+
+.catch{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:13px}
+.catch li{font-size:14px;font-weight:300;line-height:1.6;color:var(--dim2);padding-left:20px;position:relative}
+.catch li::before{content:'—';position:absolute;left:0;color:var(--gold)}
+.catch li b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:60px auto 0;max-width:680px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 0 10px;max-width:520px;margin-left:auto;margin-right:auto}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+
+@media (max-width:600px){
+.stepcard,.demo{padding:20px 18px}
+}
 </style>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Claude × TradingView</span></header>
-
-  <h1>Let AI <em>drive your charts</em> — Claude Code × TradingView Desktop.</h1>
-  <p class="lede">This free, open-source bridge lets Claude <b>see and control your actual TradingView Desktop app</b> — switch symbols, read candles and indicators, scan your whole watchlist, write &amp; compile Pine Script, draw trade plans, <b>backtest the strategy, audit it for weak rules and overfitting</b>, and manage alerts. <b>No API key. Nothing leaves your machine.</b></p>
-
-  <div class="agents">
-    <span class="chip">📈 Watchlist scans</span><span class="chip">🧠 Chart analysis</span><span class="chip">📜 Pine Script</span>
-    <span class="chip">🎯 Trade plans</span><span class="chip">🧪 Backtest</span><span class="chip">🛡️ Audit</span><span class="chip">🔔 Alerts</span>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class="brand">
+    <img class="logo" src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class="wm">Cloud9 <b>Markets</b></div>
+    <div class="tag"><span class="hh">Free Setup Guide</span></div>
   </div>
-
-  <div class="sect">The workflow — end to end</div>
-  <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:12px;font-weight:700;letter-spacing:.5px">
-    <span style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--blu)">CHART</span><span style="color:var(--faint)">→</span>
-    <span style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--blu)">ANALYZE</span><span style="color:var(--faint)">→</span>
-    <span style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--blu)">CODE</span><span style="color:var(--faint)">→</span>
-    <span style="background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--blu)">BACKTEST</span><span style="color:var(--faint)">→</span>
-    <span style="background:var(--card);border:1px solid rgba(22,224,138,.4);border-radius:8px;padding:7px 11px;color:var(--g)">AUDIT</span>
+  <div class="right">
+    <a class="ig" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets ↗</a>
   </div>
-  <p class="note" style="padding-left:0;margin-top:10px"><b>No backtest, no trust. No blind execution.</b> The steps below build to a strategy you can actually stress-test — then you make the call.</p>
-
-  <div class="sect">Setup — 5 minutes</div>
-
-  <div class="step">
-    <h3><span class="n">1</span> Get the two apps</h3>
-    <p>You need <b>TradingView Desktop</b> (the app, not the website) and <b>Claude Code</b> (free with any Claude plan). Node.js 18+ if you don't have it.</p>
-    <div class="note">→ <a href="https://www.tradingview.com/desktop/" target="_blank" rel="noopener">tradingview.com/desktop</a> · <a href="https://claude.com/code" target="_blank" rel="noopener">claude.com/code</a> · <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a></div>
+</nav>
+<header class="hero">
+  <div class="eyebrow">Free setup · Claude Code × TradingView</div>
+  <h1>Let AI drive your charts.<br><span class="free">Claude Code × TradingView Desktop.</span></h1>
+  <p class="sub">This free, open-source bridge lets Claude see and control your actual TradingView Desktop app — switch symbols, read candles and indicators, scan your whole watchlist, write &amp; compile Pine Script, draw trade plans, backtest the strategy, audit it for weak rules and overfitting, and manage alerts. No API key. Nothing leaves your machine.</p>
+  <div class="chips">
+    <span class="chip">Watchlist scans</span><span class="chip">Chart analysis</span><span class="chip">Pine Script</span>
+    <span class="chip">Trade plans</span><span class="chip">Backtest</span><span class="chip">Audit</span><span class="chip">Alerts</span>
   </div>
+</header>
+<main>
 
-  <div class="step">
-    <h3><span class="n">2</span> Install the bridge</h3>
-    <p>Clone the open-source MCP server and install its dependencies.</p>
-    <div class="code"><button class="cp">Copy</button>git clone https://github.com/tradesdontlie/tradingview-mcp.git ~/tradingview-mcp
-cd ~/tradingview-mcp &amp;&amp; npm install</div>
-  </div>
+  <section class="topic">
+    <div class="tnum">01</div>
+    <h2>The workflow, end to end.</h2>
+    <p class="tdesc">Five steps take you from a blank chart to a strategy you can stress-test, not just a pretty picture.</p>
+    <div class="flow">
+      <span class="tag hi">CHART</span><span class="arrow">→</span>
+      <span class="tag hi">ANALYZE</span><span class="arrow">→</span>
+      <span class="tag hi">CODE</span><span class="arrow">→</span>
+      <span class="tag hi">BACKTEST</span><span class="arrow">→</span>
+      <span class="tag hi">AUDIT</span>
+    </div>
+    <p class="tdesc" style="margin-top:16px"><b>No backtest, no trust. No blind execution.</b> The steps below build to a strategy you can actually stress-test — then you make the call.</p>
+  </section>
 
-  <div class="step">
-    <h3><span class="n">3</span> Launch TradingView in debug mode</h3>
-    <p>The bridge talks to the app through Chrome DevTools Protocol, so TradingView must start with a debug flag. <b>Quit TradingView first</b>, then run:</p>
-    <div class="code"><button class="cp">Copy</button>open -a TradingView --args --remote-debugging-port=9222</div>
-    <div class="note"><b>Windows:</b> run <code>scripts\launch_tv_debug.bat</code> from the repo instead. <b>Every restart of TradingView needs this flag</b> — if you open it normally later, the connection drops until you relaunch this way.</div>
-    <div class="code"><button class="cp">Copy</button>curl http://127.0.0.1:9222/json/version</div>
-    <div class="note">That should print JSON. Use <b>127.0.0.1</b>, not localhost — localhost can resolve to IPv6 and fail.</div>
-  </div>
+  <section class="topic">
+    <div class="tnum">02</div>
+    <h2>Setup — 5 minutes.</h2>
+    <p class="tdesc">Everything below runs locally. No TradingView API, no credentials, no data sent anywhere.</p>
 
-  <div class="step">
-    <h3><span class="n">4</span> Connect it to Claude Code</h3>
-    <div class="code"><button class="cp">Copy</button>claude mcp add --scope user tradingview -- node ~/tradingview-mcp/src/server.js</div>
-    <div class="note">User scope = available in every project. Verify with <code>claude mcp list</code> — you want <b>tradingview ✔ Connected</b>.</div>
-  </div>
+    <div class="stepcard">
+      <div class="sh"><span class="sn">1</span><h3>Get the two apps</h3></div>
+      <p>You need <b>TradingView Desktop</b> (the app, not the website) and <b>Claude Code</b> (free with any Claude plan). Node.js 18+ if you don't have it.</p>
+      <div class="fine">→ <a href="https://www.tradingview.com/desktop/" target="_blank" rel="noopener">tradingview.com/desktop</a> · <a href="https://claude.com/code" target="_blank" rel="noopener">claude.com/code</a> · <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a></div>
+    </div>
 
-  <div class="step">
-    <h3><span class="n">5</span> Test it</h3>
-    <p>Open a new Claude Code session and ask:</p>
-    <div class="code"><button class="cp">Copy</button>Use tv_health_check to verify TradingView is connected.</div>
-  </div>
+    <div class="stepcard">
+      <div class="sh"><span class="sn">2</span><h3>Install the bridge</h3></div>
+      <p>Clone the open-source MCP server and install its dependencies.</p>
+      <div class="codeblock">
+        <div class="head"><div><div class="t">Clone &amp; install</div></div><button class="copybtn" data-target="cmd-install">Copy</button></div>
+        <pre class="code" id="cmd-install">git clone https://github.com/tradesdontlie/tradingview-mcp.git ~/tradingview-mcp
+cd ~/tradingview-mcp &amp;&amp; npm install</pre>
+      </div>
+    </div>
 
-  <div class="sect">What it can actually do</div>
+    <div class="stepcard">
+      <div class="sh"><span class="sn">3</span><h3>Launch TradingView in debug mode</h3></div>
+      <p>The bridge talks to the app through Chrome DevTools Protocol, so TradingView must start with a debug flag. <b>Quit TradingView first</b>, then run:</p>
+      <div class="codeblock">
+        <div class="head"><div><div class="t">Launch with the debug flag</div></div><button class="copybtn" data-target="cmd-launch">Copy</button></div>
+        <pre class="code" id="cmd-launch">open -a TradingView --args --remote-debugging-port=9222</pre>
+      </div>
+      <div class="fine"><b>Windows:</b> run <code>scripts\launch_tv_debug.bat</code> from the repo instead. <b>Every restart of TradingView needs this flag</b> — if you open it normally later, the connection drops until you relaunch this way.</div>
+      <div class="codeblock">
+        <div class="head"><div><div class="t">Verify the debug port</div></div><button class="copybtn" data-target="cmd-curl">Copy</button></div>
+        <pre class="code" id="cmd-curl">curl http://127.0.0.1:9222/json/version</pre>
+      </div>
+      <div class="fine">That should print JSON. Use <b>127.0.0.1</b>, not localhost — localhost can resolve to IPv6 and fail.</div>
+    </div>
 
-  <div class="demo">
-    <h3>🔍 “Go through my watchlist and give me the best chart to trade”</h3>
-    <p>Claude flipped the chart through every watchlist symbol, pulled 150 daily candles each, computed trend/momentum/volatility for all of them — and picked the strongest setup, with reasoning.</p>
-    <div class="code"><button class="cp">Copy</button>Go through my watchlist and give me the best chart to trade right now.</div>
-    <img class="shot" src="tv-guide-scan.jpg" alt="Claude scanned the watchlist and opened the winning chart in TradingView" loading="lazy"/>
-    <div class="cap">The scan's pick, opened automatically on the chart — indicators and news panel included.</div>
-  </div>
+    <div class="stepcard">
+      <div class="sh"><span class="sn">4</span><h3>Connect it to Claude Code</h3></div>
+      <div class="codeblock">
+        <div class="head"><div><div class="t">Register the MCP server</div></div><button class="copybtn" data-target="cmd-connect">Copy</button></div>
+        <pre class="code" id="cmd-connect">claude mcp add --scope user tradingview -- node ~/tradingview-mcp/src/server.js</pre>
+      </div>
+      <div class="fine">User scope = available in every project. Verify with <code>claude mcp list</code> — you want <b>tradingview ✔ Connected</b>.</div>
+    </div>
 
-  <div class="demo">
-    <h3>📜 “Draw my trade plan with Pine Script”</h3>
-    <p>Claude wrote a Pine v6 indicator — entry, stop, take-profit with risk/reward shading, supply zone, moving averages, alert conditions — compiled it in the Pine editor and applied it to the chart. Every level is an editable input.</p>
-    <div class="code"><button class="cp">Copy</button>Draw the TSLA chart with entry, stop loss, take profit and any needed indicators using Pine Script.</div>
-    <img class="shot" src="tv-guide-tsla-plan.jpg" alt="AI-generated Pine Script trade plan on the TSLA daily chart" loading="lazy"/>
-    <div class="cap">TSLA daily — blue entry, red stop, green target, supply zone box: all drawn by one prompt.</div>
-  </div>
+    <div class="stepcard">
+      <div class="sh"><span class="sn">5</span><h3>Test it</h3></div>
+      <p>Open a new Claude Code session and ask:</p>
+      <div class="codeblock">
+        <div class="head"><div><div class="t">Health check</div></div><button class="copybtn" data-target="cmd-test">Copy</button></div>
+        <pre class="code" id="cmd-test">Use tv_health_check to verify TradingView is connected.</pre>
+      </div>
+    </div>
+  </section>
 
-  <div class="demo">
-    <h3>🪙 “Give me a Bitcoin trade setup, update the chart”</h3>
-    <p>Same flow on crypto: Claude read the structure (a liquidity sweep off the lows), built the setup with confirmation trigger and invalidation, and put it on the chart — including three ready-to-enable alert conditions.</p>
-    <img class="shot" src="tv-guide-btc-plan.jpg" alt="AI Bitcoin trade setup drawn on the BTCUSD daily chart" loading="lazy"/>
-    <div class="cap">BTCUSD daily — entry, stop under the sweep low, target in front of supply, breakout trigger line.</div>
-  </div>
+  <section class="topic">
+    <div class="tnum">03</div>
+    <h2>What it can actually do.</h2>
+    <p class="tdesc">Five real prompts, five real outcomes on the live chart.</p>
 
-  <div class="demo">
-    <h3>🧪 “Turn it into a strategy and backtest it”</h3>
-    <p>An indicator draws levels; a <b>strategy</b> can be tested. Ask Claude to convert the plan into a Pine <code>strategy()</code> — entries, exits, stop and target as real orders — then open the Strategy Tester. It reads the results back: net profit, win rate, profit factor, max drawdown and the trade list.</p>
-    <div class="code"><button class="cp">Copy</button>Convert this trade plan into a Pine v6 strategy with entry, stop and target orders. Compile it, open the Strategy Tester, and tell me the net profit, win rate, profit factor, max drawdown and number of trades.</div>
-    <div class="note"><b>Why it matters:</b> most AI chart posts stop at a pretty picture. A backtest is the difference between a setup that <i>looks</i> good and one that survived history. Fewer than ~30 trades or a suspiciously perfect equity curve is a red flag, not a green light.</div>
-  </div>
+    <div class="demo">
+      <h3>"Go through my watchlist and give me the best chart to trade"</h3>
+      <p>Claude flipped the chart through every watchlist symbol, pulled 150 daily candles each, computed trend/momentum/volatility for all of them — and picked the strongest setup, with reasoning.</p>
+      <div class="codeblock">
+        <div class="head"><div><div class="t">Watchlist scan</div></div><button class="copybtn" data-target="cmd-demo1">Copy</button></div>
+        <pre class="code" id="cmd-demo1">Go through my watchlist and give me the best chart to trade right now.</pre>
+      </div>
+      <img class="shot" src="tv-guide-scan.jpg" alt="Claude scanned the watchlist and opened the winning chart in TradingView" loading="lazy">
+      <div class="cap">The scan's pick, opened automatically on the chart — indicators and news panel included.</div>
+    </div>
 
-  <div class="demo">
-    <h3>🛡️ “Audit the strategy — is it real or overfit?”</h3>
-    <p>Now make Claude interrogate its own work. It reviews the strategy code and the backtest stats for the ways strategies lie: curve-fit parameters, too few trades, look-ahead bias, no out-of-sample check, and rules that only worked in one regime.</p>
-    <div class="code"><button class="cp">Copy</button>Audit this strategy for overfitting and bias. Check: how many inputs were tuned, whether any rule uses future data, trade count and sample size, performance in different market conditions, and what would break it. Be skeptical — argue the bear case against your own strategy.</div>
-    <div class="note"><b>This is the whole edge.</b> An AI that only ever agrees with itself is dangerous. Forcing it to attack its own idea is how you avoid trading a hope with extra math. The final call — and every real order — stays with you.</div>
-  </div>
+    <div class="demo">
+      <h3>"Draw my trade plan with Pine Script"</h3>
+      <p>Claude wrote a Pine v6 indicator — entry, stop, take-profit with risk/reward shading, supply zone, moving averages, alert conditions — compiled it in the Pine editor and applied it to the chart. Every level is an editable input.</p>
+      <div class="codeblock">
+        <div class="head"><div><div class="t">Draw the trade plan</div></div><button class="copybtn" data-target="cmd-demo2">Copy</button></div>
+        <pre class="code" id="cmd-demo2">Draw the TSLA chart with entry, stop loss, take profit and any needed indicators using Pine Script.</pre>
+      </div>
+      <img class="shot" src="tv-guide-tsla-plan.jpg" alt="AI-generated Pine Script trade plan on the TSLA daily chart" loading="lazy">
+      <div class="cap">TSLA daily — blue entry, red stop, green target, supply zone box: all drawn by one prompt.</div>
+    </div>
 
-  <div class="step">
-    <h3><span class="n">!</span> Good to know</h3>
-    <p><b>It's your account, your limits.</b> On the free/Basic plan TradingView allows 2 indicators per chart — Claude works within that (it swaps indicators in and out). Paid plans remove the friction.</p>
-    <p><b>All local.</b> The bridge connects to the app on your machine only — no TradingView API, no credentials, no data sent anywhere.</p>
-    <p><b>AI can be wrong.</b> Treat every setup as a starting point, not a signal. Size your own risk.</p>
-  </div>
+    <div class="demo">
+      <h3>"Give me a Bitcoin trade setup, update the chart"</h3>
+      <p>Same flow on crypto: Claude read the structure (a liquidity sweep off the lows), built the setup with confirmation trigger and invalidation, and put it on the chart — including three ready-to-enable alert conditions.</p>
+      <img class="shot" src="tv-guide-btc-plan.jpg" alt="AI Bitcoin trade setup drawn on the BTCUSD daily chart" loading="lazy">
+      <div class="cap">BTCUSD daily — entry, stop under the sweep low, target in front of supply, breakout trigger line.</div>
+    </div>
 
-  <div class="cta">
+    <div class="demo">
+      <h3>"Turn it into a strategy and backtest it"</h3>
+      <p>An indicator draws levels; a <b>strategy</b> can be tested. Ask Claude to convert the plan into a Pine <code>strategy()</code> — entries, exits, stop and target as real orders — then open the Strategy Tester. It reads the results back: net profit, win rate, profit factor, max drawdown and the trade list.</p>
+      <div class="codeblock">
+        <div class="head"><div><div class="t">Convert &amp; backtest</div></div><button class="copybtn" data-target="cmd-demo3">Copy</button></div>
+        <pre class="code" id="cmd-demo3">Convert this trade plan into a Pine v6 strategy with entry, stop and target orders. Compile it, open the Strategy Tester, and tell me the net profit, win rate, profit factor, max drawdown and number of trades.</pre>
+      </div>
+      <div class="tip"><b>Why it matters:</b> most AI chart posts stop at a pretty picture. A backtest is the difference between a setup that looks good and one that survived history. Fewer than ~30 trades or a suspiciously perfect equity curve is a red flag, not a green light.</div>
+    </div>
+
+    <div class="demo">
+      <h3>"Audit the strategy — is it real or overfit?"</h3>
+      <p>Now make Claude interrogate its own work. It reviews the strategy code and the backtest stats for the ways strategies lie: curve-fit parameters, too few trades, look-ahead bias, no out-of-sample check, and rules that only worked in one regime.</p>
+      <div class="codeblock">
+        <div class="head"><div><div class="t">Audit for overfitting</div></div><button class="copybtn" data-target="cmd-demo4">Copy</button></div>
+        <pre class="code" id="cmd-demo4">Audit this strategy for overfitting and bias. Check: how many inputs were tuned, whether any rule uses future data, trade count and sample size, performance in different market conditions, and what would break it. Be skeptical — argue the bear case against your own strategy.</pre>
+      </div>
+      <div class="tip"><b>This is the whole edge.</b> An AI that only ever agrees with itself is dangerous. Forcing it to attack its own idea is how you avoid trading a hope with extra math. The final call — and every real order — stays with you.</div>
+    </div>
+  </section>
+
+  <section class="topic">
+    <div class="tnum">04</div>
+    <h2>Test Fable 5.1 vs GPT-6 Astra yourself.</h2>
+    <p class="tdesc">Two experiments we ran on camera with the same input to both models, so anyone can repeat them in TradingView and judge for themselves.</p>
+
+    <div class="subhead">Test 1: the hidden-future call (4H chart)</div>
+    <p class="subnote">A single prediction on a real chart, future hidden, one shot each.</p>
+    <ol class="steps">
+      <li><b>Chart.</b> BTCUSDT on one venue (e.g. BINANCE:BTCUSDT), 4-hour candles, clean chart: candles + volume only, price scale on.</li>
+      <li><b>Hide the future.</b> Open Bar Replay and pause it at 21 days ago, 00:00 UTC (e.g. 2026-08-23 00:00 UTC on 13 Sept 2026) — say the rule out loud, never pick the bar by eye.</li>
+      <li><b>Frame it.</b> Show ~250 candles (~6 weeks). Hide the time scale so dates don't leak (chart settings → scales).</li>
+      <li><b>Export.</b> Camera icon → "Save image"; optionally also a 3-month daily chart for context.</li>
+      <li><b>Ask both models.</b> Fresh chat in each, memory and custom instructions off, no web or tools, strongest reasoning tier on both, one shot, no regenerate. Send the identical image + prompt.</li>
+      <li><b>Mark the calls.</b> Draw each model's call with the Long/Short Position tool (entry, stop, target), colour one gold and one green, label them.</li>
+      <li><b>Resolve.</b> Press play on replay and watch both resolve. If a script didn't compile, paste back exactly once: "It didn't compile. Error: [paste]. Fix it." and count it.</li>
+    </ol>
+    <div class="codeblock">
+      <div class="head"><div><div class="t">Test 1 prompt</div><div class="m">Paste verbatim, image attached, into a fresh chat with each model.</div></div><button class="copybtn" data-target="prompt-test1">Copy</button></div>
+      <pre class="code" id="prompt-test1">You are being tested against another AI on the same chart. One shot, no retries.
+
+Attached is a TradingView chart of BTCUSD, 4-hour candles. The future is hidden:
+bar replay is paused at the last visible candle. You know nothing after that
+candle. Do not ask for more data. Do not use web search or tools.
+
+TASK 1 — THE CALL (max 60 words, this goes on screen):
+Direction (LONG / SHORT / NO TRADE), entry price, stop price, target price, and
+the one reason in plain English. The stop must be a real level visible on the
+chart. The target must be at least 2x the stop distance. Give a confidence
+from 0-100%.
+
+TASK 2 — THE RULES (Pine Script v6):
+Write a strategy() script that encodes the SAME logic as your call so it can be
+backtested on this chart: entry condition, stop, target, one position at a time,
+100% of equity, no pyramiding, commission 0.05%. Use strategy.exit with stop and
+limit. It must compile first try in TradingView with no warnings. No repainting
+(no request.security with lookahead, no realtime-bar tricks). Under 60 lines.
+
+OUTPUT FORMAT, EXACTLY:
+CALL: &lt;LONG/SHORT/NO TRADE&gt; | ENTRY &lt;price&gt; | STOP &lt;price&gt; | TARGET &lt;price&gt; | CONF &lt;n&gt;%
+WHY: &lt;one sentence&gt;
+PINE:
+```pine
+...
+```</pre>
+    </div>
+    <div class="callout"><b>What we saw:</b> across three rounds on 4H and daily both models picked the same direction and the trade either never filled or hit its stop — a single call is a coin flip, which is why Test 2 exists.</div>
+    <div class="tip"><b>Daily chart variant:</b> pause at the later of the two models' training cutoffs (we used 2026-07-01 00:00 UTC) so neither can remember the answer; ask each model its cutoff in a separate chat first.</div>
+
+    <div class="subhead">Test 2: write a strategy, we backtest it</div>
+    <p class="subnote">No image this time — both models design a Pine strategy, the numbers decide.</p>
+    <ol class="steps">
+      <li><b>Same prompt to both, no image.</b></li>
+      <li><b>Save separately.</b> Pine editor → paste → "Save as" with different names (Fable_R2, Astra_R2) so they don't overwrite each other → Add to chart.</li>
+      <li><b>Set the date range.</b> Strategy Tester → Properties → set the backtest date range identically for both: in-sample 2024-01-01 → 2025-12-31, then out-of-sample 2026-01-01 → today (the one that counts, neither model has seen 2026).</li>
+      <li><b>Screenshot.</b> Overview tab for each window: net profit, max drawdown, profit factor, total trades, percent profitable, and the buy-and-hold line.</li>
+      <li><b>Score it.</b> Winner = higher out-of-sample net profit; disqualified if fewer than 30 trades or max drawdown above 30%; always show buy-and-hold beside both.</li>
+    </ol>
+    <div class="codeblock">
+      <div class="head"><div><div class="t">Test 2 prompt</div><div class="m">Paste verbatim, no image, into a fresh chat with each model.</div></div><button class="copybtn" data-target="prompt-test2">Copy</button></div>
+      <pre class="code" id="prompt-test2">You are competing against another AI. One shot, no retries, no questions back.
+
+Design a complete trend-following or mean-reversion strategy for BTCUSDT on the
+4-hour chart and write it as a Pine Script v6 strategy() that I will backtest
+in TradingView exactly as you deliver it.
+
+Constraints:
+- Fixed parameters. No optimisation, no "tune this". Choose the values yourself.
+- Long and short allowed, one position at a time, no pyramiding.
+- Every trade has a stop and a target or trailing exit via strategy.exit.
+- initial_capital=10000, default_qty_type=strategy.percent_of_equity,
+  default_qty_value=100, commission_type=strategy.commission.percent,
+  commission_value=0.05, slippage=2.
+- Must take at least 30 trades in a typical 2-year window (a strategy that
+  rarely trades is disqualified).
+- No repainting, no lookahead, no request.security with lookahead_on,
+  no realtime-bar tricks.
+- Under 80 lines. Compiles first try with no warnings.
+
+Output format, exactly:
+NAME: &lt;strategy name&gt;
+LOGIC: &lt;3 sentences: entry, exit, why it should have edge on BTC 4H&gt;
+EXPECTED: &lt;one line: what you expect it to do in trend vs chop&gt;
+PINE:
+```pine
+...
+```</pre>
+    </div>
+
+    <ul class="gotchas">
+      <li><b>Layout gotcha:</b> in a multi-chart layout, "Add to chart" applies the script open in the editor to the chart you last clicked, and editing a script updates every chart using it — save two separately named scripts.</li>
+      <li><b>Replay gotcha:</b> bar replay does not reliably drive both charts of a layout, so run the visual on ONE chart with two coloured position tools, and use the two scripts one at a time for the tester numbers.</li>
+    </ul>
+
+    <p class="honest">Max reasoning makes the shown reasoning more thorough, not the price call more skilful; the scoreboard over many rounds is what carries meaning.</p>
+  </section>
+
+  <section class="topic">
+    <div class="tnum">05</div>
+    <h2>Good to know.</h2>
+    <ul class="catch">
+      <li><b>It's your account, your limits.</b> On the free/Basic plan TradingView allows 2 indicators per chart — Claude works within that (it swaps indicators in and out). Paid plans remove the friction.</li>
+      <li><b>All local.</b> The bridge connects to the app on your machine only — no TradingView API, no credentials, no data sent anywhere.</li>
+      <li><b>AI can be wrong.</b> Treat every setup as a starting point, not a signal. Size your own risk.</li>
+    </ul>
+  </section>
+
+  <div class="ctaboard">
+    <div class="lbl">The edge</div>
     <h2>This is the @cloud9.markets edge.</h2>
     <p>Follow for the full video walkthrough — watchlist scan to trade plan, live.</p>
-    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+    <div class="actions">
+      <a class="btn-gold" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+    </div>
   </div>
-
-  <footer>Educational setup guide · not affiliated with TradingView Inc. or Anthropic · charts shown are examples, <b>not financial advice</b> · do your own research<br/>© Cloud9 Markets</footer>
+</main>
+<footer>
+  <span>Cloud9 Markets — MMXXVI</span>
+  <span>Educational only, not financial advice. Claude Code and TradingView are trademarks of their owners; Cloud9 is not affiliated.</span>
+</footer>
+</div>
 
 <script>
-  document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',function(){
-    var code=b.parentNode.textContent.replace('Copy','').trim();
-    navigator.clipboard&&navigator.clipboard.writeText(code);b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy';},1500);});});
+document.querySelectorAll('.copybtn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var id = btn.getAttribute('data-target');
+    var el = document.getElementById(id);
+    var text = el.textContent;
+    function done(){
+      var prev = btn.textContent;
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent = prev; btn.classList.remove('copied'); }, 1500);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  });
+});
+function fallbackCopy(text, cb){
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try { document.execCommand('copy'); } catch(e){}
+  document.body.removeChild(ta);
+  if(cb) cb();
+}
 </script>
 </body>
 </html>
