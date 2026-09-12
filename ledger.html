@@ -1,7 +1,328 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>Drop Ledger → opening…</title>
-<meta http-equiv="refresh" content="0; url=https://claude.ai/code/artifact/151049e5-43e0-4889-97da-ded05acef4db">
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0d10;color:#8a919a;font:15px/1.5 -apple-system,Inter,system-ui,sans-serif}a{color:#d9b45b}</style>
-</head><body><p>Opening the Drop Ledger… <a href="https://claude.ai/code/artifact/151049e5-43e0-4889-97da-ded05acef4db">tap here if it doesn't</a>.</p>
-<script>location.replace("https://claude.ai/code/artifact/151049e5-43e0-4889-97da-ded05acef4db")</script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0b0d10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0d10'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='%23d9b45b' font-family='Georgia'%3EL%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230b0d10'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='%23d9b45b' font-family='Georgia'%3EL%3C/text%3E%3C/svg%3E">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Ledger">
+<title>Drop Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+  :root{--bg:#0b0d10;--panel:#12151a;--line:rgba(217,180,91,.22);--line2:rgba(255,255,255,.07);--gold:#d9b45b;--gold-dim:rgba(217,180,91,.14);
+        --ink:#e9e6df;--muted:#8a919a;--faint:#5c636b;--green:#57d9a3;--green-dim:rgba(87,217,163,.14);--red:#ff6b6b;
+        --serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,Menlo,monospace}
+  html{color-scheme:dark}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;padding-inline:clamp(16px,4vw,40px);padding-block:28px 80px;-webkit-font-smoothing:antialiased}
+  *{box-sizing:border-box;margin:0}
+  button,input,select,textarea{font:inherit;color:inherit}
+  a{color:var(--gold)}
+  .wrap{max-width:1040px;margin:0 auto}
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+  header h1{font-family:var(--serif);font-weight:700;font-size:clamp(28px,4vw,38px);letter-spacing:-.01em;text-wrap:balance}
+  header h1 em{font-style:italic;font-weight:500;color:var(--gold)}
+  header p{color:var(--muted);max-width:56ch;margin-top:6px}
+  .stats{display:flex;gap:10px;flex-wrap:wrap}
+  .stat{border:1px solid var(--line2);background:var(--panel);padding:10px 14px;min-width:96px;border-radius:6px}
+  .stat b{display:block;font-family:var(--mono);font-size:22px;line-height:1.1;font-variant-numeric:tabular-nums}
+  .stat span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .stat.u b{color:var(--gold)} .stat.p b{color:var(--green)}
+  .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:18px 0 12px}
+  .chip{border:1px solid var(--line2);background:transparent;color:var(--muted);padding:6px 11px;border-radius:999px;cursor:pointer;font-size:12.5px;font-weight:500}
+  .chip[aria-pressed="true"]{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+  .chip:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .sep{width:1px;height:20px;background:var(--line2);margin:0 4px}
+  #q{margin-left:auto;background:var(--panel);border:1px solid var(--line2);border-radius:6px;padding:7px 10px;min-width:200px;color:var(--ink)}
+  #q::placeholder{color:var(--faint)}
+  .add{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:12px 14px;margin-bottom:16px}
+  .add summary{cursor:pointer;color:var(--gold);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;list-style:none}
+  .add summary::-webkit-details-marker{display:none}
+  .add form{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-top:12px}
+  .add input,.add select,.add textarea{background:var(--bg);border:1px solid var(--line2);border-radius:5px;padding:8px 10px;width:100%}
+  .add textarea{grid-column:1/-1;min-height:56px;resize:vertical}
+  .add .full{grid-column:1/-1}
+  .add button{grid-column:1/-1;justify-self:start;background:var(--gold);color:#1a1405;border:0;border-radius:5px;padding:8px 16px;font-weight:600;cursor:pointer}
+  .list{display:flex;flex-direction:column;gap:8px}
+  .row{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line2);background:var(--panel);border-radius:8px;padding:12px 14px}
+  .row.posted{opacity:.62}
+  .row.skip{opacity:.45}
+  .tick{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--faint);background:transparent;cursor:pointer;display:grid;place-items:center;font-size:15px;color:transparent;margin-top:2px}
+  .tick:hover{border-color:var(--gold)}
+  .row.posted .tick{border-color:var(--green);background:var(--green-dim);color:var(--green)}
+  .title{font-weight:600;font-size:15px}
+  .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:5px;color:var(--muted);font-size:12.5px}
+  .tag{border:1px solid var(--line2);border-radius:4px;padding:1px 7px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .tag.carousel{color:#c9b06a;border-color:rgba(217,180,91,.35)}
+  .tag.reel,.tag.video{color:#8fb7ff;border-color:rgba(143,183,255,.35)}
+  .tag.page{color:#b9a3ff;border-color:rgba(185,163,255,.35)}
+  .tag.demo{color:#7fd6c8;border-color:rgba(127,214,200,.35)}
+  .kw{font-family:var(--mono);font-size:12px;color:var(--gold);background:var(--gold-dim);padding:1px 7px;border-radius:4px}
+  .date{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums}
+  .path{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;word-break:break-all}
+  .path button{background:none;border:1px solid var(--line2);border-radius:4px;color:var(--muted);font-size:11px;padding:1px 7px;cursor:pointer}
+  .notes{margin-top:6px;color:var(--ink);font-size:13px;min-height:18px;border-left:2px solid var(--line2);padding-left:8px}
+  .notes:empty::before{content:"add a note…";color:var(--faint)}
+  .notes:focus{outline:none;border-left-color:var(--gold)}
+  .side{display:flex;flex-direction:column;gap:6px;align-items:flex-end;font-size:12px;color:var(--muted)}
+  .side button{background:none;border:1px solid var(--line2);border-radius:4px;color:var(--muted);font-size:11px;padding:2px 8px;cursor:pointer}
+  .side button:hover{color:var(--ink);border-color:var(--muted)}
+  .posted-at{font-family:var(--mono);color:var(--green);font-size:11.5px}
+  .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line2);margin:6px 0 16px}
+  .tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:10px 14px;font-weight:600;font-size:14px;cursor:pointer;margin-bottom:-1px}
+  .tabs button[aria-selected="true"]{color:var(--gold);border-bottom-color:var(--gold)}
+  .tabs button b{font-family:var(--mono);font-weight:600;color:var(--faint);margin-left:6px;font-size:12px}
+  [hidden]{display:none!important}
+  .idea{display:grid;grid-template-columns:1fr auto;gap:12px;border:1px solid var(--line2);background:var(--panel);border-radius:8px;padding:12px 14px}
+  .idea .txt{font-size:14.5px;white-space:pre-wrap}
+  .idea .txt:focus{outline:none;box-shadow:inset 0 -1px 0 var(--gold)}
+  .idea.done .txt,.idea.dropped .txt{color:var(--muted)}
+  .idea.dropped{opacity:.5}
+  .st{border:1px solid var(--line2);border-radius:999px;padding:3px 10px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;background:none;color:var(--muted);white-space:nowrap}
+  .st.idea{color:var(--gold);border-color:rgba(217,180,91,.4)} .st.doing{color:#8fb7ff;border-color:rgba(143,183,255,.4)} .st.done{color:var(--green);border-color:rgba(87,217,163,.4)}
+  .ideaform{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:14px}
+  .ideaform textarea{grid-column:1/-1;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-height:74px;resize:vertical;width:100%}
+  .ideaform textarea::placeholder{color:var(--faint)}
+  .ideaform select{background:var(--panel);border:1px solid var(--line2);border-radius:5px;padding:8px 10px}
+  .ideaform button{background:var(--gold);color:#1a1405;border:0;border-radius:5px;padding:8px 16px;font-weight:600;cursor:pointer}
+  .empty,.msg{color:var(--muted);padding:28px 0;text-align:center}
+  .msg.err{color:var(--red)}
+  @media (max-width:640px){.add form{grid-template-columns:1fr}.row{grid-template-columns:36px 1fr}.side{grid-column:2;flex-direction:row;align-items:center;justify-content:flex-start}#q{margin-left:0;width:100%}.idea{grid-template-columns:1fr}.idea .side{flex-direction:row;flex-wrap:wrap;justify-content:flex-start}.ideaform{grid-template-columns:1fr}.ideaform button{justify-self:start}}
+  @media (prefers-reduced-motion:no-preference){.row{transition:opacity .25s}}
+
+  #gate{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:50;padding:24px}
+  #gate form{width:min(380px,100%);border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:26px 24px;display:grid;gap:12px}
+  #gate h2{font-family:var(--serif);font-size:24px;font-weight:600}
+  #gate p{color:var(--muted);font-size:13px}
+  #gate input{background:var(--bg);border:1px solid var(--line2);border-radius:6px;padding:12px 12px;font-family:var(--mono);font-size:16px;width:100%}
+  #gate button{background:var(--gold);color:#1a1405;border:0;border-radius:6px;padding:12px;font-weight:600;font-size:15px;cursor:pointer}
+  #gate .err{color:var(--red);font-size:13px;min-height:1em}
+  .foot{margin-top:36px;color:var(--faint);font-size:12px;display:flex;gap:14px;flex-wrap:wrap}
+  .foot button{background:none;border:0;color:var(--faint);text-decoration:underline;cursor:pointer;padding:0;font-size:12px}
+</style>
+</head><body>
+<div id="gate" hidden>
+  <form id="gateform" autocomplete="off">
+    <h2>Drop Ledger</h2>
+    <p>Enter the passcode once on this device. It stays signed in until you forget it.</p>
+    <input id="pc" type="password" inputmode="text" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="passcode" aria-label="Passcode" required>
+    <button type="submit">Open ledger</button>
+    <div class="err" id="gate-err"></div>
+  </form>
+</div>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Drop Ledger <em>cloud9.markets</em></h1>
+      <p>Everything built, in one list, and a bank for what to build next. Tick a drop when it's posted. Claude logs new builds here and reads the ideas bank at the start of every content session.</p>
+      <div class="foot"><span>Private ledger · cloud9.markets</span><button id="forget">Forget this device</button></div>
+</div>
+    <div class="stats">
+      <div class="stat u"><b id="n-unposted">–</b><span>Unposted</span></div>
+      <div class="stat p"><b id="n-posted">–</b><span>Posted</span></div>
+      <div class="stat"><b id="n-total">–</b><span>Total</span></div>
+    </div>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tab-drops" aria-selected="true" aria-controls="view-drops">Drops<b id="n-drops-tab">–</b></button>
+    <button role="tab" id="tab-ideas" aria-selected="false" aria-controls="view-ideas">Ideas bank<b id="n-ideas-tab">–</b></button>
+  </div>
+
+  <section id="view-drops">
+  <details class="add" id="add">
+    <summary>+ Add something you built</summary>
+    <form id="addform">
+      <input id="f-title" placeholder="Title (e.g. JPMorgan syllabus carousel)" required>
+      <select id="f-type"><option value="carousel">Carousel</option><option value="reel">Reel / video</option><option value="page">CTA page</option><option value="demo">Demo / app</option><option value="other">Other</option></select>
+      <input id="f-keyword" placeholder="Keyword (e.g. JPM)">
+      <input id="f-path" class="full" placeholder="Where it lives (folder, URL)">
+      <input id="f-cta" class="full" placeholder="CTA URL (optional)">
+      <textarea id="f-notes" placeholder="Notes"></textarea>
+      <button type="submit">Add to ledger</button>
+    </form>
+  </details>
+
+  <div class="bar" role="group" aria-label="Filters">
+    <button class="chip" data-status="unposted" aria-pressed="true">Unposted</button>
+    <button class="chip" data-status="posted" aria-pressed="false">Posted</button>
+    <button class="chip" data-status="skip" aria-pressed="false">Skipped</button>
+    <button class="chip" data-status="all" aria-pressed="false">All</button>
+    <span class="sep"></span>
+    <button class="chip" data-type="carousel" aria-pressed="false">Carousels</button>
+    <button class="chip" data-type="reel" aria-pressed="false">Reels</button>
+    <button class="chip" data-type="page" aria-pressed="false">Pages</button>
+    <button class="chip" data-type="demo" aria-pressed="false">Demos</button>
+    <input id="q" type="search" placeholder="Search title, keyword, path" aria-label="Search">
+  </div>
+
+  <div id="list" class="list"><div class="msg" id="status">Connecting to the ledger…</div></div>
+  </section>
+
+  <section id="view-ideas" hidden>
+    <form class="ideaform" id="ideaform">
+      <textarea id="i-text" placeholder="Drop an idea. e.g. “Jane Street carousel did well — same hook format, remake with the Citadel logo” or “Goldman has a new internship coming up, add to the bank”" required></textarea>
+      <select id="i-tag" aria-label="Type"><option value="carousel">Carousel</option><option value="reel">Reel / video</option><option value="page">CTA page</option><option value="hook">Hook / format</option><option value="program">Program / name-drop</option><option value="other">Other</option></select>
+      <button type="submit">Add idea</button>
+    </form>
+    <div class="bar" role="group" aria-label="Idea filters">
+      <button class="chip" data-istatus="open" aria-pressed="true">Open</button>
+      <button class="chip" data-istatus="doing" aria-pressed="false">In progress</button>
+      <button class="chip" data-istatus="done" aria-pressed="false">Built</button>
+      <button class="chip" data-istatus="all" aria-pressed="false">All</button>
+    </div>
+    <div id="ideas" class="list"><div class="msg">Connecting…</div></div>
+  </section>
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const list = $('list'), statusEl = $('status');
+  let docs = [], db = null, filt = { status: 'unposted', type: null, q: '' };
+  try { const s = JSON.parse(localStorage.getItem('dl.filt') || 'null'); if (s) filt = { ...filt, ...s }; } catch (e) {}
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const today = () => new Date().toISOString().slice(0, 10);
+
+  function syncChips(){
+    document.querySelectorAll('.chip[data-status]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.status === filt.status)));
+    document.querySelectorAll('.chip[data-type]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.type === filt.type)));
+    $('q').value = filt.q || '';
+    try { localStorage.setItem('dl.filt', JSON.stringify(filt)); } catch (e) {}
+  }
+  document.querySelectorAll('.chip[data-status]').forEach(b => b.addEventListener('click', () => { filt.status = b.dataset.status; syncChips(); render(); }));
+  document.querySelectorAll('.chip[data-type]').forEach(b => b.addEventListener('click', () => { filt.type = filt.type === b.dataset.type ? null : b.dataset.type; syncChips(); render(); }));
+  $('q').addEventListener('input', e => { filt.q = e.target.value.trim().toLowerCase(); try { localStorage.setItem('dl.filt', JSON.stringify(filt)); } catch (x) {} render(); });
+
+  function render(){
+    const all = docs.map(d => ({ id: d.id, ...d.data() }));
+    $('n-unposted').textContent = all.filter(x => (x.status || 'unposted') === 'unposted').length;
+    $('n-posted').textContent = all.filter(x => x.status === 'posted').length;
+    $('n-total').textContent = all.length; $('n-drops-tab').textContent = all.filter(x => (x.status || 'unposted') === 'unposted').length;
+    let rows = all.filter(x => filt.status === 'all' || (x.status || 'unposted') === filt.status);
+    if (filt.type) rows = rows.filter(x => (x.type || '') === filt.type || (filt.type === 'reel' && x.type === 'video'));
+    if (filt.q) rows = rows.filter(x => [x.title, x.keyword, x.path, x.notes, x.engine, x.cta].join(' ').toLowerCase().includes(filt.q));
+    const rank = s => s === 'unposted' || !s ? 0 : s === 'posted' ? 1 : 2;
+    rows.sort((a, b) => rank(a.status) - rank(b.status) || String(b.built || '').localeCompare(String(a.built || '')));
+    if (!rows.length) { list.innerHTML = `<div class="empty">Nothing here${all.length ? ' for this filter' : ' yet'}.</div>`; return; }
+    list.innerHTML = rows.map(x => {
+      const st = x.status || 'unposted';
+      return `<div class="row ${st}" data-id="${esc(x.id)}">
+        <button class="tick" data-act="toggle" aria-label="${st === 'posted' ? 'Mark unposted' : 'Mark posted'}" title="${st === 'posted' ? 'Mark unposted' : 'Mark posted'}">✓</button>
+        <div>
+          <div class="title">${esc(x.title)}</div>
+          <div class="meta">
+            <span class="tag ${esc(x.type || 'other')}">${esc(x.type || 'other')}</span>
+            ${x.keyword ? `<span class="kw">${esc(x.keyword)}</span>` : ''}
+            ${x.built ? `<span class="date">built ${esc(x.built)}</span>` : ''}
+            ${x.engine ? `<span>${esc(x.engine)}</span>` : ''}
+            ${x.slides ? `<span>${esc(x.slides)} slides</span>` : ''}
+            ${x.cta ? `<a href="${esc(x.cta)}" target="_blank" rel="noopener">CTA page ↗</a>` : ''}
+          </div>
+          ${x.path ? `<div class="path"><span>${esc(x.path)}</span><button data-act="copy" data-v="${esc(x.path)}">copy</button></div>` : ''}
+          <div class="notes" contenteditable="plaintext-only" data-act="notes" spellcheck="false">${esc(x.notes || '')}</div>
+        </div>
+        <div class="side">
+          ${st === 'posted' && x.posted_at ? `<span class="posted-at">posted ${esc(x.posted_at)}</span>` : ''}
+          ${st !== 'skip' ? `<button data-act="skip">skip</button>` : `<button data-act="unskip">unskip</button>`}
+          <button data-act="del">delete</button>
+        </div>
+      </div>`; }).join('');
+  }
+
+  async function write(id, patch){ if (!db) return; try { await db.collection('drops').doc(id).update({ ...patch, updated: new Date().toISOString() }); }
+    catch (e) { statusEl && (statusEl.textContent = 'Write failed: ' + (e && e.message || e)); console.warn(e); } }
+
+  list.addEventListener('click', async e => {
+    const btn = e.target.closest('button[data-act]'); if (!btn) return;
+    const row = btn.closest('.row'); const id = row?.dataset.id; if (!id) return;
+    const cur = docs.find(d => d.id === id)?.data() || {};
+    const act = btn.dataset.act;
+    if (act === 'toggle') await write(id, cur.status === 'posted' ? { status: 'unposted', posted_at: null } : { status: 'posted', posted_at: today() });
+    else if (act === 'skip') await write(id, { status: 'skip' });
+    else if (act === 'unskip') await write(id, { status: 'unposted' });
+    else if (act === 'del') { if (!confirmDelete(row)) return; try { await db.collection('drops').doc(id).delete(); } catch (x) { console.warn(x); } }
+    else if (act === 'copy') { try { await navigator.clipboard.writeText(btn.dataset.v); btn.textContent = 'copied'; setTimeout(() => btn.textContent = 'copy', 1200); } catch (x) {} }
+  });
+  // two-click delete instead of a modal dialog
+  function confirmDelete(row){ const b = row.querySelector('button[data-act="del"]'); if (b.dataset.armed) return true; b.dataset.armed = '1'; b.textContent = 'sure?'; setTimeout(() => { delete b.dataset.armed; b.textContent = 'delete'; }, 2500); return false; }
+  list.addEventListener('focusout', e => { const n = e.target.closest('[data-act="notes"]'); if (!n) return; const id = n.closest('.row').dataset.id;
+    const cur = docs.find(d => d.id === id)?.data() || {}; const v = n.textContent.trim(); if (v !== (cur.notes || '')) write(id, { notes: v }); });
+
+  $('addform').addEventListener('submit', async e => { e.preventDefault(); if (!db) return;
+    const title = $('f-title').value.trim(); if (!title) return;
+    const doc = { title, type: $('f-type').value, keyword: $('f-keyword').value.trim().toUpperCase() || null, path: $('f-path').value.trim() || null,
+      cta: $('f-cta').value.trim() || null, notes: $('f-notes').value.trim() || '', built: today(), status: 'unposted', engine: 'manual', created: new Date().toISOString() };
+    try { await db.collection('drops').add(doc); e.target.reset(); $('add').open = false; } catch (x) { statusEl && (statusEl.textContent = 'Add failed: ' + (x && x.message || x)); } });
+
+  // ---- tabs ----
+  const tabs = { drops: [$('tab-drops'), $('view-drops')], ideas: [$('tab-ideas'), $('view-ideas')] };
+  let tab = 'drops'; try { tab = localStorage.getItem('dl.tab') || 'drops'; } catch (e) {}
+  function setTab(t){ tab = t; for (const [k, [b, v]] of Object.entries(tabs)) { b.setAttribute('aria-selected', String(k === t)); v.hidden = k !== t; } try { localStorage.setItem('dl.tab', t); } catch (e) {} }
+  $('tab-drops').addEventListener('click', () => setTab('drops')); $('tab-ideas').addEventListener('click', () => setTab('ideas')); setTab(tab);
+
+  // ---- ideas bank ----
+  let ideas = [], ifilt = 'open'; try { ifilt = localStorage.getItem('dl.ifilt') || 'open'; } catch (e) {}
+  const NEXT = { idea: 'doing', doing: 'done', done: 'idea' }, LABEL = { idea: 'open', doing: 'in progress', done: 'built', dropped: 'dropped' };
+  document.querySelectorAll('.chip[data-istatus]').forEach(b => b.addEventListener('click', () => { ifilt = b.dataset.istatus; try { localStorage.setItem('dl.ifilt', ifilt); } catch (e) {} renderIdeas(); }));
+  function renderIdeas(){
+    document.querySelectorAll('.chip[data-istatus]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.istatus === ifilt)));
+    const all = ideas.map(d => ({ id: d.id, ...d.data() }));
+    $('n-ideas-tab').textContent = all.filter(x => (x.status || 'idea') === 'idea').length;
+    let rows = all.filter(x => ifilt === 'all' || (ifilt === 'open' ? (x.status || 'idea') === 'idea' : x.status === ifilt));
+    rows.sort((a, b) => String(b.created || '').localeCompare(String(a.created || '')));
+    const box = $('ideas');
+    if (!rows.length) { box.innerHTML = `<div class="empty">${all.length ? 'Nothing in this view.' : 'No ideas yet. Write the first one above.'}</div>`; return; }
+    box.innerHTML = rows.map(x => { const st = x.status || 'idea'; return `<div class="idea ${st}" data-id="${esc(x.id)}">
+        <div>
+          <div class="txt" contenteditable="plaintext-only" data-iact="edit" spellcheck="false">${esc(x.text)}</div>
+          <div class="meta"><span class="tag ${esc(x.tag || 'other')}">${esc(x.tag || 'other')}</span><span class="date">${esc(String(x.created || '').slice(0, 10))}</span>${x.by ? `<span>${esc(x.by)}</span>` : ''}${x.built_ref ? `<span>→ ${esc(x.built_ref)}</span>` : ''}</div>
+        </div>
+        <div class="side">
+          <button class="st ${st}" data-iact="cycle" title="Click to advance status">${LABEL[st] || st}</button>
+          ${st !== 'dropped' ? `<button data-iact="drop">drop</button>` : `<button data-iact="reopen">reopen</button>`}
+          <button data-iact="del">delete</button>
+        </div>
+      </div>`; }).join('');
+  }
+  async function iwrite(id, patch){ if (!db) return; try { await db.collection('ideas').doc(id).update({ ...patch, updated: new Date().toISOString() }); } catch (e) { console.warn(e); } }
+  $('ideas').addEventListener('click', async e => {
+    const btn = e.target.closest('button[data-iact]'); if (!btn) return; const row = btn.closest('.idea'); const id = row?.dataset.id; if (!id) return;
+    const cur = ideas.find(d => d.id === id)?.data() || {}; const act = btn.dataset.iact;
+    if (act === 'cycle') await iwrite(id, { status: NEXT[cur.status || 'idea'] || 'idea' });
+    else if (act === 'drop') await iwrite(id, { status: 'dropped' });
+    else if (act === 'reopen') await iwrite(id, { status: 'idea' });
+    else if (act === 'del') { if (btn.dataset.armed) { try { await db.collection('ideas').doc(id).delete(); } catch (x) {} } else { btn.dataset.armed = '1'; btn.textContent = 'sure?'; setTimeout(() => { delete btn.dataset.armed; btn.textContent = 'delete'; }, 2500); } }
+  });
+  $('ideas').addEventListener('focusout', e => { const n = e.target.closest('[data-iact="edit"]'); if (!n) return; const id = n.closest('.idea').dataset.id;
+    const cur = ideas.find(d => d.id === id)?.data() || {}; const v = n.textContent.trim(); if (v && v !== cur.text) iwrite(id, { text: v }); });
+  $('ideaform').addEventListener('submit', async e => { e.preventDefault(); if (!db) return; const text = $('i-text').value.trim(); if (!text) return;
+    try { await db.collection('ideas').add({ text, tag: $('i-tag').value, status: 'idea', by: 'owner', created: new Date().toISOString() }); e.target.reset(); } catch (x) { console.warn(x); } });
+
+  syncChips();
+  // ---- passcode gate + Firestore ----
+  const FB = { apiKey: "AIzaSyBlRkHlK_83TQfDCFYiu7oqRD3JiGmo5-g", authDomain: "cloud9-ledger.firebaseapp.com", projectId: "cloud9-ledger", appId: "1:492854976147:web:6dee01eeb6f99468727766" };
+  const gate = $('gate'), gateErr = $('gate-err');
+  async function sha256(s){ const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); }
+  let fs = null;
+  function ensureFs(){ if (!fs) { firebase.initializeApp(FB); fs = firebase.firestore(); } return fs; }
+  function connect(key){
+    const f = ensureFs();
+    db = { collection: name => f.collection('ledgers/' + key + '/' + name) };
+    db.collection('ideas').onSnapshot(snap => { ideas = snap.docs.filter(d => d.exists); renderIdeas(); }, err => console.warn(err));
+    db.collection('drops').onSnapshot(snap => { docs = snap.docs.filter(d => d.exists); render(); },
+      err => { list.innerHTML = `<div class="msg err">Ledger connection lost (${esc(err && err.code)}). Reload the page.</div>`; });
+  }
+  $('gateform').addEventListener('submit', async e => { e.preventDefault(); gateErr.textContent = '';
+    const key = await sha256($('pc').value.trim().toLowerCase());
+    try { const snap = await ensureFs().collection('ledgers/' + key + '/meta').doc('info').get();
+      if (!snap.exists) { gateErr.textContent = 'That passcode is not right.'; return; }
+      try { localStorage.setItem('ledger.key', key); } catch (x) {}
+      gate.hidden = true; connect(key);
+    } catch (x) { gateErr.textContent = 'Could not reach the ledger: ' + (x && x.message || x); } });
+  $('forget').addEventListener('click', () => { try { localStorage.removeItem('ledger.key'); } catch (e) {} location.reload(); });
+  (function boot(){ let key = null; try { key = localStorage.getItem('ledger.key'); } catch (e) {}
+    if (key && /^[a-f0-9]{64}$/.test(key)) { connect(key); } else { gate.hidden = false; setTimeout(() => $('pc').focus(), 50); } })();
+})();
+</script>
+</body></html>
