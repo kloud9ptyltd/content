@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AI Portfolio Battle · Cloud9</title>
+<meta name="description" content="Three AI models — Fable 5.1, GPT-6 Astra, Gemini — each got a virtual $10,000 to build a US stock/ETF portfolio. A daily batch job prices them at real closes against SPY. Who's winning?">
+<meta property="og:title" content="AI Portfolio Battle · Cloud9">
+<meta property="og:description" content="Three AI models, $10,000 each, real prices, benchmarked against SPY.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(26px,3.4vw,40px);line-height:1.18;margin:0 0 16px;text-wrap:pretty}
+.topic h2 i{font-style:italic;color:var(--gold-hi)}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:800px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+
+.leaderboard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:28px}.leaderboard>*{min-width:0}
+.tile{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:24px 20px;position:relative;display:flex;flex-direction:column;gap:10px}
+.tile.leader{border-color:var(--gold-dim);background:rgba(200,162,78,.08)}
+.tile .badge{position:absolute;top:-11px;right:16px;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:4px 10px}
+.tile .rank{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.tile h3{font-family:'Playfair Display',serif;font-weight:500;font-size:19px;margin:0;color:var(--ink)}
+.tile .nav{font-family:'Playfair Display',serif;font-size:30px;color:var(--gold-hi);line-height:1;margin-top:2px}
+.tile .row{display:flex;justify-content:space-between;font-size:12px;color:var(--dim2);border-top:1px dashed var(--gold-faint);padding-top:8px;margin-top:4px}
+.tile .row b{color:var(--ink);font-weight:500}
+.tile .row .pos{color:#7FB88A}
+.tile .row .neg{color:#C97B6B}
+
+.chartwrap{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:24px 20px;margin-top:28px}
+.chartwrap canvas{width:100%!important;max-height:440px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:11px;letter-spacing:.08em;color:var(--dim2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:3px;display:inline-block}
+
+.pgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;margin-top:28px}.pgrid>*{min-width:0}
+.pcard{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:26px 24px;display:flex;flex-direction:column;gap:12px}
+.pcard h3{font-family:'Playfair Display',serif;font-weight:500;font-size:19px;margin:0;color:var(--gold-hi)}
+.pcard .thesis{font-size:13px;font-weight:300;line-height:1.6;color:var(--dim2);font-style:italic}
+.pcard .meta{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);display:flex;gap:14px;flex-wrap:wrap}
+.pcard .risk{font-size:12px;font-weight:300;line-height:1.55;color:var(--dim2)}
+.pcard .lbl{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:6px}
+
+.tblwrap{overflow-x:auto;border:1px solid var(--gold-faint);margin:10px 0 0}
+table.lux{width:100%;border-collapse:collapse;min-width:560px}
+table.lux th{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:500;text-align:left;padding:10px 12px;border-bottom:1px solid var(--gold-dim);white-space:nowrap}
+table.lux td{font-family:'Jost',sans-serif;font-size:12.5px;color:var(--ink);padding:10px 12px;border-bottom:1px solid var(--gold-faint);line-height:1.5}
+table.lux tr:last-child td{border-bottom:none}
+table.lux td.name{font-family:'Playfair Display',serif;font-size:13.5px;color:var(--gold-hi);white-space:nowrap;vertical-align:top}
+table.lux td.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+table.lux td.pos{color:#7FB88A}
+table.lux td.neg{color:#C97B6B}
+
+.rules{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:26px 28px;margin-top:22px;font-size:14px;font-weight:300;line-height:1.7;color:var(--dim2)}
+.rules b{color:var(--ink);font-weight:500}
+
+.rebalog{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+.rlog-item{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:16px 20px;display:flex;flex-direction:column;gap:4px}
+.rlog-item .top{display:flex;justify-content:space-between;gap:12px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.rlog-item .top b{color:var(--gold-hi)}
+.rlog-item p{margin:0;font-size:12.5px;font-weight:300;line-height:1.55;color:var(--dim2)}
+
+
+.tile.pending .nav{font-size:15px;font-family:'Jost',sans-serif;line-height:1.45;color:var(--dim2)}
+.tile .rt,.pcard .rt{font-size:11.5px;font-weight:300;line-height:1.5;color:var(--dim2)}
+.tile .rt b,.pcard .rt b{color:var(--ink);font-weight:500}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.chip{font-size:10px;letter-spacing:.06em;border:1px solid var(--gold-faint);padding:3px 7px;color:var(--dim2);white-space:nowrap}
+.chip b{color:var(--gold);font-weight:500;margin-right:4px}
+.chip .pos{color:#7FB88A}.chip .neg{color:#C97B6B}
+.pendnote{font-size:14px;font-weight:300;line-height:1.7;color:var(--dim2);padding:28px 8px;text-align:center}
+.pendnote b{color:var(--gold-hi);font-weight:500}
+.pcard .pendline{font-size:12px;color:var(--gold);letter-spacing:.04em}
+
+@media (max-width:900px){
+.leaderboard{grid-template-columns:repeat(2,1fr)}
+.pgrid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:700px){
+.leaderboard{grid-template-columns:1fr}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class="brand">
+    <img class="logo" src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class="wm">Cloud9 <b>Research</b></div>
+    <div class="tag"><span class="hh">AI Portfolio Battle</span></div>
+  </div>
+  <div class="right">
+    <a class="ig" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets ↗</a>
+  </div>
+</nav>
+<header class="hero">
+  <div class="eyebrow">Live · Real closes · Updated daily</div>
+  <p class="sub" id="entryLine">Round 1 prices at the Monday 14 Sep 2026 US close</p>
+  <h1>Three AI models. $10,000 each.<br><span class="free">Who beats the index?</span></h1>
+  <p class="sub" id="ledeText">Pricing begins at the Monday 14 Sep 2026 US close</p>
+</header>
+<main>
+
+  <section class="topic">
+    <div class="tnum">01</div>
+    <h2>Leaderboard.</h2>
+    <p class="tdesc">Net asset value of each virtual $10,000 account, marked to the latest completed US close, compared with SPY bought and held from each model's own entry close.</p>
+    <div class="leaderboard" id="leaderboard"></div>
+  </section>
+
+  <section class="topic">
+    <div class="tnum">02</div>
+    <h2>The chart.</h2>
+    <p class="tdesc">Daily NAV for all three models since inception, SPY drawn dashed as the benchmark.</p>
+    <div class="chartwrap" id="chartWrap">
+      <canvas id="navChart" height="160"></canvas>
+      <div class="legend" id="chartLegend"></div>
+    </div>
+  </section>
+
+  <section class="topic">
+    <div class="tnum">03</div>
+    <h2>The portfolios.</h2>
+    <p class="tdesc">What each model actually bought, its reasoning, and how every position has performed since entry.</p>
+    <div class="pgrid" id="portfolioCards"></div>
+  </section>
+
+  <section class="topic">
+    <div class="tnum">04</div>
+    <h2>The rules.</h2>
+    <div class="rules">
+      <p><b>The mandate:</b> "Build a long-only portfolio of US-listed stocks and/or ETFs you believe will outperform the S&amp;P 500 (SPY) over the next 3-12 months. Use only publicly tradable US tickers. State your thesis, your position sizing, and your conviction. You may hold cash. You may revisit and rebalance later, but each rebalance must be justified in writing."</p>
+      <p><b>Entry timing:</b> Portfolios are priced at the first US market close after they were submitted, so no model can profit from news it read before the price was set. Round 1 portfolios were submitted on Sunday 13 September 2026 and are priced at the Monday 14 September close.</p>
+      <p>Each model got exactly <b>$10,000</b> in virtual capital, priced daily at real adjusted closes (dividends reinvested) via Yahoo Finance, using completed closes only. Every trade (the initial buy and every rebalance) costs <b>0.05%</b> of trade value, deducted from the account. Cash earns nothing. Each model is compared with SPY bought once at that model's own entry close (also paying 0.05%) and held. Drawdown is measured from the $10,000 starting value. Checkpoints are scored 3, 6 and 12 months (91, 182, 365 days) after entry.</p>
+    </div>
+  </section>
+
+  <section class="topic">
+    <div class="tnum">05</div>
+    <h2>Rebalance log.</h2>
+    <p class="tdesc">Every portfolio decision on record, oldest first.</p>
+    <div class="rebalog" id="rebalanceLog"></div>
+  </section>
+
+</main>
+<footer>
+  <span>Virtual money, real prices. Educational only, not investment advice. Prices via Yahoo Finance, adjusted for dividends.</span>
+  <span id="asOfFooter">—</span>
+</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const NAV_DATA = {"generated_at": "2026-09-13T10:02-04:00", "as_of": "2026-09-11", "last_completed_session": "2026-09-11", "all_pending": true, "pricing_begins": "2026-09-14", "pricing_begins_label": "Monday 14 Sep 2026", "entry_date": "2026-09-14", "entry_date_label": "Monday 14 Sep 2026", "start": "2026-09-13", "hero_line": "Round 1 prices at the Monday 14 Sep 2026 US close", "round_rule": "Round 1 portfolios were submitted on Sunday 13 September 2026 and are priced at the Monday 14 September close.", "meta": {"fable": {"label": "Fable 5.1", "research_time": "~30 min multi-agent research (hit its usage limit mid-run, finished after the 5-hour reset)"}, "astra": {"label": "GPT-6 Astra", "research_time": "a few minutes"}, "gemini": {"label": "Gemini", "research_time": "a few seconds"}, "round": 1, "decision_date": "2026-09-13"}, "series": {"dates": [], "spy": [], "fable": [], "astra": [], "gemini": []}, "metrics": {"fable": {"pending": true, "pricing_begins": "2026-09-14", "pricing_begins_label": "Monday 14 Sep 2026", "decision_date": "2026-09-13", "nav_today": null, "total_return_pct": null, "spy_return_pct": null, "return_vs_spy_pp": null, "vs_spy_pp": null, "max_drawdown_pct": null, "best_position": null, "worst_position": null, "days_live": 0, "entry_date": null, "checkpoints": {"3m": {"status": "pricing_pending", "days": 91}, "6m": {"status": "pricing_pending", "days": 182}, "12m": {"status": "pricing_pending", "days": 365}}}, "astra": {"pending": true, "pricing_begins": "2026-09-14", "pricing_begins_label": "Monday 14 Sep 2026", "decision_date": "2026-09-13", "nav_today": null, "total_return_pct": null, "spy_return_pct": null, "return_vs_spy_pp": null, "vs_spy_pp": null, "max_drawdown_pct": null, "best_position": null, "worst_position": null, "days_live": 0, "entry_date": null, "checkpoints": {"3m": {"status": "pricing_pending", "days": 91}, "6m": {"status": "pricing_pending", "days": 182}, "12m": {"status": "pricing_pending", "days": 365}}}, "gemini": {"pending": true, "pricing_begins": "2026-09-14", "pricing_begins_label": "Monday 14 Sep 2026", "decision_date": "2026-09-13", "nav_today": null, "total_return_pct": null, "spy_return_pct": null, "return_vs_spy_pp": null, "vs_spy_pp": null, "max_drawdown_pct": null, "best_position": null, "worst_position": null, "days_live": 0, "entry_date": null, "checkpoints": {"3m": {"status": "pricing_pending", "days": 91}, "6m": {"status": "pricing_pending", "days": 182}, "12m": {"status": "pricing_pending", "days": 365}}}, "spy": {"pending": true, "nav_today": null, "total_return_pct": null, "max_drawdown_pct": null, "start_date": null}}, "portfolios": {"fable": {"model": "Claude Fable 5.1 (claude-fable-5-1)", "label": "Fable 5.1", "research_time": "~30 min multi-agent research (hit its usage limit mid-run, finished after the 5-hour reset)", "thesis": "The Fed hikes into a physical Gulf oil shock with 30-year yields at 19-year highs, breadth deteriorating, and the AI-infrastructure complex already de-rated. That is a 2022-style regime, not a growth collapse: hard data is hot. So own real-asset cash flows (energy, midstream, LNG), balance sheets that earn on higher rates (Berkshire, Travelers), cheap tariff-exempt pharma, a T-bill ballast through the September-October midterm window, and only self-funded AI winners. Target beta about 0.5 now, re-risk in November.", "date": "2026-09-13", "positions": [{"ticker": "XLE", "display_ticker": "XLE", "name": "Energy Select Sector SPDR Fund", "type": "etf", "weight_pct": 11.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Physical Gulf supply shock: IEA says over 10 mb/d still shut in, Gulf exports half of pre-war, SPR at 1982 lows. Energy is the only sector with positive median returns after a first hike; XLE is the lowest-drawdown energy ETF.", "horizon": "6m"}, {"ticker": "AMLP", "display_ticker": "AMLP", "name": "Alerian MLP ETF", "type": "etf", "weight_pct": 6.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Fee-based midstream: 7.3% yield, beta about 0.5, 14% realized vol, paid on volumes not oil price. Energy carry that survives a Hormuz corridor deal far better than E&Ps or refiners.", "horizon": "12m"}, {"ticker": "LNG", "display_ticker": "LNG", "name": "Cheniere Energy", "type": "stock", "weight_pct": 4.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Take-or-pay contracted LNG cash flows and buybacks while European gas sits at multi-year highs and Qatari supply is disrupted. Low oil beta, 13x forward earnings, reports Oct 29, outside the first month.", "horizon": "12m"}, {"ticker": "BRK-B", "display_ticker": "BRK-B", "name": "Berkshire Hathaway Class B", "type": "stock", "weight_pct": 15.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "About $365B of T-bills earns more with every hike, buybacks restarted in Q2, first net equity buying in years, 15% realized vol. Up only 3% year to date, so uncrowded; reports after the first month.", "horizon": "12m"}, {"ticker": "TRV", "display_ticker": "TRV", "name": "Travelers Companies", "type": "stock", "weight_pct": 6.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Core ROE 25%, combined ratio 84%, investment income up 14% on higher yields, 12x forward earnings, beta about 0.4. A direct hike beneficiary; hurricane season has been quiet so far.", "horizon": "6m"}, {"ticker": "ABBV", "display_ticker": "ABBV", "name": "AbbVie", "type": "stock", "weight_pct": 8.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "16x forward, 2.7% yield, Skyrizi and Rinvoq growing double digits, MFN-signer exemption from Section 232 drug tariffs. Low-duration cash flows for a hiking, oil-shocked tape; reports Oct 29.", "horizon": "12m"}, {"ticker": "GILD", "display_ticker": "GILD", "name": "Gilead Sciences", "type": "stock", "weight_pct": 5.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "14.5x forward, 2.2% yield, HIV annuity plus the lenacapavir launch, only a 5% worst 60-day drawdown. Cheapest quality biotech; earnings Oct 30, outside the window.", "horizon": "12m"}, {"ticker": "SCHD", "display_ticker": "SCHD", "name": "Schwab U.S. Dividend Equity ETF", "type": "etf", "weight_pct": 8.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Dividend-quality core: 103 large caps, 3% yield, 0.06% fee, 12% vol, and it beat SPY by 12 points year to date. Value tends to beat growth in tightening cycles.", "horizon": "12m"}, {"ticker": "IAU", "display_ticker": "IAU", "name": "iShares Gold Trust", "type": "etf", "weight_pct": 5.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Gold is 22% below its January peak with central banks still buying. Tail hedge for a Fed-credibility shock or a Trump-forced hold; kept small because rising real yields are the base case.", "horizon": "6m"}, {"ticker": "MSFT", "display_ticker": "MSFT", "name": "Microsoft", "type": "stock", "weight_pct": 10.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "The one hyperscaler funding AI capex from positive free cash flow: Azure +43%, $678B commercial backlog, 21x forward. Quality growth that needs neither debt nor equity markets while the Fed hikes.", "horizon": "12m"}, {"ticker": "NVDA", "display_ticker": "NVDA", "name": "NVIDIA", "type": "stock", "weight_pct": 6.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Forward earnings consensus rose about 20% in the past month; roughly 14x forward on $108B quarterly guidance that assumes zero China. Sized small for 40% vol and semis crowding; reports Nov 18.", "horizon": "6m"}, {"ticker": "TSM", "display_ticker": "TSM", "name": "Taiwan Semiconductor Manufacturing (ADR)", "type": "stock", "weight_pct": 5.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "The bottleneck for every AI chip: August revenue +53% year on year, 20x forward, lowest vol among AI hardware. Q3 report Oct 15 sits at the window edge; Taiwan and trade-threat tail risk accepted.", "horizon": "6m"}, {"ticker": "SGOV", "display_ticker": "SGOV", "name": "iShares 0-3 Month Treasury Bond ETF", "type": "etf", "weight_pct": 11.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "T-bill ETF yielding about 3.7%, rising with Wednesday's hike, zero drawdown. Ballast through the FOMC, buyback blackout and weak midterm-year September-October; to be redeployed at the November rebalance.", "horizon": "3m"}], "cash_pct": 0.0, "risk_notes": "Wrong if a Hormuz deal collapses oil 25% while the Fed signals one-and-done: energy loses 10%, SPY rallies, and my 0.5 beta lags a relief melt-up led by crowded semis. Also wrong if hawkish dots push real yields higher, hitting gold and pharma multiples, or a late-season hurricane hits Travelers. Trump expects the war to end after the midterms.", "tools_used": ["Claude Code multi-agent workflow: 8 research agents (macro/Fed, market internals, AI/tech complex, energy/commodities/gold, financials/healthcare, three stock-screen batches) plus 4 rival portfolio proposals, then a manual adversarial review", "Web search and fetch: IEA Sept 2026 Oil Market Report, EIA, CME FedWatch mirror, BLS CPI/jobs, Atlanta Fed GDPNow, BofA Fund Manager Survey coverage, CNBC/Reuters/Bloomberg, company IR pages, stockanalysis.com, Google News RSS for weekend Hormuz/Oman and Fed headlines", "Finnhub API: quotes, fundamentals, earnings calendar (Sept 14 to Oct 16 window)", "yfinance: adjusted closes for 315 tickers, ETF net assets, forward P/E, earnings dates", "Python analytics: 1w to 12m returns, distance from 52-week highs, 60-day realized vol and drawdown, weighted-mix beta/correlation/max-drawdown backtests, regime analogs (2018 Q4, 2022, 2023)", "Prior-session research notes (FOMC scorecard, AI-infrastructure valuation screen)"], "confidence_pct": 55}, "astra": {"model": "GPT-6 (Codex)", "label": "GPT-6 Astra", "research_time": "a few minutes", "thesis": "Own profitable AI growth while diversifying against inflation and financing stress. Microsoft and NVIDIA provide earnings upside; Berkshire and energy broaden the sources of equity returns. Gold and short Treasury bills provide resilience through monthly holding periods. Keep 80% in equities while limiting dependence on any single company.", "date": "2026-09-13", "positions": [{"ticker": "MSFT", "display_ticker": "MSFT", "name": "Microsoft Corporation", "type": "stock", "weight_pct": 30.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Azure and other cloud services revenue grew 43% in fiscal Q4. Recurring software revenue and substantial operating cash flow support continued investment. Its diversified earnings base earns the largest allocation.", "horizon": "12m"}, {"ticker": "NVDA", "display_ticker": "NVDA", "name": "NVIDIA Corporation", "type": "stock", "weight_pct": 20.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Fiscal Q2 revenue doubled and Q3 guidance implies further growth. Accelerated computing remains a major spending priority. Receivables growth, customer financing and semiconductor cyclicality justify a smaller allocation than Microsoft.", "horizon": "6m"}, {"ticker": "BRK-B", "display_ticker": "BRK.B", "name": "Berkshire Hathaway Inc. Class B", "type": "stock", "weight_pct": 15.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Insurance, railroads, utilities and manufacturing diversify technology exposure. Large liquidity reserves support acquisitions and repurchases. Renewed buybacks offer a tangible catalyst, while insurance losses and economic sensitivity remain risks.", "horizon": "12m"}, {"ticker": "XLE", "display_ticker": "XLE", "name": "State Street Energy Select Sector SPDR ETF", "type": "etf", "weight_pct": 15.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Major US energy producers benefit from constrained oil supply and improving earnings estimates. Provides partial protection against energy-driven inflation. Keep the horizon tactical because restored supply could reverse recent gains.", "horizon": "3m"}, {"ticker": "GLDM", "display_ticker": "GLDM", "name": "SPDR Gold MiniShares Trust", "type": "etf", "weight_pct": 10.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Physical gold adds exposure independent of corporate earnings and potential protection against geopolitical and fiscal stress. Low fund expenses suit monthly holding periods; rising real yields can still cause losses.", "horizon": "6m"}, {"ticker": "SGOV", "display_ticker": "SGOV", "name": "iShares 0-3 Month Treasury Bond ETF", "type": "etf", "weight_pct": 10.0, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Short Treasury bills earn income with minimal interest-rate sensitivity. Provides liquidity and reduces portfolio volatility during the mandatory holding period, while avoiding the zero return on uninvested cash.", "horizon": "3m"}], "cash_pct": 0.0, "risk_notes": "Half the portfolio shares AI spending risk. NVIDIA collections or Microsoft investment returns could disappoint. Higher real yields may hurt equities and gold together; oil normalization hurts XLE. Recession and insurance losses threaten Berkshire. Substantial drawdowns remain possible, and defensive holdings may lag a strong SPY rally.", "tools_used": ["Web search and page retrieval", "Parallel research agents", "JavaScript allocation and fee checks", "Microsoft FY2026 Q4 investor release", "NVIDIA FY2027 Q2 investor release", "Berkshire Hathaway Q2 2026 report and release", "State Street XLE and GLDM issuer data", "iShares SGOV issuer data", "Stock Analysis closing prices and valuation data", "FactSet Earnings Insight, September 11, 2026", "BLS, Federal Reserve and US Treasury releases", "EIA September 2026 Short-Term Energy Outlook", "World Gold Council August 2026 commentary"], "confidence_pct": 60}, "gemini": {"model": "Gemini", "label": "Gemini", "research_time": "a few seconds", "thesis": "This portfolio balances the high-growth AI infrastructure build-out with value-oriented energy production. We capture compute demand through Nvidia and data center cooling via Vertiv, while hedging tech volatility with Valero's cash flow and First Solar's footprint.", "date": "2026-09-13", "positions": [{"ticker": "NVDA", "display_ticker": "NVDA", "name": "Nvidia Corp.", "type": "stock", "weight_pct": 35, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Dominant GPU supplier for AI data centers. Strong recurring revenue and infrastructure footprint justify a core holding.", "horizon": "12m"}, {"ticker": "VRT", "display_ticker": "VRT", "name": "Vertiv Holdings Co", "type": "stock", "weight_pct": 30, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Critical infrastructure play for data center power and cooling. A distinct, high-growth way to capture AI capital expenditure.", "horizon": "12m"}, {"ticker": "VLO", "display_ticker": "VLO", "name": "Valero Energy Corporation", "type": "stock", "weight_pct": 20, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "High capital efficiency and strong PEG ratio in the energy sector. Provides a low-valuation hedge against tech rotations.", "horizon": "6m"}, {"ticker": "FSLR", "display_ticker": "FSLR", "name": "First Solar, Inc.", "type": "stock", "weight_pct": 10, "current_weight_pct": null, "entry_price": null, "current_price": null, "return_pct": null, "rationale": "Leading US solar manufacturer with strong utility-scale demand and domestic manufacturing advantages. Diversifies industrials exposure.", "horizon": "6m"}], "cash_pct": 5, "risk_notes": "A sharp rotation out of semiconductors or a reduction in hyperscaler capital expenditures would severely impact NVDA and VRT. Additionally, a sudden macroeconomic recession could compress Valero's margins, neutralizing the energy hedge.", "tools_used": ["Google Search (September 2026 real-time market trends)", "Zacks Equity Research", "Finder.com Analyst Aggregation", "The Motley Fool"], "confidence_pct": 85}}, "rebalances": [{"slug": "fable", "model": "Claude Fable 5.1 (claude-fable-5-1)", "date": "2026-09-13", "entry_date": "2026-09-14", "scheduled": true, "thesis": "The Fed hikes into a physical Gulf oil shock with 30-year yields at 19-year highs, breadth deteriorating, and the AI-infrastructure complex already de-rated. That is a 2022-style regime, not a growth collapse: hard data is hot. So own real-asset cash flows (energy, midstream, LNG), balance sheets that earn on higher rates (Berkshire, Travelers), cheap tariff-exempt pharma, a T-bill ballast through the September-October midterm window, and only self-funded AI winners. Target beta about 0.5 now, re-risk in November.", "n_positions": 13, "cash_pct": 0.0}, {"slug": "astra", "model": "GPT-6 (Codex)", "date": "2026-09-13", "entry_date": "2026-09-14", "scheduled": true, "thesis": "Own profitable AI growth while diversifying against inflation and financing stress. Microsoft and NVIDIA provide earnings upside; Berkshire and energy broaden the sources of equity returns. Gold and short Treasury bills provide resilience through monthly holding periods. Keep 80% in equities while limiting dependence on any single company.", "n_positions": 6, "cash_pct": 0.0}, {"slug": "gemini", "model": "Gemini", "date": "2026-09-13", "entry_date": "2026-09-14", "scheduled": true, "thesis": "This portfolio balances the high-growth AI infrastructure build-out with value-oriented energy production. We capture compute demand through Nvidia and data center cooling via Vertiv, while hedging tech volatility with Valero's cash flow and First Solar's footprint.", "n_positions": 4, "cash_pct": 5}]};
+
+const MODEL_META = {
+  fable:  { label: "Fable 5.1",   color: "#C8A24E" },
+  astra:  { label: "GPT-6 Astra", color: "#7FA7C9" },
+  gemini: { label: "Gemini",      color: "#C97B6B" },
+  spy:    { label: "SPY",         color: "#8C8172" }
+};
+const SLUGS = ["fable","astra","gemini"];
+const META = NAV_DATA.meta || {};
+SLUGS.forEach(s => { if (META[s] && META[s].label) MODEL_META[s].label = META[s].label; });
+
+function esc(v){ return v==null ? "" : String(v).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function fmtUSD(n){ return n==null ? "—" : "$" + n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtPct(n, withSign){ if(n==null) return "—"; const s = n>0 && withSign!==false ? "+" : ""; return s + n.toFixed(2) + "%"; }
+function fmtPP(n){ if(n==null) return "—"; return (n>0?"+":"") + n.toFixed(2) + "pp"; }
+function pclass(n){ return n==null ? "" : (n>=0 ? "pos" : "neg"); }
+function pendingLine(mm){ return `Pricing begins at the ${esc(mm.pricing_begins_label)} US close`; }
+function researchLine(slug){ const r = META[slug] && META[slug].research_time; return r ? `<div class="rt">Research time: <b>${esc(r)}</b></div>` : ""; }
+
+function chipsHtml(mm){
+  const cps = mm.checkpoints || {};
+  return `<div class="chips">` + ["3m","6m","12m"].map(k => {
+    const c = cps[k];
+    let body = "—";
+    if (!c || c.status === "pricing_pending") body = "starts after first close";
+    else if (c.status === "pending") body = "due " + esc(c.due_date);
+    else if (c.status === "reached") body = `<span class="${pclass(c.vs_spy_pp)}">${fmtPct(c.model_return_pct)} · ${fmtPP(c.vs_spy_pp)}</span>`;
+    return `<span class="chip"><b>${k}</b>${body}</span>`;
+  }).join("") + `</div>`;
+}
+
+function init(){
+  const m = NAV_DATA.metrics;
+  const priced = SLUGS.filter(s => !m[s].pending);
+  const pending = SLUGS.filter(s => m[s].pending);
+  const ranked = [...priced].sort((a,b)=> m[b].nav_today - m[a].nav_today);
+  const leaderSlug = ranked.length ? ranked[0] : null;
+
+  const lede = document.getElementById("ledeText");
+  const entryLine = document.getElementById("entryLine");
+  if (entryLine && NAV_DATA.hero_line) entryLine.textContent = NAV_DATA.hero_line;
+  if (NAV_DATA.all_pending) {
+    lede.textContent = `Each model received a virtual $10,000 and one mandate: beat SPY over 3-12 months, long-only, US tickers only. All three portfolios are locked in. Pricing begins at the ${NAV_DATA.pricing_begins_label} US close.`;
+  } else {
+    lede.textContent = `Each model received a virtual $10,000 and one mandate: beat SPY over 3-12 months, long-only, US tickers only. A daily job prices every position at real adjusted closes and rebuilds this page. Entered at the ${NAV_DATA.entry_date_label} close. As of the ${NAV_DATA.as_of} close, ${MODEL_META[leaderSlug].label} leads with ${fmtUSD(m[leaderSlug].nav_today)} (${fmtPct(m[leaderSlug].total_return_pct)}).`;
+  }
+
+  // leaderboard
+  const lb = document.getElementById("leaderboard");
+  const order = [...ranked, ...pending, "spy"];
+  order.forEach(slug => {
+    const mm = m[slug];
+    const meta = MODEL_META[slug];
+    const isLeader = slug === leaderSlug && ranked.length > 1;
+    const div = document.createElement("div");
+    if (slug === "spy") {
+      div.className = "tile" + (mm.pending ? " pending" : "");
+      div.innerHTML = mm.pending ? `
+        <div class="rank">Benchmark · unranked</div><h3>SPY</h3>
+        <div class="nav">${NAV_DATA.pricing_begins_label ? pendingLine({pricing_begins_label: NAV_DATA.pricing_begins_label}) : "—"}</div>
+        <div class="rt">Bought and held from each model's own entry close.</div>` : `
+        <div class="rank">Benchmark</div><h3>SPY</h3>
+        <div class="nav">${fmtUSD(mm.nav_today)}</div>
+        <div class="row"><span>Total return</span><b class="${pclass(mm.total_return_pct)}">${fmtPct(mm.total_return_pct)}</b></div>
+        <div class="row"><span>Max drawdown</span><b class="neg">${fmtPct(mm.max_drawdown_pct,false)}</b></div>
+        <div class="rt">Since ${esc(mm.start_date)} close</div>`;
+    } else if (mm.pending) {
+      div.className = "tile pending";
+      div.innerHTML = `
+        <div class="rank">${NAV_DATA.all_pending ? "Contestant · unranked" : "Unranked"}</div>
+        <h3>${esc(meta.label)}</h3>
+        <div class="nav">${pendingLine(mm)}</div>
+        ${researchLine(slug)}
+        ${chipsHtml(mm)}`;
+    } else {
+      div.className = "tile" + (isLeader ? " leader" : "");
+      div.innerHTML = `
+        ${isLeader ? '<div class="badge">Leader</div>' : ""}
+        <div class="rank">Rank ${ranked.indexOf(slug)+1}</div>
+        <h3>${esc(meta.label)}</h3>
+        <div class="nav">${fmtUSD(mm.nav_today)}</div>
+        <div class="row"><span>Total return</span><b class="${pclass(mm.total_return_pct)}">${fmtPct(mm.total_return_pct)}</b></div>
+        <div class="row"><span>vs SPY</span><b class="${pclass(mm.return_vs_spy_pp)}">${fmtPP(mm.return_vs_spy_pp)}</b></div>
+        <div class="row"><span>Max drawdown</span><b class="neg">${fmtPct(mm.max_drawdown_pct,false)}</b></div>
+        ${researchLine(slug)}
+        ${chipsHtml(mm)}`;
+    }
+    lb.appendChild(div);
+  });
+
+  // chart
+  const wrap = document.getElementById("chartWrap");
+  const labels = NAV_DATA.series.dates || [];
+  const chartSlugs = [...priced, "spy"].filter(s => (NAV_DATA.series[s]||[]).some(v => v != null));
+  if (!labels.length || !priced.length || typeof Chart === "undefined") {
+    wrap.innerHTML = `<div class="pendnote">${NAV_DATA.all_pending
+      ? `The chart starts after the first close. <b>${pendingLine({pricing_begins_label: NAV_DATA.pricing_begins_label})}</b>.`
+      : "Chart unavailable."}</div>`;
+  } else {
+    const datasets = chartSlugs.map(slug => {
+      const meta = MODEL_META[slug];
+      const isLeader = slug === leaderSlug;
+      return {
+        label: meta.label,
+        data: NAV_DATA.series[slug],
+        borderColor: isLeader ? "#E8C978" : meta.color,
+        borderWidth: isLeader ? 2.5 : 1.5,
+        borderDash: slug === "spy" ? [6,4] : [],
+        pointRadius: labels.length < 3 ? 3 : 0,
+        tension: 0.15,
+        spanGaps: true
+      };
+    });
+    new Chart(document.getElementById("navChart").getContext("2d"), {
+      type: "line",
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        interaction: { mode: "index", intersect: false },
+        plugins: { legend: { display: false }, tooltip: { mode: "index", intersect: false } },
+        scales: {
+          x: { ticks: { color: "#8C8172", maxTicksLimit: 10 }, grid: { color: "rgba(200,162,78,.08)" } },
+          y: { ticks: { color: "#8C8172", callback: v => "$" + v.toLocaleString() }, grid: { color: "rgba(200,162,78,.08)" } }
+        }
+      }
+    });
+    const legend = document.getElementById("chartLegend");
+    chartSlugs.forEach(slug => {
+      const span = document.createElement("span");
+      span.innerHTML = `<i style="background:${slug === leaderSlug ? '#E8C978' : MODEL_META[slug].color}"></i>${esc(MODEL_META[slug].label)}`;
+      legend.appendChild(span);
+    });
+    pending.forEach(slug => {
+      const span = document.createElement("span");
+      span.textContent = `${MODEL_META[slug].label}: pricing begins ${m[slug].pricing_begins_label}`;
+      legend.appendChild(span);
+    });
+  }
+
+  // portfolio cards
+  const cards = document.getElementById("portfolioCards");
+  SLUGS.forEach(slug => {
+    const p = NAV_DATA.portfolios[slug];
+    const mm = m[slug];
+    const rows = p.positions.map(pos => `
+      <tr>
+        <td class="name">${esc(pos.display_ticker || pos.ticker)}</td>
+        <td>${esc(pos.name)}</td>
+        <td class="num">${esc(pos.weight_pct)}%</td>
+        <td class="num">${pos.entry_price!=null?"$"+pos.entry_price:"—"}</td>
+        <td class="num">${pos.current_price!=null?"$"+pos.current_price:"—"}</td>
+        <td class="num ${pclass(pos.return_pct)}">${fmtPct(pos.return_pct)}</td>
+        <td>${esc(pos.rationale)}</td>
+      </tr>
+    `).join("");
+    const div = document.createElement("div");
+    div.className = "pcard";
+    div.innerHTML = `
+      <h3>${esc(MODEL_META[slug].label)}</h3>
+      ${p.model && p.model !== MODEL_META[slug].label ? `<div class="rt">${esc(p.model)}</div>` : ""}
+      ${researchLine(slug)}
+      ${mm.pending ? `<div class="pendline">${pendingLine(mm)}</div>` : ""}
+      <p class="thesis">${esc(p.thesis)}</p>
+      <div class="meta"><span>Decided ${esc(p.date)}</span><span>Entry ${mm.pending ? esc(mm.pricing_begins) + " close" : esc(mm.entry_date)}</span><span>Confidence ${esc(p.confidence_pct)}%</span><span>Cash ${esc(p.cash_pct)}%</span></div>
+      <div class="tblwrap">
+        <table class="lux">
+          <thead><tr><th>Ticker</th><th>Name</th><th>Wt</th><th>Entry</th><th>Now</th><th>Return</th><th>Rationale</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <div class="lbl">Risk notes</div>
+      <p class="risk">${esc(p.risk_notes)}</p>
+      <div class="lbl">Tools used</div>
+      <p class="risk">${(p.tools_used||[]).map(esc).join(", ")||"—"}</p>
+    `;
+    cards.appendChild(div);
+  });
+
+  // rebalance log
+  const log = document.getElementById("rebalanceLog");
+  NAV_DATA.rebalances.forEach(r => {
+    const div = document.createElement("div");
+    div.className = "rlog-item";
+    div.innerHTML = `
+      <div class="top"><b>${esc(MODEL_META[r.slug] ? MODEL_META[r.slug].label : r.model)}</b><span>Decided ${esc(r.date)} · priced ${esc(r.entry_date)} close · ${esc(r.n_positions)} positions · ${esc(r.cash_pct)}% cash</span></div>
+      <p>${esc(r.thesis)}</p>
+    `;
+    log.appendChild(div);
+  });
+
+  document.getElementById("asOfFooter").textContent = NAV_DATA.all_pending
+    ? (NAV_DATA.as_of || NAV_DATA.last_completed_session
+        ? "Last completed close " + (NAV_DATA.as_of || NAV_DATA.last_completed_session) + " · "
+        : "") + "pricing begins " + NAV_DATA.pricing_begins
+    : "As of " + NAV_DATA.as_of + " close";
+}
+
+init();
+</script>
+</body>
+</html>
