@@ -34,6 +34,13 @@
 .repo .st{color:var(--gold);font-size:13px;font-weight:700;flex:none}
 .repo .ds{color:var(--mut);font-size:13.5px;line-height:1.4}
 .repobox{margin-top:16px;background:rgba(15,18,24,.6);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.hudfig{margin:18px 0 0;border:1px solid rgba(217,180,91,.45);border-radius:14px;overflow:hidden;background:#04070d;box-shadow:0 18px 60px rgba(0,0,0,.45)}
+.hudfig img{display:block;width:100%;height:auto}
+.hudfig figcaption{font-size:12.5px;color:var(--faint);padding:10px 14px;border-top:1px solid var(--line);line-height:1.5}
+.real{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.real div{background:rgba(15,18,24,.6);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;color:#c9d2df;line-height:1.5}
+.real div b{display:block;color:#fff;font-size:13px;letter-spacing:.4px;margin-bottom:3px}
+@media(max-width:560px){.real{grid-template-columns:1fr}}
 .locked{margin-top:26px;border:1px dashed rgba(217,180,91,.5);border-radius:16px;padding:20px 22px;background:rgba(217,180,91,.05)}
 .locked h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold)}
 .locked ul{margin:12px 0 0;padding-left:20px}
@@ -44,7 +51,7 @@
 </head>
 <body>
 <div class="wrap">
-<header><img src="https://www.cloud9markets.com/cloud9-logo.png" onerror="this.style.display='none'"><span class="hh">Cloud9 × The Desk</span></header>
+<header><img src="https://www.cloud9markets.com/cloud9-logo-gold.png" onerror="this.style.display='none'"><span class="hh">Cloud9 × The Desk</span></header>
 <span class="badge">Free · Cloud9 Build Guide</span>
 <h1 class="serif">I built an AI trading desk.<br><span class="g">Nine agents. One voice.</span></h1>
 <p class="lede">Everyone's cloning a general-purpose Jarvis. I built one that's <b style="color:#e9e6df">deep in a single world — the markets</b>. You talk to the desk, and a master AI routes your words to <b style="color:#e9e6df">nine specialist agents</b> — each an expert in one job, each with its own voice — while the charts on the big screen <b style="color:#e9e6df">obey out loud</b>: pull up Nvidia, mark the levels, draw the AI forecast. This page is the blueprint.</p>
@@ -98,7 +105,7 @@
   <h2 class="serif">Every piece is free.</h2>
   <p>The stack that looks like Iron Man's lab is, piece by piece, free software you can install tonight. Here's the honest shopping list:</p>
 
-  <div class="step"><div class="n">1</div><div class="b"><div class="t">The shell</div><p>Ask Claude Code for an <b style="color:#e9e6df">Electron app</b> (a desktop web page, basically): a dark HUD, nine agent seats, one glowing orb. Claude writes all of it — the visual taste is the only part you supply.</p></div></div>
+  <div class="step"><div class="n">1</div><div class="b"><div class="t">The shell</div><p>Ask Claude Code for an <b style="color:#e9e6df">Electron app</b> (a desktop web page, basically): a dark HUD, nine agent seats, one glowing orb. Claude writes all of it — the visual taste is the only part you supply. <a href="#hud-reference" style="color:var(--gold)">Use Friday's HUD as your reference ↓</a></p></div></div>
   <div class="step"><div class="n">2</div><div class="b"><div class="t">The voices — $0</div><p>Local TTS gives every agent a distinct voice for free: <b style="color:#e9e6df">Voicebox</b> running the open-source <b style="color:#e9e6df">Kokoro</b> engine — dozens of voices, ~2 seconds a clip, entirely on your machine. (ElevenLabs is the paid upgrade if you want Hollywood polish — you don't need it to start.)</p></div></div>
   <div class="step"><div class="n">3</div><div class="b"><div class="t">The ears — $0</div><p>Voice in is <b style="color:#e9e6df">whisper.cpp</b> — OpenAI's speech recognition running locally. Your app hears you finish a sentence and acts. No cloud, no per-minute fees.</p></div></div>
   <div class="step"><div class="n">4</div><div class="b"><div class="t">Live market data — $0</div><p>A free <b style="color:#e9e6df">Finnhub</b> key covers quotes, movers and news; <b style="color:#e9e6df">yfinance</b> covers history. Every number the desk speaks should come from a real feed — a desk that invents prices is a toy.</p></div></div>
@@ -126,6 +133,39 @@ Start with the HUD and two agents; we'll add the rest one by one.</span>
     <a href="https://finnhub.io" target="_blank" rel="noopener" style="color:var(--gold)">Finnhub</a> + <a href="https://github.com/ranaroussi/yfinance" target="_blank" rel="noopener" style="color:var(--gold)">yfinance</a> (live + historical market data) ·
     and the <a href="claude-tradingview-setup.html" style="color:var(--gold)">TradingView MCP setup</a> for the chart control.</p>
   </div>
+</div>
+
+<div class="section" id="hud-reference">
+  <div class="eyebrow">The HUD · your design reference</div>
+  <h2 class="serif">Show Claude Code this screen.</h2>
+  <p>This is F.R.I.D.A.Y. running live. Save the screenshot and hand it to Claude Code as the <b style="color:#e9e6df">visual reference</b> for your HUD — Claude Code reads images, so drag the file into your prompt and ask it to match the layout, the glow and the panels.</p>
+
+  <figure class="hudfig">
+    <img src="img/friday-hud.jpg" alt="F.R.I.D.A.Y. trading desk HUD: a glowing central orb with a gold halo, nine agent nodes around it, market pulse rings, NYSE session, September calendar and a streaming signal log" loading="lazy" width="1920" height="1080">
+    <figcaption>F.R.I.D.A.Y. mid-session, 15 Sep 2026 — orb in focus mode. Market pulse, the NYSE session and the signal log are live; the calendar dots mark FOMC and options expiry.</figcaption>
+  </figure>
+
+  <div class="fable" style="margin-top:18px"><span class="tag">What's real on this screen</span>
+    <p>In our build the <b>market panels are wired to real market data</b>, not placeholders — and the <b>alerts in the signal log come from our own sub-agents</b>. You can do exactly the same with Claude Code: point each panel at a live feed, and route <i>your</i> agents' alerts into the log.</p>
+    <div class="real">
+      <div><b>Market pulse + session chips</b>Live quotes from the free Finnhub API, refreshed every minute, red when down.</div>
+      <div><b>Session clock</b>The real NYSE phase and countdown, computed from New York time.</div>
+      <div><b>Signal log</b>Alerts from our sub-agents — macro, recon, risk. Swap in whatever your agents watch.</div>
+      <div><b>Agent roster</b>Ours is nine seats. Tailor the nodes to your own sub-agents — three is plenty to start.</div>
+    </div>
+  </div>
+
+  <p style="margin-top:20px">Paste this into Claude Code with the screenshot attached:</p>
+<span class="code">Here's a screenshot of the F.R.I.D.A.Y. trading desk HUD (attached).
+Use it as the visual reference for my desk's HUD:
+- same layout: left column (market pulse, task queue, signal log),
+  a glowing central orb with my agent nodes around it,
+  right column (market session, calendar, agent load)
+- wire the market panels to REAL data: Finnhub quotes for the pulse
+  rings, the live NYSE session + countdown, my event calendar
+- the signal log streams alerts from MY sub-agents: [list your agents]
+- never show invented numbers on a market panel — if a feed is down, show "—"
+Build the static HUD first, then wire one panel at a time.</span>
 </div>
 
 <div class="section">
