@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Money Map — where your monthly pay should go · Cloud9</title>
+<meta name="description" content="The paycheck split, three guardrails, an emergency-fund target and your retirement number — the rules from the reel, written down, plus four calculators that run your own monthly numbers.">
+<meta property="og:title" content="The Money Map — where your monthly pay should go">
+<meta property="og:description" content="Five buckets, three guardrails, one emergency fund, one retirement number. The rules from the reel plus calculators that run your real take-home pay.">
+<meta property="og:image" content="https://www.cloud9markets.com/cloud9-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+/* page-specific only (topic sections, inputs, bars, chips) — house tokens live in cloud9-luxe.css */
+main{max-width:1000px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.intro{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:720px;margin:0 auto 8px;text-align:center}
+
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(26px,3.4vw,40px);line-height:1.18;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:760px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.snum{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold-hi);margin-right:2px}
+
+.mcard{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:26px 24px;margin-top:22px}
+.mct{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+
+.flabel{display:block;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin:16px 2px 8px}
+.inp{width:100%;min-height:46px;background:transparent;border:1px solid var(--gold-dim);color:var(--ink);font:400 16px 'Jost',sans-serif;padding:10px 14px}
+.inp:focus-visible,.mbtn:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.hint{font-size:13px;color:var(--gold);margin-top:10px}
+.note{font-size:13px;font-weight:300;color:var(--dim2);margin-top:10px;font-style:italic}
+
+.bar{display:flex;height:22px;overflow:hidden;margin:18px 0 8px;background:rgba(239,231,216,.06);border:1px solid var(--gold-faint)}
+.bar i{display:block;height:100%;min-width:0}
+.brow{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed var(--gold-faint)}
+.brow:last-of-type{border-bottom:none}
+.sw{flex:none;width:11px;height:11px;margin-top:6px}
+.bname{font-family:'Jost',sans-serif;font-weight:500;color:var(--ink);font-size:15px}
+.bpct{color:var(--gold);font-weight:500;font-size:13px;margin-left:8px}
+.bcov{font-size:13px;font-weight:300;line-height:1.5;color:var(--dim2);margin-top:3px}
+.bamt{margin-left:auto;font-family:'Jost',sans-serif;font-weight:500;font-size:15px;color:var(--ink);white-space:nowrap;padding-left:10px;font-variant-numeric:tabular-nums}
+.btotal{font-size:13px;font-weight:300;color:var(--dim);margin-top:14px}
+
+.grrow{padding:15px 0;border-bottom:1px dashed var(--gold-faint)}
+.grrow:last-of-type{border-bottom:none}
+.grhead{display:flex;align-items:center;gap:10px}
+.grhead b{font-family:'Jost',sans-serif;font-size:15px;font-weight:500;color:var(--ink)}
+.grline{font-size:13.5px;font-weight:300;color:var(--dim2);margin-top:6px}
+.grline .mono{font-family:'Jost',sans-serif;color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+.chip{margin-left:auto;flex:none;padding:4px 11px;border:1px solid;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.chip.ok{color:var(--gold-hi);border-color:var(--gold-dim);background:rgba(200,162,78,.06)}
+.chip.over{color:#C2703F;border-color:rgba(194,112,63,.5);background:rgba(194,112,63,.08)}
+.warn{color:#C2703F;font-weight:500}
+.mgroup{display:flex;gap:8px;margin-top:6px}
+.mbtn{min-width:56px;min-height:44px;background:transparent;border:1px solid var(--gold-dim);color:var(--dim2);font:500 15px 'Jost',sans-serif;cursor:pointer}
+.mbtn[aria-pressed="true"]{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.prog{height:10px;background:rgba(239,231,216,.08);overflow:hidden;margin:14px 0 8px;border:1px solid var(--gold-faint)}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-hi))}
+.stat{font-family:'Jost',sans-serif;font-size:15px;font-weight:300;color:var(--ink);margin-top:14px}
+.dash{color:var(--dim)}
+
+.cta .btn-gold{display:inline-block;margin-top:22px}
+
+@media (min-width:560px){.two{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}}
+</style>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class="brand">
+    <img class="logo" src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class="wm">Cloud9</div>
+    <div class="tag"><span class="hh">Money Basics</span></div>
+  </div>
+  <div class="right">
+    <a class="ig" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets ↗</a>
+  </div>
+</nav>
+<header class="hero">
+  <div class="eyebrow">Free · Cloud9 Research</div>
+  <h1>The Money Map<br><span class="free">where my pay actually goes</span></h1>
+  <p class="sub">Five buckets, three guardrails, one emergency fund, one retirement number — the rules from the reel, written down, with calculators that run <b>your</b> pay through them.</p>
+</header>
+<main>
+
+  <p class="intro">The reel gave you the map in sixty seconds. This page is the full version: the split I use every month, the guardrails I check, and four calculators. Type your monthly take-home once — everything below updates as you type. These are my rules of thumb, not financial advice.</p>
+
+  <!-- ============ CALCULATOR 1 — THE SPLIT ============ -->
+  <section class="topic">
+    <div class="tnum">01 — THE SPLIT</div>
+    <h2>Where every dollar goes</h2>
+    <p class="tdesc">Every month my take-home lands in five buckets. <b>Essentials</b> first — the bills that keep life running. <b>Investing</b> buys future freedom. <b>Emergency</b> is cash with one job. <b>Lifestyle</b> is the fun money I refuse to feel guilty about. <b>Buffer</b> catches the annual bills and broken things the other buckets forget.</p>
+
+    <div class="mcard"><div class="mct">Your monthly take-home pay</div>
+      <label class="flabel" for="inTake">Monthly take-home pay ($)</label>
+      <input class="inp" id="inTake" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="10000">
+      <p class="hint" id="takeHint" hidden>Enter your take-home pay — the number that actually lands in your account, after taxes.</p>
+    </div>
+
+    <div class="mcard"><div class="mct">The split</div>
+      <div class="bar" id="bar" role="img" aria-label="">
+        <i id="segE" style="background:var(--gold-hi)"></i><i id="segI" style="background:var(--gold)"></i><i id="segM" style="background:rgba(200,162,78,.55)"></i><i id="segL" style="background:var(--gold-dim)"></i><i id="segB" style="background:var(--dim)"></i>
+      </div>
+      <div aria-live="polite">
+        <div class="brow"><span class="sw" style="background:var(--gold-hi)"></span><div><span class="bname">Essentials</span><span class="bpct">50%</span><div class="bcov">rent/mortgage, food, utilities, transport, insurance, minimum debt payments</div></div><span class="bamt" id="bEss">—</span></div>
+        <div class="brow"><span class="sw" style="background:var(--gold)"></span><div><span class="bname">Investing</span><span class="bpct">20%</span><div class="bcov">index funds, retirement accounts, anything long-term</div></div><span class="bamt" id="bInv">—</span></div>
+        <div class="brow"><span class="sw" style="background:rgba(200,162,78,.55)"></span><div><span class="bname">Emergency fund</span><span class="bpct">10%</span><div class="bcov">cash only, until it holds 6 months of essentials — then it rolls into Investing</div></div><span class="bamt" id="bEm">—</span></div>
+        <div class="brow"><span class="sw" style="background:var(--gold-dim)"></span><div><span class="bname">Lifestyle</span><span class="bpct">15%</span><div class="bcov">eating out, travel, subscriptions, hobbies</div></div><span class="bamt" id="bLife">—</span></div>
+        <div class="brow"><span class="sw" style="background:var(--dim)"></span><div><span class="bname">Buffer</span><span class="bpct">5%</span><div class="bcov">annual bills, repairs, gifts — the "life happens" account</div></div><span class="bamt" id="bBuf">—</span></div>
+        <p class="btotal" id="bTotal"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CALCULATOR 2 — GUARDRAILS ============ -->
+  <section class="topic">
+    <div class="tnum">02 — THE GUARDRAILS</div>
+    <h2>Three limits worth keeping</h2>
+    <p class="tdesc">Percentages keep the buckets honest. <b>Rent at or under 30%</b> of take-home. <b>All car costs at or under 10%</b> — payment, insurance, gas, everything. <b>Essentials at or under 50%</b>. They use the take-home you typed above, so change it there and these re-check instantly.</p>
+
+    <div class="mcard"><div class="mct">Check my numbers</div>
+      <label class="flabel" for="inRent">Monthly rent / housing ($)</label>
+      <input class="inp" id="inRent" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="2500">
+      <div class="two">
+        <div>
+          <label class="flabel" for="inCar">All monthly car costs ($)</label>
+          <input class="inp" id="inCar" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="500">
+        </div>
+        <div>
+          <label class="flabel" for="inEss">Total monthly essentials ($)</label>
+          <input class="inp" id="inEss" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="5000">
+        </div>
+      </div>
+      <div aria-live="polite">
+        <div class="grrow"><div class="grhead"><b>Rent</b><span class="chip ok" id="gRentChip">✓ PASS</span></div>
+          <div class="grline"><span class="mono" id="gRentAmt">—</span> · <span id="gRentPct">—</span> of take-home · cap 30% (<span id="gRentCap">—</span>)</div></div>
+        <div class="grrow"><div class="grhead"><b>Car — all in</b><span class="chip ok" id="gCarChip">✓ PASS</span></div>
+          <div class="grline"><span class="mono" id="gCarAmt">—</span> · <span id="gCarPct">—</span> of take-home · cap 10% (<span id="gCarCap">—</span>)</div></div>
+        <div class="grrow"><div class="grhead"><b>Essentials — total</b><span class="chip ok" id="gEssChip">✓ PASS</span></div>
+          <div class="grline"><span class="mono" id="gEssAmt">—</span> · <span id="gEssPct">—</span> of take-home · cap 50% (<span id="gEssCap">—</span>)</div></div>
+        <p class="stat" id="fixFirst">If essentials are over 50%, fix that first — every other rule depends on it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CALCULATOR 3 — EMERGENCY FUND ============ -->
+  <section class="topic">
+    <div class="tnum">03 — THE EMERGENCY FUND</div>
+    <h2>Your safety net</h2>
+    <p class="tdesc">The target is <b>six months of your essentials</b>, held in cash — a high-yield savings account, never invested. That fund is the difference between a job loss being a crisis and it being an inconvenient Tuesday. The 10% bucket feeds it until it's full; after that, that 10% rolls into Investing.</p>
+
+    <div class="mcard"><div class="mct">Fund the fund</div>
+      <label class="flabel" for="inEfEss">Monthly essentials ($)</label>
+      <input class="inp" id="inEfEss" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="5000">
+      <span class="flabel" id="mLabel">Months of essentials to hold</span>
+      <div class="mgroup" role="group" aria-labelledby="mLabel">
+        <button type="button" class="mbtn" data-m="3" aria-pressed="false">3</button>
+        <button type="button" class="mbtn" data-m="6" aria-pressed="true">6</button>
+        <button type="button" class="mbtn" data-m="12" aria-pressed="false">12</button>
+      </div>
+      <div class="two">
+        <div>
+          <label class="flabel" for="inEfSaved">Already saved ($)</label>
+          <input class="inp" id="inEfSaved" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="0">
+        </div>
+        <div>
+          <label class="flabel" for="inEfCon">Monthly contribution ($)</label>
+          <input class="inp" id="inEfCon" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="1000">
+        </div>
+      </div>
+      <div aria-live="polite">
+        <div class="grline" style="margin-top:14px">Target <span class="mono" id="efTarget">—</span> · remaining <span class="mono" id="efRem">—</span></div>
+        <div class="prog" role="img" aria-label="Emergency fund progress"><i id="efBar"></i></div>
+        <div class="grline"><span id="efPct">—</span> funded</div>
+        <p class="stat" id="efStat">—</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CALCULATOR 4 — FREEDOM NUMBER ============ -->
+  <section class="topic">
+    <div class="tnum">04 — THE RETIREMENT NUMBER</div>
+    <h2>Your retirement number</h2>
+    <p class="tdesc">My retirement number is <b>25 × my annual expenses</b> — the yearly cost of my life, times twenty-five. At that point a 4% withdrawal covers me indefinitely, and work becomes a choice. I also track the cautious version: <b>30 ×</b>. It takes longer to reach and it forgives worse markets.</p>
+
+    <div class="mcard"><div class="mct">Run my number</div>
+      <label class="flabel" for="inExp">Monthly expenses ($)</label>
+      <input class="inp" id="inExp" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="5000">
+      <div class="two">
+        <div>
+          <label class="flabel" for="inInv">Already invested ($)</label>
+          <input class="inp" id="inInv" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="0">
+        </div>
+        <div>
+          <label class="flabel" for="inMinv">Monthly investment ($)</label>
+          <input class="inp" id="inMinv" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="2000">
+        </div>
+      </div>
+      <label class="flabel" for="inRet">Expected annual return (%)</label>
+      <input class="inp" id="inRet" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" value="5">
+      <p class="note">5% is my default working assumption — growth after inflation. A planning number, not a promise.</p>
+      <div aria-live="polite">
+        <div class="grrow"><div class="grhead"><b>Retirement number — 25×</b></div><span class="bamt" id="fdNum">—</span></div>
+        <div class="grrow"><div class="grhead"><b>Cautious — 30×</b></div><span class="bamt" id="fdCau">—</span></div>
+        <p class="stat" id="fdStat">—</p>
+      </div>
+      <p class="note">This assumes the monthly investment never changes and the return is an average — some years run hotter, some colder.</p>
+    </div>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section class="topic">
+    <div class="tnum">05 — SOURCES</div>
+    <h2>Where these numbers come from</h2>
+    <p class="tdesc"><span class="snum">01</span> · <b>The split.</b> It's a cousin of the 50/30/20 budget that Elizabeth Warren popularized in <i>All Your Worth</i> — 50% needs, 30% wants, 20% saving. I keep the 50, then move ten points out of wants and into saving, because I'd rather buy my freedom earlier than spend it at restaurants.</p>
+    <p class="tdesc"><span class="snum">02</span> · <b>The 4% rule.</b> From the 1998 Trinity study (<i>Retirement Savings: Choosing a Withdrawal Rate That Is Sustainable</i>). Withdrawing 4% of a US stock-and-bond portfolio in year one, then adjusting for inflation, survived most 30-year retirements in the historical data. Twenty-five times annual expenses is the same idea from the other end. That's a US-market historical result — not a guarantee about the future.</p>
+    <p class="tdesc"><span class="snum">03</span> · <b>The six-month fund.</b> A personal-finance convention, not a law: six months of essentials in cash, because that's roughly how long a serious job hunt takes. It assumes a reasonably stable income; if mine were shaky, I'd hold more.</p>
+    <p class="tdesc">All of these are rules of thumb for a normal, stable income — a starting map, not advice, and not a prediction of any market.</p>
+  </section>
+
+  <!-- ============ CLOSE ============ -->
+  <div class="cta">
+    <div class="lbl">Run your real numbers</div>
+    <p class="line">The reel was the map. This page is the ruler. Plug in your actual take-home, find the one bucket that's off, and fix that one first.</p>
+    <a class="btn-gold" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+</main>
+<footer>
+  <span>Educational only · not financial advice · © Cloud9 Markets</span>
+  <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets on Instagram</a>
+</footer>
+</div>
+
+<script src="calc.js"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+  // Page parses its own inputs (CALC's n0 stays as the safety net).
+  function parseNum(id) {
+    var s = $(id).value.trim().replace(/[$,\s]/g, '');
+    if (s === '') return null; // empty — caller decides
+    if (!/^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$/.test(s)) return null; // junk like 12px / abc
+    var v = parseFloat(s);
+    return isFinite(v) ? v : null;
+  }
+  function money(v) {
+    if (v === null || v === undefined || !isFinite(v)) return '—';
+    return fmt.format(Object.is(v, -0) ? 0 : v);
+  }
+  function pct(v) {
+    if (v === null || v === undefined || !isFinite(v)) return '—';
+    var r = Math.round(v * 10) / 10;
+    return (Object.is(r, -0) ? 0 : r) + '%';
+  }
+  function set(id, t) { $(id).textContent = t; }
+
+  // ONE state object; every calculator reads from it.
+  var state = {
+    takeHome: 10000, takeInvalid: false,
+    rent: 2500, car: 500, essentials: 5000,
+    efEss: 5000, efMonths: 6, efSaved: 0, efCon: 1000,
+    exp: 5000, inv: 0, minv: 2000, ret: 5
+  };
+
+  function read() {
+    var v;
+    v = parseNum('inTake');
+    state.takeInvalid = (v === null || v < 0);
+    state.takeHome = v === null ? 0 : v;
+    ['rent:inRent', 'car:inCar', 'essentials:inEss', 'efEss:inEfEss', 'efSaved:inEfSaved',
+     'efCon:inEfCon', 'exp:inExp', 'inv:inInv', 'minv:inMinv', 'ret:inRet'].forEach(function (pair) {
+      var k = pair.split(':')[0], id = pair.split(':')[1];
+      var x = parseNum(id);
+      state[k] = x === null ? 0 : x; // empty or junk optional field → 0, no NaN ever reaches CALC
+    });
+  }
+
+  function chip(id, ok) {
+    var el = $(id);
+    el.textContent = ok ? '✓ PASS' : '✗ OVER';
+    el.className = 'chip ' + (ok ? 'ok' : 'over');
+  }
+  function guardRow(prefix, g) {
+    set(prefix + 'Amt', money(g.amount));
+    set(prefix + 'Pct', pct(g.pct));
+    set(prefix + 'Cap', money(g.capAmount));
+    chip(prefix + 'Chip', g.ok);
+  }
+
+  function render() {
+    var tk = state.takeInvalid ? 0 : state.takeHome;
+
+    /* --- 1. the split --- */
+    var s = CALC.split(tk);
+    if (state.takeInvalid) {
+      ['bEss', 'bInv', 'bEm', 'bLife', 'bBuf'].forEach(function (id) { set(id, '—'); });
+      set('bTotal', 'Enter your take-home pay above to see the split.');
+      $('bar').setAttribute('aria-label', '');
+    } else {
+      set('bEss', money(s.essentials)); set('bInv', money(s.investing));
+      set('bEm', money(s.emergency)); set('bLife', money(s.lifestyle));
+      set('bBuf', money(s.buffer));
+      set('bTotal', 'Adds to ' + money(s.total) + ' — 100% of take-home.');
+      $('bar').setAttribute('aria-label', 'Stacked bar of take-home: Essentials 50%, Investing 20%, Emergency 10%, Lifestyle 15%, Buffer 5%.');
+    }
+    var w = state.takeInvalid ? [0, 0, 0, 0, 0] : [50, 20, 10, 15, 5];
+    ['segE', 'segI', 'segM', 'segL', 'segB'].forEach(function (id, i) { $(id).style.width = w[i] + '%'; });
+    $('takeHint').hidden = !state.takeInvalid;
+
+    /* --- 2. guardrails --- */
+    var g = CALC.guardrails({ takeHome: tk, rent: state.rent, car: state.car, essentials: state.essentials });
+    guardRow('gRent', g.rent); guardRow('gCar', g.car); guardRow('gEss', g.essentials);
+    $('fixFirst').className = 'stat' + (g.essentials.ok ? '' : ' warn');
+
+    /* --- 3. emergency fund --- */
+    var e = CALC.emergencyFund({
+      monthlyEssentials: state.efEss, months: state.efMonths,
+      saved: state.efSaved, monthlyContribution: state.efCon
+    });
+    set('efTarget', money(e.target));
+    set('efRem', money(e.remaining));
+    set('efPct', pct(e.pctFunded));
+    $('efBar').style.width = e.pctFunded + '%';
+    if (e.monthsToFull === null) {
+      set('efStat', 'Set a monthly contribution above and I’ll count the months for you.');
+    } else if (e.monthsToFull === 0) {
+      set('efStat', 'Fully funded. It stays in cash — high-yield savings, never invested.');
+    } else {
+      set('efStat', 'Fully funded in ' + e.monthsToFull + ' months at this pace.');
+    }
+
+    /* --- 4. freedom number --- */
+    var f = CALC.freedom({
+      monthlyExpenses: state.exp, invested: state.inv,
+      monthlyInvestment: state.minv, annualReturnPct: state.ret
+    });
+    set('fdNum', money(f.number));
+    set('fdCau', money(f.cautiousNumber));    if (f.monthsToFreedom === 0) {
+      set('fdStat', 'Already there — now the job is staying there.');
+    } else if (f.monthsToFreedom === null) {
+      if (state.minv <= 0) {
+        set('fdStat', "At this rate it never arrives — $0 a month is going in. Set a monthly investment above and the countdown begins.");
+      } else {
+        set('fdStat', 'At this rate the number stays more than a century out. A bigger monthly investment or a higher assumed return pulls it closer.');
+      }
+    } else {
+      set('fdStat', 'At this rate you get there in ' + f.yearsToFreedom + ' years.');
+    }
+  }
+
+  document.querySelectorAll('.inp').forEach(function (el) {
+    el.addEventListener('input', function () { read(); render(); });
+  });
+  document.querySelectorAll('.mbtn').forEach(function (el) {
+    el.addEventListener('click', function () {
+      state.efMonths = parseInt(el.getAttribute('data-m'), 10);
+      document.querySelectorAll('.mbtn').forEach(function (b) {
+        b.setAttribute('aria-pressed', b === el ? 'true' : 'false');
+      });
+      render();
+    });
+  });
+
+  read();
+  render();
+})();
+</script>
+</body></html>
