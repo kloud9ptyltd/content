@@ -124,6 +124,8 @@ footer{margin-top:auto;border-top:1px solid var(--gold-faint);padding:30px clamp
 .qq .res b.ok{color:#5BD99C}.qq .res b.no{color:#C97B6B}
 .quiz .score{margin-top:24px;padding-top:16px;border-top:1px solid var(--gold-faint);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
 .quiz .score b{color:var(--gold-hi);font-weight:500}
+.quiz .requiz{margin-left:14px;background:transparent;border:1px solid var(--gold-faint);color:var(--dim);font-family:inherit;font-size:10px;letter-spacing:.24em;text-transform:uppercase;padding:5px 12px;cursor:pointer;border-radius:0}
+.quiz .requiz:hover{color:var(--gold-hi);border-color:var(--gold-dim)}
 .steal{margin-top:34px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:26px 30px}
 .steal .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
 .steal .q{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.55;color:var(--ink);margin:0 0 18px;text-wrap:pretty}
@@ -353,6 +355,9 @@ const P={"modules":[{"id":"market-decoded-01","title":"What a 13F filing actuall
 const $=s=>document.querySelector(s);const LKEY="c9acad_"+SLUG;
 const localDone=()=>{try{return JSON.parse(localStorage.getItem(LKEY)||"{}")}catch(e){return{}}};
 const saveLocal=d=>{try{localStorage.setItem(LKEY,JSON.stringify(d))}catch(e){}};
+const LQKEY="c9quiz_"+SLUG;
+const localQuiz=()=>{try{return JSON.parse(localStorage.getItem(LQKEY)||"{}")}catch(e){return{}}};
+const saveLocalQuiz=d=>{try{localStorage.setItem(LQKEY,JSON.stringify(d))}catch(e){}};
 const pad=n=>String(n).padStart(2,"0");
 let openId=null;
 
@@ -400,6 +405,20 @@ async function fbInit(){
 
 const unlocked=()=>!!(profile&&profile.unlocked&&profile.unlocked[SLUG]);
 const prog=()=>user?((profile&&profile.progress&&profile.progress[SLUG])||{}):localDone();
+const quizAll=()=>user?((profile&&profile.quiz&&profile.quiz[SLUG])||{}):localQuiz();
+const quizFor=id=>quizAll()[id]||{};
+/* Mirrors the progress write: local copy always, Firestore when signed in.
+   Failures are swallowed like the other writes, but warned so a rules
+   rejection on the new `quiz` field is findable in the console. */
+function saveQuiz(id,rec){
+ const all={...quizAll()};
+ if(rec)all[id]=rec;else delete all[id];
+ if(user&&profile){profile.quiz={...(profile.quiz||{}),[SLUG]:all};}
+ saveLocalQuiz(all);
+ if(!user||!uref||!fx)return;
+ const path="quiz."+SLUG+"."+id;
+ fx.updateDoc(uref,{[path]:rec?rec:fx.deleteField(),lastSeen:fx.serverTimestamp()})
+  .catch(e=>console.warn("[c9] quiz write failed",e&&e.code||e));}
 const canOpen=m=>m.n===1||(user&&unlocked());
 async function sha(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s.trim().toUpperCase()));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
 
@@ -436,7 +455,7 @@ function openLesson(id){const m=M.find(x=>x.id==id);if(!m||!m.ready)return;
   $("#mCopy").textContent="Copy prompt";
   $("#mCopy").onclick=async()=>{try{await navigator.clipboard.writeText(m.prompt);$("#mCopy").textContent="Copied ✓"}catch(e){}};}
  else $("#mSteal").style.display="none";
- renderPractice(m.practice);renderQuiz(m.quiz);
+ renderPractice(m.practice);renderQuiz(m.quiz,id);
  $("#modal").classList.add("on");document.body.style.overflow="hidden";}
 
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -446,26 +465,68 @@ function renderPractice(p){const el=$("#mPrac");
  $("#mPracSteps").innerHTML=(p.steps||[]).map(s=>`<li>${esc(s)}</li>`).join("");
  $("#mPracCheck").textContent=p.check||"";
  el.style.display="";}
-function renderQuiz(qs){const el=$("#mQuiz");
+/* Quiz results persist to academy_users/{uid}.quiz[SLUG][lessonId] as
+   {a:[chosenIdx|null,...], s:score, t:total, n:attempts, ts:ms}. Signed-out
+   answers go to localStorage under LQKEY and fold into the profile on first
+   sign-in, exactly as the lesson ticks do. Each answer writes immediately, so
+   an abandoned quiz still records what was attempted — and which distractor
+   was chosen, which is the part worth having. */
+function renderQuiz(qs,lid){const el=$("#mQuiz");
  if(!Array.isArray(qs)||!qs.length){el.style.display="none";$("#mQuizQs").innerHTML="";return;}
- const K="ABCD";let score=0,answered=0;
- const tally=()=>{$("#mQuizScore").innerHTML=`Score <b>${score} / ${qs.length}</b>`+(answered===qs.length?" · complete":answered?` · ${qs.length-answered} to go`:"");};
- $("#mQuizQs").innerHTML=qs.map((q,i)=>`<div class=qq data-i="${i}">
-  <div class=qn id="qq${i}">Question ${i+1} of ${qs.length}</div><p class=qt>${esc(q.q)}</p>
-  <div class=opts role=group aria-labelledby="qq${i}">${(q.options||[]).map((o,j)=>
-   `<button type=button class=qopt data-j="${j}"><span class=k aria-hidden=true>${K[j]}</span><span class=t>${esc(o)}</span><span class=mk></span></button>`).join("")}</div>
-  <div class=res role=status></div></div>`).join("");
- document.querySelectorAll("#mQuizQs .qq").forEach(box=>{const q=qs[+box.dataset.i];
-  box.querySelectorAll(".qopt").forEach(b=>b.onclick=()=>{
-   if(box.classList.contains("done"))return;
-   const j=+b.dataset.j,ok=j===q.answer_index;
-   box.querySelectorAll(".qopt").forEach(x=>{const k=+x.dataset.j;x.disabled=true;
-    if(k===q.answer_index){x.classList.add("right");x.querySelector(".mk").textContent=ok?"✓ Correct":"✓ Answer";}
-    else if(k===j){x.classList.add("wrong");x.querySelector(".mk").textContent="✕ Not quite";}
-    else x.classList.add("dimmed");});
-   box.querySelector(".res").innerHTML=`<b class="${ok?'ok':'no'}">${ok?"Correct":"Not quite"}</b>${esc(q.why||"")}`;
-   box.classList.add("done");answered++;if(ok)score++;tally();});});
- tally();el.style.display="";}
+ const K="ABCD",n=qs.length;
+ const prev=quizFor(lid);
+ // a[i] = the option index chosen for question i, or null if unanswered
+ let a=Array.isArray(prev.a)&&prev.a.length===n?prev.a.slice():new Array(n).fill(null);
+ let attempts=prev.n||0;
+ const scoreOf=v=>v.reduce((t,c,i)=>t+(c===qs[i].answer_index?1:0),0);
+ const doneCt=v=>v.filter(c=>c!==null&&c!==undefined).length;
+
+ const tally=()=>{const ans=doneCt(a),sc=scoreOf(a);
+  const tail=ans===n?" · complete":(ans?` · ${n-ans} to go`:"");
+  const again=ans?' <button type=button class=requiz id=mQuizAgain>Try again</button>':"";
+  $("#mQuizScore").innerHTML=`Score <b>${sc} / ${n}</b>${tail}`+
+   (attempts>1?` · attempt ${attempts}`:"")+again;
+  const ab=$("#mQuizAgain");if(ab)ab.onclick=()=>{a=new Array(n).fill(null);attempts++;paint();save();};
+  syncDone();};
+
+ const paint=()=>{
+  $("#mQuizQs").innerHTML=qs.map((q,i)=>`<div class=qq data-i="${i}">
+   <div class=qn id="qq${i}">Question ${i+1} of ${n}</div><p class=qt>${esc(q.q)}</p>
+   <div class=opts role=group aria-labelledby="qq${i}">${(q.options||[]).map((o,j)=>
+    `<button type=button class=qopt data-j="${j}"><span class=k aria-hidden=true>${K[j]}</span><span class=t>${esc(o)}</span><span class=mk></span></button>`).join("")}</div>
+   <div class=res role=status></div></div>`).join("");
+  document.querySelectorAll("#mQuizQs .qq").forEach(box=>{
+   const i=+box.dataset.i,q=qs[i];
+   if(a[i]!==null&&a[i]!==undefined)mark(box,q,a[i]);
+   box.querySelectorAll(".qopt").forEach(b=>b.onclick=()=>{
+    if(box.classList.contains("done"))return;
+    const j=+b.dataset.j;a[i]=j;mark(box,q,j);tally();save();});});
+  tally();};
+
+ const mark=(box,q,j)=>{const ok=j===q.answer_index;
+  box.querySelectorAll(".qopt").forEach(x=>{const k=+x.dataset.j;x.disabled=true;
+   if(k===q.answer_index){x.classList.add("right");x.querySelector(".mk").textContent=ok?"✓ Correct":"✓ Answer";}
+   else if(k===j){x.classList.add("wrong");x.querySelector(".mk").textContent="✕ Not quite";}
+   else x.classList.add("dimmed");});
+  box.querySelector(".res").innerHTML=`<b class="${ok?'ok':'no'}">${ok?"Correct":"Not quite"}</b>${esc(q.why||"")}`;
+  box.classList.add("done");};
+
+ const save=()=>{const ans=doneCt(a);
+  const rec={a:a.slice(),s:scoreOf(a),t:n,n:Math.max(attempts,ans?1:0),ts:Date.now()};
+  if(!ans)return saveQuiz(lid,null);
+  saveQuiz(lid,rec);};
+
+ if(doneCt(a)&&!attempts)attempts=1;
+ paint();el.style.display="";}
+
+/* The Done button reports the quiz result rather than gating on it — a reader
+   who skips the quiz can still finish the lesson, but the label stops
+   "complete" from silently meaning "clicked a button". */
+function syncDone(){const b=$("#mDone");if(!b||!openId)return;
+ if(!user){b.textContent="Sign in to track progress";return;}
+ const q=quizFor(openId),base=prog()[openId]?"Mark as not complete":"Mark lesson complete";
+ b.textContent=(q&&q.t&&q.a&&q.a.filter(x=>x!==null&&x!==undefined).length===q.t)
+  ?`${base} · quiz ${q.s}/${q.t}`:base;}
 function closeLesson(){$("#modal").classList.remove("on");document.body.style.overflow="";openId=null;}
 $("#mClose").onclick=$("#mClose2").onclick=closeLesson;
 $("#modal").onclick=e=>{if(e.target.id==="modal")closeLesson()};
@@ -499,9 +560,16 @@ async function onUser(signedIn){
   const merged={...remote,...local};
   profile.progress={...(profile.progress||{}),[SLUG]:merged};
   saveLocal(merged);
+  // same for quiz results — the remote record wins on conflict, because a
+  // signed-in attempt is the more deliberate one
+  const lq=localQuiz();
+  const rq=(profile.quiz&&profile.quiz[SLUG])||{};
+  const mq={...lq,...rq};
+  profile.quiz={...(profile.quiz||{}),[SLUG]:mq};
+  saveLocalQuiz(mq);
   try{await fx.setDoc(uref,{email:user.email||null,name:user.displayName||null,
    photo:user.photoURL||null,lastSeen:fx.serverTimestamp(),
-   progress:{[SLUG]:merged}},{merge:true});}catch(e){}}
+   progress:{[SLUG]:merged},quiz:{[SLUG]:mq}},{merge:true});}catch(e){}}
  render();}
 render();
 fbInit();
