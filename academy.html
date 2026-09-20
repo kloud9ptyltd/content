@@ -86,6 +86,44 @@ footer{margin-top:auto;border-top:1px solid var(--gold-faint);padding:30px clamp
 .lesson li{font-size:16px;font-weight:300;line-height:1.7;color:#DDD2BE;margin-bottom:8px}
 .lesson strong{color:var(--ink);font-weight:500}
 .lesson em{color:var(--gold-hi)}
+.lesson code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;color:var(--gold-hi)}
+.lesson pre{margin:0 0 16px;padding:16px 18px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.04);overflow-x:auto;font-size:13.5px;line-height:1.6}
+.lesson pre code{color:var(--ink);font-size:inherit}
+.lesson table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:15px;font-weight:300;color:#DDD2BE}
+.lesson th{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:500;text-align:left;padding:8px 10px;border-bottom:1px solid var(--gold-dim)}
+.lesson td{padding:8px 10px;border-bottom:1px solid var(--gold-faint)}
+/* practice + quiz (lesson uplift, 2026-09) — same Luxe grammar as .steal */
+.prac{margin-top:34px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:26px 30px}
+.prac .lbl,.quiz .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.prac .task{font-family:'Playfair Display',serif;font-size:19px;line-height:1.5;color:var(--ink);margin:0 0 18px;text-wrap:pretty}
+.prac ol{list-style:none;margin:0 0 20px;padding:0;counter-reset:st}
+.prac li{position:relative;padding-left:40px;font-size:15.5px;font-weight:300;line-height:1.65;color:#DDD2BE;margin-bottom:10px;counter-increment:st}
+.prac li::before{content:counter(st,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Playfair Display',serif;font-size:15px;color:var(--gold-hi)}
+.prac .chk{border-top:1px solid var(--gold-faint);padding-top:16px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.prac .chk b{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);font-weight:500;margin-bottom:6px}
+.quiz{margin-top:38px;border-top:1px solid var(--gold-faint);padding-top:26px}
+.qq{padding:22px 0 0;margin-top:22px;border-top:1px solid var(--gold-faint)}
+.qq:first-child{padding-top:0;margin-top:0;border-top:none}
+.qq .qn{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.qq .qt{font-family:'Playfair Display',serif;font-size:18px;line-height:1.5;color:var(--ink);margin:0 0 16px;text-wrap:pretty}
+.qq .opts{display:grid;gap:8px}
+.qopt{display:flex;gap:14px;align-items:flex-start;width:100%;min-height:44px;text-align:left;background:transparent;border:1px solid var(--gold-faint);color:#DDD2BE;font-family:'Jost',sans-serif;font-size:15px;font-weight:300;line-height:1.5;padding:12px 16px;cursor:pointer;transition:border-color .2s,background .2s}
+.qopt:hover:not(:disabled){border-color:var(--gold-dim);background:rgba(200,162,78,.05)}
+.qopt:disabled{cursor:default}
+.qopt .k{font-family:'Playfair Display',serif;color:var(--gold);flex:none;min-width:14px;line-height:1.5}
+.qopt .t{flex:1}
+.qopt .mk{flex:none;font-size:10px;letter-spacing:.24em;text-transform:uppercase;font-weight:500;padding-top:4px}
+.qopt.right{border-color:var(--gold);background:rgba(200,162,78,.1);color:var(--ink)}
+.qopt.right .mk{color:#5BD99C}
+.qopt.wrong{border-color:#C97B6B;color:var(--ink)}
+.qopt.wrong .mk{color:#C97B6B}
+.qopt.dimmed{opacity:.45}
+.qq .res{display:none;margin-top:14px;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.qq.done .res{display:block;animation:rise .25s ease}
+.qq .res b{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;font-weight:500;margin-bottom:6px}
+.qq .res b.ok{color:#5BD99C}.qq .res b.no{color:#C97B6B}
+.quiz .score{margin-top:24px;padding-top:16px;border-top:1px solid var(--gold-faint);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
+.quiz .score b{color:var(--gold-hi);font-weight:500}
 .steal{margin-top:34px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:26px 30px}
 .steal .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
 .steal .q{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.55;color:var(--ink);margin:0 0 18px;text-wrap:pretty}
@@ -199,6 +237,15 @@ footer{flex-direction:column;align-items:center;text-align:center;gap:10px;
 .steal{margin-top:28px;padding:20px 18px}
 .steal .q{font-size:16.5px}
 .steal .btn-line{width:100%;padding:13px}
+.prac{margin-top:28px;padding:20px 18px}
+.prac .task{font-size:17px}
+.prac li{font-size:14.5px;padding-left:34px}
+.qq .qt{font-size:16.5px}
+.qopt{font-size:14.5px;padding:12px 14px;gap:12px}
+.qopt .mk{display:block;width:100%;padding-top:6px}
+.qopt{flex-wrap:wrap}
+.lesson pre{padding:12px 14px;font-size:12.5px}
+.lesson table{font-size:14px}
 .sheet .actions{margin-top:28px;flex-direction:column;gap:12px}
 .sheet .actions .btn-gold,.sheet .actions .btn-line{width:100%;padding:15px;text-align:center}
 .login{max-width:none;padding:22px 22px calc(48px + env(safe-area-inset-bottom))}
