@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Weekend Build II — 5 more Claude trading agents · Cloud9</title>
+<meta name="description" content="Five more things to build with Claude in one weekend — an AI that draws the next candles on your chart, an earnings alert hub, a politician-filing tracker, a strategy-testing gauntlet, and a voice-controlled trading desk. Every guide free.">
+<meta property="og:title" content="The Weekend Build II — 5 more Claude trading agents">
+<meta property="og:description" content="Friday night you have a laptop. Sunday night you have an AI that forecasts candles on your chart, alerts you to every earnings release, tracks politician filings, stress-tests your strategies and answers out loud.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(26px,3.4vw,40px);line-height:1.18;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:800px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+
+.byline{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:20px 0 0}
+.byline b{color:var(--gold-hi);font-weight:500}
+
+.callout{border-left:2px solid var(--gold-dim);background:rgba(200,162,78,.05);padding:22px 26px;margin:6px 0 20px;max-width:800px}
+.callout .clbl{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.callout p{margin:0;font-size:14.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2)}
+
+.gates{margin:20px 0 22px;padding:0;list-style:none;max-width:800px;counter-reset:gate}
+.gates li{counter-increment:gate;position:relative;padding:16px 0 16px 46px;border-top:1px solid var(--gold-faint);font-size:14.5px;font-weight:300;line-height:1.65;letter-spacing:.01em;color:var(--dim2)}
+.gates li:first-child{border-top:none}
+.gates li::before{content:counter(gate);position:absolute;left:0;top:14px;font-family:'Playfair Display',serif;font-weight:500;color:var(--gold-hi);font-size:22px;line-height:1}
+.gates b{color:var(--ink);font-weight:500}
+
+.codebox{margin:20px 0 22px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);max-width:800px}
+.codebox .clabel{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);padding:14px 18px 0}
+.codebox pre{margin:0;padding:14px 18px 20px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.codebox code{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.65;color:var(--ink);white-space:pre}
+
+.warn{border:1px solid #C97B6B;background:rgba(201,123,107,.07);padding:22px 26px;margin:20px 0 22px;max-width:800px}
+.warn .wlbl{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#C97B6B;margin-bottom:12px}
+.warn p{margin:0;font-size:14.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2)}
+
+.meta-row{display:flex;gap:28px;flex-wrap:wrap;margin:22px 0 24px}
+.meta-row span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.meta-row b{color:var(--gold);font-weight:500}
+
+.go{display:inline-block;margin-top:2px;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-hi);border:1px solid var(--gold);padding:13px 28px;background:transparent;transition:background .2s ease,color .2s ease}
+.go:hover{background:var(--gold);color:var(--bg)}
+
+.order{margin-top:64px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:34px 36px;text-align:center}
+.order .olbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.order p{margin:0 auto;max-width:720px;font-size:15px;font-weight:300;line-height:1.75;letter-spacing:.01em;color:var(--dim2)}
+.order a{color:var(--gold-hi)}
+.order a:hover{color:#fff}
+
+@media (max-width:600px){
+.callout,.warn,.codebox,.gates{max-width:100%}
+.meta-row{gap:18px 24px}
+.order{padding:26px 20px}
+}
+
+figure.shot{margin:26px 0 0;max-width:800px}
+figure.shot img{width:100%;height:auto;display:block;border:1px solid var(--gold-faint)}
+figure.shot figcaption{font-size:12px;font-weight:300;color:var(--dim);letter-spacing:.02em;margin-top:10px;line-height:1.6}
+.funnel{margin:26px 0 0;max-width:800px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:26px 24px}
+.funnel .flbl{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.frow{display:grid;grid-template-columns:132px 1fr 42px;align-items:center;gap:14px;margin-bottom:12px}
+.frow .fname{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim2)}
+.frow .fbar{height:16px;background:rgba(200,162,78,.10);position:relative}
+.frow .fbar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-dim),var(--gold))}
+.frow .fn{font-family:'Playfair Display',serif;font-size:19px;color:var(--gold-hi);text-align:right;line-height:1}
+.frow.kill .fbar i{background:rgba(201,123,107,.35)}
+.frow.kill .fn{color:#C97B6B}
+.funnel .fnote{font-size:12px;font-weight:300;color:var(--dim);margin:16px 0 0;line-height:1.6}
+@media (max-width:600px){.frow{grid-template-columns:96px 1fr 38px;gap:10px}.frow .fname{font-size:10px;letter-spacing:.08em}}
+</style>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class="brand">
+    <img class="logo" src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class="wm">Cloud9 <b>Research</b></div>
+    <div class="tag"><span class="hh">The Weekend Build II</span></div>
+  </div>
+  <div class="right">
+    <a class="ig" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets ↗</a>
+  </div>
+</nav>
+<header class="hero">
+  <div class="eyebrow">Part II · Free · Cloud9 Research</div>
+  <h1>5 more AI Finance agents.<br><span class="free">One weekend. Still $0.</span></h1>
+  <p class="sub">Part one built the foundation: charts, briefs, a desk, a backtester. This is the follow-up — five builds that go further. An AI that draws its forecast candles onto your live chart, an alert hub that never misses an earnings release, a tracker that reads politicians' own filings, a gauntlet that kills bad strategies before they cost you anything, and a desk that answers you out loud. Every guide is free. Every one of these runs on this account's own machines.</p>
+  <p class="byline">By <b>Cloud9 Research</b></p>
+</header>
+<main>
+
+  <section class="topic">
+    <div class="tnum">BUILD 01 · Saturday morning</div>
+    <h2>An AI that draws the next candles on your chart.</h2>
+    <p class="tdesc">Kronos is the first open-source foundation model built for candlesticks — trained on K-line data from more than 45 exchanges, MIT licensed, accepted to AAAI 2026. It doesn't forecast a price line like most models. It takes full OHLCV and generates the next candles, wicks and all. You run it on your laptop, then have Claude turn its output into a Pine script that draws those ghost candles ahead of live price on TradingView.</p>
+
+    <div class="callout">
+      <div class="clbl">Before you trust it</div>
+      <p>Read this before you trust it. Kronos is a short-horizon model — roughly the next 10 candles — and it is stochastic, so two runs disagree. In my own testing across several tickers it leaned persistently toward mean reversion, calling a fall on instruments that had no business falling. Run it for the visual and the experiment. Do not trade it. If you want a number you can rely on, the honest move is to log its forecasts and score them against what actually happened before you believe a single one.</p>
+    </div>
+
+    <div class="codebox">
+      <div class="clabel">the shape of it</div>
+      <pre><code># 1. run the model locally (CPU is fine)
+python forecast.py NVDA
+
+# 2. hand the output to Claude:
+#    "turn these predicted OHLC values into a Pine v6 indicator
+#     that draws them as candles ahead of the last bar,
+#     using xloc.bar_time with future timestamps"
+
+# 3. paste the generated script into the Pine editor</code></pre>
+    </div>
+
+    <figure class="shot">
+      <img src="weekend2-kronos.png" alt="NVDA daily candles with ten semi-transparent forecast candles extending past the last real bar, inside a shaded band" loading="lazy">
+      <figcaption>The actual output: 34 real NVDA sessions, then ten candles the model generated, with the shaded band showing where repeated runs disagreed. This is the picture the Pine script puts on your TradingView chart — and note it is calling a fall, which is exactly the bias described above.</figcaption>
+    </figure>
+
+    <div class="meta-row">
+      <span>TIME <b>~1.5 hrs</b></span>
+      <span>DIFFICULTY <b>medium</b></span>
+      <span>COST <b>$0</b></span>
+    </div>
+    <a class="go" href="kronos-market-ai.html">Open the guide →</a>
+  </section>
+
+  <section class="topic">
+    <div class="tnum">BUILD 02 · Saturday afternoon</div>
+    <h2>Never miss an earnings release again.</h2>
+    <p class="tdesc">An agent that watches the earnings calendar, pings you before the bell when something you follow is due, then comes back after the release with the actual numbers against estimates. It runs on a free data tier and a webhook. No terminal subscription, no alerts you forget to set.</p>
+    <p class="tdesc">The part nobody warns you about: calendars lie. Two free sources will disagree about which companies report on a given day, and plenty of rows arrive with no session attached — you can't tell whether it's before the open or after the close. Reconcile two calendars rather than trusting one, treat a missing time as unknown instead of guessing, and match a result to its expected release inside a window of a day or two rather than demanding an exact date. Get those three things right and the agent stops missing releases.</p>
+
+    <div class="meta-row">
+      <span>TIME <b>~2 hrs</b></span>
+      <span>DIFFICULTY <b>medium</b></span>
+      <span>COST <b>$0</b></span>
+    </div>
+    <a class="go" href="earnings-alert-agent.html">Open the guide →</a>
+  </section>
+
+  <section class="topic">
+    <div class="tnum">BUILD 03 · Saturday night</div>
+    <h2>Read politicians' trades from their own filings.</h2>
+    <p class="tdesc">US officials have to disclose their trades, and those disclosures are public, free and machine-readable enough for an AI to parse. Claude fetches the filings, pulls each transaction into a table, and plots the buys and sells onto a price chart so you can see exactly where someone bought. No paid aggregator — go to the primary source, because the free middlemen break constantly.</p>
+
+    <div class="callout">
+      <div class="clbl">Know what you're looking at</div>
+      <p>Know what you're looking at. These are periodic transaction reports, filed with a legal lag that can run to 45 days after the trade. By the time you read one, the price has moved. Amounts are disclosed in broad bands, not exact dollars. This is a research and storytelling tool — a way to study what disclosure actually reveals — not a signal to copy.</p>
+    </div>
+
+    <div class="meta-row">
+      <span>TIME <b>~2 hrs</b></span>
+      <span>DIFFICULTY <b>medium</b></span>
+      <span>COST <b>$0</b></span>
+    </div>
+    <a class="go" href="trump-trade-tracker.html">Open the guide →</a>
+  </section>
+
+  <section class="topic">
+    <div class="tnum">BUILD 04 · Sunday morning</div>
+    <h2>A gauntlet that kills bad strategies.</h2>
+    <p class="tdesc">Anyone can find a strategy that looks good on one chart. The hard part is proving it isn't luck. So don't test a strategy — build a gauntlet and make every strategy earn its way through. Claude writes the variants, the gauntlet kills the ones that don't survive, and almost all of them don't. That's the point: the value is in the rejection rate, not in finding a winner.</p>
+
+    <ol class="gates">
+      <li><b>Full-window backtest.</b> Real fees, real spreads, years of data. Most candidates die here — and a strategy that can't clear this bar was never a strategy.</li>
+      <li><b>Walk-forward.</b> Split the history in half. Tune on the first half, test on the second, untouched. Anything that only works on the half you tuned on is curve-fitted, and this is what catches it.</li>
+      <li><b>Parameter jitter.</b> Nudge every setting a few percent in both directions and re-run. A real edge sits on a plateau and survives the nudge. A fluke sits on a knife-edge and collapses. This gate is the most useful one and almost nobody runs it.</li>
+      <li><b>Paper trading.</b> Live data, fake money, weeks not days. Only after all four does anything deserve a conversation about real capital.</li>
+    </ol>
+
+    <div class="funnel">
+      <div class="flbl">One batch through the gates</div>
+      <div class="frow"><span class="fname">Written</span><span class="fbar"><i style="width:100%"></i></span><span class="fn">20</span></div>
+      <div class="frow"><span class="fname">Made money</span><span class="fbar"><i style="width:65%"></i></span><span class="fn">13</span></div>
+      <div class="frow"><span class="fname">Survived walk-forward</span><span class="fbar"><i style="width:30%"></i></span><span class="fn">6</span></div>
+      <div class="frow"><span class="fname">Survived jitter</span><span class="fbar"><i style="width:10%"></i></span><span class="fn">2</span></div>
+      <div class="frow kill"><span class="fname">Rejected</span><span class="fbar"><i style="width:90%"></i></span><span class="fn">18</span></div>
+      <p class="fnote">Nine out of ten died, and the biggest cull came after the backtest — at the two gates most people never run. That ratio is the product. A process that approves everything you feed it is not testing anything.</p>
+    </div>
+
+    <p class="tdesc">The most useful result I ever got from this was a failure. An early strategy came back with a <b>67% win rate</b> — and still lost money, because the losses were bigger than the wins. A high win rate is not an edge. Expectancy is. The gauntlet told me that in about three seconds, which is three seconds better than finding out with real money.</p>
+
+    <div class="codebox">
+      <div class="clabel">the gauntlet, in commands</div>
+      <pre><code># free, open-source, runs locally -- freqtrade
+freqtrade backtesting  --strategy MyIdea --timerange 20240101-20250101
+freqtrade backtesting  --strategy MyIdea --timerange 20250101-20260101   # walk-forward: unseen half
+freqtrade hyperopt     --strategy MyIdea --spaces roi stoploss
+freqtrade trade        --strategy MyIdea --dry-run                       # paper only</code></pre>
+    </div>
+
+    <div class="warn">
+      <div class="wlbl">Paper trade first</div>
+      <p>Paper trade first. Always. A backtest is a hypothesis, not a result — it has perfect information about the past and none about the future. Run any strategy on live data with fake money for weeks before you consider risking a cent, and assume the live version will perform worse than the test. Most do. Nothing on this page is financial advice.</p>
+    </div>
+
+    <div class="meta-row">
+      <span>TIME <b>~3 hrs</b></span>
+      <span>DIFFICULTY <b>hard</b></span>
+      <span>COST <b>$0</b></span>
+    </div>
+    <a class="go" href="claude-tv-backtest.html">Open the guide →</a>
+  </section>
+
+  <section class="topic">
+    <div class="tnum">BUILD 05 · Sunday afternoon</div>
+    <h2>A trading desk that answers out loud.</h2>
+    <p class="tdesc">The last build is the one people remember. Not one agent — a desk: specialists for news, macro, risk and technicals, coordinated by a manager agent that reports back to you in a voice, out loud. Ask it what happened overnight and it tells you, in a sentence, like a person. Everything else on this list feeds it.</p>
+
+    <div class="meta-row">
+      <span>TIME <b>~3 hrs</b></span>
+      <span>DIFFICULTY <b>medium</b></span>
+      <span>COST <b>$0</b></span>
+    </div>
+    <a class="go" href="nimbus-desk.html">Open the guide →</a>
+  </section>
+
+  <div class="order">
+    <div class="olbl">The one rule</div>
+    <p>Do them in any order this time — these five stand alone. But finish one. A working agent on Sunday night beats four half-built ones and a browser full of tabs. When yours runs, tag <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a> — I repost the best builds.</p>
+  </div>
+
+</main>
+<footer>
+  <span>Educational only · not financial advice · © Cloud9 Markets</span>
+  <a class="ig" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets ↗</a>
+</footer>
+</div>
+</body>
+</html>
