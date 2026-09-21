@@ -157,6 +157,44 @@ python forecast.py NVDA
       <p>Know what you're looking at. These are periodic transaction reports, filed with a legal lag that can run to 45 days after the trade. By the time you read one, the price has moved. Amounts are disclosed in broad bands, not exact dollars. This is a research and storytelling tool — a way to study what disclosure actually reveals — not a signal to copy.</p>
     </div>
 
+    <p class="tdesc">Here are the two front doors, so you don't have to hunt for them. The House publishes one ZIP per year holding a tab-separated index of every filing; the Senate hides its search behind an agreement form you have to submit before it will answer you. Neither costs anything and neither needs a key. And this works for any filer, not just the famous one — change the name and the same script runs.</p>
+
+    <div class="codebox">
+      <div class="clabel">the primary sources, and a prompt to start from</div>
+      <pre><code># HOUSE -- one ZIP per year, holding a tab-separated index of every filing
+https://disclosures-clerk.house.gov/public_disc/financial-pdfs/2026FD.ZIP
+#   2026FD.txt columns:
+#     Prefix  Last  First  Suffix  FilingType  StateDst  Year  FilingDate  DocID
+#   FilingType "P" is the periodic transaction report -- the trades
+#   each one lives at:
+https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/&lt;DocID&gt;.pdf
+
+# SENATE -- same idea, different door
+https://efdsearch.senate.gov/search/
+#   you must POST the "prohibition_agreement" form first; the search only
+#   answers once that session cookie exists. This is what breaks most scrapers.
+
+# then hand Claude this:
+"Write a Python script that downloads 2026FD.ZIP from the House Clerk,
+ reads the tab-separated index inside it, keeps only rows where
+ FilingType is 'P', and for each one fetches
+ public_disc/ptr-pdfs/2026/&lt;DocID&gt;.pdf.
+
+ Extract every transaction: filer, ticker, asset name, buy or sell, the
+ disclosed amount band, the transaction date and the notification date.
+ Use layout-aware PDF text extraction -- the plain mode scrambles the
+ table into unusable fragments.
+
+ Write it all to one CSV, and add a column for the gap in days between
+ the trade and its disclosure.
+
+ Then plot one filer's trades against that ticker's daily price from
+ yfinance, marking each on the date of the TRADE, not the date of the
+ filing."</code></pre>
+    </div>
+
+    <p class="tdesc">Two details decide whether this works. Use layout-aware extraction — the PDFs do contain real text, but read naively the columns collapse into fragments, letters stranded on their own lines. And plot on the transaction date, not the filing date: the gap between the two is the most interesting column in the file, and mixing them up quietly ruins the chart.</p>
+
     <div class="meta-row">
       <span>TIME <b>~2 hrs</b></span>
       <span>DIFFICULTY <b>medium</b></span>
