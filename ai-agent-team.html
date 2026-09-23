@@ -169,7 +169,7 @@ footer.footcta .fineprint{margin-top:24px;font-size:12px;color:var(--muted3,var(
 <!-- ============ 1. HERO ============ -->
 <section id="hero">
   <div class="wrap hero-inner">
-    <p class="eyebrow">Free AI models · 23 agents · $0 spent</p>
+    <p class="eyebrow">Part 1 · Free AI models · 23 agents · $0 spent</p>
     <div class="hero-mascot">
       <img src="img/agent-desk/chief-ready-640.webp" alt="The Chief mascot, a gold clay character wearing a small crown" width="640" height="640" loading="eager">
     </div>
@@ -272,11 +272,11 @@ footer.footcta .fineprint{margin-top:24px;font-size:12px;color:var(--muted3,var(
   <div class="wrap">
     <p class="eyebrow">Step 3</p>
     <h2 class="sectitle">The harness: how the agents work together</h2>
-    <p class="secsub">Plain-English orchestration &mdash; no AI hand-waving.</p>
+    <p class="secsub">Phase 1 of 2. Honest version: today it's a fixed pipeline, not a free-thinking agent.</p>
 
     <div class="card">
-      <h3>What the manager script does</h3>
-      <p>A Python script is the "manager". For a ticker it:</p>
+      <h3>Phase 1: a fixed pipeline</h3>
+      <p>Right now the "harness" is a plain Python script. It runs the same steps in the same order every time, and each agent is one AI call with a fixed role and fixed data. The agents don't choose their own tools, browse, or decide what to look at next. That's deliberate for phase 1: it's cheap, predictable, and every number can be checked. For a ticker, the script:</p>
       <ol class="steps">
         <li>Fetches the data.</li>
         <li>Runs the specialists in parallel.</li>
@@ -293,7 +293,13 @@ footer.footcta .fineprint{margin-top:24px;font-size:12px;color:var(--muted3,var(
 
     <div class="card">
       <h3>The web page</h3>
-      <p>One HTML file that reads that log: a Team view, an Agent view, a Desk chat, plus an "Ask" box where visitors question an agent. It answers only from that run's notes, is rate-limited, and never gives advice.</p>
+      <p>One HTML file that reads that log: a Team view, an Agent view, a Desk chat, plus an "Ask" box where visitors question an agent. In phase 1 the Ask box can only answer from that run's notes: it can't go and look anything up. It's rate-limited and never gives advice.</p>
+    </div>
+
+    <div class="callout">
+      <div class="clabel">Phase 2: a real agent harness &middot; coming in Part 2</div>
+      <p>An agent that does one fixed thing isn't much of an agent. In Part 2 I'll swap the fixed script for <b>Hermes Agent</b>, an open-source agent harness, so each desk can choose its own tools, dig into primary sources, check each other's work, remember past runs, and answer follow-up questions by actually going and finding out. Same team, same characters, a real brain behind them.</p>
+      <p style="margin-top:10px"><b>Stay tuned for Part 2.</b> Follow <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a> so you don't miss it.</p>
     </div>
 
     <div class="pullquote">
