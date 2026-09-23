@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>I built a 23-agent AI research team for $0 · Cloud9</title>
+<meta name="description" content="A chief, 5 desk leads and 17 specialists that research a stock together, on free AI models. Here's exactly how to build your own.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="I built a 23-agent AI research team for $0">
+<meta property="og:description" content="A chief, 5 desk leads and 17 specialists that research a stock together, on free AI models. Here's exactly how to build your own.">
+<meta property="og:image" content="https://cloud9markets.com/img/agent-desk/chief-ready-640.webp">
+<meta property="og:url" content="https://cloud9markets.com/ai-agent-team.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="I built a 23-agent AI research team for $0">
+<meta name="twitter:description" content="A chief, 5 desk leads and 17 specialists that research a stock together, on free AI models. Here's exactly how to build your own.">
+<meta name="twitter:image" content="https://cloud9markets.com/img/agent-desk/chief-ready-640.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Jost:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --c0:#0E0D0B;--c1:#15130F;--c2:#1B1914;--c3:#221F1A;--c4:#2A2620;--c5:#3A3226;
+  --ink:#F2EDE3;--muted:#A8A091;--muted2:#C9C1B2;
+  --gold:#D9B26A;--gold-hi:#EBCB8A;--gold-dim:rgba(217,178,106,.35);--gold-faint:rgba(217,178,106,.12);
+  --dept-news:#EC6A60;--dept-equity:#7AA2F4;--dept-geo:#E3AC48;--dept-activity:#5CC9A1;--dept-review:#BBA9EA;--dept-chief:#D9B26A;
+  --r-card:20px;--r-md:14px;--r-sm:10px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--c0);color:var(--ink);font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}
+a:hover{color:var(--gold-hi)}
+::selection{background:var(--gold);color:var(--c0)}
+button{font-family:inherit;-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+img{max-width:100%;display:block}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;font-weight:500;margin:0}
+p{margin:0}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+.wrap-wide{max-width:1040px;margin:0 auto;padding:0 20px}
+
+header.topbar{padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--c3)}
+header.topbar .brand{display:flex;align-items:center;gap:10px;min-width:0}
+header.topbar .brand img{height:28px;width:auto;flex:none}
+header.topbar .brand span{font-family:'Playfair Display',Georgia,serif;font-size:16px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.topbar .iglink{font-size:13px;color:var(--muted2);border:1px solid var(--c4);border-radius:999px;padding:6px 14px;white-space:nowrap}
+header.topbar .iglink:hover{border-color:var(--gold-dim);color:var(--gold-hi)}
+
+section{padding:56px 0}
+section#hero{padding-top:36px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;color:var(--gold);margin:0 0 14px}
+h2.sectitle{font-size:clamp(22px,5vw,30px);line-height:1.2;margin:0 0 8px}
+.secsub{font-size:15px;color:var(--muted);line-height:1.5;margin:0 0 28px}
+
+/* ---- hero ---- */
+.hero-inner{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px}
+.hero-mascot{width:180px;height:180px}
+.hero-mascot img{width:100%;height:100%;object-fit:contain}
+h1.herotitle{font-size:clamp(28px,7vw,44px);line-height:1.12;max-width:720px}
+.herosub{font-size:16px;line-height:1.55;color:var(--muted2);max-width:560px}
+.herobtns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.btn-gold{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border:0;border-radius:999px;background:var(--gold);color:#17130B;font-size:15px;font-weight:600;cursor:pointer}
+.btn-gold:hover{background:var(--gold-hi);color:#17130B}
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border:1px solid var(--c5);border-radius:999px;background:transparent;color:var(--ink);font-size:15px;font-weight:500;cursor:pointer}
+.btn-ghost:hover{border-color:var(--gold-dim);color:var(--gold-hi)}
+
+.mascotstrip{margin-top:30px;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:6px 4px 14px}
+.mascotstrip .row{display:flex;gap:14px;width:max-content;padding:0 4px}
+.mascotstrip .mchip{flex:none;width:64px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.mascotstrip .mchip img{width:56px;height:56px;object-fit:contain;border-radius:50%;background:var(--c1);border:1px solid var(--c3);padding:4px}
+.mascotstrip .mchip span{font-size:9.5px;color:var(--muted3,var(--muted));text-align:center;line-height:1.25;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scrollhint{text-align:center;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+/* ---- team hierarchy ---- */
+.chiefrow{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:8px}
+.chiefrow img{width:96px;height:96px;object-fit:contain}
+.chiefrow .cname{font-family:'Playfair Display',Georgia,serif;font-size:20px;color:var(--ink)}
+.chiefrow .crole{font-size:13px;color:var(--muted);max-width:440px;text-align:center;line-height:1.5}
+.arrowdown{text-align:center;color:var(--muted);font-size:20px;margin:6px 0 20px}
+
+.deskgrid{display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:860px){.deskgrid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.deskcard{background:var(--c1);border:1px solid var(--c3);border-radius:var(--r-card);padding:18px 16px;display:flex;flex-direction:column;gap:10px}
+.deskcard .deptlabel{font-size:11px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase}
+.deskcard .leadhead{display:flex;align-items:center;gap:10px}
+.deskcard .leadhead img{width:44px;height:44px;object-fit:contain;flex:none}
+.deskcard .leadname{font-family:'Playfair Display',Georgia,serif;font-size:16px;color:var(--ink);line-height:1.25}
+.deskcard .leadrole{font-size:12.5px;color:var(--muted);line-height:1.5}
+.deskcard .speclist{list-style:none;margin:4px 0 0;padding:10px 0 0;border-top:1px solid var(--c3);display:flex;flex-direction:column;gap:8px}
+.deskcard .specrow{display:flex;align-items:center;gap:8px}
+.deskcard .specrow img{width:26px;height:26px;object-fit:contain;border-radius:50%;background:var(--c2);flex:none}
+.deskcard .specrow .sname{font-size:12.5px;color:var(--muted2);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.statusdot{width:6px;height:6px;border-radius:50%;flex:none}
+.statusdot.live{background:#5CC9A1;box-shadow:0 0 5px rgba(92,201,161,.6)}
+.statusdot.standby{background:var(--c5)}
+.scalenote{margin-top:24px;padding:16px 18px;border:1px solid var(--c3);border-radius:var(--r-md);background:var(--c1);font-size:13.5px;color:var(--muted2);line-height:1.55;text-align:center}
+
+/* ---- generic step cards / callouts ---- */
+.card{background:var(--c1);border:1px solid var(--c3);border-radius:var(--r-card);padding:22px}
+.card + .card{margin-top:16px}
+.card h3{font-size:17px;color:var(--ink);margin-bottom:8px}
+.card p{font-size:14.5px;line-height:1.6;color:var(--muted2)}
+ul.plain{margin:0;padding-left:20px}
+ul.plain li{font-size:14.5px;line-height:1.65;color:var(--muted2);margin-bottom:8px}
+ol.steps{margin:0;padding-left:20px}
+ol.steps li{font-size:14.5px;line-height:1.65;color:var(--muted2);margin-bottom:10px}
+ol.steps b{color:var(--ink);font-weight:600}
+
+.labtags{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.labtag{font-size:12px;padding:5px 12px;border-radius:999px;border:1px solid var(--c4);color:var(--muted2)}
+
+.callout{margin-top:18px;padding:20px;border-radius:var(--r-card);background:var(--gold-faint);border:1px solid var(--gold-dim)}
+.callout .clabel{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.callout p{font-size:15px;line-height:1.6;color:var(--ink)}
+
+.limitbox{margin-top:14px;padding:14px 18px;border-radius:var(--r-md);background:var(--c2);border:1px solid var(--c3)}
+.limitbox p{font-size:13px;color:var(--muted);line-height:1.55}
+
+.codeblock{margin:16px 0;background:var(--c2);border:1px solid var(--c4);border-radius:var(--r-md);overflow:hidden}
+.codeblock .cbhead{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--c3)}
+.codeblock .cblabel{font-size:11px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted)}
+.copybtn{min-height:32px;padding:0 14px;border:1px solid var(--c5);border-radius:999px;background:transparent;color:var(--gold);font-size:12.5px;font-weight:500;cursor:pointer}
+.copybtn:hover{border-color:var(--gold-dim);color:var(--gold-hi)}
+.codeblock pre{margin:0;padding:16px;white-space:pre-wrap;word-break:break-word;font-size:12.5px;line-height:1.6;color:var(--muted2);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+
+.pullquote{margin:18px 0 0;padding:18px 20px;border-left:3px solid var(--gold);background:var(--c1);border-radius:0 var(--r-md) var(--r-md) 0}
+.pullquote p{font-style:italic;font-family:'Playfair Display',Georgia,serif;font-size:16px;line-height:1.55;color:var(--ink)}
+
+.costgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (min-width:560px){.costgrid{grid-template-columns:repeat(4,1fr)}}
+.costitem{background:var(--c2);border:1px solid var(--c3);border-radius:var(--r-md);padding:16px 12px;text-align:center}
+.costitem .cv{font-family:'Playfair Display',Georgia,serif;font-size:22px;color:var(--gold)}
+.costitem .cl{font-size:12px;color:var(--muted);margin-top:4px}
+.costnote{margin-top:16px;font-size:15px;color:var(--ink);text-align:center;font-weight:500}
+.costcaveat{margin-top:10px;font-size:12.5px;color:var(--muted);text-align:center;line-height:1.5}
+
+.disclaimer-card{background:var(--c1);border:1px solid var(--gold-dim);border-radius:var(--r-card);padding:24px}
+.disclaimer-card h2{font-size:18px;color:var(--gold);margin-bottom:10px}
+.disclaimer-card p{font-size:15px;line-height:1.65;color:var(--ink)}
+
+footer.footcta{padding:48px 0 40px;text-align:center;border-top:1px solid var(--c3)}
+footer.footcta img{height:36px;width:auto;margin:0 auto 16px}
+footer.footcta h2{font-size:20px;margin-bottom:12px}
+footer.footcta .igbtn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 22px;border-radius:999px;border:1px solid var(--c5);color:var(--ink);font-size:14px;font-weight:500}
+footer.footcta .igbtn:hover{border-color:var(--gold-dim);color:var(--gold-hi)}
+footer.footcta .fineprint{margin-top:24px;font-size:12px;color:var(--muted3,var(--muted))}
+
+@media (max-width:600px){
+  section{padding:44px 0}
+  .hero-mascot{width:150px;height:150px}
+}
+.card code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#1B1914;border:1px solid #2A2620;border-radius:6px;padding:1px 6px;color:#EBCB8A}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="cloud9-logo-gold.png" alt="Cloud9 Markets logo">
+    <span>Cloud9 Markets</span>
+  </div>
+  <a class="iglink" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a>
+</header>
+
+<main>
+
+<!-- ============ 1. HERO ============ -->
+<section id="hero">
+  <div class="wrap hero-inner">
+    <p class="eyebrow">Free AI models · 23 agents · $0 spent</p>
+    <div class="hero-mascot">
+      <img src="img/agent-desk/chief-ready-640.webp" alt="The Chief mascot, a gold clay character wearing a small crown" width="640" height="640" loading="eager">
+    </div>
+    <h1 class="herotitle">I built a 23-agent AI research team for $0</h1>
+    <p class="herosub">A chief, 5 desk leads and 17 specialists that research a stock together, on free AI models. Here's exactly how to build your own.</p>
+    <div class="herobtns">
+      <a class="btn-gold" href="https://desk.cloud9markets.com" data-live-link target="_blank" rel="noopener">See it live</a>
+      <a class="btn-ghost" href="#step1">How it works</a>
+    </div>
+  </div>
+  <div class="wrap-wide">
+    <div class="mascotstrip" role="region" aria-label="All 23 agents on the desk">
+      <div class="row" id="mascot-row"></div>
+    </div>
+    <p class="scrollhint">Swipe to meet the whole desk &rarr;</p>
+  </div>
+</section>
+
+<!-- ============ 2. TEAM / HIERARCHY ============ -->
+<section id="team">
+  <div class="wrap-wide">
+    <p class="eyebrow">The team</p>
+    <h2 class="sectitle">Chief &rarr; 5 desk leads &rarr; 17 specialists</h2>
+    <p class="secsub">Every agent is a role, not a person: a place in the hierarchy, a department colour, and a model that answers for it.</p>
+
+    <div class="chiefrow">
+      <img src="img/agent-desk/chief-ready-256.webp" alt="Chief mascot" width="256" height="256">
+      <div class="cname">Chief Market Intelligence Officer</div>
+      <p class="crole">Reads every lead's desk pack plus the bull and bear cases, and writes the final research brief for the ticker.</p>
+    </div>
+    <div class="arrowdown" aria-hidden="true">&darr;</div>
+
+    <div class="deskgrid" id="desk-grid"></div>
+
+    <p class="scalenote">In the demo, 10 agents run end-to-end; the other 13 show how the full desk would scale.</p>
+  </div>
+</section>
+
+<!-- ============ 3. STEP 1: THE BRAIN ============ -->
+<section id="step1">
+  <div class="wrap">
+    <p class="eyebrow">Step 1</p>
+    <h2 class="sectitle">The brain: free AI models</h2>
+    <p class="secsub">Every agent is a different free model on OpenRouter (openrouter.ai): one API key, dozens of models whose ids end in <span class="mono">:free</span>.</p>
+
+    <div class="card">
+      <h3>One key, many labs</h3>
+      <p>Assign each agent a model from a different lab, so the desk isn't relying on a single provider. Ours: NVIDIA Nemotron, Qwen, InclusionAI Ling (finance-tuned), Poolside Laguna, Liquid LFM, Nex &mdash; models from different AI labs.</p>
+      <div class="labtags">
+        <span class="labtag">NVIDIA Nemotron</span>
+        <span class="labtag">Qwen</span>
+        <span class="labtag">InclusionAI Ling</span>
+        <span class="labtag">Poolside Laguna</span>
+        <span class="labtag">Liquid LFM</span>
+        <span class="labtag">Nex</span>
+      </div>
+      <div class="limitbox">
+        <p><b>Honest limits:</b> free models are often busy, so every agent gets 2 backup models. They're also rate-limited &mdash; at the time of writing, roughly 50 requests/day on a brand-new account, far more once you've added credits; check OpenRouter's current docs. The list of free models changes often.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="clabel">The golden rule</div>
+      <p>Never let the AI do the maths. Python pulls the data (price, news, SEC filings, insider trades) and calculates every number. The AI only writes sentences about numbers it's handed, and a checker flags any number it didn't get from the data.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. STEP 2: THE CHARACTERS ============ -->
+<section id="step2">
+  <div class="wrap">
+    <p class="eyebrow">Step 2</p>
+    <h2 class="sectitle">The characters: ChatGPT image generation</h2>
+    <p class="secsub">How the mascots were made, start to finish.</p>
+
+    <div class="card">
+      <ol class="steps">
+        <li><b>Design the 6 leads together.</b> Sketch all 6 lead characters (chief + 5 desk leads) on one board, so their species, proportions and material language agree with each other.</li>
+        <li><b>Generate each alone.</b> Pull each lead out on its own, on a genuinely transparent background.</li>
+        <li><b>Give it a resting pose.</b> Same character, eyes closed, a quiet second pose for when it's on standby.</li>
+        <li><b>Specialists as junior siblings.</b> Each specialist reuses its lead's body, colour and material, but rounder and cuter, with its own small prop so it still reads as its own character.</li>
+      </ol>
+      <p style="margin-top:12px"><b style="color:var(--ink)">Tip:</b> do a whole department in one chat, attaching the lead's ready image as reference each time, so the style stays consistent.</p>
+    </div>
+
+    <div class="codeblock">
+      <div class="cbhead"><span class="cblabel">Base prompt · ready pose</span><button class="copybtn" type="button" data-copy-target="prompt-ready">Copy</button></div>
+      <pre id="prompt-ready">Using the attached [LEAD NAME] as the exact style and species reference, create a JUNIOR member of the same team: the same body shape, colour, soft matte clay material, facial style (glossy dark eyes, pink blush cheeks, small smile) and warm studio lighting, but about 15% rounder and cuter, like a younger sibling. It does NOT wear the lead's signature accessory ([LEAD ACCESSORY]). Instead, its one identifying prop is: [PROP]. Pose: [POSE]. One character only, centred, full body, with clear padding on all sides. The background must be genuinely transparent. No backdrop, floor, cast shadow, text, label, logo or border. Square 1024&times;1024 PNG.</pre>
+    </div>
+
+    <div class="codeblock">
+      <div class="cbhead"><span class="cblabel">Base prompt · resting pose</span><button class="copybtn" type="button" data-copy-target="prompt-resting">Copy</button></div>
+      <pre id="prompt-resting">Render the exact same character you just made, with the same identity, proportions, colours, material, prop and lighting. Give it gently closed eyes and a peaceful tiny smile, leaning into a blank folded cream paper held like a pillow (the paper has no writing). Keep its prop visible. Same framing and transparent background.</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. STEP 3: THE HARNESS ============ -->
+<section id="step3">
+  <div class="wrap">
+    <p class="eyebrow">Step 3</p>
+    <h2 class="sectitle">The harness: how the agents work together</h2>
+    <p class="secsub">Plain-English orchestration &mdash; no AI hand-waving.</p>
+
+    <div class="card">
+      <h3>What the manager script does</h3>
+      <p>A Python script is the "manager". For a ticker it:</p>
+      <ol class="steps">
+        <li>Fetches the data.</li>
+        <li>Runs the specialists in parallel.</li>
+        <li>Each lead reads its specialists' reports and writes a desk pack.</li>
+        <li>The bull and bear analysts argue from all the packs.</li>
+        <li>The Chief writes the final brief.</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>Every message is logged</h3>
+      <p>Every message is saved to a small SQLite database: who wrote it, to whom, which model, how long it took, its sources and a receipt id. That log is what the web page replays, and it's why you can watch the agents "talk".</p>
+    </div>
+
+    <div class="card">
+      <h3>The web page</h3>
+      <p>One HTML file that reads that log: a Team view, an Agent view, a Desk chat, plus an "Ask" box where visitors question an agent. It answers only from that run's notes, is rate-limited, and never gives advice.</p>
+    </div>
+
+    <div class="pullquote">
+      <p>"I didn't hand-write this. I directed Claude Code, which planned it and delegated the coding to cheaper Sonnet sub-agents, then reviewed their work."</p>
+    </div>
+
+    <div class="codeblock">
+      <div class="cbhead"><span class="cblabel">Starter prompt · for your AI coding tool</span><button class="copybtn" type="button" data-copy-target="prompt-starter">Copy</button></div>
+      <pre id="prompt-starter">Build me a stock-research agent team in Python. A chief, 3 desk leads, 6 specialists. Specialists fetch free public data (Yahoo chart API, SEC EDGAR companyfacts, Finnhub free tier), compute every number in Python, and pass the facts as sentences to a free OpenRouter model to write a short JSON report. Leads summarise their specialists; the chief writes the final brief. Log every message to SQLite with model, latency and sources, and add a checker that flags any number in the AI's text that isn't in the data. Then build a single-page web UI that replays the log as an org chart and a chat.</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. STEP 4: HOSTING ============ -->
+<section id="step4">
+  <div class="wrap">
+    <p class="eyebrow">Step 4</p>
+    <h2 class="sectitle">Hosting, free</h2>
+    <div class="card">
+      <p>It runs on an Oracle Cloud "Always Free" ARM server (currently 2 CPU / 12 GB RAM; free-tier capacity depends on region and availability, and Oracle has changed the allowance before). A free Cloudflare Tunnel puts it online without opening any ports. A daily timer runs the team each morning.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6b. STEP 5: DELIVERY ============ -->
+<section id="step5">
+  <div class="wrap">
+    <p class="eyebrow">Step 5</p>
+    <h2 class="sectitle">Get the brief delivered</h2>
+    <p class="secsub">Don't go to the page; have the Chief's brief come to you each morning.</p>
+
+    <div class="card">
+      <h3>Discord (easiest, free)</h3>
+      <ol class="steps">
+        <li><b>Make a channel</b> for it, e.g. <code>#desk-brief</code>.</li>
+        <li><b>Create a webhook:</b> Server Settings &rarr; Integrations &rarr; Webhooks &rarr; New Webhook. Pick the channel, give it a name and an avatar (your Chief mascot works well).</li>
+        <li><b>Copy the webhook URL</b> and store it as a secret (an environment variable), never in your code. Anyone with that URL can post to your channel.</li>
+        <li><b>After each run, POST the brief</b> to that URL as JSON: the headline as the title, the summary, key facts, the bull and bear cases. Turn mentions off so it can never ping <code>@everyone</code>.</li>
+      </ol>
+      <p style="margin-top:12px">Discord's guide: <a href="https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks" target="_blank" rel="noopener">Intro to Webhooks</a>.</p>
+    </div>
+
+    <div class="card">
+      <h3>Telegram (free, pings your phone)</h3>
+      <p>Message <b>@BotFather</b> on Telegram, send <code>/newbot</code> and keep the token it gives you (as a secret). Send your new bot a message, then your script can post the brief to that chat with the Bot API's <code>sendMessage</code>. Telegram's guide: <a href="https://core.telegram.org/bots/tutorial" target="_blank" rel="noopener">From BotFather to "Hello World"</a>.</p>
+    </div>
+
+    <div class="card">
+      <h3>WhatsApp</h3>
+      <p>It can also be done through the WhatsApp Business Platform, but it needs a verified business account, approved message templates and per-message fees, so Discord or Telegram is the easier free route.</p>
+    </div>
+
+    <div class="codeblock">
+      <div class="cbhead"><span class="cblabel">Add-on prompt · for your AI coding tool</span><button class="copybtn" type="button" data-copy-target="prompt-deliver">Copy</button></div>
+      <pre id="prompt-deliver">After each run finishes, post the chief's brief to Discord. Read the webhook URL from an environment variable (skip quietly if it isn't set, and never print it). Send one embed: the headline as the title linking to my site, the summary as the description, and fields for key facts, bull case, bear case and what to watch next. Set allowed_mentions so it never pings anyone, respect Discord's field length limits, retry once on a 429, and never let a failed post fail the run.</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. COSTS ============ -->
+<section id="costs">
+  <div class="wrap">
+    <p class="eyebrow">The bill</p>
+    <h2 class="sectitle">What it actually costs</h2>
+    <div class="costgrid">
+      <div class="costitem"><div class="cv">$0</div><div class="cl">AI models<br>(free tier)</div></div>
+      <div class="costitem"><div class="cv">$0</div><div class="cl">Data<br>(free public APIs)</div></div>
+      <div class="costitem"><div class="cv">$0</div><div class="cl">Server<br>(Always Free)</div></div>
+      <div class="costitem"><div class="cv">$0</div><div class="cl">Tunnel</div></div>
+    </div>
+    <p class="costnote">Your only cost is time.</p>
+    <p class="costcaveat">Free tiers can change or be withdrawn.</p>
+  </div>
+</section>
+
+<!-- ============ 8. DISCLAIMER ============ -->
+<section id="disclaimer">
+  <div class="wrap">
+    <div class="disclaimer-card">
+      <h2>Disclaimer</h2>
+      <p>For educational purposes only. This is a demo of AI agent orchestration, not financial advice, and nothing here is a recommendation to buy or sell anything. AI output can be wrong. Free models and free tiers have rate limits and may change or disappear. The live demo may be slow or paused when limits are hit.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ 9. FOOTER CTA ============ -->
+<footer class="footcta">
+  <div class="wrap">
+    <img src="cloud9-logo-gold.png" alt="Cloud9 Markets logo">
+    <h2>Follow @cloud9.markets for the build series</h2>
+    <a class="igbtn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow on Instagram</a>
+    <p class="fineprint">&copy; Cloud9 Markets</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---- agent roster (id, name, dept, working) ---- */
+var AGENTS = [
+  {id:"chief", name:"Chief", full:"Chief Market Intelligence Officer", dept:"chief", working:true},
+  {id:"lead_news", name:"News Lead", full:"Market News Research Lead", dept:"news", working:true},
+  {id:"news_research", name:"Research Analyst", full:"Research Analyst", dept:"news", working:false},
+  {id:"news_sentiment", name:"Sentiment", full:"News Sentiment Analyst", dept:"news", working:true},
+  {id:"news_movement", name:"Movement", full:"Stock Movement Analyst", dept:"news", working:true},
+  {id:"news_credibility", name:"Credibility", full:"News Credibility Analyst", dept:"news", working:false},
+  {id:"lead_equity", name:"Equity Lead", full:"Equity Research Lead", dept:"equity", working:true},
+  {id:"eq_fundamental", name:"Fundamentals", full:"Fundamental Research Analyst", dept:"equity", working:true},
+  {id:"eq_forensics", name:"Forensics", full:"Financial Forensics Analyst", dept:"equity", working:false},
+  {id:"eq_preearnings", name:"Pre-Earnings", full:"Pre-Earnings Intelligence Analyst", dept:"equity", working:false},
+  {id:"lead_geo", name:"Geo Lead", full:"Head of Industry & Geopolitical Research", dept:"geo", working:false},
+  {id:"geo_industry", name:"Industry", full:"Industry Research Analyst", dept:"geo", working:false},
+  {id:"geo_risk", name:"Geo Risk", full:"Geopolitical Risk Analyst", dept:"geo", working:false},
+  {id:"lead_activity", name:"Activity Lead", full:"Head of Market Activity & Ownership", dept:"activity", working:true},
+  {id:"act_volume", name:"Volume", full:"Market Volume Intelligence Analyst", dept:"activity", working:false},
+  {id:"act_insider", name:"Insiders", full:"Insider Activity Analyst", dept:"activity", working:true},
+  {id:"act_funds", name:"Fund Holdings", full:"Fund Holdings Research Analyst", dept:"activity", working:false},
+  {id:"act_congress", name:"Congress Trades", full:"Congress Trades Analyst", dept:"activity", working:false},
+  {id:"act_short", name:"Short Interest", full:"Short-Seller Research Analyst", dept:"activity", working:false},
+  {id:"lead_review", name:"Review Lead", full:"Independent Research Review Lead", dept:"review", working:false},
+  {id:"rev_bull", name:"Bull Case", full:"Bull Case Analyst", dept:"review", working:true},
+  {id:"rev_bear", name:"Bear Case", full:"Bear Case Analyst", dept:"review", working:true},
+  {id:"rev_validation", name:"Validation", full:"Research Validation Analyst", dept:"review", working:false}
+];
+
+var DEPTS = [
+  {id:"news", label:"News", color:"var(--dept-news)", lead:"lead_news", leadName:"Market News Research Lead",
+    role:"Synthesises the news desk's specialist reports into one desk pack for the chief.",
+    specs:["news_research","news_sentiment","news_movement","news_credibility"]},
+  {id:"equity", label:"Equity", color:"var(--dept-equity)", lead:"lead_equity", leadName:"Equity Research Lead",
+    role:"Synthesises the equity desk's specialist reports into one desk pack for the chief.",
+    specs:["eq_fundamental","eq_forensics","eq_preearnings"]},
+  {id:"geo", label:"Industry & Geo", color:"var(--dept-geo)", lead:"lead_geo", leadName:"Head of Industry & Geopolitical Research",
+    role:"Would synthesise industry-structure and geopolitical-risk reports into a desk pack.",
+    specs:["geo_industry","geo_risk"]},
+  {id:"activity", label:"Activity & Ownership", color:"var(--dept-activity)", lead:"lead_activity", leadName:"Head of Market Activity & Ownership",
+    role:"Synthesises trading-activity and ownership reports into one desk pack for the chief.",
+    specs:["act_volume","act_insider","act_funds","act_congress","act_short"]},
+  {id:"review", label:"Independent Review", color:"var(--dept-review)", lead:"lead_review", leadName:"Independent Research Review Lead",
+    role:"Would run the bull/bear/validation review triad and package it for the chief.",
+    specs:["rev_bull","rev_bear","rev_validation"]}
+];
+
+function esc(s){
+  return String(s==null?"":s).replace(/[&<>"']/g, function(c){
+    return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c];
+  });
+}
+function byId(id){ for(var i=0;i<AGENTS.length;i++){ if(AGENTS[i].id===id) return AGENTS[i]; } return null; }
+function imgSrc(id){ return "img/agent-desk/"+id+"-ready-256.webp"; }
+
+/* ---- build the 23-mascot strip ---- */
+(function buildStrip(){
+  var row = document.getElementById("mascot-row");
+  if(!row) return;
+  var html = "";
+  for(var i=0;i<AGENTS.length;i++){
+    var a = AGENTS[i];
+    html += '<div class="mchip"><img src="'+imgSrc(a.id)+'" alt="'+esc(a.name)+' mascot" width="128" height="128" loading="lazy"><span>'+esc(a.name)+'</span></div>';
+  }
+  row.innerHTML = html;
+})();
+
+/* ---- build the team hierarchy grid ---- */
+(function buildDeskGrid(){
+  var grid = document.getElementById("desk-grid");
+  if(!grid) return;
+  var html = "";
+  for(var i=0;i<DEPTS.length;i++){
+    var d = DEPTS[i];
+    html += '<div class="deskcard">';
+    html += '<div class="deptlabel" style="color:'+d.color+'">'+esc(d.label)+'</div>';
+    html += '<div class="leadhead"><img src="'+imgSrc(d.lead)+'" alt="'+esc(d.leadName)+' mascot" width="88" height="88" loading="lazy">';
+    html += '<div><div class="leadname">'+esc(d.leadName)+'</div></div></div>';
+    html += '<p class="leadrole">'+esc(d.role)+'</p>';
+    html += '<ul class="speclist">';
+    for(var j=0;j<d.specs.length;j++){
+      var s = byId(d.specs[j]);
+      if(!s) continue;
+      html += '<li class="specrow"><img src="'+imgSrc(s.id)+'" alt="" width="52" height="52" loading="lazy"><span class="sname">'+esc(s.name)+'</span><span class="statusdot '+(s.working?"live":"standby")+'" title="'+(s.working?"Runs end-to-end in the demo":"Standby role")+'"></span></li>';
+    }
+    html += '</ul></div>';
+  }
+  grid.innerHTML = html;
+})();
+
+/* ---- copy to clipboard, with fallback ---- */
+function fallbackCopy(text, done){
+  try{
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.top = "-1000px";
+    ta.style.left = "-1000px";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    var ok = document.execCommand && document.execCommand("copy");
+    document.body.removeChild(ta);
+    done(!!ok);
+  }catch(e){
+    done(false);
+  }
+}
+function copyText(text, done){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ fallbackCopy(text, done); });
+  } else {
+    fallbackCopy(text, done);
+  }
+}
+function wireCopyButtons(){
+  var btns = document.querySelectorAll(".copybtn");
+  for(var i=0;i<btns.length;i++){
+    (function(btn){
+      var origLabel = btn.textContent;
+      btn.addEventListener("click", function(){
+        var targetId = btn.getAttribute("data-copy-target");
+        var target = document.getElementById(targetId);
+        if(!target) return;
+        var text = target.textContent;
+        copyText(text, function(ok){
+          btn.textContent = ok ? "Copied" : "Copy failed";
+          setTimeout(function(){ btn.textContent = origLabel; }, 1700);
+        });
+      });
+    })(btns[i]);
+  }
+}
+wireCopyButtons();
+
+})();
+</script>
+</body>
+</html>
