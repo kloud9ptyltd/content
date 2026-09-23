@@ -204,7 +204,7 @@ footer.footcta .fineprint{margin-top:24px;font-size:12px;color:var(--muted3,var(
 
     <div class="deskgrid" id="desk-grid"></div>
 
-    <p class="scalenote">In the demo, 10 agents run end-to-end; the other 13 show how the full desk would scale.</p>
+    <p class="scalenote">In the demo, 13 agents run end-to-end, with every desk lead active; the other 10 show how the full desk would scale.</p>
   </div>
 </section>
 
@@ -281,7 +281,7 @@ footer.footcta .fineprint{margin-top:24px;font-size:12px;color:var(--muted3,var(
         <li>Fetches the data.</li>
         <li>Runs the specialists in parallel.</li>
         <li>Each lead reads its specialists' reports and writes a desk pack.</li>
-        <li>The bull and bear analysts argue from all the packs.</li>
+        <li>The bull and bear analysts argue from all the packs, and the review lead weighs the two cases.</li>
         <li>The Chief writes the final brief.</li>
       </ol>
     </div>
@@ -407,8 +407,8 @@ var AGENTS = [
   {id:"eq_fundamental", name:"Fundamentals", full:"Fundamental Research Analyst", dept:"equity", working:true},
   {id:"eq_forensics", name:"Forensics", full:"Financial Forensics Analyst", dept:"equity", working:false},
   {id:"eq_preearnings", name:"Pre-Earnings", full:"Pre-Earnings Intelligence Analyst", dept:"equity", working:false},
-  {id:"lead_geo", name:"Geo Lead", full:"Head of Industry & Geopolitical Research", dept:"geo", working:false},
-  {id:"geo_industry", name:"Industry", full:"Industry Research Analyst", dept:"geo", working:false},
+  {id:"lead_geo", name:"Geo Lead", full:"Head of Industry & Geopolitical Research", dept:"geo", working:true},
+  {id:"geo_industry", name:"Industry", full:"Industry Research Analyst", dept:"geo", working:true},
   {id:"geo_risk", name:"Geo Risk", full:"Geopolitical Risk Analyst", dept:"geo", working:false},
   {id:"lead_activity", name:"Activity Lead", full:"Head of Market Activity & Ownership", dept:"activity", working:true},
   {id:"act_volume", name:"Volume", full:"Market Volume Intelligence Analyst", dept:"activity", working:false},
@@ -416,7 +416,7 @@ var AGENTS = [
   {id:"act_funds", name:"Fund Holdings", full:"Fund Holdings Research Analyst", dept:"activity", working:false},
   {id:"act_congress", name:"Congress Trades", full:"Congress Trades Analyst", dept:"activity", working:false},
   {id:"act_short", name:"Short Interest", full:"Short-Seller Research Analyst", dept:"activity", working:false},
-  {id:"lead_review", name:"Review Lead", full:"Independent Research Review Lead", dept:"review", working:false},
+  {id:"lead_review", name:"Review Lead", full:"Independent Research Review Lead", dept:"review", working:true},
   {id:"rev_bull", name:"Bull Case", full:"Bull Case Analyst", dept:"review", working:true},
   {id:"rev_bear", name:"Bear Case", full:"Bear Case Analyst", dept:"review", working:true},
   {id:"rev_validation", name:"Validation", full:"Research Validation Analyst", dept:"review", working:false}
@@ -430,13 +430,13 @@ var DEPTS = [
     role:"Synthesises the equity desk's specialist reports into one desk pack for the chief.",
     specs:["eq_fundamental","eq_forensics","eq_preearnings"]},
   {id:"geo", label:"Industry & Geo", color:"var(--dept-geo)", lead:"lead_geo", leadName:"Head of Industry & Geopolitical Research",
-    role:"Would synthesise industry-structure and geopolitical-risk reports into a desk pack.",
+    role:"Turns the industry analyst's sector comparison into a desk pack for the chief.",
     specs:["geo_industry","geo_risk"]},
   {id:"activity", label:"Activity & Ownership", color:"var(--dept-activity)", lead:"lead_activity", leadName:"Head of Market Activity & Ownership",
     role:"Synthesises trading-activity and ownership reports into one desk pack for the chief.",
     specs:["act_volume","act_insider","act_funds","act_congress","act_short"]},
   {id:"review", label:"Independent Review", color:"var(--dept-review)", lead:"lead_review", leadName:"Independent Research Review Lead",
-    role:"Would run the bull/bear/validation review triad and package it for the chief.",
+    role:"Weighs the bull and bear cases, flags missing evidence, and reports to the chief.",
     specs:["rev_bull","rev_bear","rev_validation"]}
 ];
 
