@@ -31,6 +31,14 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
 .parthead p{font-size:15px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:720px;margin:0}
 .parthead + .roles{margin-top:28px}
 .go.soonlink{font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-top:auto}
+.countdown{margin-top:18px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.fig{font-size:14px;font-weight:300;color:var(--dim2);margin:-6px 0 18px;line-height:1.5}
+.fig b{color:var(--gold-hi);font-weight:500}
+.fig a{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-left:4px}
+.sources{margin-top:56px;padding-top:30px;border-top:1px solid var(--gold-faint);max-width:860px}
+.sources ul{margin:10px 0 0;padding-left:18px;font-size:13.5px;font-weight:300;line-height:1.7;color:var(--dim2)}
+.sources a{color:var(--gold)}
+.which{font-family:'Playfair Display',serif;font-style:italic;font-size:19px;color:var(--gold-hi)}
 .note{margin-top:56px;padding-top:34px;border-top:1px solid var(--gold-faint);font-size:14.5px;font-weight:300;line-height:1.75;color:var(--dim2);max-width:760px}
 </style>
 </head>
@@ -50,6 +58,7 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
   <div class=eyebrow>Free · Cloud9 Research</div>
   <h1>Master these.</h1>
   <div class=free>Twelve routes. Twelve skills each.</div>
+  <div class=countdown id=countdown>Less than 100 days left in 2026. Pick your route.</div>
   <p class=sub>Twelve different outcomes in markets, and the twelve things you actually have to learn for each one. Not job titles — skills. Every route below points at a free syllabus taught by the institutions and practitioners who do the work: Yale, MIT, Columbia, NYU Stern, Two Sigma.</p>
 </header>
 <main>
@@ -62,15 +71,17 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
     <section class="role live" id=fire>
       <div class=rnum>Route 07</div>
       <h2>Retire Early</h2>
-      <div class=track>Money &amp; Wealth · $2M by 45</div>
+      <div class=track>Money &amp; Wealth</div>
+      <div class=fig><b>$2M by 45</b> · $2,000 a month from age 20 <a href="#sources">source</a></div>
       <ul class=skills><li>Savings Rate</li><li>Budgeting</li><li>Your FIRE Number</li><li>Index Funds</li><li>Side Income</li><li>Debt Payoff</li><li>Tax-Advantaged Accounts</li><li>Compound Interest</li><li>The 4% Rule</li><li>Coast FIRE</li><li>Frugality</li><li>Patience</li></ul>
-      <div class=go><a href="money-skills.html#millionaire">Open the free syllabus →</a></div>
+      <div class=go><a href="money-skills.html#fire">Open the free syllabus →</a></div>
     </section>
 
     <section class="role live" id=options>
       <div class=rnum>Route 08</div>
       <h2>Options Trader</h2>
       <div class=track>Options Unlocked</div>
+      <div class=fig><b>$250K–$400K</b> · first-year comp, options market maker <a href="#sources">source</a></div>
       <ul class=skills><li>Calls &amp; Puts</li><li>The Greeks</li><li>Implied Volatility</li><li>Theta Decay</li><li>Spreads</li><li>Covered Calls</li><li>Cash-Secured Puts</li><li>Iron Condors</li><li>Earnings IV Crush</li><li>Assignment</li><li>Position Sizing</li><li>Discipline</li></ul>
       <div class=go><a href="money-skills.html#options">Open the free syllabus →</a></div>
     </section>
@@ -79,30 +90,34 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
       <div class=rnum>Route 09</div>
       <h2>AI Investor</h2>
       <div class=track>AI Investing</div>
+      <div class=fig><b>$0</b> · an AI research desk, vs <b>$31,980</b> a year for a Bloomberg Terminal <a href="#sources">source</a></div>
       <ul class=skills><li>Prompting</li><li>AI Stock Screeners</li><li>Earnings Summaries with AI</li><li>Sentiment Analysis</li><li>Checking the Data</li><li>Spotting Hallucinations</li><li>Python</li><li>APIs</li><li>Backtesting</li><li>AI Agents</li><li>Bias Checks</li><li>Judgment</li></ul>
-      <div class=go><a href="money-skills.html#ai">Open the free syllabus →</a></div>
+      <div class=go><a href="money-skills.html#ai-investor">Open the free syllabus →</a></div>
     </section>
 
     <section class="role live" id=wealth>
       <div class=rnum>Route 10</div>
       <h2>Wealth Manager</h2>
-      <div class=track>Money &amp; Wealth · Family Office</div>
+      <div class=track>Money &amp; Wealth · Financial Planning</div>
+      <div class=fig><b>$105K</b> US median · top 10% earn <b>$357K+</b> <a href="#sources">source</a></div>
       <ul class=skills><li>Financial Planning</li><li>Cash Flow</li><li>Retirement Planning</li><li>Tax Planning</li><li>Estate Planning</li><li>Insurance</li><li>Asset Allocation</li><li>Risk Profiling</li><li>Rebalancing</li><li>Behavioural Coaching</li><li>The CFP Exam</li><li>Client Trust</li></ul>
-      <div class=go><a href="money-skills.html#family-office">Open the free syllabus →</a></div>
+      <div class=go><a href="money-skills.html#planning">Open the free syllabus →</a></div>
     </section>
 
     <section class="role live" id=macro>
       <div class=rnum>Route 11</div>
       <h2>Macro Trader</h2>
       <div class=track>Market Decoded</div>
+      <div class=fig><b>$200K–$250K</b> · first-year comp, hedge fund analyst <a href="#sources">source</a></div>
       <ul class=skills><li>Interest Rates</li><li>The Yield Curve</li><li>Inflation</li><li>Fed Watching</li><li>CPI</li><li>The Jobs Report</li><li>Currencies (FX)</li><li>Oil</li><li>Gold</li><li>Business Cycles</li><li>Correlation</li><li>Risk-On / Risk-Off</li></ul>
-      <div class="go soonlink">Free syllabus coming soon</div>
+      <div class=go><a href="money-skills.html#macro">Open the free syllabus →</a></div>
     </section>
 
     <section class="role live" id=pm>
       <div class=rnum>Route 12</div>
       <h2>Portfolio Manager</h2>
       <div class=track>Data &amp; Signals · Portfolio Management</div>
+      <div class=fig><b>~$1M</b> · median hedge fund PM total comp <a href="#sources">source</a></div>
       <ul class=skills><li>Asset Allocation</li><li>Diversification</li><li>Risk Budgeting</li><li>Sharpe Ratio</li><li>Drawdowns</li><li>Rebalancing</li><li>Factor Investing</li><li>Hedging</li><li>Benchmarks</li><li>Performance Attribution</li><li>Liquidity</li><li>Discipline</li></ul>
       <div class=go><a href="money-skills.html#family-office">Open the free syllabus →</a></div>
     </section>
@@ -195,14 +210,37 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
 
   </div>
 
-  <p class=note>Every route is open (the Macro Trader syllabus is on its way). Behind each one is a free syllabus — real courses from real institutions and practitioners, not a reading list someone generated. Pick the route that matches the life you want, and finish it before you open another.</p>
+  <p class=note>Every route is open. Behind each one is a free syllabus — real courses from real institutions and practitioners, not a reading list someone generated. Pick the route that matches the life you want, and finish it before you open another.</p>
+
+  <div class=sources id=sources>
+    <div class=rnum>Where the Part 2 numbers come from</div>
+    <ul>
+      <li><b>Retire Early:</b> our own maths. $2,000 a month for 25 years at 8.3% a year (the same return as Part 1's Millionaire Investor card) reaches $2M. The 4% rule on $2M is $80,000 a year. Returns are not guaranteed.</li>
+      <li><b>Options Trader:</b> graduate trader total comp at an options market maker, US: <a href="https://quantvault.org/optiver-salary.html" target=_blank rel=noopener>QuantVault</a>, <a href="https://www.quantt.co.uk/resources/optiver-salary" target=_blank rel=noopener>Quantt</a>.</li>
+      <li><b>AI Investor:</b> Bloomberg Terminal single-seat price, 2026: <a href="https://costbench.com/software/financial-data-terminals/bloomberg-terminal/" target=_blank rel=noopener>CostBench</a>. The $0 desk: <a href="https://desk.cloud9markets.com" target=_blank rel=noopener>desk.cloud9markets.com</a>, built on free models, free data and free hosting.</li>
+      <li><b>Wealth Manager:</b> US Bureau of Labor Statistics, personal financial advisors, May 2025: <a href="https://www.bls.gov/ooh/business-and-financial/personal-financial-advisors.htm" target=_blank rel=noopener>BLS</a>.</li>
+      <li><b>Macro Trader and Portfolio Manager:</b> hedge fund pay surveys (<a href="https://hedgefundinterview.com/hedge-fund-compensation" target=_blank rel=noopener>HedgeFundInterview</a>, <a href="https://www.wallstreetcareers.com/blog/hedge-fund-careers-2026" target=_blank rel=noopener>WallStreetCareers</a>). Hedge fund pay varies enormously with fund size and performance.</li>
+    </ul>
+  </div>
 
   <div class=ctaboard>
     <div class=lbl>One rule</div>
     <h2>Pick one. Finish it.</h2>
     <p>Twelve skills is a semester, not a weekend. The people who get there are the ones who finished one list instead of starting twelve.</p>
+    <p class=which>Which number are you? Comment it on the reel.</p>
     <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
   </div>
 </main>
 </div>
+<script>
+(function(){
+  try{
+    var now=new Date(), y=now.getFullYear();
+    var today=new Date(y,now.getMonth(),now.getDate());
+    var days=Math.round((new Date(y+1,0,1)-today)/86400000);
+    var el=document.getElementById("countdown");
+    if(el) el.textContent=days+(days===1?" day":" days")+" left in "+y+". Pick your route.";
+  }catch(e){}
+})();
+</script>
 </body></html>
