@@ -92,6 +92,15 @@ footer{margin-top:auto;border-top:1px solid var(--gold-faint);padding:30px clamp
 .lesson table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:15px;font-weight:300;color:#DDD2BE}
 .lesson th{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:500;text-align:left;padding:8px 10px;border-bottom:1px solid var(--gold-dim)}
 .lesson td{padding:8px 10px;border-bottom:1px solid var(--gold-faint)}
+.lesson figure.fig{margin:28px 0 24px;padding:18px 18px 14px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.035)}
+.lesson figure.fig svg{display:block;width:100%;height:auto;font-family:'Jost',sans-serif}
+.lesson figure.fig{cursor:zoom-in}
+.figzoom{position:fixed;inset:0;z-index:60;background:#0A0907;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;cursor:zoom-out}
+.figzoom.on{display:flex}
+.figzoom svg{height:auto;flex:none;font-family:'Jost',sans-serif}
+.figzoom .zc{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
+@media (orientation:portrait) and (max-width:600px){.figzoom svg{max-width:none;transform:rotate(90deg)}.figzoom .zc{position:absolute;bottom:calc(18px + env(safe-area-inset-bottom))}}
+.lesson figcaption{margin-top:12px;font-size:13px;font-weight:300;line-height:1.55;letter-spacing:.02em;color:var(--dim)}
 /* practice + quiz (lesson uplift, 2026-09) — same Luxe grammar as .steal */
 .prac{margin-top:34px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:26px 30px}
 .prac .lbl,.quiz .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
@@ -248,6 +257,10 @@ footer{flex-direction:column;align-items:center;text-align:center;gap:10px;
 .qopt{flex-wrap:wrap}
 .lesson pre{padding:12px 14px;font-size:12.5px}
 .lesson table{font-size:14px}
+/* phones: full-bleed figure (whole chart visible); tap opens the enlarged view */
+.lesson figure.fig{margin:22px -20px 20px;padding:12px 6px 12px;border-left:none;border-right:none}
+.lesson figcaption{font-size:12px;padding:0 14px}
+.lesson figcaption::after{content:" · tap to enlarge";color:var(--gold);white-space:nowrap}
 .sheet .actions{margin-top:28px;flex-direction:column;gap:12px}
 .sheet .actions .btn-gold,.sheet .actions .btn-line{width:100%;padding:15px;text-align:center}
 .login{max-width:none;padding:22px 22px calc(48px + env(safe-area-inset-bottom))}
