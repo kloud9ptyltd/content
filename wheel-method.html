@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Wheel Method · Cloud9</title>
+<meta name="description" content="The Wheel, explained simply: get paid to promise to buy a stock at a discount, then get paid again to sell it higher. Step-by-step guide, real premium calculator and the full risk breakdown.">
+<meta property="og:title" content="Wall Street will pay me $12,540 to buy NVDA at a 21% discount">
+<meta property="og:description" content="The Wheel Method: step-by-step guide, premium calculator with real option prices, and every risk spelled out.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px}
+.stat{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:28px 24px;text-align:center}
+.stat .n{font-family:'Playfair Display',serif;font-size:30px;color:var(--gold-hi);line-height:1;margin-bottom:10px}
+.stat .l{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.stats.four{grid-template-columns:repeat(4,1fr)}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim);text-align:center}
+
+.check{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:16px}
+.check li{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:20px 22px;display:flex;gap:16px;align-items:flex-start}
+.check .tick{flex:none;width:24px;height:24px;margin-top:2px;background:linear-gradient(135deg,var(--gold),var(--gold-hi));color:var(--bg);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border-radius:50%}
+.check .body strong{display:block;color:var(--ink);font-weight:500;font-size:15px;margin-bottom:6px}
+.check .body p{margin:0;font-size:14px;font-weight:300;line-height:1.6;color:var(--dim2)}
+
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px}
+.mcard{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:26px 24px;transition:border-color .25s,background .25s}
+.mcard:hover{border-color:var(--gold-dim);background:rgba(200,162,78,.07)}
+.mcard h3{font-family:'Playfair Display',serif;font-weight:500;font-size:17px;line-height:1.3;margin:0 0 8px;color:var(--ink)}
+.mcard p{font-size:13.5px;font-weight:300;line-height:1.55;color:var(--dim2);margin:0}
+.badgeline{margin-top:28px;font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:780px}
+.badgeline strong{color:var(--gold-hi);font-weight:500}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.apply-row{margin-top:32px;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.apply-row .btn-gold{display:inline-block;text-decoration:none}
+.faq-link{font-size:12px;letter-spacing:.1em;color:var(--dim);text-decoration:underline;text-underline-offset:3px}
+.faq-link:hover{color:var(--gold-hi)}
+
+.catch{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
+.catch li{font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2);padding-left:20px;position:relative}
+.catch li::before{content:'—';position:absolute;left:0;color:var(--gold)}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 0 10px;max-width:560px;margin-left:auto;margin-right:auto}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+
+@media (max-width:700px){
+.stats,.stats.four{grid-template-columns:1fr}
+.mods{grid-template-columns:1fr}
+}
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+
+.calc{border:1px solid var(--gold-dim);background:rgba(200,162,78,.04);padding:26px 24px;margin-top:26px}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.tabs button{font:500 13px 'Jost',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--dim2);background:none;border:1px solid var(--gold-faint);padding:10px 16px;cursor:pointer}
+.tabs button.on{color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));border-color:var(--gold)}
+.fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.fields>*{min-width:0}
+.fields label{display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.fields select,.fields input{font:400 16px 'Jost',sans-serif;color:var(--ink);background:#0A0907;border:1px solid var(--gold-dim);padding:11px 12px;width:100%}
+.res{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}.res>*{min-width:0}
+.res .stat .n{font-size:clamp(22px,2.6vw,32px)}
+.res .stat.big{border-color:var(--gold);background:rgba(200,162,78,.09)}
+.res .stat.big .n{color:var(--gold-hi)}
+.explain{margin-top:18px;font-size:15px;font-weight:300;line-height:1.7;color:var(--dim2)}
+.explain b{color:var(--ink);font-weight:500}
+.snap{margin-top:14px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+@media(max-width:760px){.fields{grid-template-columns:repeat(2,minmax(0,1fr))}.res{grid-template-columns:minmax(0,1fr)}}
+</style><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>The Wheel Method</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+<header class=hero>
+  <div class=eyebrow>Free playbook · Options, explained simply</div>
+  <h1>Get paid to buy stocks<br><span class=free>at a discount.</span></h1>
+  <p class=sub>This is the guide from the reel. The Wheel is a simple loop: I get paid to promise to buy a stock cheaper, and if I end up owning it, I get paid again to promise to sell it higher. Below: how it works, a calculator with real option prices, and every risk, spelled out.</p>
+</header>
+<main>
+  <section class=topic>
+    <div class=tnum>01</div>
+    <h2>The idea in 30 seconds.</h2>
+    <p class=tdesc>Lots of people who own NVDA are scared of a crash, so they buy insurance. That insurance is a <b>put option</b>: a promise from someone else to buy their shares at a set price, before a set date. When I <b>sell</b> that promise, they pay me upfront, like an insurance company collecting a premium.</p>
+    <p class=tdesc>At the 29 Sep 2026 close, NVDA traded at about <b>$228</b>. A promise to buy 600 shares at <b>$180</b> (21% lower) by December 2028 paid <b>$12,540</b> upfront.</p>
+    <div class=stats>
+      <div class=stat><div class=n>$12,540</div><div class=l>Paid to me upfront</div></div>
+      <div class=stat><div class=n>$159.10</div><div class=l>My real buy price if assigned</div></div>
+      <div class=stat><div class=n>$108,000</div><div class=l>Cash I must keep ready</div></div>
+    </div>
+    <p class=capt>Real bid for 6 × NVDA Dec-2028 $180 puts, CBOE delayed quote, 29 Sep 2026 close. Prices move every day.</p>
+  </section>
+
+  <section class=topic>
+    <div class=tnum>02</div>
+    <h2>The Wheel, step by step.</h2>
+    <ol class=steps>
+      <li><span class=sn>1</span><div class=st><p><b>Pick a company you'd happily own for years.</b> This is the whole game. If you wouldn't buy it at the discount price anyway, stop here.</p></div></li>
+      <li><span class=sn>2</span><div class=st><p><b>Pick your discount price (the strike) and a deadline (the expiry).</b> Lower strike = safer but pays less. Longer deadline = pays more but ties up your cash longer.</p></div></li>
+      <li><span class=sn>3</span><div class=st><p><b>Sell a cash-secured put.</b> Keep strike × 100 × contracts in cash, so you can always afford the shares. The premium lands in your account straight away.</p></div></li>
+      <li><span class=sn>4</span><div class=st><p><b>Stock stays above your strike?</b> The promise expires. You keep the premium, never buy anything, and can sell another put.</p></div></li>
+      <li><span class=sn>5</span><div class=st><p><b>Stock drops below your strike?</b> You're "assigned": you buy the shares at the strike. Your real cost is strike minus the premium you already got.</p></div></li>
+      <li><span class=sn>6</span><div class=st><p><b>Now sell a covered call.</b> A promise to <b>sell</b> your shares at a higher price. Pick a strike at or above your real cost, so if the shares get sold, it's never at a loss. You get paid again.</p></div></li>
+      <li><span class=sn>7</span><div class=st><p><b>Shares get sold? Back to step 1.</b> Not sold? Keep the shares and the premium, and sell another call. That loop is the Wheel.</p></div></li>
+    </ol>
+  </section>
+
+  <section class=topic id=calculator>
+    <div class=tnum>03</div>
+    <h2>Premium calculator.</h2>
+    <p class=tdesc>Real option prices for 7 of the biggest US stocks. Pick a stock, a deadline and how far from today's price, and see what the promise pays.</p>
+    <div class=calc>
+      <div class=tabs><button id=tPut class=on>Step 1 · Sell a put</button><button id=tCall>Step 6 · Sell a covered call</button></div>
+      <div class=fields>
+        <label>Stock<select id=fT></select></label>
+        <label>Deadline<select id=fE></select></label>
+        <label><span id=offLab>Discount</span><select id=fO></select></label>
+        <label>Contracts<input id=fN type=number min=1 max=50 value=6></label>
+      </div>
+      <div class=res>
+        <div class="stat big"><div class=n id=rPrem>–</div><div class=l>You get paid today</div></div>
+        <div class=stat><div class=n id=rNeed>–</div><div class=l id=rNeedL>Cash to keep ready</div></div>
+        <div class=stat><div class=n id=rYield>–</div><div class=l>Yield · total · per year</div></div>
+      </div>
+      <p class=explain id=rTxt></p>
+      <p class=snap>Snapshot of real bids (what a seller receives) at the 29 Sep 2026 close, CBOE delayed quotes. The nearest listed strike is used. Check live prices in your broker before any trade.</p>
+    </div>
+  </section>
+
+  <section class=topic>
+    <div class=tnum>04</div>
+    <h2>The full risk breakdown.</h2>
+    <p class=tdesc>The reel shows the upside. Here's everything else, using the same NVDA trade.</p>
+    <ul class=catch>
+      <li><b>You need the cash.</b> 6 contracts at $180 means keeping $108,000 ready until December 2028. That money can't be used for anything else.</li>
+      <li><b>A crash still costs you.</b> NVDA fell about 66% in 2022. If it drops to $120, I still pay $180 a share: that's a loss of about <b>$23,460</b> even after keeping the premium.</li>
+      <li><b>You cap your upside.</b> If NVDA doubles, a put seller only keeps the premium. A covered call seller has to sell at the call strike, however high the stock goes.</li>
+      <li><b>You can be assigned early.</b> US stock options can be exercised any time before the deadline, not only on the final day.</li>
+      <li><b>Margin makes it riskier.</b> Some traders secure puts with their other stocks instead of cash. If markets fall, the broker can demand more money or sell your positions.</li>
+      <li><b>Taxes and fees.</b> Premiums are usually taxed as income, and bid/ask spreads on long-dated options can be wide. Check the rules where you live.</li>
+    </ul>
+  </section>
+
+  <section class=topic>
+    <div class=tnum>05</div>
+    <h2>My checklist before the first trade.</h2>
+    <ul class=check>
+      <li><span class=tick>✓</span><div class=body><strong>I'd buy this company today anyway.</strong><p>A high premium on a stock I don't want is a trap, not a bonus.</p></div></li>
+      <li><span class=tick>✓</span><div class=body><strong>The cash is set aside.</strong><p>Strike × 100 × contracts, in cash, not borrowed.</p></div></li>
+      <li><span class=tick>✓</span><div class=body><strong>I'm happy at the effective price.</strong><p>Strike minus premium is my real buy price. I'd be pleased to own it there.</p></div></li>
+      <li><span class=tick>✓</span><div class=body><strong>No earnings surprise inside a short deadline.</strong><p>For short-dated puts, check the next earnings date first.</p></div></li>
+      <li><span class=tick>✓</span><div class=body><strong>Calls only at or above my real cost.</strong><p>So getting my shares sold is never a forced loss.</p></div></li>
+    </ul>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Keep learning</div>
+    <h2>More playbooks like this.</h2>
+    <p>I break down one real money strategy at a time, with real numbers and the catch included. Follow so you don't miss the next one.</p>
+    <div class=actions>
+      <a class=btn-gold href="#calculator">Try the calculator →</a>
+      <a class=btn-line href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+    </div>
+  </div>
+</main>
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>Options involve significant risk and aren't suitable for everyone; you can lose more than the premium you collect. Option prices are CBOE delayed quotes from the 29 Sep 2026 close and change constantly. Cloud9 is not affiliated with NVIDIA or any company shown.</div>
+</footer>
+</div>
+<script>
+const D={"asof": "2026-09-29T15:59:59", "tickers": {"NVDA": {"spot": 227.97, "puts": {"Dec 2026": {"10": {"strike": 205.0, "bid": 6.0, "ask": 6.15}, "15": {"strike": 194.0, "bid": 3.7, "ask": 3.85}, "20": {"strike": 182.0, "bid": 2.07, "ask": 2.25}, "25": {"strike": 171.0, "bid": 1.29, "ask": 1.44}}, "Dec 2027": {"10": {"strike": 205.0, "bid": 22.2, "ask": 22.45}, "15": {"strike": 195.0, "bid": 18.4, "ask": 18.75}, "20": {"strike": 180.0, "bid": 13.6, "ask": 13.75}, "25": {"strike": 170.0, "bid": 10.8, "ask": 11.1}}, "Dec 2028": {"10": {"strike": 205.0, "bid": 30.8, "ask": 31.2}, "15": {"strike": 195.0, "bid": 26.6, "ask": 27.3}, "20": {"strike": 180.0, "bid": 20.9, "ask": 21.55}, "25": {"strike": 170.0, "bid": 17.3, "ask": 17.9}}}, "calls": {"Dec 2026": {"10": {"strike": 250.0, "bid": 7.0, "ask": 7.2}, "20": {"strike": 275.0, "bid": 2.43, "ask": 2.55}}, "Dec 2027": {"10": {"strike": 250.0, "bid": 34.3, "ask": 34.75}, "20": {"strike": 275.0, "bid": 25.95, "ask": 26.3}}, "Dec 2028": {"10": {"strike": 250.0, "bid": 53.1, "ask": 53.85}, "20": {"strike": 275.0, "bid": 44.55, "ask": 45.45}}}}, "AAPL": {"spot": 329.64, "puts": {"Dec 2026": {"10": {"strike": 295.0, "bid": 3.95, "ask": 4.25}, "15": {"strike": 280.0, "bid": 2.15, "ask": 2.52}, "20": {"strike": 265.0, "bid": 1.15, "ask": 1.34}, "25": {"strike": 245.0, "bid": 0.47, "ask": 0.7}}, "Dec 2027": {"10": {"strike": 295.0, "bid": 18.0, "ask": 19.25}, "15": {"strike": 280.0, "bid": 13.7, "ask": 15.0}, "20": {"strike": 265.0, "bid": 10.15, "ask": 11.4}, "25": {"strike": 245.0, "bid": 6.85, "ask": 7.4}}, "Dec 2028": {"10": {"strike": 300.0, "bid": 27.45, "ask": 28.0}, "15": {"strike": 280.0, "bid": 20.05, "ask": 21.8}, "20": {"strike": 260.0, "bid": 15.4, "ask": 16.2}, "25": {"strike": 250.0, "bid": 13.1, "ask": 14.0}}}, "calls": {"Dec 2026": {"10": {"strike": 365.0, "bid": 4.2, "ask": 4.8}, "20": {"strike": 395.0, "bid": 1.08, "ask": 1.15}}, "Dec 2027": {"10": {"strike": 365.0, "bid": 32.05, "ask": 33.1}, "20": {"strike": 395.0, "bid": 21.5, "ask": 22.9}}, "Dec 2028": {"10": {"strike": 360.0, "bid": 55.1, "ask": 56.95}, "20": {"strike": 400.0, "bid": 40.4, "ask": 41.9}}}}, "GOOGL": {"spot": 344.02, "puts": {"Dec 2026": {"10": {"strike": 310.0, "bid": 7.6, "ask": 8.05}, "15": {"strike": 290.0, "bid": 3.75, "ask": 4.25}, "20": {"strike": 275.0, "bid": 2.09, "ask": 2.72}, "25": {"strike": 260.0, "bid": 0.98, "ask": 1.3}}, "Dec 2027": {"10": {"strike": 310.0, "bid": 29.05, "ask": 32.0}, "15": {"strike": 290.0, "bid": 19.5, "ask": 22.4}, "20": {"strike": 275.0, "bid": 15.1, "ask": 19.35}, "25": {"strike": 260.0, "bid": 11.35, "ask": 13.6}}, "Dec 2028": {"10": {"strike": 310.0, "bid": 39.0, "ask": 43.5}, "15": {"strike": 290.0, "bid": 30.5, "ask": 35.5}, "20": {"strike": 275.0, "bid": 25.6, "ask": 29.75}, "25": {"strike": 260.0, "bid": 21.75, "ask": 24.8}}}, "calls": {"Dec 2026": {"10": {"strike": 380.0, "bid": 8.8, "ask": 9.25}, "20": {"strike": 415.0, "bid": 3.35, "ask": 3.75}}, "Dec 2027": {"10": {"strike": 380.0, "bid": 43.5, "ask": 48.0}, "20": {"strike": 415.0, "bid": 32.0, "ask": 37.0}}, "Dec 2028": {"10": {"strike": 380.0, "bid": 70.65, "ask": 73.75}, "20": {"strike": 415.0, "bid": 58.5, "ask": 63.5}}}}, "MSFT": {"spot": 507.51, "puts": {"Dec 2026": {"10": {"strike": 455.0, "bid": 7.85, "ask": 9.0}, "15": {"strike": 430.0, "bid": 4.0, "ask": 5.3}, "20": {"strike": 405.0, "bid": 1.98, "ask": 2.76}, "25": {"strike": 380.0, "bid": 1.23, "ask": 1.38}}, "Dec 2027": {"10": {"strike": 460.0, "bid": 36.7, "ask": 39.7}, "15": {"strike": 430.0, "bid": 26.1, "ask": 29.55}, "20": {"strike": 410.0, "bid": 21.5, "ask": 23.6}, "25": {"strike": 380.0, "bid": 14.8, "ask": 16.0}}, "Dec 2028": {"10": {"strike": 455.0, "bid": 50.0, "ask": 54.15}, "15": {"strike": 430.0, "bid": 41.5, "ask": 44.0}, "20": {"strike": 405.0, "bid": 32.5, "ask": 35.2}, "25": {"strike": 380.0, "bid": 26.45, "ask": 29.0}}}, "calls": {"Dec 2026": {"10": {"strike": 560.0, "bid": 11.3, "ask": 12.65}, "20": {"strike": 610.0, "bid": 3.6, "ask": 4.5}}, "Dec 2027": {"10": {"strike": 560.0, "bid": 60.0, "ask": 63.6}, "20": {"strike": 610.0, "bid": 43.5, "ask": 47.5}}, "Dec 2028": {"10": {"strike": 560.0, "bid": 95.9, "ask": 99.45}, "20": {"strike": 610.0, "bid": 78.5, "ask": 82.5}}}}, "AMZN": {"spot": 247.01, "puts": {"Dec 2026": {"10": {"strike": 220.0, "bid": 5.4, "ask": 5.65}, "15": {"strike": 210.0, "bid": 3.4, "ask": 3.7}, "20": {"strike": 200.0, "bid": 2.18, "ask": 2.29}, "25": {"strike": 185.0, "bid": 0.98, "ask": 1.22}}, "Dec 2027": {"10": {"strike": 220.0, "bid": 19.25, "ask": 20.3}, "15": {"strike": 210.0, "bid": 15.6, "ask": 16.8}, "20": {"strike": 200.0, "bid": 12.7, "ask": 13.2}, "25": {"strike": 185.0, "bid": 8.7, "ask": 9.65}}, "Dec 2028": {"10": {"strike": 220.0, "bid": 26.9, "ask": 28.0}, "15": {"strike": 210.0, "bid": 21.05, "ask": 24.8}, "20": {"strike": 200.0, "bid": 19.6, "ask": 20.75}, "25": {"strike": 185.0, "bid": 14.85, "ask": 15.45}}}, "calls": {"Dec 2026": {"10": {"strike": 270.0, "bid": 8.4, "ask": 8.65}, "20": {"strike": 295.0, "bid": 3.4, "ask": 3.75}}, "Dec 2027": {"10": {"strike": 270.0, "bid": 35.1, "ask": 36.3}, "20": {"strike": 295.0, "bid": 26.8, "ask": 27.65}}, "Dec 2028": {"10": {"strike": 270.0, "bid": 54.4, "ask": 55.9}, "20": {"strike": 300.0, "bid": 43.75, "ask": 46.25}}}}, "META": {"spot": 736.09, "puts": {"Dec 2026": {"10": {"strike": 660.0, "bid": 21.25, "ask": 21.85}, "15": {"strike": 625.0, "bid": 12.95, "ask": 13.55}, "20": {"strike": 590.0, "bid": 7.6, "ask": 8.0}, "25": {"strike": 550.0, "bid": 4.0, "ask": 4.15}}, "Dec 2027": {"10": {"strike": 660.0, "bid": 77.8, "ask": 79.65}, "15": {"strike": 630.0, "bid": 65.35, "ask": 66.95}, "20": {"strike": 590.0, "bid": 50.65, "ask": 52.35}, "25": {"strike": 550.0, "bid": 38.25, "ask": 39.55}}, "Dec 2028": {"10": {"strike": 660.0, "bid": 108.65, "ask": 111.9}, "15": {"strike": 630.0, "bid": 94.55, "ask": 98.5}, "20": {"strike": 590.0, "bid": 77.75, "ask": 81.45}, "25": {"strike": 550.0, "bid": 63.25, "ask": 65.05}}}, "calls": {"Dec 2026": {"10": {"strike": 810.0, "bid": 32.5, "ask": 33.3}, "20": {"strike": 885.0, "bid": 16.5, "ask": 17.2}}, "Dec 2027": {"10": {"strike": 810.0, "bid": 127.1, "ask": 129.35}, "20": {"strike": 880.0, "bid": 104.55, "ask": 106.8}}, "Dec 2028": {"10": {"strike": 810.0, "bid": 192.4, "ask": 195.1}, "20": {"strike": 880.0, "bid": 170.45, "ask": 172.8}}}}, "TSLA": {"spot": 353.0, "puts": {"Dec 2026": {"10": {"strike": 320.0, "bid": 11.85, "ask": 12.1}, "15": {"strike": 300.0, "bid": 6.8, "ask": 6.95}, "20": {"strike": 280.0, "bid": 3.7, "ask": 3.85}, "25": {"strike": 265.0, "bid": 2.32, "ask": 2.44}}, "Dec 2027": {"10": {"strike": 320.0, "bid": 42.9, "ask": 43.75}, "15": {"strike": 300.0, "bid": 34.75, "ask": 34.85}, "20": {"strike": 280.0, "bid": 27.3, "ask": 28.0}, "25": {"strike": 260.0, "bid": 20.9, "ask": 21.55}}, "Dec 2028": {"10": {"strike": 320.0, "bid": 59.0, "ask": 60.35}, "15": {"strike": 300.0, "bid": 49.5, "ask": 50.6}, "20": {"strike": 280.0, "bid": 41.15, "ask": 42.25}, "25": {"strike": 260.0, "bid": 34.05, "ask": 34.6}}}, "calls": {"Dec 2026": {"10": {"strike": 390.0, "bid": 15.15, "ask": 15.4}, "20": {"strike": 425.0, "bid": 7.95, "ask": 8.15}}, "Dec 2027": {"10": {"strike": 390.0, "bid": 64.35, "ask": 65.25}, "20": {"strike": 420.0, "bid": 54.65, "ask": 55.5}}, "Dec 2028": {"10": {"strike": 390.0, "bid": 97.3, "ask": 98.85}, "20": {"strike": 420.0, "bid": 87.9, "ask": 89.35}}}}}};
+const EXP={'Dec 2026':'2026-12-18','Dec 2027':'2027-12-17','Dec 2028':'2028-12-15'};
+const $=id=>document.getElementById(id),fm=v=>'$'+Math.round(v).toLocaleString('en-US'),f2=v=>'$'+v.toFixed(2);
+let mode='put';
+function opts(sel,arr,keep){const v=sel.value;sel.innerHTML=arr.map(([val,t])=>`<option value="${val}">${t}</option>`).join('');if(keep&&arr.some(a=>a[0]===v))sel.value=v;}
+function setup(){opts($('fT'),Object.keys(D.tickers).map(t=>[t,t]),true);
+  const T=D.tickers[$('fT').value],src=mode==='put'?T.puts:T.calls;opts($('fE'),Object.keys(src).map(e=>[e,e]),true);
+  if(!$('fE').value)$('fE').value='Dec 2028';
+  const offs=Object.keys(src[$('fE').value]||{});opts($('fO'),offs.map(o=>[o,mode==='put'?o+'% below today':o+'% above today']),true);
+  $('offLab').textContent=mode==='put'?'Discount':'Sell price';calc();}
+function calc(){const t=$('fT').value,T=D.tickers[t],e=$('fE').value,o=$('fO').value,n=Math.max(1,Math.min(50,+$('fN').value||1));
+  const q=(mode==='put'?T.puts:T.calls)[e][o];if(!q)return;
+  const prem=q.bid*100*n,days=(new Date(EXP[e])-new Date(D.asof))/864e5,y=q.bid/(mode==='put'?q.strike:T.spot),ann=y*365/days;
+  $('rPrem').textContent=fm(prem);
+  if(mode==='put'){$('rNeed').textContent=fm(q.strike*100*n);$('rNeedL').textContent='Cash to keep ready';
+    $('rTxt').innerHTML=`Promise to buy <b>${n*100} ${t}</b> at <b>${f2(q.strike)}</b> (today ${f2(T.spot)}, ${((1-q.strike/T.spot)*100).toFixed(0)}% lower) by ${e}. You get <b>${fm(prem)}</b> now. If you're assigned, your real buy price is <b>${f2(q.strike-q.bid)}</b>, ${((1-(q.strike-q.bid)/T.spot)*100).toFixed(0)}% below today.`;}
+  else{$('rNeed').textContent=(n*100).toLocaleString('en-US');$('rNeedL').textContent='Shares you must own';
+    $('rTxt').innerHTML=`Promise to sell <b>${n*100} ${t}</b> at <b>${f2(q.strike)}</b> (today ${f2(T.spot)}, ${((q.strike/T.spot-1)*100).toFixed(0)}% higher) by ${e}. You get <b>${fm(prem)}</b> now. If the shares get sold, you receive <b>${f2(q.strike+q.bid)}</b> a share in total.`;}
+  $('rYield').textContent=(y*100).toFixed(1)+'% · '+(ann*100).toFixed(1)+'%';}
+$('tPut').onclick=()=>{mode='put';$('tPut').className='on';$('tCall').className='';setup();};
+$('tCall').onclick=()=>{mode='call';$('tCall').className='on';$('tPut').className='';setup();};
+['fT','fE'].forEach(id=>$(id).onchange=setup);['fO','fN'].forEach(id=>$(id).oninput=calc);$('fO').onchange=calc;
+setup();$('fE').value='Dec 2028';setup();$('fO').value='20';calc();
+</script>
+</body></html>
