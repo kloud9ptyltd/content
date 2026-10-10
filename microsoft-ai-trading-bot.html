@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>24/7 AI Trading Bot · Cloud9</title>
+<meta name="description" content="I built a 24/7 AI trading bot with Microsoft's new decision model. It watches the Bitcoin order book every second, only asks the AI when the market moves, and costs under 50 cents a day. The full build, the real numbers and a prompt to build your own.">
+<meta property="og:title" content="I built a 24/7 AI trading bot with Microsoft's new decision model">
+<meta property="og:description" content="The full build: architecture, the 9 questions it asks, the cost trick, the risk engine, and a Claude Code prompt to build your own.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px;margin-top:30px}
+.stat{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:28px 20px;text-align:center;min-width:0}
+.stat .n{font-family:'Playfair Display',serif;font-size:clamp(24px,2.6vw,30px);color:var(--gold-hi);line-height:1;margin-bottom:10px}
+.stat .l{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim);text-align:center}
+
+.live-row{margin-top:30px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.live-row .btn-gold,.live-row .btn-line{display:inline-block;text-decoration:none}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3FB68B;margin-right:10px;box-shadow:0 0 0 0 rgba(63,182,139,.6);animation:pl 1.8s infinite}
+@keyframes pl{0%{box-shadow:0 0 0 0 rgba(63,182,139,.6)}70%{box-shadow:0 0 0 10px rgba(63,182,139,0)}100%{box-shadow:0 0 0 0 rgba(63,182,139,0)}}
+
+.pipe{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;margin-top:30px}
+.pipe .node{flex:1 1 170px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:20px 18px;min-width:0}
+.pipe .node.ai{border-color:var(--gold);background:rgba(200,162,78,.09)}
+.pipe .node.risk{border-color:rgba(229,72,77,.55);background:rgba(229,72,77,.06)}
+.pipe .k{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.pipe .node.risk .k{color:#E5484D}
+.pipe h3{font-family:'Playfair Display',serif;font-weight:500;font-size:19px;margin:0 0 8px;color:var(--ink)}
+.pipe p{font-size:13.5px;font-weight:300;line-height:1.55;color:var(--dim2);margin:0}
+.pipe .arrow{align-self:center;color:var(--gold);font-size:18px}
+
+table.q{width:100%;border-collapse:collapse;margin-top:28px;font-size:14px}
+table.q th{text-align:left;font-weight:500;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);padding:12px 14px;border-bottom:1px solid var(--gold-dim)}
+table.q td{padding:14px;border-bottom:1px solid var(--gold-faint);color:var(--dim2);font-weight:300;line-height:1.5;vertical-align:top}
+table.q td:first-child{color:var(--ink);font-weight:500;white-space:nowrap}
+table.q .src{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+table.q .src.mine{color:var(--gold-hi)}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+.check{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
+.check li{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 20px}
+.check li strong{display:block;color:var(--ink);font-weight:500;font-size:15px;margin-bottom:5px}
+.check li p{margin:0;font-size:14px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.check.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+.costgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:30px}
+.costcard{border:1px solid var(--gold-faint);padding:24px 22px;background:rgba(200,162,78,.03);min-width:0}
+.costcard.win{border-color:var(--gold);background:rgba(200,162,78,.09)}
+.costcard .h{font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.costcard .n{font-family:'Playfair Display',serif;font-size:32px;color:var(--ink);line-height:1;margin-bottom:8px}
+.costcard.win .n{color:var(--gold-hi)}
+.costcard p{font-size:13px;font-weight:300;line-height:1.55;color:var(--dim2);margin:0}
+
+.code{position:relative;margin-top:24px;border:1px solid var(--gold-dim);background:#070605}
+.code pre{margin:0;padding:22px 22px 20px;overflow-x:auto;font:400 13px/1.65 'JetBrains Mono',monospace;color:#d9cfbb;white-space:pre}
+.code .hd{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 10px 22px;border-bottom:1px solid var(--gold-faint);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.code button{font:500 11px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));border:0;padding:8px 14px;cursor:pointer}
+.code .c{color:#7d7464}
+.code.prompt pre{white-space:pre-wrap;font-size:13.5px}
+
+
+.catch{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:12px}
+.catch li{font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2);padding-left:20px;position:relative}
+.catch li::before{content:'—';position:absolute;left:0;color:var(--gold)}
+.catch li b{color:var(--ink);font-weight:500}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .costgrid,.check.two{grid-template-columns:1fr}
+  .pipe .arrow{display:none}
+}
+@media (max-width:480px){.stats{grid-template-columns:1fr}}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>24/7 AI Trading Bot</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Free guide · Microsoft Decision-1 · New release</div>
+  <h1>I built a 24/7 AI trading bot<br><span class=free>with Microsoft's new decision model.</span></h1>
+  <p class=sub>Microsoft just put out a model that doesn't write text. It makes decisions. I wired it into a bot that watches the Bitcoin order book every second, around the clock, and only asks the AI for a judgment when the market actually moves. This is the guide from the reel: how it works, the exact questions it asks, what it costs, a prompt to build your own, and how to turn it into a real trading bot.</p>
+  <div class=live-row>
+    <a class=btn-gold href="https://hft.cloud9markets.com/" target=_blank rel=noopener><span class=pulse></span>Watch it live →</a>
+    <a class=btn-line href="#build">Build your own ↓</a>
+    <a class=btn-line href="#real">Make it trade ↓</a>
+  </div>
+</header>
+
+<main>
+  <section class=topic>
+    <div class=tnum>01</div>
+    <h2>The numbers, measured, not estimated.</h2>
+    <p class=tdesc>Every number here comes from real calls I made to the model, logged by the bot itself.</p>
+    <div class=stats>
+      <div class=stat><div class=n>$0.000025</div><div class=l>Cost per AI decision</div></div>
+      <div class=stat><div class=n>~650 ms</div><div class=l>Per answer, 9 questions</div></div>
+      <div class=stat><div class=n>85–95%</div><div class=l>Seconds the AI sleeps</div></div>
+      <div class=stat><div class=n>&lt; 50¢</div><div class=l>Per day, running 24/7</div></div>
+    </div>
+    <p class=capt>Microsoft-Decision-1 via OpenRouter, October 2026. Cost per call measured from the API's own usage report; latency is the typical (median) answer time from Australia. The daily cost moves with how busy the market is.</p>
+  </section>
+
+  <section class=topic>
+    <div class=tnum>02</div>
+    <h2>What Microsoft just launched.</h2>
+    <p class=tdesc>Chat models like ChatGPT or Claude write paragraphs. <b>Microsoft-Decision-1</b> is different: you give it some data and a list of fixed answers, and it returns <b>a probability for each answer</b>. No essay, no "it depends". Just "trending 83%, choppy 13%, crisis 0%".</p>
+    <p class=tdesc>That makes it fast and very cheap, which is exactly what a bot that runs all day needs. It went live on OpenRouter on <b>10 October 2026</b>. It's a drop-in swap for TypeSafe's <b>Jev</b>, the decision model that started this trend in September: same request, same answer format. My bot ran on Jev first, and switching to Microsoft was a one-line change that made each decision about <b>44% cheaper</b> in my tests.</p>
+  </section>
+
+  <section class=topic>
+    <div class=tnum>03</div>
+    <h2>Rule #1: never ask an AI "should I buy?"</h2>
+    <p class=tdesc>That's the mistake almost every AI trading bot makes. "Look at Bitcoin and tell me what to do" is not a question any model answers well. So the bot splits the work into four layers, and the AI only does the one thing it's good at: <b>judgment calls</b>.</p>
+    <div class=pipe>
+      <div class=node><div class=k>Layer 1 · Code</div><h3>Calculates</h3><p>Every second: spread, order-book depth, who's buying vs selling, volatility, funding. Pure maths, no AI.</p></div>
+      <div class=arrow>→</div>
+      <div class="node ai"><div class=k>Layer 2 · AI</div><h3>Judges</h3><p>Microsoft-Decision-1 answers 9 narrow questions in one call. Is this a cascade? Are those walls fake?</p></div>
+      <div class=arrow>→</div>
+      <div class=node><div class=k>Layer 3 · Code</div><h3>Decides</h3><p>My own rules turn the answers into an action. The thresholds live in my code, never in the model.</p></div>
+      <div class=arrow>→</div>
+      <div class="node risk"><div class=k>Layer 4 · Risk engine</div><h3>Vetoes</h3><p>Hard limits checked every time. It can overrule the AI, and the AI can never overrule it.</p></div>
+    </div>
+  </section>
+
+  <section class=topic>
+    <div class=tnum>04</div>
+    <h2>The 9 questions it asks, every time.</h2>
+    <p class=tdesc>All nine go in <b>one call</b>, so nine answers cost about the same as one. Five are the classic market-maker questions; four are mine, picked because they're the moments that actually wreck traders.</p>
+    <div class=tablewrap>
+    <table class=q>
+      <tr><th>Question</th><th>Answer type</th><th>What it's really asking</th><th></th></tr>
+      <tr><td>Market regime</td><td>Pick one</td><td>Trending, choppy, wild both ways, or crisis?</td><td class=src>Classic</td></tr>
+      <tr><td>Next 30s bias</td><td>Pick one</td><td>Up, down or flat over the next half minute? (The least trusted answer, shown but rarely acted on.)</td><td class=src>Classic</td></tr>
+      <tr><td>Smart money flow?</td><td>Probability</td><td>Is the aggressive buying or selling informed, or just noise?</td><td class=src>Classic</td></tr>
+      <tr><td>Thin order book?</td><td>Probability</td><td>Is there less liquidity than normal right now?</td><td class=src>Classic</td></tr>
+      <tr><td>Good conditions?</td><td>Score 0–3</td><td>How good is the market for placing orders right now: Do not quote / Marginal / Standard / Excellent.</td><td class=src>Classic</td></tr>
+      <tr><td>Liquidation cascade?</td><td>Probability</td><td>Is forced selling (or buying) starting to snowball?</td><td class="src mine">Mine</td></tr>
+      <tr><td>Fake walls?</td><td>Probability</td><td>Do the big orders near the price look like spoofing: placed to scare, then pulled?</td><td class="src mine">Mine</td></tr>
+      <tr><td>Whale moving quietly?</td><td>Pick one</td><td>Is a large player soaking up the flow on one side?</td><td class="src mine">Mine</td></tr>
+      <tr><td>Safe to trade?</td><td>Score 0–3</td><td>Stay out / Caution / OK / Ideal.</td><td class="src mine">Mine</td></tr>
+    </table>
+    </div>
+  </section>
+
+  <section class=topic>
+    <div class=tnum>05</div>
+    <h2>The trick: it only thinks when the market moves.</h2>
+    <p class=tdesc>The code checks the market every second, but most seconds nothing happens. So instead of asking the AI 86,400 times a day, the bot only wakes it up when something real changes:</p>
+    <ul class=catch>
+      <li><b>Price moved</b> 5 basis points (0.05%) since the AI last looked</li>
+      <li><b>The buy/sell balance flipped</b> near the price</li>
+      <li><b>Volatility spiked</b> above its normal level</li>
+      <li><b>A burst of aggressive orders</b>: 4× the usual pace, over $250k in 10 seconds</li>
+      <li><b>Big walls appeared and vanished</b> (possible spoofing), or a hidden buyer or seller started absorbing trades</li>
+      <li><b>The order book drained</b> below 60% of its normal depth</li>
+      <li><b>A 30-second heartbeat</b>, so the screen never goes stale</li>
+    </ul>
+    <div class=costgrid>
+      <div class=costcard><div class=h>Ask every second</div><div class=n>~$2.15/day</div><p>86,400 calls a day. Works, but you pay for thousands of "nothing changed" answers.</p></div>
+      <div class=costcard><div class=h>Heartbeat only</div><div class=n>~$0.07/day</div><p>One call every 30 seconds. Cheap, but blind to everything that happens in between.</p></div>
+      <div class="costcard win"><div class=h>Wake on market moves</div><div class=n>$0.15–0.35/day</div><p>85–95% of seconds skipped. When something real happens, the AI is asked within a second.</p></div>
+    </div>
+    <p class=capt>At the measured $0.000025 per call: about 4–10 wake-ups a minute in my runs, quiet hours at the low end and busy ones at the high end.</p>
+  </section>
+
+  <section class=topic>
+    <div class=tnum>06</div>
+    <h2>The rules the AI can't touch.</h2>
+    <p class=tdesc>The AI gives probabilities. <b>My code</b> decides what to do with them, checked in this order:</p>
+    <div class="code"><div class=hd><span>Policy · plain code</span></div><pre>if cascade &gt;= 0.70:                 GET OUT        <span class=c># forced selling is snowballing</span>
+elif smart_money_flow &gt;= 0.60:       GET OUT        <span class=c># don't fight informed traders</span>
+elif thin_book &gt;= 0.70:              CAUTION        <span class=c># limit orders only</span>
+elif fake_walls &gt;= 0.70:             CAUTION
+elif conditions &gt;= "Standard" and confidence &gt;= 0.80
+     and safe_to_trade &gt;= "OK":      GREEN LIGHT
+elif conditions &gt;= "Marginal":       TRADE SMALL
+else:                                SIT OUT</pre></div>
+    <ul class="check two" style="margin-top:18px">
+      <li><strong style="color:#3FB68B">GREEN LIGHT</strong><p>Good conditions. Trade your normal size.</p></li>
+      <li><strong style="color:#3FB68B">TRADE SMALL</strong><p>OK, not great. Smaller size, wider stops.</p></li>
+      <li><strong style="color:#E0A84A">CAUTION</strong><p>Thin book or fake walls. Limit orders only, no market orders.</p></li>
+      <li><strong style="color:#E5484D">GET OUT</strong><p>Cascade or smart money moving. Cancel orders, close or tighten stops.</p></li>
+      <li><strong style="color:#8d8576">SIT OUT</strong><p>Nothing worth doing. No new trades.</p></li>
+      <li><strong style="color:#E5484D">EMERGENCY STOP</strong><p>The risk engine's kill switch. Everything off until it clears.</p></li>
+    </ul>
+    <p class=tdesc style="margin-top:22px">Then the <b>risk engine</b> gets the final word. These are hard limits that no AI answer can override:</p>
+    <ul class="check two">
+      <li><strong>Stale data → sit out</strong><p>If the market feed is more than 3 seconds old, it doesn't act on it.</p></li>
+      <li><strong>Late answer → no trade</strong><p>If the AI takes longer than 2.5 seconds, that answer is thrown away.</p></li>
+      <li><strong>Volatility spike → emergency stop</strong><p>Wild 30-second moves switch everything off for 60 seconds.</p></li>
+      <li><strong>Feed disconnected → emergency stop</strong><p>No data, no decisions, until the feed is back.</p></li>
+      <li><strong>AI down → code-only rules</strong><p>After 3 errors in a row it falls back to simple rules, and retries the AI every 60 seconds.</p></li>
+      <li><strong>Every veto is logged</strong><p>On the live screen you'll see the AI's pick crossed out when the risk engine says no.</p></li>
+    </ul>
+  </section>
+
+
+  <section class=topic id=build>
+    <div class=tnum>07</div>
+    <h2>Build your own.</h2>
+    <p class=tdesc>Here's what one decision call looks like. You need an <b>OpenRouter</b> account and API key. The Bitcoin order-book data comes free from Hyperliquid's public feed.</p>
+    <div class=code><div class=hd><span>One call · Python</span><button data-copy=snippet>Copy</button></div><pre id=snippet>import json, os, urllib.request
+
+body = {
+  "model": "microsoft/microsoft-decision-1",
+  "state": {"spread_bps": 0.4, "imbalance": 0.21, "vol_ratio": 1.2,
+            "aggr_buy_10s": 16690, "aggr_sell_10s": 9840},
+  "questions": {
+    "regime": {"type": "choice", "instructions": "Current BTC market regime?",
+               "criteria": {"trending": "Persistent one-way move",
+                            "mean_reverting": "Oscillating around a level",
+                            "high_vol": "Large moves both ways",
+                            "crisis": "Disorderly, liquidity vanishing"}},
+    "cascade": {"type": "noul", "instructions": "Is a liquidation cascade starting?",
+                "criteria": {"true": "Cascade starting", "false": "No cascade"}},
+  },
+}
+req = urllib.request.Request(
+  "https://openrouter.ai/api/alpha/decisions",
+  data=json.dumps(body).encode(), method="POST",
+  headers={"Authorization": "Bearer " + os.environ["OPENROUTER_API_KEY"],
+           "Content-Type": "application/json"})
+print(json.loads(urllib.request.urlopen(req).read())["answers"])</pre></div>
+    <p class=tdesc style="margin-top:22px">Then let Claude Code build the rest. Open it in an empty folder and paste this:</p>
+    <div class="code prompt"><div class=hd><span>Claude Code prompt</span><button data-copy=prompt>Copy</button></div><pre id=prompt>Build me a 24/7 crypto decision bot in Python, in stages, with tests for each stage. Stop for my approval between stages. PAPER MODE ONLY: never place real orders and never connect a wallet.
+
+1. Market feed: subscribe to Hyperliquid's public WebSocket (wss://api.hyperliquid.xyz/ws) for BTC "l2Book" and "trades". Auto-reconnect with backoff.
+
+2. State engine: every second, compute a compact numeric snapshot (spread, depth near the price, buy/sell imbalance, short-term returns and volatility, aggressive buy vs sell volume over 10s and 60s). Past data only, never future data.
+
+3. Trigger: only call the AI when the market really changes (price moves 5 bps, imbalance flips, volatility spikes, a burst of aggressive orders, the book drains), plus a 30-second heartbeat. At least 3 seconds between calls. Count how many seconds were skipped.
+
+4. Decision layer: POST the snapshot to https://openrouter.ai/api/alpha/decisions with model "microsoft/microsoft-decision-1" and these questions in ONE call: regime (choice: trending/mean_reverting/high_vol/crisis), direction (choice: up/down/neutral), toxic_flow (noul), liquidity_stressed (noul), quote_env (score: Do not quote/Marginal/Standard/Excellent), cascade (noul), spoofing (noul), whale (choice: quietly_buying/quietly_selling/none), safe_to_trade (score: Stay out/Caution/OK/Ideal). "noul" questions need criteria {"true": ..., "false": ...}. Score answers come back as a decimal plus a probability per level, so use the most likely level. Read OPENROUTER_API_KEY from the environment and never log it. Log the cost from usage.cost.
+
+5. Policy: turn the answers into one signal (GREEN LIGHT / TRADE SMALL / CAUTION / GET OUT / SIT OUT) with thresholds in a config file.
+
+6. Risk engine with the final say: stale data over 3s, answers slower than 2.5s, a volatility kill switch, feed disconnects, and a fallback to code-only rules after 3 AI errors in a row that RETRIES the AI every 60 seconds.
+
+7. Log every snapshot, answer and decision to SQLite, and serve a small live dashboard.
+
+Start with stage 1 only.</pre></div>
+    <p class=capt>The model ID and request format are exactly what my bot uses. Swap the model name to "typesafe/jev-1.13" to run the same bot on Jev.</p>
+  </section>
+
+  <section class=topic id=real>
+    <div class=tnum>08</div>
+    <h2>Turning it into a real trading bot.</h2>
+    <p class=tdesc>The decision engine is <b>not a strategy</b>. It's a traffic light. A real bot needs two parts: a strategy that decides <b>what</b> to trade, and this engine deciding <b>when it's safe</b>. If you want to take it live, this is the order I'd do it in.</p>
+    <ol class=steps>
+      <li><span class=sn>1</span><div class=st><p><b>Start with a strategy that works without the AI.</b> Something simple and testable, like a moving-average trend follower or a breakout on the 15-minute chart. Backtest it with fees and slippage included. If it loses money on its own, the AI filter won't rescue it.</p></div></li>
+      <li><span class=sn>2</span><div class=st><p><b>Use the signal as a filter, not a trigger.</b> The strategy finds the trade; the signal decides whether it's allowed and how big. See the table below.</p></div></li>
+      <li><span class=sn>3</span><div class=st><p><b>Build on testnet first.</b> Hyperliquid runs a full test exchange with fake money (api.hyperliquid-testnet.xyz) and an official Python SDK (<b>hyperliquid-python-sdk</b>). Get every order type working there before real money exists anywhere in your code.</p></div></li>
+      <li><span class=sn>4</span><div class=st><p><b>Lock down the keys.</b> Trade through an <b>API wallet</b>: it can place orders but can't withdraw funds. Fund a separate sub-account with only what you can afford to lose. Keep keys in environment variables or a secret manager, never in your code.</p></div></li>
+      <li><span class=sn>5</span><div class=st><p><b>Size every trade by risk, not by gut.</b> Risk 0.5–1% of the account per trade: position size = (account × risk %) ÷ distance to your stop. Use isolated margin and cap leverage at 2–3×.</p></div></li>
+      <li><span class=sn>6</span><div class=st><p><b>Put the stop-loss on the exchange, not in your bot.</b> Send a stop-loss trigger order together with every entry. If your bot crashes, loses internet or freezes, the stop still protects you.</p></div></li>
+      <li><span class=sn>7</span><div class=st><p><b>Add account-level limits in code.</b> A daily loss limit (for example −3%, then no more trades that day), a maximum position size, and a cap on orders per minute. Also switch on Hyperliquid's <b>dead-man's switch</b> (scheduleCancel): if your bot stops checking in, the exchange cancels your open orders for you.</p></div></li>
+      <li><span class=sn>8</span><div class=st><p><b>Treat the exchange as the truth.</b> On start-up, and every minute after, read your real positions and open orders from the exchange and fix any mismatch. Never trust what the bot thinks it holds.</p></div></li>
+      <li><span class=sn>9</span><div class=st><p><b>Make fees part of the maths.</b> Prefer post-only limit orders (Hyperliquid's "Alo" order type), which pay the lower maker fee. If a strategy's average profit per trade isn't comfortably above the round-trip fees, it isn't a strategy yet.</p></div></li>
+      <li><span class=sn>10</span><div class=st><p><b>Prove the AI earns its place.</b> Paper-trade the strategy with and without the filter, side by side, for 2–4 weeks. Keep the filter only if it actually cuts losing trades or drawdowns.</p></div></li>
+      <li><span class=sn>11</span><div class=st><p><b>Go live tiny.</b> Start with $50–100 for two weeks. Read the logs every few days. Scale up slowly, and only after the live results match the paper results.</p></div></li>
+    </ol>
+    <div class=tablewrap>
+    <table class=q>
+      <tr><th>Signal</th><th>What the trading bot does</th></tr>
+      <tr><td style="color:#3FB68B">GREEN LIGHT</td><td>New entries allowed at full size.</td></tr>
+      <tr><td style="color:#3FB68B">TRADE SMALL</td><td>New entries allowed at half size.</td></tr>
+      <tr><td style="color:#E0A84A">CAUTION</td><td>Post-only limit orders only. No market orders, because thin books and fake walls cause slippage.</td></tr>
+      <tr><td style="color:#E5484D">GET OUT</td><td>Cancel open orders. Close positions against the move, or tighten their stops.</td></tr>
+      <tr><td style="color:#8d8576">SIT OUT</td><td>No new entries. Keep managing what's already open.</td></tr>
+      <tr><td style="color:#E5484D">EMERGENCY STOP</td><td>Cancel everything and flatten. Resume only when the risk engine clears.</td></tr>
+    </table>
+    </div>
+    <p class=tdesc style="margin-top:26px">Once the decision bot from the prompt above is running, paste this into Claude Code to add the trading layer, still on testnet:</p>
+    <div class="code prompt"><div class=hd><span>Claude Code prompt · part 2</span><button data-copy=prompt2>Copy</button></div><pre id=prompt2>Extend my decision bot into a trading bot on HYPERLIQUID TESTNET ONLY (https://api.hyperliquid-testnet.xyz). Use the official hyperliquid-python-sdk. Build it in stages with tests, and stop for my approval between stages. Never point it at mainnet unless I explicitly change a config flag myself.
+
+1. Strategy: a simple BTC trend follower on 15-minute candles (fast/slow moving-average cross). Write a backtest that includes fees and slippage, and show me the results before going further.
+
+2. Signal filter: before every entry, read the decision bot's current signal. GREEN LIGHT = full size, TRADE SMALL = half size, CAUTION = post-only (Alo) limit orders only, GET OUT = cancel orders and close or tighten stops, SIT OUT = no new entries, EMERGENCY STOP = cancel all and flatten.
+
+3. Sizing: risk a configurable % of account equity per trade (default 0.5%), size = equity × risk ÷ stop distance. Isolated margin, max leverage 2×.
+
+4. Every entry places an exchange-side stop-loss trigger order in the same step. Never leave a position without a stop.
+
+5. Risk limits in config: daily loss limit (default −3%, then halt until the next UTC day), max position size, max orders per minute. Use the exchange's scheduleCancel dead-man's switch and refresh it on every loop.
+
+6. Reconcile with the exchange on startup and every 60 seconds: the exchange is the source of truth for positions and orders.
+
+7. Log every signal, order, fill, fee and PnL to SQLite. Build a report comparing strategy-alone vs strategy-plus-filter on the same period.
+
+Use an API wallet key from an environment variable. Never log it. Start with stage 1 only.</pre></div>
+    <p class=capt>Check that the exchange is available where you live, and how trading profits are taxed there. Leverage can wipe out an account fast.</p>
+  </section>
+
+  <section class=topic>
+    <div class=tnum>09</div>
+    <h2>What this is, and what it isn't.</h2>
+    <ul class=catch>
+      <li><b>It's a decision engine, running on paper.</b> No real orders, no real money. It shows what the AI would do and why, live, second by second.</li>
+      <li><b>It's not a money printer.</b> Fast, cheap judgments don't create an edge by themselves. Finding an edge is still the hard part, and fees eat most naive strategies alive.</li>
+      <li><b>It's not Wall Street HFT.</b> Professional firms trade in microseconds on custom hardware. A bot that thinks in about half a second has no business competing with them.</li>
+      <li><b>Break it on purpose.</b> Cut the network, slow the API, breach a limit, and check the bot recovers by itself. A fallback that never retries the AI will quietly leave you on dumb rules.</li>
+      <li><b>Test before you trust.</b> Run it on paper for weeks. Check whether the AI's 80% really happens 80% of the time on your market, and whether the fees beat the profit per trade.</li>
+    </ul>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>See it run</div>
+    <h2>The bot is live right now.</h2>
+    <p>Watch it read the Bitcoin order book, wake the AI up, and get overruled by its own risk engine, in real time.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://hft.cloud9markets.com/" target=_blank rel=noopener>Open the live desk →</a>
+      <a class=btn-line href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>This bot runs in paper mode and places no orders. Trading crypto carries a high risk of loss. Costs and speeds are my own measurements in October 2026 and will change. Cloud9 is not affiliated with Microsoft, TypeSafe, OpenRouter or Hyperliquid.</div>
+</footer>
+</div>
+<script>
+document.querySelectorAll('button[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.getAttribute('data-copy')).innerText;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){
+      b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy'},1600);
+    },function(){b.textContent='Select + copy';});
+  });
+});
+</script>
+</body></html>
