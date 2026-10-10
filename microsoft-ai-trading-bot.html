@@ -294,23 +294,32 @@ Start with stage 1 only.</pre></div>
       <li><span class=sn>10</span><div class=st><p><b>Prove the AI earns its place.</b> Paper-trade the strategy with and without the filter, side by side, for 2–4 weeks. Keep the filter only if it actually cuts losing trades or drawdowns.</p></div></li>
       <li><span class=sn>11</span><div class=st><p><b>Go live tiny.</b> Start with $50–100 for two weeks. Read the logs every few days. Scale up slowly, and only after the live results match the paper results.</p></div></li>
     </ol>
+
+    <h3 style="font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);margin:44px 0 12px;color:var(--ink)">Who decides long or short?</h3>
+    <p class=tdesc>Not the AI. "Long or short?" is just "should I buy?" in disguise, and that breaks Rule #1. The bot does ask the AI for a 30-second bias, but over 30 seconds that's mostly noise, so it's shown on screen and never traded on.</p>
+    <p class=tdesc><b>Direction comes from the strategy: plain code with fixed rules.</b> Same inputs, same answer, every time, so you can test it on years of history before risking a cent. For example, a moving-average trend follower on 15-minute candles:</p>
+    <div class="code"><div class=hd><span>Strategy · decides direction</span></div><pre>if fast_ma(20) crosses above slow_ma(50) and price &gt; both:   go LONG
+if fast_ma(20) crosses below slow_ma(50) and price &lt; both:   go SHORT
+exit on the opposite cross, or when the stop-loss is hit     <span class=c># stop sits on the exchange</span></pre></div>
+    <p class=tdesc style="margin-top:22px">Then the AI signal decides whether that trade is allowed, and how big:</p>
     <div class=tablewrap>
     <table class=q>
-      <tr><th>Signal</th><th>What the trading bot does</th></tr>
-      <tr><td style="color:#3FB68B">GREEN LIGHT</td><td>New entries allowed at full size.</td></tr>
-      <tr><td style="color:#3FB68B">TRADE SMALL</td><td>New entries allowed at half size.</td></tr>
-      <tr><td style="color:#E0A84A">CAUTION</td><td>Post-only limit orders only. No market orders, because thin books and fake walls cause slippage.</td></tr>
-      <tr><td style="color:#E5484D">GET OUT</td><td>Cancel open orders. Close positions against the move, or tighten their stops.</td></tr>
-      <tr><td style="color:#8d8576">SIT OUT</td><td>No new entries. Keep managing what's already open.</td></tr>
-      <tr><td style="color:#E5484D">EMERGENCY STOP</td><td>Cancel everything and flatten. Resume only when the risk engine clears.</td></tr>
+      <tr><th>Strategy says</th><th>AI signal</th><th>The trading bot does</th></tr>
+      <tr><td>Go long / short</td><td style="color:#3FB68B">GREEN LIGHT</td><td>Enter at full size.</td></tr>
+      <tr><td>Go long / short</td><td style="color:#3FB68B">TRADE SMALL</td><td>Enter at half size.</td></tr>
+      <tr><td>Go long / short</td><td style="color:#E0A84A">CAUTION</td><td>Enter with a post-only limit order only. No market orders, because thin books and fake walls cause slippage.</td></tr>
+      <tr><td>Go long / short</td><td style="color:#8d8576">SIT OUT</td><td>Skip this trade. Keep managing what's already open.</td></tr>
+      <tr><td>Holding a position</td><td style="color:#E5484D">GET OUT</td><td>Cancel open orders. Close the position, or tighten its stop.</td></tr>
+      <tr><td>Anything</td><td style="color:#E5484D">EMERGENCY STOP</td><td>Cancel everything and flatten. Resume only when the risk engine clears.</td></tr>
     </table>
     </div>
+    <p class=tdesc style="margin-top:22px"><b>Optional:</b> the AI's direction answer can work as a <b>veto, never a trigger</b>. For example, skip a long when the AI says "down" with over 80% confidence. Keep that rule only if your side-by-side paper test shows it actually helps.</p>
     <p class=tdesc style="margin-top:26px">Once the decision bot from the prompt above is running, paste this into Claude Code to add the trading layer, still on testnet:</p>
     <div class="code prompt"><div class=hd><span>Claude Code prompt · part 2</span><button data-copy=prompt2>Copy</button></div><pre id=prompt2>Extend my decision bot into a trading bot on HYPERLIQUID TESTNET ONLY (https://api.hyperliquid-testnet.xyz). Use the official hyperliquid-python-sdk. Build it in stages with tests, and stop for my approval between stages. Never point it at mainnet unless I explicitly change a config flag myself.
 
-1. Strategy: a simple BTC trend follower on 15-minute candles (fast/slow moving-average cross). Write a backtest that includes fees and slippage, and show me the results before going further.
+1. Strategy (deterministic code, decides direction): a BTC trend follower on 15-minute candles. Go LONG when the 20-period moving average crosses above the 50 and price is above both; go SHORT when the 20 crosses below the 50 and price is below both; exit on the opposite cross or when the stop-loss is hit. The AI must NEVER choose long or short. Write a backtest that includes fees and slippage, and show me the results before going further.
 
-2. Signal filter: before every entry, read the decision bot's current signal. GREEN LIGHT = full size, TRADE SMALL = half size, CAUTION = post-only (Alo) limit orders only, GET OUT = cancel orders and close or tighten stops, SIT OUT = no new entries, EMERGENCY STOP = cancel all and flatten.
+2. Signal filter: when the strategy wants to enter, read the decision bot's current signal. GREEN LIGHT = enter at full size, TRADE SMALL = half size, CAUTION = post-only (Alo) limit order only, SIT OUT = skip the trade. While holding a position: GET OUT = cancel orders and close or tighten the stop. EMERGENCY STOP = cancel all and flatten. Optionally add the AI's direction answer as a veto only (e.g. skip a long if it says "down" above 80% confidence), behind a config flag that defaults to off.
 
 3. Sizing: risk a configurable % of account equity per trade (default 0.5%), size = equity × risk ÷ stop distance. Isolated margin, max leverage 2×.
 
