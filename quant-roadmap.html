@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Quant Roadmap · Cloud9</title>
+<meta name="description" content="Master these to become a quant: 12 strategies, 18 Claude Code commands, 12 probability concepts, 15 statistics functions, a production-level project and 15 real interview questions with answers.">
+<meta property="og:title" content="Master these to become a quant: the full roadmap">
+<meta property="og:description" content="The four lists from the reel, explained, plus the project and the interview questions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+.countdown{margin-top:18px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+
+.live-row{margin-top:30px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.live-row .btn-gold,.live-row .btn-line{display:inline-block;text-decoration:none}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3FB68B;margin-right:10px;box-shadow:0 0 0 0 rgba(63,182,139,.6);animation:pl 1.8s infinite}
+@keyframes pl{0%{box-shadow:0 0 0 0 rgba(63,182,139,.6)}70%{box-shadow:0 0 0 10px rgba(63,182,139,0)}100%{box-shadow:0 0 0 0 rgba(63,182,139,0)}}
+
+.map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 16px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.items{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;counter-reset:it}
+.items li{counter-increment:it;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:16px 18px 16px 58px;position:relative;min-width:0}
+.items li::before{content:counter(it,decimal-leading-zero);position:absolute;left:18px;top:16px;font:500 12px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 5px;line-height:1}
+.items li strong{display:block;color:var(--ink);font-weight:500;font-size:15px;margin-bottom:4px}
+.items li code{font:500 14px 'JetBrains Mono',monospace;color:var(--gold-hi);word-break:break-word}
+.items li p{margin:0;font-size:13.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.items li p i{color:var(--dim)}
+
+.code{position:relative;margin-top:24px;border:1px solid var(--gold-dim);background:#070605}
+.code pre{margin:0;padding:22px 22px 20px;overflow-x:auto;font:400 13px/1.65 'JetBrains Mono',monospace;color:#d9cfbb;white-space:pre}
+.code .hd{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 10px 22px;border-bottom:1px solid var(--gold-faint);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.code button{font:500 11px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));border:0;padding:8px 14px;cursor:pointer}
+.code.prompt pre{white-space:pre-wrap;font-size:13.5px}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+.steps .st a{color:var(--gold-hi)}
+
+.qa{margin-top:28px;display:grid;gap:10px}
+.qa details{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03)}
+.qa summary{cursor:pointer;list-style:none;padding:16px 46px 16px 58px;position:relative;font-size:15px;color:var(--ink);line-height:1.5}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary .qn{position:absolute;left:18px;top:17px;font:500 12px 'JetBrains Mono',monospace;color:var(--gold)}
+.qa summary::after{content:'+';position:absolute;right:18px;top:14px;color:var(--gold);font-size:18px}
+.qa details[open] summary::after{content:'−'}
+.qa .ans{padding:0 20px 18px 58px;font-size:14px;font-weight:300;line-height:1.7;color:var(--dim2)}
+.qa .ans b{color:var(--gold-hi);font-weight:500}
+.qa .tag{display:inline-block;margin-left:8px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .items{grid-template-columns:1fr}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Quant Roadmap</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Free roadmap · From the reel</div>
+  <h1>Master these to become a quant.<br><span class=free>The full roadmap.</span></h1>
+  <p class=sub>The reel showed four lists. This page explains every item on them, gives you a task for each one, and then adds the two things the reel promised: the project that takes it to production level, and real quant interview questions with worked answers.</p>
+  <div class=countdown id=countdown>Days left in 2026. Start today.</div>
+  <div class=map>
+    <a href="#strategies"><div class=k>01 · Practice</div><div class=t>Quant trading</div><div class=n>12 strategies</div></a>
+    <a href="#claude"><div class=k>02 · Practice</div><div class=t>Claude Code</div><div class=n>18 commands</div></a>
+    <a href="#probability"><div class=k>03 · Understand</div><div class=t>Probability</div><div class=n>12 concepts</div></a>
+    <a href="#statistics"><div class=k>04 · Practice</div><div class=t>Statistics</div><div class=n>15 functions</div></a>
+    <a href="#project"><div class=k>05 · Build</div><div class=t>The project</div><div class=n>+ 15 interview Qs</div></a>
+  </div>
+</header>
+
+<main>
+  <section class=topic>
+    <div class=tnum>How to use this</div>
+    <h2>One item a day. Ship something every week.</h2>
+    <ul class=steps>
+      <li><span class=sn>1</span><div class=st><p><b>Don't read it all today.</b> Save the page and take one item a day. There are 57 items across the four lists; at one a day you finish in under two months.</p></div></li>
+      <li><span class=sn>2</span><div class=st><p><b>Learn the maths in Python, not on paper.</b> Every probability concept has a one-line simulation you can run. If you can simulate it, you understand it.</p></div></li>
+      <li><span class=sn>3</span><div class=st><p><b>Let Claude Code do the typing, you do the thinking.</b> Use it to build each strategy, then check its work. You learn faster reviewing code than staring at a blank file.</p></div></li>
+      <li><span class=sn>4</span><div class=st><p><b>Finish with the project.</b> A working system with real logs beats any certificate in an interview.</p></div></li>
+    </ul>
+  </section>
+
+  <section class=topic id=strategies>
+    <div class=tnum>01 · Practice these strategies</div>
+    <h2>To master quant trading.</h2>
+    <p class=tdesc>Every strategy below is a <b>rule a computer can follow</b>. Practise each one the same way: write the rule, backtest it with fees, and write one sentence on why it worked or didn't.</p>
+    <ol class=items>
+      <li><strong>Momentum</strong><p>Buy what has gone up most over the last 3–12 months, sell what has fallen most. Winners tend to keep winning for a while. <i>Task: rank 20 stocks by 12-month return each month.</i></p></li>
+      <li><strong>Mean reversion</strong><p>Bet that a price stretched far from its average snaps back. <i>Task: buy when price is 2 standard deviations below its 20-day average.</i></p></li>
+      <li><strong>Trend following</strong><p>Go with the direction of the market and cut losers fast. Moving-average crossovers are the classic version. <i>Task: 50/200-day crossover on an index.</i></p></li>
+      <li><strong>Breakout</strong><p>Enter when price breaks out of a recent range, on the idea that a new move has started. <i>Task: buy a 20-day high, exit on a 10-day low.</i></p></li>
+      <li><strong>Pairs trading</strong><p>Find two stocks that move together (like Coke and Pepsi). When the gap between them widens, bet it closes. <i>Task: test the textbook pair, KO/PEP, for cointegration (see list 04). The result may surprise you.</i></p></li>
+      <li><strong>Statistical arbitrage</strong><p>Pairs trading scaled up: hundreds of small, related bets that are each slightly mispriced, with the market risk hedged out.</p></li>
+      <li><strong>Market making</strong><p>Quote a price to buy and a price to sell at the same time and earn the gap (the spread). The risk is getting run over when the price moves.</p></li>
+      <li><strong>Carry</strong><p>Get paid for holding something: higher interest rates in currencies, funding rates in crypto, roll yield in futures. <i>Task: chart a crypto funding rate for a month.</i></p></li>
+      <li><strong>Factor investing</strong><p>Tilt a portfolio towards traits that have paid over long periods, like value, quality, size and low volatility.</p></li>
+      <li><strong>Post-earnings drift</strong><p>Stocks that beat earnings expectations by a lot have tended to keep drifting in the same direction for weeks afterwards.</p></li>
+      <li><strong>Volatility selling</strong><p>Sell options to collect the premium, because implied volatility usually prices in more movement than actually happens. Small steady wins, rare large losses.</p></li>
+      <li><strong>Volatility targeting</strong><p>Not an entry signal but a sizing rule: hold less when the market is wild, more when it's calm, to keep risk steady. It improves almost every strategy above.</p></li>
+    </ol>
+  </section>
+
+  <section class=topic id=claude>
+    <div class=tnum>02 · Practice these commands</div>
+    <h2>To master Claude Code.</h2>
+    <p class=tdesc>Claude Code is the AI coding agent I use to build all my trading tools. It runs in your terminal, reads your project and writes and runs the code for you. These are the commands worth knowing first. Install it from <b>claude.com/claude-code</b>, then open a terminal in a project folder.</p>
+    <ol class=items>
+      <li><code>claude</code><p>Start a session in the current folder.</p></li>
+      <li><code>claude -p "…"</code><p>Ask one question and get the answer back without opening a session. Great inside scripts.</p></li>
+      <li><code>claude -c</code><p>Continue your most recent conversation in this folder.</p></li>
+      <li><code>claude --resume</code><p>Pick an older conversation to come back to.</p></li>
+      <li><code>/init</code><p>Scan the project and write a <b>CLAUDE.md</b> describing it.</p></li>
+      <li><code>CLAUDE.md</code><p>A file of standing rules Claude reads every session. Put your data sources, risk rules and style here.</p></li>
+      <li><code>/memory</code><p>Edit Claude's memory files without leaving the session.</p></li>
+      <li><code>/model</code><p>Switch model: the strongest for planning, a cheaper one for routine work.</p></li>
+      <li><code>/clear</code><p>Wipe the conversation and start fresh on a new task.</p></li>
+      <li><code>/compact</code><p>Shrink a long conversation into a summary so you can keep going.</p></li>
+      <li><code>/context</code><p>See what's taking up Claude's working memory.</p></li>
+      <li><code>/mcp</code><p>Manage connections to outside tools and data, like market data APIs or TradingView.</p></li>
+      <li><code>/agents</code><p>Create sub-agents with their own jobs, e.g. a "risk reviewer" that checks every strategy.</p></li>
+      <li><code>/skills</code><p>List reusable skills: instruction packs Claude loads for a specific job.</p></li>
+      <li><code>/hooks</code><p>Run your own commands automatically, e.g. run the tests every time a file changes.</p></li>
+      <li><code>/permissions</code><p>Choose what Claude may do without asking you first.</p></li>
+      <li><code>/loop</code><p>Repeat a task on a schedule, e.g. check a running backtest every 10 minutes.</p></li>
+      <li><code>/doctor</code><p>Check your install when something isn't working.</p></li>
+    </ol>
+    <div class="code prompt"><div class=hd><span>First prompt to try</span><button data-copy=p1>Copy</button></div><pre id=p1>Create a Python project that downloads 10 years of daily prices for SPY with yfinance, backtests a 50/200-day moving-average crossover with 0.1% fees per trade, and compares it to buy-and-hold. Show the total return, max drawdown and Sharpe ratio for both, and plot the equity curves. Explain each step in plain English as you go.</pre></div>
+    <p class=capt>Commands checked against Claude Code 2.1, October 2026. Run <code>/help</code> inside a session for the full current list.</p>
+  </section>
+
+  <section class=topic id=probability>
+    <div class=tnum>03 · Understand these concepts</div>
+    <h2>To master probability.</h2>
+    <p class=tdesc>Trading is betting with an edge, so probability is the language of the whole job. For each concept, <b>simulate it in Python</b> before moving on.</p>
+    <ol class=items>
+      <li><strong>Expected value</strong><p>The average outcome if you repeated a bet forever. A trade is only worth taking if this is positive after costs.</p></li>
+      <li><strong>Variance &amp; standard deviation</strong><p>How spread out the outcomes are. In markets, standard deviation of returns is called volatility.</p></li>
+      <li><strong>Conditional probability</strong><p>The chance of A given that B already happened. "What happens after a 3% down day?" is a conditional question.</p></li>
+      <li><strong>Bayes' theorem</strong><p>How to update a belief when new evidence arrives. The core of how every good trader changes their mind.</p></li>
+      <li><strong>Independence</strong><p>Two events are independent if one tells you nothing about the other. Most "patterns" traders see fail this test.</p></li>
+      <li><strong>Normal distribution</strong><p>The bell curve. Many models assume returns follow it, which is useful and also wrong in the tails.</p></li>
+      <li><strong>Fat tails</strong><p>Extreme moves happen far more often than the bell curve predicts. The reason risk models blow up in crashes.</p></li>
+      <li><strong>Law of large numbers</strong><p>With enough repetitions, your average result approaches the expected value. Why one lucky trade proves nothing.</p></li>
+      <li><strong>Central limit theorem</strong><p>Averages of many random things look normal even when the things themselves don't. Why statistics works at all.</p></li>
+      <li><strong>Random walk</strong><p>A path built from random steps. The default assumption for prices, and the thing your strategy has to beat.</p></li>
+      <li><strong>Kelly criterion</strong><p>The bet size that grows money fastest given your edge. Most professionals bet a fraction of it, because Kelly is brutal when you overestimate your edge.</p></li>
+      <li><strong>Monte Carlo simulation</strong><p>Run thousands of random futures to see the range of outcomes, not just the average. The best tool for answering "how bad can it get?"</p></li>
+    </ol>
+  </section>
+
+  <section class=topic id=statistics>
+    <div class=tnum>04 · Practice these functions</div>
+    <h2>To master statistics.</h2>
+    <p class=tdesc>Statistics is how you tell a real edge from luck. These are the actual Python functions quants use, from <b>NumPy</b>, <b>SciPy</b>, <b>statsmodels</b> and <b>pandas</b>. Install them with <code>pip install numpy scipy statsmodels pandas yfinance</code>.</p>
+    <ol class=items>
+      <li><code>np.mean()</code><p>Average return. Multiply daily by 252 to get a rough yearly figure.</p></li>
+      <li><code>np.std()</code><p>Volatility. Daily × √252 = annualised volatility.</p></li>
+      <li><code>np.percentile()</code><p>Value at risk: the 5th percentile of daily returns is your "bad day" number.</p></li>
+      <li><code>np.corrcoef()</code><p>Correlation between two assets, from −1 to +1.</p></li>
+      <li><code>stats.skew()</code><p>Are returns lopsided? Negative skew means occasional big losses, as with selling options.</p></li>
+      <li><code>stats.kurtosis()</code><p>Measures fat tails. Above 0 means more extreme days than a bell curve.</p></li>
+      <li><code>stats.norm.ppf()</code><p>Turns a probability into a z-score, e.g. 0.95 → 1.645. Used in risk limits.</p></li>
+      <li><code>stats.ttest_1samp()</code><p>Is the average return really different from zero, or is it noise?</p></li>
+      <li><code>stats.jarque_bera()</code><p>Tests whether returns are normally distributed. For real markets, they almost never are.</p></li>
+      <li><code>stats.linregress()</code><p>The slope of a stock against the market is its beta.</p></li>
+      <li><code>sm.OLS()</code><p>Full linear regression: how much of a return is explained by factors like market, size and value.</p></li>
+      <li><code>adfuller()</code><p>Tests stationarity: does the series wander off, or keep coming back to a mean? Mean reversion needs it.</p></li>
+      <li><code>coint()</code><p>Tests whether two prices are tied together over time. The foundation of pairs trading.</p></li>
+      <li><code>acf()</code><p>Autocorrelation: does today's return predict tomorrow's? Non-zero values hint at momentum or reversion.</p></li>
+      <li><code>df.rolling()</code><p>Rolling statistics: moving averages, rolling volatility and z-scores, the building blocks of most signals.</p></li>
+    </ol>
+    <div class=code><div class=hd><span>Try them on real data</span><button data-copy=p2>Copy</button></div><pre id=p2>import numpy as np
+import yfinance as yf
+from scipy import stats
+from statsmodels.tsa.stattools import adfuller, coint
+
+px = yf.download(["KO", "PEP"], start="2018-01-01", auto_adjust=True)["Close"].dropna()
+r = np.log(px).diff().dropna()
+
+print("Annual volatility:\n", r.std() * np.sqrt(252))
+print("5% daily VaR, KO:", np.percentile(r["KO"], 5))
+print("Skew / kurtosis, KO:", stats.skew(r["KO"]), stats.kurtosis(r["KO"]))
+print("Normal? Jarque-Bera p-value:", stats.jarque_bera(r["KO"]).pvalue)
+print("KO price stationary? ADF p-value:", adfuller(px["KO"])[1])
+print("KO/PEP cointegrated? p-value:", coint(px["KO"], px["PEP"])[1])</pre></div>
+    <p class=capt>Spoiler: when I ran this in October 2026, Coke and Pepsi <b>failed</b> the cointegration test (p-value ≈ 1.0). The most famous textbook pair isn't one, which is exactly why you test instead of assuming. A p-value below 0.05 is the usual bar for "probably not luck". Test enough ideas and some will pass by chance, which is why the backtest traps in the project matter.</p>
+  </section>
+
+  <section class=topic id=project>
+    <div class=tnum>05 · And finally, build this project</div>
+    <h2>To run a quant trading system at production level.</h2>
+    <p class=tdesc>The project in the reel is my <b>24/7 AI trading bot</b>. It watches the Bitcoin order book every second, asks an AI model for a decision only when the market moves, and has a risk engine that can overrule the AI. It runs live, in paper mode, right now.</p>
+    <div class=live-row>
+      <a class=btn-gold href="https://hft.cloud9markets.com/" target=_blank rel=noopener><span class=pulse></span>Watch it live →</a>
+      <a class=btn-line href="microsoft-ai-trading-bot.html">Full build guide + prompts →</a>
+    </div>
+    <p class=tdesc style="margin-top:30px">Build up to it in three levels:</p>
+    <ul class=steps>
+      <li><span class=sn>1</span><div class=st><p><b>Backtest.</b> Pick two strategies from list 01 and backtest them with Claude Code, including fees and slippage. Test on data the strategy has never seen (walk-forward), not just the period you tuned it on.</p></div></li>
+      <li><span class=sn>2</span><div class=st><p><b>Paper trade.</b> Run the best one live on paper for at least four weeks. Compare live results to the backtest: the gap between them is the most honest number you will ever see.</p></div></li>
+      <li><span class=sn>3</span><div class=st><p><b>Production.</b> Build the 24/7 bot from the <a href="microsoft-ai-trading-bot.html">build guide</a>. "Production level" means it runs without you: logs every decision, enforces risk limits in code, checks its positions against the exchange, restarts itself after crashes, and has a kill switch.</p></div></li>
+    </ul>
+    <p class=capt>The traps that kill most backtests: look-ahead bias (using data you couldn't have had yet), survivorship bias (testing only stocks that still exist), overfitting (tuning until the past looks perfect), and ignoring fees. My AI desk once generated and backtested 180+ strategies; after fees, walk-forward testing and stress tests, exactly four survived. The full story is in the <a href="trader-gauntlet.html" style="color:var(--gold-hi)">Trader Gauntlet</a>.</p>
+  </section>
+
+  <section class=topic id=interview>
+    <div class=tnum>Bonus · Interview questions</div>
+    <h2>15 real quant interview questions.</h2>
+    <p class=tdesc>These are the classic types that come up at trading firms: probability puzzles, expected value, mental maths and market sense. Try each one before opening the answer. Interviewers care about <b>how you reason out loud</b> more than the final number.</p>
+    <div class=qa>
+      <details><summary><span class=qn>01</span>You roll a fair die and I pay you the number that shows, in dollars. What's a fair price to play?<span class=tag>EV</span></summary><div class=ans><b>$3.50.</b> The average of 1 to 6 is 21 ÷ 6 = 3.5.</div></details>
+      <details><summary><span class=qn>02</span>Same game, but after the first roll you may roll once more and take the second result instead. Fair price now?<span class=tag>EV</span></summary><div class=ans><b>$4.25.</b> Re-roll only if the first roll is worth less than 3.5, so on 1, 2 or 3. Half the time you keep a 4, 5 or 6 (average 5); half the time you re-roll (average 3.5). 0.5 × 5 + 0.5 × 3.5 = 4.25.</div></details>
+      <details><summary><span class=qn>03</span>On average, how many rolls of a fair die does it take to get a 6?<span class=tag>Probability</span></summary><div class=ans><b>6.</b> Each roll succeeds with probability 1/6, and the expected wait for an event with probability p is 1/p.</div></details>
+      <details><summary><span class=qn>04</span>You flip a fair coin until you get two heads in a row. Expected number of flips?<span class=tag>Probability</span></summary><div class=ans><b>6.</b> Let E be the expected flips from the start. A tail (½) sends you back to the start; a head then a tail (¼) also does; two heads (¼) ends it. E = ½(1 + E) + ¼(2 + E) + ¼(2), so E = 6.</div></details>
+      <details><summary><span class=qn>05</span>A family has two children and at least one is a boy. What's the chance both are boys?<span class=tag>Conditional</span></summary><div class=ans><b>1/3.</b> The equally likely options with at least one boy are BB, BG and GB. Only one of the three is BB.</div></details>
+      <details><summary><span class=qn>06</span>A disease affects 1% of people. A test is 99% accurate both ways. You test positive. Chance you have it?<span class=tag>Bayes</span></summary><div class=ans><b>50%.</b> Out of 10,000 people, 100 are sick and 99 of them test positive. Of the 9,900 healthy people, 1% (99) also test positive. So 99 of the 198 positives are real.</div></details>
+      <details><summary><span class=qn>07</span>How many people do you need in a room for a better than 50% chance that two share a birthday?<span class=tag>Probability</span></summary><div class=ans><b>23.</b> The chance that all birthdays differ falls below 50% at 23 people (ignoring leap years), because the number of pairs grows fast: 23 people make 253 pairs.</div></details>
+      <details><summary><span class=qn>08</span>Break a stick at two random points. What's the chance the three pieces can form a triangle?<span class=tag>Geometry</span></summary><div class=ans><b>1/4.</b> A triangle needs every piece shorter than half the stick. Mapping the two break points onto a unit square, that region is exactly a quarter of the area.</div></details>
+      <details><summary><span class=qn>09</span>X and Y have correlation 0.9, and Y and Z have correlation 0.9. What's the lowest possible correlation between X and Z?<span class=tag>Statistics</span></summary><div class=ans><b>0.62.</b> Think of correlations as cosines of angles. Each pair is about 25.8° apart, so X and Z can be at most twice that: cos(2θ) = 2 × 0.9² − 1 = 0.62.</div></details>
+      <details><summary><span class=qn>10</span>A bet pays even money and you win 60% of the time. What fraction of your bankroll should you bet?<span class=tag>Kelly</span></summary><div class=ans><b>20%.</b> For even-money bets, Kelly says bet p − q = 0.6 − 0.4 = 0.2. In practice most traders bet half of that or less, because a slightly wrong edge estimate with full Kelly hurts a lot.</div></details>
+      <details><summary><span class=qn>11</span>A strategy has an annual Sharpe ratio of 1. What's its daily Sharpe?<span class=tag>Markets</span></summary><div class=ans><b>About 0.063.</b> Sharpe scales with the square root of time, so divide by √252 ≈ 15.9.</div></details>
+      <details><summary><span class=qn>12</span>How many times a day do the hour and minute hands of a clock overlap?<span class=tag>Brainteaser</span></summary><div class=ans><b>22.</b> The minute hand laps the hour hand 11 times every 12 hours, not 12, because the hour hand keeps moving. Twice a day makes 22.</div></details>
+      <details><summary><span class=qn>13</span>Quick: what is 17 × 23?<span class=tag>Mental maths</span></summary><div class=ans><b>391.</b> One fast route: 20² − 3² = 400 − 9 = 391, since 17 × 23 = (20 − 3)(20 + 3).</div></details>
+      <details><summary><span class=qn>14</span>You backtested 1,000 strategies and the best one has a Sharpe of 2. Should you trade it?<span class=tag>Research</span></summary><div class=ans><b>Not yet.</b> With 1,000 tries, some will look great by pure luck (the multiple testing problem). Test it on data it has never seen, check that it makes economic sense, and adjust for how many ideas you tried before believing it.</div></details>
+      <details><summary><span class=qn>15</span>What's the difference between correlation and cointegration?<span class=tag>Statistics</span></summary><div class=ans><b>Correlation</b> is about returns moving together day to day. <b>Cointegration</b> is about prices staying tied together over the long run. Two stocks can be highly correlated yet drift apart forever, and pairs trading needs cointegration, not just correlation.</div></details>
+    </div>
+    <p class=capt>Practise mental arithmetic daily with a speed drill like Zetamac; trading interviews often time it. More free prep in the <a href="quant-vault.html" style="color:var(--gold-hi)">Quant Vault</a>.</p>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Next step</div>
+    <h2>Pick list 01 and start today.</h2>
+    <p>One strategy, one backtest, one sentence on what you learned. Then follow along: I post a new build every week, and every one comes with a free guide like this.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="https://hft.cloud9markets.com/" target=_blank rel=noopener>See the bot live</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>Strategy descriptions are general education, not recommendations. Past patterns can stop working, and trading carries a high risk of loss. Cloud9 is not affiliated with Anthropic or any firm whose interview style is described here.</div>
+</footer>
+</div>
+<script>
+(function(){
+  var now=new Date(), y=now.getFullYear();
+  var today=new Date(y,now.getMonth(),now.getDate()), end=new Date(y,11,31);
+  var d=Math.round((end-today)/864e5);
+  var el=document.getElementById("countdown");
+  if(el) el.textContent=(d===1?"1 day":d+" days")+" left in "+y+". One item a day finishes the roadmap.";
+})();
+document.querySelectorAll('button[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.getAttribute('data-copy')).innerText;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){
+      b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy'},1600);
+    },function(){b.textContent='Select + copy';});
+  });
+});
+</script>
+</body></html>
