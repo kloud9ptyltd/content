@@ -1,0 +1,115 @@
+<!doctype html><html lang=en><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Free Adobe, Office &amp; AutoCAD alternatives, rebuilt with AI — Cloud9</title>
+<meta name="description" content="12 free, open-source apps that replace Photoshop, Premiere, Illustrator, Excel, Word, PowerPoint, AutoCAD and more. Install guide, safety check and how to let your AI agent drive them over MCP.">
+<meta property="og:title" content="Adobe, Office & AutoCAD — rebuilt free with AI">
+<meta property="og:description" content="12 open-source replacements, one installer, and MCP servers so AI agents can use them. Setup guide inside.">
+<meta property="og:image" content="https://www.cloud9markets.com/cloud9-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-editorial.css">
+<style>
+  .apps td:first-child{font-weight:700;white-space:nowrap}
+  .apps td a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+  .apps .co{opacity:.6;font-size:.86em}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+  .steps li{counter-increment:s;position:relative;padding:0 0 14px 44px;line-height:1.55}
+  .steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:-2px;font-family:"Playfair Display",serif;font-weight:800;color:#d9b45a;font-size:1.25em}
+  .ok{color:#22e07a;font-weight:700}
+  .warn{border-left:3px solid #ffd23f;padding:10px 14px;margin:16px 0;background:rgba(255,210,63,.06)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><img src="https://www.cloud9markets.com/cloud9-logo.png" onerror="this.style.display='none'"><span class="hh">AI · Open source</span></header>
+  <span class="badge">Free · Cloud9 Research</span>
+  <h1 class="serif">Adobe, Office &amp; AutoCAD<br><span class="g">rebuilt free, with AI</span></h1>
+  <p class="lede">One developer used AI to rebuild 12 of the world's most expensive creative and office apps as free, open-source software, and added a way for AI agents to use every one of them.</p>
+  <p class="by">By <b>Cloud9 Research</b> · checked 12 Oct 2026</p>
+
+  <p class="intro">Brandon Thomas, founder of <b>ArtCraft</b> (formerly CEO of Storyteller.ai), released the <b>Craft App Suite</b>: clean-room versions of Photoshop, Premiere Pro, Illustrator, Lightroom, After Effects, InDesign and Acrobat, plus Word, Excel, PowerPoint, AutoCAD and Pro Tools. They're written in Rust, licensed MIT/Apache, and run on Mac, Windows, Linux and in the browser. Press reports say they were built with Anthropic's Claude Opus 5.5. Adobe alone is a <b>~$94B</b> company.</p>
+
+  <div class="section">
+    <div class="eyebrow">The lineup</div>
+    <h2 class="serif">12 apps, and what each one replaces</h2>
+    <div class="card"><div class="ct">Tap a name to open its download page</div>
+      <table class="apps"><thead><tr><th>Free app</th><th>Replaces</th></tr></thead><tbody>
+        <tr><td><a href="https://github.com/storytold/photocraft/releases/latest">PhotoCraft</a></td><td>Photoshop <span class="co">· Adobe</span></td></tr>
+        <tr><td><a href="https://github.com/storytold/filmcraft/releases/latest">FilmCraft</a></td><td>Premiere Pro <span class="co">· Adobe</span></td></tr>
+        <tr><td><a href="https://github.com/storytold/vectorcraft/releases/latest">VectorCraft</a></td><td>Illustrator <span class="co">· Adobe</span></td></tr>
+        <tr><td><a href="https://github.com/storytold/lightcraft/releases/latest">LightCraft</a></td><td>Lightroom <span class="co">· Adobe</span></td></tr>
+        <tr><td><a href="https://github.com/storytold/effectcraft/releases/latest">EffectCraft</a></td><td>After Effects <span class="co">· Adobe</span></td></tr>
+        <tr><td><a href="https://github.com/storytold/designcraft/releases/latest">DesignCraft</a></td><td>InDesign <span class="co">· Adobe</span></td></tr>
+        <tr><td><a href="https://github.com/storytold/pdfcraft/releases/latest">PdfCraft</a></td><td>Acrobat <span class="co">· Adobe</span></td></tr>
+        <tr><td><a href="https://github.com/storytold/wordcraft/releases/latest">WordCraft</a></td><td>Word <span class="co">· Microsoft</span></td></tr>
+        <tr><td><a href="https://github.com/storytold/gridcraft/releases/latest">GridCraft</a></td><td>Excel <span class="co">· Microsoft</span></td></tr>
+        <tr><td><a href="https://github.com/storytold/deckcraft/releases/latest">DeckCraft</a></td><td>PowerPoint <span class="co">· Microsoft</span></td></tr>
+        <tr><td><a href="https://github.com/storytold/cadcraft/releases/latest">CADCraft</a></td><td>AutoCAD <span class="co">· Autodesk</span></td></tr>
+        <tr><td><a href="https://github.com/storytold/soundcraft/releases/latest">SoundCraft</a></td><td>Pro Tools <span class="co">· Avid</span></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="eyebrow">What "clean room" means</div>
+    <h2 class="serif">New code, not copied code</h2>
+    <p>Nobody looked at Adobe's or Microsoft's source code. The apps were rebuilt from <b>public file-format specs</b> (like the open .xlsx and PDF standards) and from <b>watching how the originals behave</b>. Then AI wrote the new code. That's the long-standing legal technique for building compatible software without copying it.</p>
+    <p class="warn">Honest note: clean-room makes a "you copied our code" claim very hard, but it isn't a force field. Trademarks, patents and look-alike designs are separate questions. That's for lawyers, not a reason to avoid the apps.</p>
+  </div>
+
+  <div class="section">
+    <div class="eyebrow">Setup · 2 minutes</div>
+    <h2 class="serif">Install all 12 with one app</h2>
+    <p>The official <b>ArtCraft Launcher</b> lists every app, downloads the right build for your computer, checks its SHA-256 checksum, and keeps everything updated.</p>
+    <ol class="steps">
+      <li>Download the Launcher for your system from <a href="https://github.com/storytold/craft-launcher/releases/latest">github.com/storytold/craft-launcher/releases/latest</a>. On a Mac, pick the file ending <b>macos-universal.dmg</b>; on Windows, the <b>.msi</b>.</li>
+      <li>Open it and drag it to Applications (Mac), or run the installer (Windows).</li>
+      <li>Click <b>Install</b> next to any app you want. Start with GridCraft or PdfCraft; they're the most useful day to day.</li>
+    </ol>
+    <p>Prefer just one app? Use the download links in the table above.</p>
+  </div>
+
+  <div class="section">
+    <div class="eyebrow">Is it safe?</div>
+    <h2 class="serif">What I checked before installing</h2>
+    <p>New software going viral is exactly when to be careful, so I checked before running anything:</p>
+    <p><span class="ok">✓</span> <b>Real, established publisher.</b> The ArtCraft GitHub org dates from 2021, has ~35k followers and real contributors, and a proper release pipeline.<br>
+    <span class="ok">✓</span> <b>Apple-notarized.</b> The Mac Launcher and GridCraft are signed by "Learning Machines LLC" and notarized, which means Apple scanned them for malware.<br>
+    <span class="ok">✓</span> <b>Checksums match</b> the published SHA-256 list.<br>
+    <span class="ok">✓</span> <b>GridCraft can't phone home.</b> I read the source code: it has no internet library at all.</p>
+    <p class="warn">I fully audited GridCraft and the Launcher, not every app. Ignore the star counts; they jumped by tens of thousands in days, so don't treat them as a safety signal. Get the apps only from the <b>github.com/storytold</b> links above, never from look-alike sites or ads.</p>
+  </div>
+
+  <div class="section">
+    <div class="eyebrow">The real unlock</div>
+    <h2 class="serif">Let your AI agent use them</h2>
+    <p>Every app ships an <b>MCP server</b>. MCP is the plug that lets AI agents like Claude operate an app directly: open files, edit cells, lay out slides, export, with no screen-clicking. Each app exposes hundreds of commands (GridCraft: read and write ranges, formulas, charts, tables, sorting…).</p>
+    <ol class="steps">
+      <li>From an app's download page, grab the <b>-cli-</b> file (e.g. <b>gridcraft-cli-…-macos-universal.zip</b>), unzip it, and move <b>gridcraft-cli</b> somewhere on your PATH (e.g. <b>/usr/local/bin</b>).</li>
+      <li>Connect it to Claude Code with one line:</li>
+    </ol>
+    <span class="code">claude mcp add gridcraft -- gridcraft-cli mcp</span>
+    <ol class="steps" style="counter-reset:s 2">
+      <li>Ask in plain English. For example:</li>
+    </ol>
+    <span class="code prompt">"Build a 5-year DCF for a company with $100M revenue growing 12% in GridCraft, chart the free cash flow, and save it as dcf.xlsx."</span>
+    <span class="code prompt">"Turn this earnings summary into a 6-slide deck in DeckCraft and export it as PDF."</span>
+    <p>The same pattern works for every app: swap <b>gridcraft</b> for <b>deckcraft</b>, <b>pdfcraft</b>, <b>photocraft</b> and so on.</p>
+  </div>
+
+  <div class="section">
+    <div class="eyebrow">Before you switch</div>
+    <h2 class="serif">Know what you're getting</h2>
+    <p><span class="num">01</span> <b>It's early alpha, days old.</b> GridCraft's own estimate is about 50% ready for real work.<br>
+    <span class="num">02</span> <b>Keep your original files.</b> Saving back to .xlsx, .docx or .psd can lose formatting.<br>
+    <span class="num">03</span> <b>Don't cancel your subscriptions yet</b> for client or business-critical work. Use these for personal projects, learning, and AI-agent workflows.</p>
+  </div>
+
+  <div class="close">
+    <h3 class="serif">Software just got a lot cheaper.</h3>
+    <p>Save this. Follow for more AI tools that actually work.</p>
+    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  </div>
+
+  <footer>Independent guide · not affiliated with ArtCraft, Adobe, Microsoft, Autodesk or Avid. All trademarks belong to their owners.<br>© Cloud9 Markets</footer>
+</div>
+</body></html>
