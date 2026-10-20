@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Free Stock Market Terminal · Cloud9</title>
+<meta name="description" content="OpenStock: a free, open-source stock market terminal with 7 markets, live charts, heatmaps, financials and a watchlist (20,000+ GitHub stars). Bonus: 8 TradingView indicators on every chart. What it does and how to set it up.">
+<meta property="og:title" content="A FREE open-source stock market terminal. The setup guide.">
+<meta property="og:description" content="OpenStock: 7 markets, live charts, heatmaps, financials, watchlist. Plus 8 TradingView indicators per chart. Free and open source.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+.countdown{margin-top:18px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+
+.live-row{margin-top:30px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.live-row .btn-gold,.live-row .btn-line{display:inline-block;text-decoration:none}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3FB68B;margin-right:10px;box-shadow:0 0 0 0 rgba(63,182,139,.6);animation:pl 1.8s infinite}
+@keyframes pl{0%{box-shadow:0 0 0 0 rgba(63,182,139,.6)}70%{box-shadow:0 0 0 10px rgba(63,182,139,0)}100%{box-shadow:0 0 0 0 rgba(63,182,139,0)}}
+
+.map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 16px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.items{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;counter-reset:it}
+.items li{counter-increment:it;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:16px 18px 16px 58px;position:relative;min-width:0}
+.items li::before{content:counter(it,decimal-leading-zero);position:absolute;left:18px;top:16px;font:500 12px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 5px;line-height:1}
+.items li strong{display:block;color:var(--ink);font-weight:500;font-size:15px;margin-bottom:4px}
+.items li code{font:500 14px 'JetBrains Mono',monospace;color:var(--gold-hi);word-break:break-word}
+.items li p{margin:0;font-size:13.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.items li p i{color:var(--dim)}
+
+.code{position:relative;margin-top:24px;border:1px solid var(--gold-dim);background:#070605}
+.code pre{margin:0;padding:22px 22px 20px;overflow-x:auto;font:400 13px/1.65 'JetBrains Mono',monospace;color:#d9cfbb;white-space:pre}
+.code .hd{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 10px 22px;border-bottom:1px solid var(--gold-faint);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.code button{font:500 11px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));border:0;padding:8px 14px;cursor:pointer}
+.code.prompt pre{white-space:pre-wrap;font-size:13.5px}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+.steps .st a{color:var(--gold-hi)}
+
+.qa{margin-top:28px;display:grid;gap:10px}
+.qa details{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03)}
+.qa summary{cursor:pointer;list-style:none;padding:16px 46px 16px 58px;position:relative;font-size:15px;color:var(--ink);line-height:1.5}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary .qn{position:absolute;left:18px;top:17px;font:500 12px 'JetBrains Mono',monospace;color:var(--gold)}
+.qa summary::after{content:'+';position:absolute;right:18px;top:14px;color:var(--gold);font-size:18px}
+.qa details[open] summary::after{content:'−'}
+.qa .ans{padding:0 20px 18px 58px;font-size:14px;font-weight:300;line-height:1.7;color:var(--dim2)}
+.qa .ans b{color:var(--gold-hi);font-weight:500}
+.qa .tag{display:inline-block;margin-left:8px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .items{grid-template-columns:1fr}
+}
+.shot{margin-top:28px;border:1px solid var(--gold-dim);background:#070605;padding:8px}
+.shot img{display:block;width:100%;height:auto}
+.cmp{width:100%;border-collapse:collapse;margin-top:26px;font-size:15px}
+.cmp th,.cmp td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);text-align:left;font-weight:300;color:var(--dim2)}
+.cmp th{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.cmp td b{color:var(--ink);font-weight:500}
+.cmp tr.me td{color:var(--gold-hi);background:rgba(200,162,78,.06)}
+.cmp tr.me td b{color:var(--gold-hi)}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Free Stock Terminal</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Free setup guide · From the reel</div>
+  <h1>A FREE open-source<br><span class=free>stock market terminal.</span></h1>
+  <p class=sub>OpenStock covers 7 markets with live charts, a heatmap, financials, technicals and a watchlist. It's free, open source and has over 20,000 stars on GitHub. <b style="color:var(--gold-hi);font-weight:500">Bonus:</b> 8 TradingView indicators on every chart, where TradingView's free plan stops at 2. I installed it and tested it, and here's exactly what it does and how to get it running.</p>
+  <div class=map>
+    <a href="#what"><div class=k>01</div><div class=t>What you get</div><div class=n>7 markets, charts, data</div></a>
+    <a href="#indicators"><div class=k>02 · Bonus</div><div class=t>8 indicators</div><div class=n>TradingView free: 2</div></a>
+    <a href="#easy"><div class=k>03 · Easiest</div><div class=t>Use it online</div><div class=n>No install</div></a>
+    <a href="#setup"><div class=k>04 · Full</div><div class=t>Run your own</div><div class=n>5 steps, ~10 min</div></a>
+    <a href="#claude"><div class=k>05 · Shortcut</div><div class=t>Let Claude do it</div><div class=n>One prompt</div></a>
+  </div>
+</header>
+
+<main>
+  <section class=topic id=what>
+    <div class=tnum>01 · What you get</div>
+    <h2>Your own stock market terminal, for $0.</h2>
+    <p class=tdesc>OpenStock is made by Open Dev Society and released under the AGPL-3.0 licence, so the code is public and free to run yourself. Under the hood it combines <b>TradingView's free chart widgets</b> with market data from <b>Finnhub</b>, wrapped in a clean app with an account and a watchlist.</p>
+    <div class=shot><img src="img/openstock-dashboard.jpg" alt="OpenStock market overview with S&amp;P 500 heatmap" loading=lazy></div>
+    <p class=capt>My own install: the market overview with the index pulse, leaders and the S&amp;P 500 heatmap.</p>
+    <ol class=items>
+      <li><strong>7 markets</strong><p>US, India, Germany, Canada, Australia, crypto and forex, with a sector heatmap, leaders and top stories.</p></li>
+      <li><strong>⌘K search + tabs</strong><p>Search every exchange Finnhub covers and keep stocks open as browser-style tabs.</p></li>
+      <li><strong>Stock pages</strong><p>Live candles with drawing tools (trend lines, Fibonacci, shapes, text), financials, technicals and the company profile.</p></li>
+      <li><strong>Watchlist</strong><p>Up to 50 stocks, saved to your account.</p></li>
+      <li><strong>Price alerts + AI news digest</strong><p>Built in, but they need email set up (and "realtime mode" for alerts). Optional.</p></li>
+      <li><strong>What it isn't</strong><p>It's a free terminal for charts and research, not Bloomberg-grade data. Quotes refresh hourly by default (charts are live), and some markets are delayed: <i>India and Germany chart end of day.</i></p></li>
+    </ol>
+  </section>
+
+  <section class=topic id=indicators>
+    <div class=tnum>02 · Bonus</div>
+    <h2>8 TradingView indicators. Pick once, kept on every chart.</h2>
+    <p class=tdesc>Above the chart there's an <b>Indicators</b> menu with 8 choices: SMA, EMA, Bollinger Bands, VWAP, RSI, MACD, Stochastic and ATR. Tick them and they load on every stock you open, even after a reload. I ticked all 8 on NVDA:</p>
+    <div class=shot><img src="img/openstock-nvda-8-indicators.jpg" alt="OpenStock NVDA chart with Indicators 8 selected" loading=lazy></div>
+    <p class=capt>Note the "Indicators 8" button top right. Screenshot from my install, 20 Oct 2026.</p>
+    <table class=cmp>
+      <tr><th>Plan</th><th>Indicators per chart</th></tr>
+      <tr><td><b>TradingView Basic</b> (free)</td><td>2</td></tr>
+      <tr><td><b>TradingView Essential</b> (paid)</td><td>5</td></tr>
+      <tr><td><b>TradingView Plus</b> (paid)</td><td>10</td></tr>
+      <tr><td><b>TradingView Premium</b> (paid)</td><td>25</td></tr>
+      <tr class=me><td><b>OpenStock</b> (free)</td><td><b>8</b>, from its picker</td></tr>
+    </table>
+    <p class=capt>TradingView limits from <a href="https://quantroutine.com/tools/tradingview-free-vs-pro/" target=_blank rel=noopener style="color:var(--gold-hi)">QuantRoutine</a> and <a href="https://stockbrokers.com/review/tools/tradingview" target=_blank rel=noopener style="color:var(--gold-hi)">StockBrokers.com</a>, checked Oct 2026. Plans and limits can change.</p>
+  </section>
+
+  <section class=topic id=easy>
+    <div class=tnum>03 · Easiest</div>
+    <h2>Just want to try it? Use the free online version.</h2>
+    <p class=tdesc>The OpenStock team runs a free public version. Sign up and you're in, nothing to install. Quotes there refresh hourly and are shared by everyone.</p>
+    <div class=live-row>
+      <a class=btn-gold href="https://openstock-ods.vercel.app" target=_blank rel=noopener>Open the terminal online ↗</a>
+      <a class=btn-line href="https://github.com/Open-Dev-Society/OpenStock" target=_blank rel=noopener>See it on GitHub ↗</a>
+    </div>
+  </section>
+
+  <section class=topic id=setup>
+    <div class=tnum>04 · Run your own</div>
+    <h2>Your own copy in 5 steps.</h2>
+    <p class=tdesc>Running your own copy means your own data limits, and you can switch on 15-second quotes. You need a computer (Mac, Windows or Linux) and about 10 minutes. Everything below is free.</p>
+    <ul class=steps>
+      <li><span class=sn>1</span><div class=st><p><b>Install Node.js 22 and Git.</b> Download Node.js 22 LTS from <a href="https://nodejs.org" target=_blank rel=noopener>nodejs.org</a> and Git from <a href="https://git-scm.com" target=_blank rel=noopener>git-scm.com</a>.</p></div></li>
+      <li><span class=sn>2</span><div class=st><p><b>Get a free Finnhub key.</b> Sign up at <a href="https://finnhub.io" target=_blank rel=noopener>finnhub.io</a> and copy your API key from the dashboard. The free key allows 60 requests a minute.</p></div></li>
+      <li><span class=sn>3</span><div class=st><p><b>Get a free database.</b> Create a free cluster on <a href="https://www.mongodb.com/atlas" target=_blank rel=noopener>MongoDB Atlas</a> and copy its connection string (it starts with <code>mongodb+srv://</code>). If you use Docker, the repo's <code>docker-compose.yml</code> runs one for you instead.</p></div></li>
+      <li><span class=sn>4</span><div class=st><p><b>Download and configure.</b> Run the commands below, then open the new <code>.env</code> file and fill in three lines: <code>MONGODB_URI</code>, <code>BETTER_AUTH_SECRET</code> (any long random text) and <code>FINNHUB_API_KEY</code>.</p></div></li>
+      <li><span class=sn>5</span><div class=st><p><b>Start it and sign up.</b> Open <code>http://localhost:3000/sign-up</code>, create an account (it stays on your own database), open any stock, click <b>Indicators</b> and tick all 8.</p></div></li>
+    </ul>
+    <div class=code>
+      <div class=hd><span>Terminal · Mac / Linux</span><button data-copy=cmds>Copy</button></div>
+<pre id=cmds>git clone https://github.com/Open-Dev-Society/OpenStock.git
+cd OpenStock
+npm ci
+cp .env.example .env          # then fill in the 3 lines
+node scripts/check-env.mjs    # checks your .env
+npm run dev                   # open http://localhost:3000</pre>
+    </div>
+    <p class=capt>On Windows, use <code>copy .env.example .env</code> instead of <code>cp</code>. For 15-second quotes, add <code>NEXT_PUBLIC_OPENSTOCK_DATA_MODE=realtime</code> to <code>.env</code> and restart. Keep your <code>.env</code> private: it holds your keys.</p>
+  </section>
+
+  <section class=topic id=claude>
+    <div class=tnum>05 · Shortcut</div>
+    <h2>Or paste this into Claude Code.</h2>
+    <p class=tdesc>If you use Claude Code, it can do steps 1 to 5 for you. Have your Finnhub key and MongoDB connection string ready, and paste them in when it asks.</p>
+    <div class="code prompt">
+      <div class=hd><span>Prompt</span><button data-copy=prompt>Copy</button></div>
+<pre id=prompt>Install OpenStock (https://github.com/Open-Dev-Society/OpenStock) on my computer.
+1. Check I have Node.js 22+ and Git; tell me how to install them if not.
+2. Clone the repo, run npm ci, and copy .env.example to .env.
+3. Ask me for my Finnhub API key and MongoDB connection string, put them in .env,
+   and generate a random BETTER_AUTH_SECRET.
+4. Run node scripts/check-env.mjs and fix anything it flags.
+5. Start it with npm run dev and tell me the URL to open.
+Don't commit or share my .env file.</pre>
+    </div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Want more like this?</div>
+    <h2>Free tools, honestly tested.</h2>
+    <p>I install the tool, check what it actually does, and show you the setup. Follow for the next one.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="academy-trading-mastery.html">Free trading course</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>OpenStock is an independent open-source project by Open Dev Society. Cloud9 is not affiliated with OpenStock, Open Dev Society, TradingView or Finnhub. Indicator limits and plans are as published in October 2026 and may change.</div>
+</footer>
+</div>
+<script>
+document.querySelectorAll('button[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.getAttribute('data-copy')).innerText;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){
+      b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy'},1600);
+    },function(){b.textContent='Select + copy';});
+  });
+});
+</script>
+</body></html>
