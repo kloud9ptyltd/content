@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Try a Finance Job, Free · Cloud9</title>
+<meta name="description" content="Five free job simulations from Goldman Sachs, Bank of America, Standard Chartered, Fidelity International and Bloomberg. Self-paced, a few hours each, with a certificate of completion for your résumé.">
+<meta property="og:title" content="Try a finance job for free. All 5 links from the reel.">
+<meta property="og:description" content="Goldman Sachs, Bank of America, Standard Chartered, Fidelity International and Bloomberg: free, self-paced job simulations with a certificate of completion.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 16px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+/* simulation cards */
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:22px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:24px 26px;scroll-margin-top:24px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .no{font-family:'Playfair Display',serif;font-size:44px;line-height:1;color:var(--gold-hi);font-variant-numeric:lining-nums}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:680px}
+.sim p b{color:var(--ink);font-weight:500}
+.sim .sk{margin-top:8px;font-size:12.5px;color:var(--dim);letter-spacing:.02em}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+
+.items{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;counter-reset:it}
+.items li{counter-increment:it;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:16px 18px 16px 58px;position:relative;min-width:0}
+.items li::before{content:counter(it,decimal-leading-zero);position:absolute;left:18px;top:16px;font:500 12px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 5px;line-height:1}
+.items li strong{display:block;color:var(--ink);font-weight:500;font-size:15px;margin-bottom:4px}
+.items li p{margin:4px 0 0;font-size:13.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.items li a{color:var(--gold-hi)}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.note{margin-top:22px;border-left:2px solid var(--gold);padding:12px 18px;background:rgba(200,162,78,.05);font-size:14px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:780px}
+.note b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .items{grid-template-columns:1fr}
+  .sim{grid-template-columns:minmax(0,1fr);gap:12px;padding:22px 20px}
+  .sim .no{font-size:32px}
+  .sim .go{text-align:center}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Finance Careers</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>All 5 links · From the reel</div>
+  <h1>Try a finance job.<br><span class=free>For free.</span></h1>
+  <p class=sub>Goldman Sachs, Bank of America, Standard Chartered, Fidelity International and Bloomberg each run an official <b style="color:var(--gold-hi);font-weight:500">job simulation</b> on Forage. You do the kind of tasks their teams do, at your own pace, in a few hours. Finish one and you get a certificate of completion for your résumé.</p>
+  <div class=map>
+    <a href="#gs"><div class=k>01</div><div class=t>Goldman Sachs</div><div class=n>Wealth management ops</div></a>
+    <a href="#bofa"><div class=k>02</div><div class=t>Bank of America</div><div class=n>Investment banking</div></a>
+    <a href="#sc"><div class=k>03</div><div class=t>Standard Chartered</div><div class=n>Credit analyst</div></a>
+    <a href="#fid"><div class=k>04</div><div class=t>Fidelity Intl</div><div class=n>Investment management</div></a>
+    <a href="#bb"><div class=k>05</div><div class=t>Bloomberg</div><div class=n>Client service</div></a>
+  </div>
+</header>
+
+<main>
+  <section class=topic id=links>
+    <div class=tnum>01 · The five simulations</div>
+    <h2>Pick a job. Start today.</h2>
+    <p class=tdesc>Each one is <b>free and self-paced</b>, with no grades and no deadline. Every link goes straight to the official Forage page.</p>
+
+    <div class=sims>
+      <div class=sim id=gs>
+        <div class=no>01</div>
+        <div>
+          <div class=co>Goldman Sachs</div>
+          <h3>Operations · Wealth Management</h3>
+          <div class=meta><span>1–2 HOURS</span><span>CERTIFICATE</span></div>
+          <p>Learn the <b>foundations of operations</b> on the wealth-management side: how transactions are processed, checked and kept low-risk.</p>
+          <div class=sk>Skills: data analysis · process improvement · risk management · transaction management</div>
+        </div>
+        <a class=go href="https://www.theforage.com/simulations/goldman-sachs/operations-9vyc" target=_blank rel=noopener>Start free ↗</a>
+      </div>
+
+      <div class=sim id=bofa>
+        <div class=no>02</div>
+        <div>
+          <div class=co>Bank of America</div>
+          <h3>Investment Banking</h3>
+          <div class=meta><span>4–5 HOURS</span><span>5 TASKS</span><span class=hot>HIRING NOW</span></div>
+          <p>Work on the <b>Technology, Media &amp; Telecom</b> team. You start by turning a company's 10-K into a financial summary and a SWOT analysis, then move on to valuation.</p>
+          <div class=sk>Skills: DCF modelling · M&amp;A analysis · valuation · financial modelling · SWOT</div>
+        </div>
+        <a class=go href="https://www.theforage.com/simulations/bank-of-america/investment-banking-bwp7" target=_blank rel=noopener>Start free ↗</a>
+      </div>
+
+      <div class=sim id=sc>
+        <div class=no>03</div>
+        <div>
+          <div class=co>Standard Chartered</div>
+          <h3>Credit Analyst · Banking &amp; Coverage</h3>
+          <div class=meta><span>3–4 HOURS</span><span>INTERMEDIATE</span><span class=hot>HIRING NOW</span></div>
+          <p>Lead a <b>credit review of a long-standing client</b>: read the numbers, spot the risks, and present your view.</p>
+          <div class=sk>Skills: credit analysis · accounting fundamentals · risk identification · presentation</div>
+        </div>
+        <a class=go href="https://www.theforage.com/simulations/standardchartered/banking-coverage-kr4i" target=_blank rel=noopener>Start free ↗</a>
+      </div>
+
+      <div class=sim id=fid>
+        <div class=no>04</div>
+        <div>
+          <div class=co>Fidelity International</div>
+          <h3>Investment Management</h3>
+          <div class=meta><span>4–5 HOURS</span><span>6 TASKS</span></div>
+          <p>Learn how a fund manager thinks, from <b>company and industry analysis</b> to fixed income and building a portfolio.</p>
+          <div class=sk>Skills: portfolio management · company analysis · fixed income · Excel · PowerPoint</div>
+        </div>
+        <a class=go href="https://www.theforage.com/simulations/fidelity-international/investment-management-bqoj" target=_blank rel=noopener>Start free ↗</a>
+      </div>
+
+      <div class=sim id=bb>
+        <div class=no>05</div>
+        <div>
+          <div class=co>Bloomberg</div>
+          <h3>Client Service</h3>
+          <div class=meta><span>3–4 HOURS</span><span>4 TASKS</span></div>
+          <p>Step into Bloomberg's <b>client service</b> team: prioritise incoming requests, triage problems and find the root cause.</p>
+          <div class=sk>Skills: prioritisation · triage · root-cause analysis · customer experience</div>
+        </div>
+        <a class=go href="https://www.theforage.com/simulations/bloomberg/client-service-l3u2" target=_blank rel=noopener>Start free ↗</a>
+      </div>
+    </div>
+    <p class=capt>All five links checked live on 25 Oct 2026. Times and task counts are Forage's own estimates.</p>
+  </section>
+
+  <section class=topic id=how>
+    <div class=tnum>02 · How it works</div>
+    <h2>Four steps, a few hours.</h2>
+    <ul class=steps>
+      <li><span class=sn>1</span><div class=st><p><b>Open a link and tap "Start Free Simulation".</b> Forage asks you to create a free account. That's the only signup.</p></div></li>
+      <li><span class=sn>2</span><div class=st><p><b>Do the tasks at your own pace.</b> Each one opens with a short brief and videos from the company's team, and you can compare your work with an example answer when you finish.</p></div></li>
+      <li><span class=sn>3</span><div class=st><p><b>Get your certificate.</b> Complete every task and Forage gives you a certificate of completion.</p></div></li>
+      <li><span class=sn>4</span><div class=st><p><b>Put it to work.</b> Add it to LinkedIn under <b>Licenses &amp; certifications</b> and to your résumé, and use what you built as an interview story: "I valued a TMT company for Bank of America's simulation…"</p></div></li>
+    </ul>
+  </section>
+
+  <section class=topic id=more>
+    <div class=tnum>03 · Bonus</div>
+    <h2>Two more worth doing.</h2>
+    <ol class=items>
+      <li><strong>Mastercard · Advisors &amp; Consulting</strong><p>1–2 hours. Consulting work for Mastercard's advisory arm. <a href="https://www.theforage.com/simulations/mastercard/advisors-client-services-xvlw" target=_blank rel=noopener>Start free ↗</a></p></li>
+      <li><strong>BCG · Strategy Consulting</strong><p>4–5 hours. Strategy work in the Boston Consulting Group style. <a href="https://www.theforage.com/simulations/bcg/strategy-consulting-jk76" target=_blank rel=noopener>Start free ↗</a></p></li>
+    </ol>
+  </section>
+
+  <section class=topic id=know>
+    <div class=tnum>04 · Good to know</div>
+    <h2>What you get, honestly.</h2>
+    <div class=ok>
+      <div><span><b>It's a simulation, not an internship.</b> Nobody is hiring you by finishing it, but it shows initiative and gives you real things to talk about.</span></div>
+      <div><span><b>The certificate is a certificate of completion</b>, issued through Forage. It proves you did the work, not that the bank certified you.</span></div>
+      <div><span><b>"Hiring now"</b> is Forage's own tag on the Bank of America and Standard Chartered pages. For actual open roles, check each firm's careers page.</span></div>
+      <div><span><b>Fidelity International</b> is the non-US sister company of Fidelity Investments, so check which one you're applying to.</span></div>
+    </div>
+    <div class=note><b>Do them soon.</b> Firms retire these programmes without warning. In October 2026 JPMorgan's simulation disappeared and all of Citi's went offline. If a link stops working, tell me and I'll swap in the replacement.</div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Want more like this?</div>
+    <h2>The fastest way in is to do the work first.</h2>
+    <p>I find the free ways into finance (simulations, certificates, tools) and check every link before I share it. Follow for the next one.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="#links">Back to the 5 links ↑</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is career or financial advice</span>
+  <div class=disclaimer>Job simulations are run by Forage (theforage.com) with each company. Cloud9 is not affiliated with Forage, Goldman Sachs, Bank of America, Standard Chartered, Fidelity International, Bloomberg, Mastercard or BCG. Company names are used only to identify each programme. Availability, times and tags can change.</div>
+</footer>
+</div>
+</body></html>
