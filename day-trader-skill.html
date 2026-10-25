@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Claude's Free Day-Trading Desk · Cloud9</title>
+<meta name="description" content="11 free, open-source Claude skills for day trading, including a Time Machine that replays your trade 10,000 times. Two-minute setup, how to read the odds, and our two-month Nvidia test.">
+<meta property="og:title" content="Claude's free day-trading desk. The setup guide + our Nvidia test.">
+<meta property="og:description" content="11 free Claude skills, a Time Machine that replays your trade 10,000 times, and an honest two-month Nvidia test.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.tdesc code{font:500 14px 'JetBrains Mono',monospace;color:var(--gold-hi)}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 16px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.items{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;counter-reset:it}
+.items li{counter-increment:it;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:16px 18px 16px 58px;position:relative;min-width:0}
+.items li::before{content:counter(it,decimal-leading-zero);position:absolute;left:18px;top:16px;font:500 12px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 5px;line-height:1}
+.items li strong{display:block;color:var(--ink);font-weight:500;font-size:15px;margin-bottom:4px}
+.items li code{font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);word-break:break-word}
+.items li p{margin:4px 0 0;font-size:13.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.items li.star{border-color:var(--gold-dim);background:rgba(200,162,78,.07)}
+
+.code{position:relative;margin-top:24px;border:1px solid var(--gold-dim);background:#070605}
+.code pre{margin:0;padding:22px 22px 20px;overflow-x:auto;font:400 13px/1.65 'JetBrains Mono',monospace;color:#d9cfbb;white-space:pre}
+.code .hd{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 10px 22px;border-bottom:1px solid var(--gold-faint);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.code button{font:500 11px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));border:0;padding:8px 14px;cursor:pointer}
+.code.prompt pre{white-space:pre-wrap;font-size:13.5px}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+.steps .st i{color:var(--gold-hi);font-style:normal;font-family:'JetBrains Mono',monospace;font-size:13px}
+
+.big{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+.big div{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 18px;min-width:0}
+.big .v{font-family:'Playfair Display',serif;font-size:clamp(34px,4.6vw,52px);line-height:1;color:var(--gold-hi);font-variant-numeric:lining-nums}
+.big .l{margin-top:10px;font-size:13px;font-weight:300;line-height:1.55;color:var(--dim2)}
+.big .v.loss{color:#D9776A}.big .v.win{color:#3FB68B}.big .v.flat{color:var(--dim2)}
+
+.note{margin-top:22px;border-left:2px solid var(--gold);padding:12px 18px;background:rgba(200,162,78,.05);font-size:14px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:780px}
+.note b{color:var(--ink);font-weight:500}
+
+.cmp{width:100%;border-collapse:collapse;margin-top:26px;font-size:15px}
+.cmp th,.cmp td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);text-align:left;font-weight:300;color:var(--dim2)}
+.cmp th{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.cmp td b{color:var(--ink);font-weight:500}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:26px;border:1px solid var(--gold-faint)}
+.trades{width:100%;min-width:600px;border-collapse:collapse;font-size:13.5px}
+.trades th,.trades td{padding:11px 12px;border-bottom:1px solid var(--gold-faint);text-align:left;font-weight:300;color:var(--dim2);white-space:nowrap;font-variant-numeric:tabular-nums}
+.trades th{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:500;background:rgba(200,162,78,.05)}
+.trades td.win{color:#3FB68B}.trades td.loss{color:#D9776A}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .items{grid-template-columns:1fr}
+  .big{grid-template-columns:1fr}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>AI Trading Desk</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Free setup guide · From the reel</div>
+  <h1>Claude's free<br><span class=free>day-trading desk.</span></h1>
+  <p class=sub>Eleven open-source Claude skills that scan, plan and stress-test a day trade. The star is a <b style="color:var(--gold-hi);font-weight:500">Time Machine</b> that plays your trade out 10,000 times before you buy. I installed it, ran it on two months of Nvidia breakouts, and here's the setup plus what I found.</p>
+  <div class=map>
+    <a href="#desk"><div class=k>01</div><div class=t>The 11 skills</div><div class=n>What each one does</div></a>
+    <a href="#setup"><div class=k>02 · Setup</div><div class=t>Install it</div><div class=n>Claude Code + skills</div></a>
+    <a href="#first"><div class=k>03 · Use it</div><div class=t>Your first trade</div><div class=n>7 prompts, in order</div></a>
+    <a href="#odds"><div class=k>04 · Time Machine</div><div class=t>Read the odds</div><div class=n>Target, stop, neither</div></a>
+    <a href="#test"><div class=k>05 · Beyond the reel</div><div class=t>The Nvidia test</div><div class=n>All 24 trades</div></a>
+  </div>
+</header>
+
+<main>
+  <section class=topic id=desk>
+    <div class=tnum>01 · The desk</div>
+    <h2>Eleven skills. Eleven jobs. $0.</h2>
+    <p class=tdesc>The pack is called <b>day-trader-skill</b>, built by <b>Jake Schincariol</b> (<a href="https://www.instagram.com/opusjake/" target=_blank rel=noopener>@opusjake</a>) and released under the MIT licence. It's plain Python that reads free public data (Yahoo Finance prices, Nasdaq's symbol lists, SEC filings), so there's <b>no API key, no signup and nothing to pay</b>. It never trades on its own: every order needs your yes, and paper trading is the default.</p>
+    <ol class=items>
+      <li><strong>Scanner</strong><code>/trader-scanner</code><p>Sweeps the market for breakouts, flags and oversold bounces.</p></li>
+      <li><strong>News desk</strong><code>/trader-news</code><p>Headlines and SEC filings for the stocks you're watching.</p></li>
+      <li><strong>Entry timer</strong><code>/trader-entry</code><p>Watches a setup candle by candle and calls the moment to buy.</p></li>
+      <li><strong>Exit planner</strong><code>/trader-exit</code><p>Sets your stop-loss and profit target before you're in.</p></li>
+      <li class=star><strong>Time Machine</strong><code>/trader-timemachine</code><p>Replays the rest of the day 10,000 times and gives you the odds.</p></li>
+      <li><strong>Position sizer</strong><code>/trader-budget</code><p>How many shares fit your account and your max loss.</p></li>
+      <li><strong>Risk manager</strong><code>/trader-risk</code><p>Blocks any trade that breaks your limits.</p></li>
+      <li><strong>Order desk</strong><code>/trader-broker</code><p>Sends approved orders to your broker, paper by default.</p></li>
+      <li><strong>Alerts</strong><code>/trader-alerts</code><p>Pings you at your stop, your target, and before the close.</p></li>
+      <li><strong>Earnings analyst</strong><code>/trader-analyst</code><p>Reads a company's latest reported numbers from the SEC.</p></li>
+      <li><strong>Congress tracker</strong><code>/trader-pelosi</code><p>New stock-trade disclosures filed by members of Congress.</p></li>
+    </ol>
+  </section>
+
+  <section class=topic id=setup>
+    <div class=tnum>02 · Setup</div>
+    <h2>Install it in two minutes.</h2>
+    <p class=tdesc>These skills run inside <b>Claude Code</b>, Anthropic's coding assistant. Already have it? Jump to <a href="#install">step 2</a>.</p>
+
+    <ul class=steps>
+      <li><span class=sn>1</span><div class=st><p><b>Get Claude Code, in either form.</b> You need a paid Claude plan (<b>Pro or Max</b>, or an Anthropic API account). The free plan doesn't include Claude Code.</p></div></li>
+    </ul>
+    <ol class=items>
+      <li><strong>Option A · Claude Desktop (easiest)</strong><p>No terminal needed. Download the <a href="https://claude.com/download" target=_blank rel=noopener>Claude desktop app</a> for Mac or Windows, sign in, and click the <b>Code</b> tab at the top of the sidebar. The app itself is free, but the Code tab needs a Pro or Max plan; on the free plan it asks you to upgrade. Then go straight to step 2.</p></li>
+      <li><strong>Option B · Claude Code in the terminal</strong><p>Open a terminal (Mac: the <b>Terminal</b> app; Windows: <b>PowerShell</b>) and paste the line for your computer, below.</p></li>
+    </ol>
+    <div class=code>
+      <div class=hd><span>Mac · Linux</span><button data-copy=cc1>Copy</button></div>
+<pre id=cc1>curl -fsSL https://claude.ai/install.sh | bash</pre>
+    </div>
+    <div class=code>
+      <div class=hd><span>Windows · PowerShell</span><button data-copy=cc2>Copy</button></div>
+<pre id=cc2>irm https://claude.ai/install.ps1 | iex</pre>
+    </div>
+    <p class=tdesc style="margin-top:20px">The installer shows no progress bar, so give it a minute. Then <b>open a new terminal window</b>, type <code>claude</code> and press Enter. A browser window opens for you to log in with your Claude account. To check it worked, <code>claude --version</code> prints a version number. Official guide: <a href="https://code.claude.com/docs/en/setup" target=_blank rel=noopener>code.claude.com/docs/en/setup</a>.</p>
+    <div class=note><b>Also needed: Python 3.8 or newer</b>, which the skills use for their calculations. Macs usually have it (if not, macOS offers to install it the first time it's needed). On Windows, install it from <a href="https://www.python.org/downloads/" target=_blank rel=noopener>python.org</a> and tick <b>"Add python.exe to PATH"</b>. Or just ask Claude Code: <i>"Check I have Python 3.8+ and help me install it if not."</i></div>
+
+    <ul class=steps id=install style="margin-top:36px">
+      <li><span class=sn>2</span><div class=st><p><b>Install the skills.</b> In Claude Desktop or Claude Code (type <code>claude</code> in your terminal), paste this in and send it:</p></div></li>
+    </ul>
+    <div class="code prompt">
+      <div class=hd><span>Paste into Claude</span><button data-copy=p1>Copy</button></div>
+<pre id=p1>https://github.com/Jakeschincariol/day-trader-skill
+
+install skill</pre>
+    </div>
+    <p class=tdesc style="margin-top:28px">Or install it yourself in Claude Code, either as a plugin (commands get a <code>/day-trader-skill:</code> prefix) or by copying the folders (short names like <code>/trader-scanner</code>):</p>
+    <div class=code>
+      <div class=hd><span>Claude Code · plugin</span><button data-copy=c1>Copy</button></div>
+<pre id=c1>/plugin marketplace add Jakeschincariol/day-trader-skill
+/plugin install day-trader-skill@day-trader-skill</pre>
+    </div>
+    <div class=code>
+      <div class=hd><span>Terminal · Mac / Linux</span><button data-copy=c2>Copy</button></div>
+<pre id=c2>git clone https://github.com/Jakeschincariol/day-trader-skill.git
+cp -r day-trader-skill/trader-* ~/.claude/skills/</pre>
+    </div>
+    <div class=note><b>One extra step</b> for the news and earnings skills: the SEC asks every tool to say who's calling. Tell Claude <i>"set my SEC user agent to Your Name you@email.com"</i>, or set the <b>SEC_USER_AGENT</b> environment variable yourself.</div>
+  </section>
+
+  <section class=topic id=first>
+    <div class=tnum>03 · Your first trade</div>
+    <h2>Run the desk in order.</h2>
+    <p class=tdesc>Each skill passes its work to the next, so go top to bottom. Plain English works.</p>
+    <ul class=steps>
+      <li><span class=sn>1</span><div class=st><p><b>Find a setup.</b> <i>"Scan for opening-range breakouts in NVDA, TSLA, AAPL, MSFT, META, AMD."</i></p></div></li>
+      <li><span class=sn>2</span><div class=st><p><b>Check the news</b> on the one you like. <i>"Any news on NVDA today?"</i></p></div></li>
+      <li><span class=sn>3</span><div class=st><p><b>Time the entry.</b> <i>"Watch NVDA and tell me when it triggers."</i></p></div></li>
+      <li><span class=sn>4</span><div class=st><p><b>Plan the exit before you buy.</b> <i>"Set my stop and target."</i></p></div></li>
+      <li><span class=sn>5</span><div class=st><p><b>Run the Time Machine.</b> <i>"Replay this trade. What are the odds?"</i></p></div></li>
+      <li><span class=sn>6</span><div class=st><p><b>Size it.</b> <i>"I have $5,000 and want to risk $50 max. How many shares?"</i></p></div></li>
+      <li><span class=sn>7</span><div class=st><p><b>Risk check, then you decide.</b> If it passes and you still want it, the order desk can send it to a paper account. You type yes. Nothing happens without you.</p></div></li>
+    </ul>
+  </section>
+
+  <section class=topic id=odds>
+    <div class=tnum>04 · The Time Machine</div>
+    <h2>How to read the odds.</h2>
+    <p class=tdesc>You give it a trade: an entry, a stop-loss and a target. It rebuilds the rest of that trading day <b>10,000 times</b>, each time stitching together real 5-minute moves the stock made at that time of day over the last ~60 sessions. Every replay ends one of three ways:</p>
+    <div class=big>
+      <div><div class="v win">Target</div><div class=l>Price hit your profit target first. A win.</div></div>
+      <div><div class="v loss">Stop</div><div class=l>Price hit your stop-loss first. A small, planned loss.</div></div>
+      <div><div class="v flat">Neither</div><div class=l>Still open at the close. The closing price decides.</div></div>
+    </div>
+    <p class=tdesc style="margin-top:28px"><b>The part most people miss:</b> how often you need to win depends on your target. With a target <b>twice</b> as far as your stop (the default, "2R"), winning about <b>1 in 3</b> breaks even. With a target the same distance as your stop ("1R"), you need about <b>1 in 2</b>. The verdict line does that maths for you:</p>
+    <table class=cmp>
+      <tr><th>The verdict says</th><th>What it means</th></tr>
+      <tr><td><b>Leans / strongly toward the target</b></td><td>Wins more often than you need. The odds are on your side.</td></tr>
+      <tr><td><b>Close to break-even</b> (or coin flip)</td><td>No real edge either way.</td></tr>
+      <tr><td><b>Leans / strongly toward the stop</b></td><td>Loses more often than you can afford. Think twice.</td></tr>
+    </table>
+    <p class=capt>It also re-runs the same setup on every real day in the last ~60 sessions and shows how often it worked. If the simulation and the real history disagree, trust neither blindly.</p>
+  </section>
+
+  <section class=topic id=test>
+    <div class=tnum>05 · Beyond the reel</div>
+    <h2>I tested it on two months of Nvidia.</h2>
+    <p class=tdesc>I went back through every Nvidia breakout from <b>31 Aug to 23 Oct 2026</b>. On each day, the Time Machine only saw data from <b>before</b> that day, exactly as if you'd asked it live. Then I checked what really happened.</p>
+    <div class=big>
+      <div><div class=v>24</div><div class=l>Nvidia breakouts in two months</div></div>
+      <div><div class=v>0</div><div class=l>times it said the odds were on your side</div></div>
+      <div><div class="v loss">−$239</div><div class=l>if you'd bought all 24 anyway, risking $50 each</div></div>
+    </div>
+    <p class=tdesc style="margin-top:28px">It never once gave an Nvidia breakout a thumbs-up, and holding back was right: taking every one would have lost money. <b>12 hit the stop, 2 reached the target</b>, and 10 ended the day somewhere in between.</p>
+    <div class=tw><table class=trades>
+      <thead><tr><th>Date</th><th>Entry</th><th>Time Machine said</th><th>Target odds</th><th>Stop odds</th><th>What happened</th></tr></thead>
+      <tbody>
+        <tr><td>31 Aug</td><td>$219.38</td><td>Leans to stop</td><td>21%</td><td>61%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+        <tr><td>1 Sep</td><td>$217.80</td><td>Leans to stop</td><td>20%</td><td>61%</td><td class="loss">Neither (-0.6R)</td></tr>
+        <tr><td>2 Sep</td><td>$221.46</td><td>Leans to stop</td><td>13%</td><td>51%</td><td class="win">Hit target (+2.0R)</td></tr>
+        <tr><td>3 Sep</td><td>$228.80</td><td>Leans to stop</td><td>17%</td><td>51%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+        <tr><td>4 Sep</td><td>$234.09</td><td>Leans to stop</td><td>16%</td><td>49%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+        <tr><td>11 Sep</td><td>$221.59</td><td>Leans to stop</td><td>26%</td><td>65%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+        <tr><td>14 Sep</td><td>$211.89</td><td>Strongly to stop</td><td>8%</td><td>44%</td><td class="loss">Neither (-0.1R)</td></tr>
+        <tr><td>16 Sep</td><td>$214.67</td><td>Break-even</td><td>31%</td><td>69%</td><td class="win">Hit target (+2.0R)</td></tr>
+        <tr><td>17 Sep</td><td>$219.03</td><td>Break-even</td><td>28%</td><td>69%</td><td class="win">Neither (+0.5R)</td></tr>
+        <tr><td>18 Sep</td><td>$220.62</td><td>Leans to stop</td><td>19%</td><td>59%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+        <tr><td>21 Sep</td><td>$224.54</td><td>Break-even</td><td>25%</td><td>62%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+        <tr><td>22 Sep</td><td>$229.70</td><td>Strongly to stop</td><td>3%</td><td>36%</td><td class="loss">Neither (-0.4R)</td></tr>
+        <tr><td>24 Sep</td><td>$223.54</td><td>Leans to stop</td><td>11%</td><td>46%</td><td class="win">Neither (+0.9R)</td></tr>
+        <tr><td>1 Oct</td><td>$231.64</td><td>Leans to stop</td><td>19%</td><td>58%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+        <tr><td>2 Oct</td><td>$237.67</td><td>Leans to stop</td><td>19%</td><td>54%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+        <tr><td>5 Oct</td><td>$237.84</td><td>Strongly to stop</td><td>4%</td><td>43%</td><td class="win">Neither (+1.0R)</td></tr>
+        <tr><td>7 Oct</td><td>$239.02</td><td>Break-even</td><td>28%</td><td>69%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+        <tr><td>8 Oct</td><td>$235.80</td><td>Leans to stop</td><td>25%</td><td>66%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+        <tr><td>13 Oct</td><td>$225.88</td><td>Leans to stop</td><td>19%</td><td>61%</td><td class="win">Neither (+1.3R)</td></tr>
+        <tr><td>15 Oct</td><td>$215.98</td><td>Leans to stop</td><td>17%</td><td>58%</td><td class="win">Neither (+1.1R)</td></tr>
+        <tr><td>16 Oct</td><td>$216.94</td><td>Break-even</td><td>27%</td><td>68%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+        <tr><td>19 Oct</td><td>$218.26</td><td>Strongly to stop</td><td>9%</td><td>47%</td><td class="loss">Neither (-0.5R)</td></tr>
+        <tr><td>20 Oct</td><td>$216.74</td><td>Strongly to stop</td><td>6%</td><td>42%</td><td class="loss">Neither (-0.1R)</td></tr>
+        <tr><td>23 Oct</td><td>$213.01</td><td>Leans to stop</td><td>16%</td><td>57%</td><td class="loss">Hit stop (-1.0R)</td></tr>
+      </tbody>
+    </table></div>
+    <p class=capt>Rules: 15-minute opening-range breakout, stop at the range midpoint, 2R target, out by 3:55 PM ET. R = the amount risked per trade.</p>
+    <p class=tdesc style="margin-top:28px"><b>Across 12 big stocks</b> (Nvidia, Tesla, Apple, Microsoft, Amazon, Meta, Google, AMD, Broadcom, Palantir, Micron, Oracle; 267 breakouts), the pattern held. It said "go" just 7 times. The trades it flagged as leaning toward the stop lost money on average, and the ones it called break-even came out roughly flat.</p>
+    <div class=note><b>What this does and doesn't show:</b> the Time Machine is good at <b>talking you out of bad trades</b>. I did <b>not</b> find that it picks winners. Two months and one strategy is a small sample, and trading costs and slippage aren't included.</div>
+  </section>
+
+  <section class=topic id=safe>
+    <div class=tnum>06 · Is it safe?</div>
+    <h2>What I checked before installing.</h2>
+    <div class=ok>
+      <div><span><b>Read the code.</b> Plain Python using only the built-in library, so no hidden packages get installed.</span></div>
+      <div><span><b>Only public data sites.</b> Yahoo Finance, Nasdaq, NYSE, the SEC, the House Clerk and Stooq. Nothing else.</span></div>
+      <div><span><b>Can't trade by itself.</b> Orders need your typed yes, then Claude asks again. Paper trading is the default.</span></div>
+      <div><span><b>MIT licensed</b>, with a test suite in the repo.</span></div>
+    </div>
+    <div class=note>It's brand new (released 20 Oct 2026), so expect rough edges. Only install it from <b>github.com/Jakeschincariol/day-trader-skill</b>, never from copies or look-alike repos.</div>
+  </section>
+
+  <section class=topic id=limits>
+    <div class=tnum>07 · Before you trade</div>
+    <h2>Know what you're getting.</h2>
+    <ol class=items>
+      <li><strong>A simulation, not a forecast</strong><p>It only knows the last ~60 days. Earnings, big news or a market shock can do things those days never did.</p></li>
+      <li><strong>Free data is delayed</strong><p>Yahoo prices can lag, so treat live signals as a guide, not a trigger.</p></li>
+      <li><strong>Long trades only</strong><p>The entry and exit skills plan buys, not short sales.</p></li>
+      <li><strong>Start on paper</strong><p>Run it for a few weeks with fake money before a real dollar goes in.</p></li>
+    </ol>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Want more like this?</div>
+    <h2>The best trade is sometimes the one you skip.</h2>
+    <p>I install the tool, test what it actually does, and show you the setup. Follow for the next one.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="https://github.com/Jakeschincariol/day-trader-skill" target=_blank rel=noopener>The repo on GitHub ↗</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>day-trader-skill is an independent open-source project by Jake Schincariol. Cloud9 is not affiliated with him, Anthropic, Yahoo or Nasdaq. Backtest results are historical, cover a short period and exclude trading costs. Day trading is risky and most day traders lose money.</div>
+</footer>
+</div>
+<script>
+document.querySelectorAll('button[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.getAttribute('data-copy')).innerText;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){
+      b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy'},1600);
+    },function(){b.textContent='Select + copy';});
+  });
+});
+</script>
+</body></html>
