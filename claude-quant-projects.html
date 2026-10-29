@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>5 Quant Projects to Build with Claude · Cloud9</title>
+<meta name="description" content="Five weekend projects that cover what quant interviews test: a Monte Carlo simulator, a backtester, a pairs-trading bot, a factor model and an options pricer. The exact Claude prompt for each, what your results should look like, and how to put them on GitHub.">
+<meta property="og:title" content="5 quant projects to build with Claude this weekend. The exact prompts.">
+<meta property="og:description" content="Monte Carlo, backtester, pairs trading, factor model, Black-Scholes. Copy the prompt, run it, put it on GitHub.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.topic h3{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:500;margin:34px 0 0}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.tdesc code,.note code{font:500 14px 'JetBrains Mono',monospace;color:var(--gold-hi)}
+.capt{margin-top:14px;font-size:12px;letter-spacing:.04em;color:var(--dim);max-width:780px;line-height:1.6}
+.teach{display:inline-block;margin:0 0 18px;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--bg);background:var(--gold);padding:5px 9px}
+
+.map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 16px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.items{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;counter-reset:it}
+.items li{counter-increment:it;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:16px 18px 16px 58px;position:relative;min-width:0}
+.items li::before{content:counter(it,decimal-leading-zero);position:absolute;left:18px;top:16px;font:500 12px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 5px;line-height:1}
+.items li strong{display:block;color:var(--ink);font-weight:500;font-size:15px;margin-bottom:4px}
+.items li p{margin:4px 0 0;font-size:13.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.items li.star{border-color:var(--gold-dim);background:rgba(200,162,78,.07)}
+
+.code{position:relative;margin-top:24px;border:1px solid var(--gold-dim);background:#070605}
+.code pre{margin:0;padding:22px 22px 20px;overflow-x:auto;font:400 13px/1.65 'JetBrains Mono',monospace;color:#d9cfbb;white-space:pre}
+.code .hd{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 10px 22px;border-bottom:1px solid var(--gold-faint);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.code button{font:500 11px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));border:0;padding:8px 14px;cursor:pointer}
+.code.prompt pre{white-space:pre-wrap;font-size:13.5px}
+
+.big{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.big.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.big>div{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 18px;min-width:0}
+.big .v{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,46px);line-height:1;color:var(--gold-hi);font-variant-numeric:lining-nums}
+.big .l{margin-top:10px;font-size:13px;font-weight:300;line-height:1.55;color:var(--dim2)}
+.big .v.sm{font-size:clamp(22px,2.6vw,32px)}
+.big .v.loss{color:#D9776A}.big .v.win{color:#3FB68B}.big .v.flat{color:var(--dim2)}
+
+.note{margin-top:22px;border-left:2px solid var(--gold);padding:12px 18px;background:rgba(200,162,78,.05);font-size:14px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:780px}
+.note b{color:var(--ink);font-weight:500}
+.note i{color:var(--gold-hi);font-style:normal}
+
+.ok{display:grid;gap:10px;margin-top:20px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+.steps .st i{color:var(--gold-hi);font-style:normal;font-family:'JetBrains Mono',monospace;font-size:13px}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .items{grid-template-columns:1fr}
+  .big,.big.four{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Quant Projects</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Free guide · From the reel</div>
+  <h1>5 quant projects<br><span class=free>to build this weekend.</span></h1>
+  <p class=sub>New-grad quant researchers at top trading firms like Jane Street, Citadel and Hudson River Trading make <b style="color:var(--gold-hi);font-weight:500">$350K–$650K</b> in year one. These five projects cover what their interviews test. Each one comes with the exact prompt to build it with Claude, the numbers we got when we ran it, and how to show it off on GitHub.</p>
+  <div class=map>
+    <a href="#mc"><div class=k>01 · Probability</div><div class=t>Monte Carlo simulator</div><div class=n>10,000 futures</div></a>
+    <a href="#bt"><div class=k>02 · Overfitting</div><div class=t>Backtester</div><div class=n>In vs out of sample</div></a>
+    <a href="#pairs"><div class=k>03 · Stat arb</div><div class=t>Pairs-trading bot</div><div class=n>Coke vs Pepsi</div></a>
+    <a href="#factor"><div class=k>04 · Regression</div><div class=t>Factor model</div><div class=n>What drives returns</div></a>
+    <a href="#options"><div class=k>05 · Derivatives</div><div class=t>Options pricer</div><div class=n>Black-Scholes + Greeks</div></a>
+  </div>
+</header>
+
+<main>
+  <section class=topic id=start>
+    <div class=tnum>00 · Before you start</div>
+    <h2>All you need is Claude and Python.</h2>
+    <p class=tdesc>Every prompt below builds a single Python file that downloads <b>free market data</b> (Yahoo Finance and Kenneth French's data library), so there are no API keys and no data bills. Pick whichever setup suits you:</p>
+    <ol class=items>
+      <li class=star><strong>Option A · Free, nothing to install</strong><p>Paste a prompt into any <a href="https://claude.ai" target=_blank rel=noopener>Claude</a> chat and add <i style="color:var(--gold-hi);font-style:normal">"Make it a Google Colab notebook."</i> Open <a href="https://colab.research.google.com" target=_blank rel=noopener>colab.research.google.com</a>, paste the code into a new notebook and press run. Colab is free and already has Python.</p></li>
+      <li><strong>Option B · Claude Code (builds and runs it for you)</strong><p>With a Claude Pro or Max plan, open the <b>Code</b> tab in the <a href="https://claude.com/download" target=_blank rel=noopener>Claude desktop app</a>, or Claude Code in your terminal. Paste a prompt and Claude writes the files, installs the libraries, runs everything and fixes errors itself. You'll need Python 3.10 or newer.</p></li>
+    </ol>
+    <div class=note><b>The real trick:</b> after each project, ask Claude <i>"Quiz me on this like a quant interviewer would."</i> Building it gets it on your GitHub. Explaining it is what gets you the offer.</div>
+  </section>
+
+  <section class=topic id=mc>
+    <div class=tnum>01 · Monte Carlo simulator</div>
+    <h2>Stress-test a portfolio across 10,000 futures.</h2>
+    <span class=teach>Teaches · Probability</span>
+    <p class=tdesc>Instead of guessing one future, you simulate thousands of possible ones and read the spread of outcomes. It's the first thing quant interviews probe: expected value, distributions, percentiles and the law of large numbers.</p>
+    <div class="code prompt">
+      <div class=hd><span>Paste into Claude</span><button data-copy=p1>Copy</button></div>
+<pre id=p1>Build a Monte Carlo portfolio simulator in Python.
+
+1. Download SPY's daily prices from 2006 to today with yfinance.
+2. Simulate 10,000 one-year paths (252 trading days) for a $100,000 investment by bootstrapping: resample real daily returns at random, with replacement.
+3. Report the median, 5th percentile and 95th percentile ending values, and the probability of ending with less than $100,000.
+4. Plot a fan chart (100 sample paths, the 5–95% band and the median) and a histogram of the 10,000 ending values.
+5. Let me pass any portfolio as tickers and weights (for example 60% SPY, 40% TLT) and compare it with 100% SPY.
+
+Put it all in one file I can run with: python monte_carlo.py
+Explain each step in plain English as you go, including why bootstrapping real returns is better than assuming a normal distribution.</pre>
+    </div>
+    <h3>What ours showed · $100K in the S&amp;P 500, one year</h3>
+    <div class="big four">
+      <div><div class="v loss">$81K</div><div class=l>Bad year (5th percentile)</div></div>
+      <div><div class=v>$111K</div><div class=l>Typical year (median)</div></div>
+      <div><div class="v win">$153K</div><div class=l>Great year (95th percentile)</div></div>
+      <div><div class="v flat">29%</div><div class=l>Chance of ending the year down</div></div>
+    </div>
+    <p class=capt>Bootstrapped from 5,236 real S&amp;P 500 daily returns (Jan 2006 to Oct 2026). Yours will differ by a few hundred dollars because every run draws new random paths. That's the point.</p>
+  </section>
+
+  <section class=topic id=bt>
+    <div class=tnum>02 · Backtester</div>
+    <h2>Catch an overfit strategy before it costs you.</h2>
+    <span class=teach>Teaches · Overfitting</span>
+    <p class=tdesc>Anyone can tune a strategy until it looks great on old data. A real backtester tests it on data it has <b>never seen</b>. If the results collapse, the strategy was memorising noise. Interviewers love this topic because most people get it wrong.</p>
+    <div class="code prompt">
+      <div class=hd><span>Paste into Claude</span><button data-copy=p2>Copy</button></div>
+<pre id=p2>Build a backtester in Python for a moving-average crossover on SPY: hold SPY when the fast moving average is above the slow one, hold cash when it's below.
+
+1. Use SPY daily prices from 2015 to today (yfinance). Act on the NEXT day after a signal, so there's no lookahead.
+2. Split the data: 2015–2020 is in-sample, 2021–today is out-of-sample.
+3. Search fast/slow pairs (fast 5–50, slow 20–200) on the in-sample period only, and pick the best by Sharpe ratio.
+4. Run that exact pair, unchanged, on the out-of-sample period.
+5. For both periods, report Sharpe ratio, CAGR, max drawdown and number of trades, next to simply buying and holding SPY.
+6. Include 0.05% cost per trade.
+7. Plot both equity curves with the split marked, plus a drawdown chart.
+
+Then tell me honestly: is this strategy overfit? Explain how you can tell.</pre>
+    </div>
+    <h3>What ours showed · the best in-sample pair (15/60 days)</h3>
+    <div class="big four">
+      <div><div class="v win">1.02</div><div class=l>Sharpe in-sample, beating buy-and-hold's 0.74</div></div>
+      <div><div class="v loss">0.61</div><div class=l>Sharpe on unseen data, where buy-and-hold got 0.91</div></div>
+      <div><div class="v loss">6.5%</div><div class=l>Yearly return out-of-sample, vs 14.8% for buy-and-hold</div></div>
+      <div><div class="v loss">−24%</div><div class=l>Worst drawdown out-of-sample, double the in-sample −13%</div></div>
+    </div>
+    <p class=capt>Our run used no trading costs, so yours (with 0.05%) should look slightly worse. The lesson holds either way: the "winning" strategy lost to doing nothing once it met new data.</p>
+  </section>
+
+  <section class=topic id=pairs>
+    <div class=tnum>03 · Pairs-trading bot</div>
+    <h2>Trade Coke against Pepsi.</h2>
+    <span class=teach>Teaches · Stat arb</span>
+    <p class=tdesc>Coca-Cola and PepsiCo sell similar things to the same people, so their prices tend to move together. When they drift unusually far apart, a pairs trader bets on the gap closing: sell the one that ran ahead, buy the one that lagged. This is <b>mean reversion</b>, the idea behind statistical arbitrage.</p>
+    <div class="code prompt">
+      <div class=hd><span>Paste into Claude</span><button data-copy=p3>Copy</button></div>
+<pre id=p3>Build a pairs-trading research tool in Python for Coca-Cola (KO) and PepsiCo (PEP).
+
+1. Download 6 years of daily prices for both with yfinance.
+2. Regress log(KO) on log(PEP) to get the hedge ratio, and run an Engle-Granger cointegration test on the spread. Explain the result in plain English.
+3. Compute a rolling 60-day z-score of the spread.
+4. Trading rules: when z goes above +2, sell KO and buy PEP. When z goes below −2, do the reverse. Exit when z crosses back through 0.
+5. Backtest it with 0.05% cost per trade, list every trade (dates, entry z, exit z, profit) and the total.
+6. Plot both prices, the z-score with the ±2 bands, and every entry and exit.
+
+Finish with: when does a pairs trade break, and how would a real desk manage that risk?</pre>
+    </div>
+    <h3>What ours showed · KO vs PEP, Oct 2020 to Oct 2026</h3>
+    <div class=big>
+      <div><div class=v>16</div><div class=l>Times the gap stretched past 2σ in six years</div></div>
+      <div><div class=v>3.1σ</div><div class=l>Peak divergence, Nov 2025: sell KO, buy PEP</div></div>
+      <div><div class="v win">34 days</div><div class=l>From entry (6 Nov 2025) until the gap closed (10 Dec 2025)</div></div>
+    </div>
+    <p class=capt>Price correlation 0.67, hedge ratio 0.48. The spread itself moved less than 1% on that trade, which is why real desks run many pairs at once and use leverage. One pair on its own is a lesson, not a business.</p>
+  </section>
+
+  <section class=topic id=factor>
+    <div class=tnum>04 · Factor model</div>
+    <h2>Find out what really drives returns.</h2>
+    <span class=teach>Teaches · Regression</span>
+    <p class=tdesc>A factor model splits a stock's returns into exposures to well-known drivers: the overall market, cheap "value" stocks, profitable "quality" companies, recent winners ("momentum") and more. It's how institutional funds decide where billions go, and it's the regression you'll be asked to explain.</p>
+    <div class="code prompt">
+      <div class=hd><span>Paste into Claude</span><button data-copy=p4>Copy</button></div>
+<pre id=p4>Build a factor model in Python.
+
+1. Download the monthly Fama-French 5 factors and the momentum factor from Kenneth French's data library (the CSV zip files on his website).
+2. Download monthly returns for Berkshire Hathaway (BRK-A) from 1990 to today with yfinance.
+3. Regress Berkshire's excess return (over the risk-free rate) on Market, Size (SMB), Value (HML), Profitability (RMW), Investment (CMA) and Momentum.
+4. Show each factor's loading, its t-statistic and the R², and explain in plain English what they say about Warren Buffett's style.
+5. Plot the loadings as a bar chart, highlighting which ones are statistically significant (|t| > 2).
+6. Let me swap in any ticker, or my own portfolio, and rerun it.</pre>
+    </div>
+    <h3>What ours showed · Berkshire Hathaway, 1990–2026</h3>
+    <div class="big four">
+      <div><div class=v>+0.72</div><div class=l>Market (t = 12.4): less swing than the market</div></div>
+      <div><div class=v>+0.52</div><div class=l>Value (t = 5.4): buys cheap companies</div></div>
+      <div><div class=v>+0.23</div><div class=l>Quality (t = 2.4): favours profitable ones</div></div>
+      <div><div class="v flat">−0.02</div><div class=l>Momentum (t = −0.5): no effect, doesn't chase trends</div></div>
+    </div>
+    <p class=capt>R² 0.36, from 1990-02 to 2026-09. Size came out at −0.36 (big companies) and Investment at −0.10 (not significant). Buffett's style, in numbers: big, cheap, profitable companies, without trend-chasing.</p>
+  </section>
+
+  <section class=topic id=options>
+    <div class=tnum>05 · Options pricer</div>
+    <h2>Build Black-Scholes from scratch.</h2>
+    <span class=teach>Teaches · Derivatives</span>
+    <p class=tdesc>Black-Scholes prices an option from five inputs, and the "Greeks" tell you how that price moves when each input changes. Every market maker's risk system is built on these numbers, which is why trading-firm interviews ask you to derive and explain them.</p>
+    <div class="code prompt">
+      <div class=hd><span>Paste into Claude</span><button data-copy=p5>Copy</button></div>
+<pre id=p5>Build a Black-Scholes options pricer in Python from scratch (only numpy and scipy.stats; no options libraries).
+
+1. Price European calls and puts, and compute delta, gamma, vega and theta.
+2. Check my prices with put-call parity, and against a Monte Carlo price using 100,000 simulated paths.
+3. Make a chart with sliders for stock price, days to expiry and volatility, showing the option's value curve against its payoff at expiry.
+4. Pull a real option chain for SPY with yfinance, back out the implied volatility for each strike, and plot the volatility smile.
+
+Explain each Greek with a simple example a beginner can follow, and why theta speeds up as expiry gets closer.</pre>
+    </div>
+    <h3>What ours showed · at-the-money call, strike $100, volatility 25%, rate 4.5%</h3>
+    <div class="big four">
+      <div><div class="v sm">$5.49 → $3.04</div><div class=l>Option value, 90 days left vs 30 days left</div></div>
+      <div><div class="v sm">0.56 → 0.53</div><div class=l>Delta: moves about half as much as the stock</div></div>
+      <div><div class="v sm">0.032 → 0.055</div><div class=l>Gamma: rises sharply near expiry</div></div>
+      <div><div class="v loss sm">−$0.03 → −$0.05</div><div class=l>Theta: what the option loses each day</div></div>
+    </div>
+    <p class=capt>Same stock price, same volatility. Only time changed, and the option lost 45% of its value. That's time decay, and it speeds up as expiry gets closer.</p>
+  </section>
+
+  <section class=topic id=github>
+    <div class=tnum>06 · Put them on GitHub</div>
+    <h2>Turn five scripts into a portfolio.</h2>
+    <p class=tdesc>Recruiters skim. A clean repo with charts and honest write-ups says more than a line on your CV, and it gives you five things to talk about in every interview.</p>
+    <div class="code prompt">
+      <div class=hd><span>Paste into Claude</span><button data-copy=p6>Copy</button></div>
+<pre id=p6>Turn my five quant projects (Monte Carlo simulator, backtester, pairs-trading bot, factor model, options pricer) into one clean GitHub portfolio repo called my-quant-portfolio.
+
+- One folder per project, each with its code, a requirements.txt and a README: what it does, how to run it, one chart, the key results and what I learned.
+- A top-level README that introduces me and links all five, with one result per project.
+- Walk me step by step through creating the repo on GitHub and pushing it, assuming I've never used git.</pre>
+    </div>
+    <div class=ok>
+      <div><span><b>Show your charts.</b> One image per project at the top of its README.</span></div>
+      <div><span><b>Report honest results,</b> especially the backtest that failed out-of-sample. Admitting overfitting shows judgement.</span></div>
+      <div><span><b>Pin the repo</b> on your GitHub profile and link it from your CV and LinkedIn.</span></div>
+      <div><span><b>Make each project yours.</b> Change the tickers, add a feature, write up what surprised you. Interviewers can tell a copied project from one you understand.</span></div>
+    </div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Want more like this?</div>
+    <h2>Build it, break it, explain it.</h2>
+    <p>I post finance and AI projects you can build yourself, with real data and honest results. Follow for the next one.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="quant-roadmap.html">The full quant roadmap →</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>Pay range: TechInterview 2026, new-grad quant researcher total compensation at top trading firms; bonuses are discretionary and vary. Firm names are used for reference only; Cloud9 is not affiliated with any firm named here or with Anthropic. Results above are historical, from free Yahoo Finance and Kenneth French data, and exclude trading costs unless stated. Past performance does not predict future results.</div>
+</footer>
+</div>
+<script>
+document.querySelectorAll('button[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.getAttribute('data-copy')).innerText;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){
+      b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy'},1600);
+    },function(){b.textContent='Select + copy';});
+  });
+});
+</script>
+</body></html>
