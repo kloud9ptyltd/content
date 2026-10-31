@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Jane Street Free Programs · Cloud9</title>
+<meta name="description" content="Jane Street's all-expenses-paid student programs (FOCUS, FTTP, AMP, WiSE, Bridge) and the $300K internship, with direct links and who can apply.">
+<meta property="og:title" content="Jane Street will fly you out for free. Every program, every link.">
+<meta property="og:description" content="FOCUS, FTTP and more: travel, hotel and food paid by Jane Street. Plus the internship listed at $300K a year.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:92px minmax(0,1fr) auto;gap:22px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:24px 26px;scroll-margin-top:24px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .no{font-family:'Playfair Display',serif;font-size:38px;line-height:1;color:var(--gold-hi);font-variant-numeric:lining-nums}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:680px}
+.sim p b{color:var(--ink);font-weight:500}
+.audit{margin-top:26px;display:flex;gap:20px;align-items:center;border:2px solid var(--gold);background:rgba(200,162,78,.12);padding:22px 26px;max-width:880px}
+.audit .ic{flex:none;font:500 13px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--bg);background:var(--gold);padding:8px 12px}
+.audit p{margin:0;font-size:17px;font-weight:400;line-height:1.55;color:var(--ink)}
+.audit p b{color:var(--gold-hi);font-weight:500}
+.sim .how{margin-top:10px;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--gold-hi)}
+@media (max-width:860px){.audit{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px}.audit p{font-size:16px}}
+.sim .sk{margin-top:8px;font-size:12.5px;color:var(--dim);letter-spacing:.02em}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
+
+.cmp{width:100%;border-collapse:collapse;margin-top:26px;font-size:15px}
+.cmp th,.cmp td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);text-align:left;font-weight:300;color:var(--dim2);vertical-align:top}
+.cmp th{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.cmp td b{color:var(--ink);font-weight:500}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim{grid-template-columns:minmax(0,1fr);gap:12px;padding:22px 20px}
+  .sim .no{font-size:32px}
+  .sim .go{text-align:center}
+  .cmp{font-size:13.5px}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Quant Careers</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>All the links · From the reel</div>
+  <h1>Jane Street will fly you out.<br><span class=free>For free.</span></h1>
+  <p class=sub>Jane Street, the trading firm that lists its interns at <b style="color:var(--gold-hi);font-weight:500">$300,000 a year</b>, runs programs for students where it pays your travel, hotel and food. Here's every one, who it's for, and where to sign up.</p>
+  <div class=map>
+    <a href="#focus"><div class=k>1st year</div><div class=t>FOCUS</div><div class=n>All paid</div></a>
+    <a href="#fttp"><div class=k>1st year</div><div class=t>FTTP</div><div class=n>Mock trading</div></a>
+    <a href="#internship"><div class=k>The prize</div><div class=t>Internship</div><div class=n>$300K / yr</div></a>
+    <a href="#amp"><div class=k>High school</div><div class=t>AMP</div><div class=n>5 weeks, NYC</div></a>
+    <a href="#more"><div class=k>Any year</div><div class=t>More programs</div><div class=n>WiSE · Bridge · Preview</div></a>
+  </div>
+</header>
+
+<main>
+  <section class=topic id=first>
+    <div class=tnum>01 · From the reel</div>
+    <h2>First year of university? Start here.</h2>
+    <p class=tdesc>Both programs are <b>paid for by Jane Street</b>: travel, meals, housing and social events. Neither needs a finance background.</p>
+    <div class=audit><span class=ic>HOW TO APPLY</span><p>Dates aren't posted yet. Open the program page and use <b>"Sign up to be notified"</b>; you'll get an email when applications open. Apply to <b>one location only</b>, the one nearest you.</p></div>
+    <div class=sims>
+      <div class=sim id=focus>
+        <div class=no>01</div>
+        <div>
+          <div class=co>First year of university</div>
+          <h3>FOCUS</h3>
+          <div class=meta><span class=hot>ALL EXPENSES PAID</span><span>MULTI-DAY</span><span>1ST YEAR</span></div>
+          <p>A multi-day program to <b>meet Jane Street's trading, software engineering, and strategy &amp; product teams</b>. Jane Street covers travel, meals, housing and social events, plus a daily allowance. For first-year students who've faced <b>barriers to advanced STEM opportunities</b>; their definition is broad (being first in your family at university counts).</p>
+        </div>
+        <a class=go href="https://www.janestreet.com/join-jane-street/programs-and-events/focus/" target=_blank rel=noopener>Get notified ↗</a>
+      </div>
+      <div class=sim id=fttp>
+        <div class=no>02</div>
+        <div>
+          <div class=co>First year of university · STEM majors</div>
+          <h3>FTTP</h3>
+          <div class=meta><span class=hot>ALL EXPENSES PAID</span><span>A FEW DAYS</span><span>NO FINANCE NEEDED</span></div>
+          <p>A few days in the office: <b>classes on how Jane Street trades</b> and builds its technology, then a <b>team mock-trading game</b>. For first-year students planning to study maths, physics, computer science or another STEM subject. No finance knowledge needed.</p>
+        </div>
+        <a class=go href="https://www.janestreet.com/join-jane-street/programs-and-events/fttp/" target=_blank rel=noopener>Get notified ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class=topic id=internship>
+    <div class=tnum>02 · The prize</div>
+    <h2>The internship: $300,000 a year.</h2>
+    <p class=tdesc>Jane Street lists base pay on its own job postings. For the <b>New York summer internship</b> (May to August):</p>
+    <table class=cmp>
+      <tr><th>Role</th><th>Listed base pay (per year)</th><th>Apply</th></tr>
+      <tr><td><b>Quantitative Trader</b></td><td>$300,000</td><td><a href="https://www.janestreet.com/join-jane-street/position/8617344002/" target=_blank rel=noopener style="color:var(--gold-hi)">Posting ↗</a></td></tr>
+      <tr><td><b>Quantitative Researcher</b></td><td>$300,000</td><td><a href="https://www.janestreet.com/join-jane-street/position/8498547002/" target=_blank rel=noopener style="color:var(--gold-hi)">Posting ↗</a></td></tr>
+      <tr><td><b>Software Engineer</b></td><td>$300,000</td><td><a href="https://www.janestreet.com/join-jane-street/position/8599644002/" target=_blank rel=noopener style="color:var(--gold-hi)">Posting ↗</a></td></tr>
+      <tr><td><b>Strategy and Product</b></td><td>$250,000</td><td><a href="https://www.janestreet.com/join-jane-street/position/8621552002/" target=_blank rel=noopener style="color:var(--gold-hi)">Posting ↗</a></td></tr>
+      <tr><td><b>Sales and Trading</b></td><td>$225,000</td><td><a href="https://www.janestreet.com/join-jane-street/position/8347385002/" target=_blank rel=noopener style="color:var(--gold-hi)">Posting ↗</a></td></tr>
+    </table>
+    <p class=tdesc style="margin-top:22px">That's an annual rate, so roughly <b>$5,800 a week</b> for the summer. And from the quant trader posting itself: <b>"no specific degree or major is required"</b> and "knowing a particular programming language is not required."</p>
+    <p class=capt>Pay as listed on janestreet.com on 31 Oct 2026. London and Hong Kong postings don't list pay.</p>
+  </section>
+
+  <section class=topic id=more>
+    <div class=tnum>03 · More free programs</div>
+    <h2>Not in first year? There's still a way in.</h2>
+    <div class=sims>
+      <div class=sim id=amp>
+        <div class=no>03</div>
+        <div>
+          <div class=co>Just finished high school · US</div>
+          <h3>AMP</h3>
+          <div class=meta><span class=hot>NO COST</span><span>5 WEEKS · NYC</span><span>$5,000 SCHOLARSHIP</span></div>
+          <p>A <b>five-week summer program in New York</b> (28 Jun to 30 Jul 2027) in advanced maths and computer science. Tuition, housing, meals and travel are covered, and everyone who completes it gets a <b>$5,000 scholarship</b>. For 2027 US high-school graduates who've faced barriers to STEM opportunities; must be able to work in the US without sponsorship.</p>
+        </div>
+        <a class=go href="https://www.janestreet.com/join-jane-street/programs-and-events/amp/" target=_blank rel=noopener>See AMP ↗</a>
+      </div>
+      <div class=sim id=wise>
+        <div class=no>04</div>
+        <div>
+          <div class=co>About to start university</div>
+          <h3>WiSE</h3>
+          <div class=meta><span class=hot>ALL EXPENSES PAID</span><span>MULTI-DAY</span><span>NO FINANCE NEEDED</span></div>
+          <p>A multi-day program applying maths and computer science to real problems, for <b>women, transgender and gender-expansive students</b> about to start university. Travel, meals and housing covered.</p>
+        </div>
+        <a class=go href="https://www.janestreet.com/join-jane-street/programs-and-events/wise/" target=_blank rel=noopener>Get notified ↗</a>
+      </div>
+      <div class=sim id=bridge>
+        <div class=no>05</div>
+        <div>
+          <div class=co>First or second year</div>
+          <h3>Bridge</h3>
+          <div class=meta><span class=hot>TRAVEL COVERED</span><span>ONE DAY</span></div>
+          <p>A day inside one team: <b>Strategy &amp; Product</b> (London and New York; no finance needed) or <b>Institutional Sales &amp; Trading</b> (London; some markets knowledge helps). Travel, meals and housing covered.</p>
+        </div>
+        <a class=go href="https://www.janestreet.com/join-jane-street/programs-and-events/bridge/" target=_blank rel=noopener>Get notified ↗</a>
+      </div>
+      <div class=sim id=preview>
+        <div class=no>06</div>
+        <div>
+          <div class=co>Any student, any year</div>
+          <h3>Preview</h3>
+          <div class=meta><span class=hot>ONE DAY</span><span>NO FINANCE NEEDED</span></div>
+          <p>A day-long introduction: talk to traders and technologists about <b>how they got from a STEM degree to Jane Street</b>. Open to students at any point in their studies.</p>
+        </div>
+        <a class=go href="https://www.janestreet.com/join-jane-street/programs-and-events/preview/" target=_blank rel=noopener>Get notified ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class=topic id=know>
+    <div class=tnum>04 · Good to know</div>
+    <h2>Honest notes.</h2>
+    <div class=ok>
+      <div><span><b>FOCUS, AMP and IN FOCUS are for students who've faced barriers to STEM opportunities.</b> Jane Street's definition is broad; read each page and apply if it fits you.</span></div>
+      <div><span><b>These programs don't guarantee an internship.</b> They get you inside the firm, teach you how it works and put you in front of the people who hire.</span></div>
+      <div><span><b>IN FOCUS has moved to May 2027.</b> Applications reopen later; sign up on <a href="https://www.janestreet.com/join-jane-street/programs-and-events/in-focus/" target=_blank rel=noopener style="color:var(--gold-hi)">its page ↗</a> to hear first.</span></div>
+      <div><span><b>Want to practise first?</b> Watch Jane Street's own trading mock interview, Wednesday on my <a href="quant-week.html" style="color:var(--gold-hi)">1-week quant roadmap</a>.</span></div>
+    </div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Know a student?</div>
+    <h2>Send them this page.</h2>
+    <p>Most people who'd qualify never hear about these programs. I find the free ways into quant finance and check every link before I share it.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="quant-week.html">1-week quant roadmap →</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is career or financial advice</span>
+  <div class=disclaimer>Program details and pay are taken from janestreet.com on 31 Oct 2026 and can change; always check the official page. Cloud9 is not affiliated with Jane Street; the name is used only to identify its programs.</div>
+</footer>
+</div>
+</body></html>
