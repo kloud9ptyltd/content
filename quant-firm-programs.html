@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>3 Firms, Free Programs · Cloud9</title>
+<meta name="description" content="Jane Street, Citadel and Optiver run student programs where they pay your flights, hotel and meals. Every program, who can apply, deadlines and direct links.">
+<meta property="og:title" content="3 trading firms will fly you out for free. Every program, every link.">
+<meta property="og:description" content="Jane Street FOCUS, Discover Citadel, Optiver FutureFocus: travel and hotel paid. Plus what their interns earn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:92px minmax(0,1fr) auto;gap:22px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:24px 26px;scroll-margin-top:24px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .no{font-family:'Playfair Display',serif;font-size:38px;line-height:1;color:var(--gold-hi);font-variant-numeric:lining-nums}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:680px}
+.sim p b{color:var(--ink);font-weight:500}
+.audit{margin-top:26px;display:flex;gap:20px;align-items:center;border:2px solid var(--gold);background:rgba(200,162,78,.12);padding:22px 26px;max-width:880px}
+.audit .ic{flex:none;font:500 13px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--bg);background:var(--gold);padding:8px 12px}
+.audit p{margin:0;font-size:17px;font-weight:400;line-height:1.55;color:var(--ink)}
+.audit p b{color:var(--gold-hi);font-weight:500}
+.sim .how{margin-top:10px;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--gold-hi)}
+@media (max-width:860px){.audit{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px}.audit p{font-size:16px}}
+.sim .sk{margin-top:8px;font-size:12.5px;color:var(--dim);letter-spacing:.02em}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
+
+.cmp{width:100%;border-collapse:collapse;margin-top:26px;font-size:15px}
+.cmp th,.cmp td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);text-align:left;font-weight:300;color:var(--dim2);vertical-align:top}
+.cmp th{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.cmp td b{color:var(--ink);font-weight:500}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim{grid-template-columns:minmax(0,1fr);gap:12px;padding:22px 20px}
+  .sim .no{font-size:32px}
+  .sim .go{text-align:center}
+  .cmp{font-size:13.5px}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Quant Careers</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>All the links · From the reel</div>
+  <h1>3 trading firms will fly you out.<br><span class=free>For free.</span></h1>
+  <p class=sub>Jane Street, Citadel and Optiver run programs for early-year students where they pay your <b style="color:var(--gold-hi);font-weight:500">flights, hotel and meals</b>. Here's each one, who can apply, the deadlines, and where to sign up.</p>
+  <div class=map>
+    <a href="#jane"><div class=k>01</div><div class=t>Jane Street</div><div class=n>FOCUS · FTTP</div></a>
+    <a href="#citadel"><div class=k>02</div><div class=t>Citadel</div><div class=n>Discover Citadel</div></a>
+    <a href="#optiver"><div class=k>03</div><div class=t>Optiver</div><div class=n>FutureFocus</div></a>
+    <a href="#pay"><div class=k>The prize</div><div class=t>Intern pay</div><div class=n>Up to ~$5,800 / week</div></a>
+  </div>
+</header>
+
+<main>
+  <section class=topic id=jane>
+    <div class=tnum>01 · Jane Street</div>
+    <h2>Jane Street: first year of university.</h2>
+    <p class=tdesc>Both programs are <b>paid for by Jane Street</b>: travel, meals, housing and social events. Neither needs a finance background. Dates aren't posted yet, so use <b>"Sign up to be notified"</b> on each page.</p>
+    <div class=sims>
+      <div class=sim id=focus>
+        <div class=no>01</div>
+        <div>
+          <div class=co>Jane Street · First year</div>
+          <h3>FOCUS</h3>
+          <div class=meta><span class=hot>ALL EXPENSES PAID</span><span>MULTI-DAY</span><span>1ST YEAR</span></div>
+          <p>A multi-day program to <b>meet Jane Street's trading, software and strategy teams</b>, with travel, meals, housing and a daily allowance covered. For first-year students who've faced <b>barriers to advanced STEM opportunities</b>; their definition is broad (being first in your family at university counts).</p>
+        </div>
+        <a class=go href="https://www.janestreet.com/join-jane-street/programs-and-events/focus/" target=_blank rel=noopener>Get notified ↗</a>
+      </div>
+      <div class=sim id=fttp>
+        <div class=no>02</div>
+        <div>
+          <div class=co>Jane Street · First year · STEM</div>
+          <h3>FTTP</h3>
+          <div class=meta><span class=hot>ALL EXPENSES PAID</span><span>A FEW DAYS</span><span>NO FINANCE NEEDED</span></div>
+          <p>A few days in the office: <b>classes on how Jane Street trades</b>, then a <b>team mock-trading game</b>. For first-year students planning to study maths, physics, computer science or another STEM subject.</p>
+        </div>
+        <a class=go href="https://www.janestreet.com/join-jane-street/programs-and-events/fttp/" target=_blank rel=noopener>Get notified ↗</a>
+      </div>
+    </div>
+    <p class=capt>Jane Street also runs AMP (high school), WiSE, Bridge and Preview. All of them are on my <a href="jane-street-programs.html" style="color:var(--gold-hi)">full Jane Street page →</a></p>
+  </section>
+
+  <section class=topic id=citadel>
+    <div class=tnum>02 · Citadel</div>
+    <h2>Citadel: first or second year.</h2>
+    <div class=sims>
+      <div class=sim id=discover>
+        <div class=no>03</div>
+        <div>
+          <div class=co>Citadel · 1st or 2nd year undergrad</div>
+          <h3>Discover Citadel</h3>
+          <div class=meta><span class=hot>FLIGHTS + HOTEL PAID</span><span>NEW YORK · EARLY APR 2027</span><span>DEADLINE 5 MAR 2027</span></div>
+          <p>A short in-person event inside Citadel in New York for <b>first- and second-year undergraduates</b> (graduating December 2028 to June 2030). Citadel covers a <b>round-trip economy flight</b>, ground transport, <b>two hotel nights</b> and meals on the competition day, worth about $750. You'll hear by 12 March 2027.</p>
+          <div class=sk>Studying in Europe? The London (EMEA) event closes 29 January 2027.</div>
+        </div>
+        <a class=go href="https://www.citadel.com/careers/programs-and-events/discover-citadel/" target=_blank rel=noopener>Apply ↗</a>
+      </div>
+      <div class=sim id=discover-cs>
+        <div class=no>04</div>
+        <div>
+          <div class=co>Citadel Securities · 1st or 2nd year</div>
+          <h3>Discover Citadel Securities</h3>
+          <div class=meta><span class=hot>SAME IDEA</span><span>MARKET MAKING</span></div>
+          <p>Citadel Securities (the market-making side) runs <b>its own Discover event</b>. Apply to both if you're eligible; they're separate firms with separate applications.</p>
+        </div>
+        <a class=go href="https://www.citadelsecurities.com/careers/programs-and-events/discover-citadel-securities/" target=_blank rel=noopener>Apply ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class=topic id=optiver>
+    <div class=tnum>03 · Optiver</div>
+    <h2>Optiver: five days, and a fast track.</h2>
+    <div class=sims>
+      <div class=sim id=futurefocus>
+        <div class=no>05</div>
+        <div>
+          <div class=co>Optiver · Graduating 2029 · UK, Ireland, EU</div>
+          <h3>FutureFocus: Quants 2027</h3>
+          <div class=meta><span class=hot>TRAVEL + HOTEL PAID</span><span>5 DAYS · AMSTERDAM</span><span>DEADLINE 6 DEC 2026</span></div>
+          <p>A five-day program at Optiver's Amsterdam headquarters, with <b>"fully covered accommodation and travel expenses"</b> plus breakfast and lunch. Do well and you <b>"could secure a fast-tracked internship offer"</b> that skips the normal process. Any degree considered. UK and Ireland students apply by <b>6 December 2026</b> (5 or 12 April); EU students by <b>1 February 2027</b> (10 May).</p>
+        </div>
+        <a class=go href="https://www.optiver.com/join-us/jobs/8745619002/" target=_blank rel=noopener>Apply ↗</a>
+      </div>
+      <div class=sim id=futurefocus-us>
+        <div class=no>06</div>
+        <div>
+          <div class=co>Optiver · US and Canada</div>
+          <h3>FutureFocus Chicago</h3>
+          <div class=meta><span class=hot>NOT OPEN YET</span><span>LAST RUN MAR 2026</span></div>
+          <p>The US edition ran in Chicago in March 2026 for students at US or Canadian universities. The 2027 edition isn't posted yet; <b>check Optiver's FutureFocus page</b> over the winter.</p>
+        </div>
+        <a class=go href="https://www.optiver.com/join-us/students/programs/futurefocus/" target=_blank rel=noopener>Watch page ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class=topic id=pay>
+    <div class=tnum>04 · The prize</div>
+    <h2>Why it matters: the internship.</h2>
+    <p class=tdesc>These programs put you in front of the people who hire interns. Here's what those internships are listed at:</p>
+    <table class=cmp>
+      <tr><th>Firm</th><th>Role</th><th>Listed pay</th></tr>
+      <tr><td><b>Jane Street</b></td><td>Quant Trader / Researcher, New York</td><td><b>$300,000 a year</b> (≈ $5,800 / week)</td></tr>
+      <tr><td><b>Citadel</b></td><td>Quant Research Analyst intern, US</td><td><b>$4,500 – $5,800 / week</b></td></tr>
+      <tr><td><b>Optiver</b></td><td>Quantitative intern, Chicago</td><td><b>$70,000 – $88,000</b> listed range</td></tr>
+    </table>
+    <p class=capt>Jane Street from its own postings (31 Oct 2026). Citadel and Optiver from their US job postings as shown on job boards (Nov 2026); check the live posting for the current figure.</p>
+  </section>
+
+  <section class=topic id=know>
+    <div class=tnum>05 · Good to know</div>
+    <h2>Honest notes.</h2>
+    <div class=ok>
+      <div><span><b>None of these guarantee an internship.</b> They get you inside the firm and in front of the people who hire. Optiver's is the only one that says it can fast-track an offer.</span></div>
+      <div><span><b>Check you're eligible.</b> Jane Street FOCUS is for students who've faced barriers to STEM; Citadel wants first- or second-years; Optiver's open edition is for students in the UK, Ireland or EU graduating in 2029.</span></div>
+      <div><span><b>Citadel's benefits are taxable to you</b>, per its program terms. The flight and hotel are booked for you.</span></div>
+      <div><span><b>Want to practise first?</b> Watch Jane Street's own trading mock interview, Wednesday on my <a href="quant-week.html" style="color:var(--gold-hi)">1-week quant roadmap</a>.</span></div>
+    </div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Know a student?</div>
+    <h2>Send them this page.</h2>
+    <p>Most people who'd qualify never hear about these programs. I find the free ways into quant finance and check every link before I share it.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="quant-week.html">1-week quant roadmap →</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is career or financial advice</span>
+  <div class=disclaimer>Program details and pay are taken from each firm's pages and job postings in Oct–Nov 2026 and can change; always check the official page. Cloud9 is not affiliated with Jane Street, Citadel, Citadel Securities or Optiver; names are used only to identify their programs.</div>
+</footer>
+</div>
+</body></html>
