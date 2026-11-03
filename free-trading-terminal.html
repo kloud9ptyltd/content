@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Free Trading Terminal · Cloud9</title>
+<meta name="description" content="London Strategic Edge gives away market data, backtesting, options flow, insider buys and AI models for free. Here's the full setup: free signup, your API key, and your first backtest.">
+<meta property="og:title" content="TradingView charges $60 a month for deep backtesting. This is free.">
+<meta property="og:description" content="The full setup guide: free signup, create your API key, run your first backtest, and use whale flow, insider buys, the screener and AI models.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:30px}
+.map>div{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 16px;min-width:0}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:26px;color:var(--ink);line-height:1.15;font-variant-numeric:lining-nums}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+.hero .go-big{display:inline-block;margin-top:30px;text-decoration:none;font:500 13px 'Jost',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:16px 26px}
+.hero .go-big:hover{filter:brightness(1.08)}
+
+.audit{margin-top:26px;display:flex;gap:20px;align-items:center;border:2px solid var(--gold);background:rgba(200,162,78,.12);padding:22px 26px;max-width:880px}
+.audit .ic{flex:none;font:500 13px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--bg);background:var(--gold);padding:8px 12px}
+.audit p{margin:0;font-size:17px;font-weight:400;line-height:1.55;color:var(--ink)}
+.audit p b{color:var(--gold-hi);font-weight:500}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:36px;font-family:'Playfair Display',serif;font-size:26px;color:var(--gold-hi);line-height:1.15}
+.steps .st h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(20px,2.2vw,24px);margin:0 0 6px;color:var(--ink)}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:760px}
+.steps .st b{color:var(--ink);font-weight:500}
+.steps .st a.lk{display:inline-block;margin-top:10px;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--gold-hi);text-decoration:none;border-bottom:1px solid var(--gold-dim)}
+
+.cmp{width:100%;border-collapse:collapse;margin-top:26px;font-size:15px}
+.cmp th,.cmp td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);text-align:left;font-weight:300;color:var(--dim2);vertical-align:top}
+.cmp th{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.cmp td b{color:var(--ink);font-weight:500}
+.cmp tr.next td{background:rgba(200,162,78,.08)}
+.cmp tr.next td:first-child b::after{content:' · NEXT';font:500 10px 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--gold-hi)}
+
+.courses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:26px;max-width:880px}
+.courses div{display:flex;gap:14px;align-items:baseline;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:14px 16px;font-size:15px;color:var(--ink)}
+.courses span{flex:none;font:500 11px 'JetBrains Mono',monospace;color:var(--gold);letter-spacing:.06em}
+.courses em{margin-left:auto;font-style:normal;font-size:12px;color:var(--dim)}
+
+.prep{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:30px}
+.pc{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 22px 20px;min-width:0}
+.pc:hover{border-color:var(--gold-dim)}
+.pc .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.pc h3{font-family:'Playfair Display',serif;font-weight:500;font-size:22px;line-height:1.2;margin:0 0 12px;color:var(--ink)}
+.pc a{display:flex;justify-content:space-between;gap:12px;text-decoration:none;padding:10px 0;border-top:1px solid var(--gold-faint);font-size:14.5px;color:var(--ink)}
+.pc a span{flex:none;font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--gold-hi)}
+.pc a:hover{color:var(--gold-hi)}
+.plan{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:26px}
+.plan div{border:1px solid var(--gold-faint);padding:16px;font-size:13.5px;font-weight:300;line-height:1.55;color:var(--dim2)}
+.plan b{display:block;font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--gold-hi);margin-bottom:6px}
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .audit{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px}.audit p{font-size:16px}
+  .courses{grid-template-columns:minmax(0,1fr)}
+  .prep{grid-template-columns:minmax(0,1fr)}
+  .plan{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cmp{font-size:13.5px}
+  .hero .go-big{display:block;text-align:center}
+}
+</style>
+<style>
+.prompt{margin-top:22px;max-width:880px;border:1px solid var(--gold-dim);background:#100E09;padding:20px 22px;font:400 14px/1.7 'JetBrains Mono',monospace;color:var(--ink);white-space:pre-wrap;word-break:break-word}
+.prompt .pl{display:block;font:500 10px 'Jost',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.result{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px;max-width:880px}
+.result>div{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 16px;min-width:0}
+.result .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.result .t{font-family:'Playfair Display',serif;font-size:30px;color:var(--ink);line-height:1.1;font-variant-numeric:lining-nums}
+.result .t.win{color:var(--gold-hi)}
+.result .n{font-size:12px;color:var(--dim);margin-top:6px}
+.cmp td a{color:var(--gold-hi)}
+.cmp tr.pick td{background:rgba(200,162,78,.08)}
+html,body{overflow-x:hidden}
+@media (max-width:860px){.result{grid-template-columns:minmax(0,1fr)}}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Free Tools</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>From the reel · Full setup guide</div>
+  <h1>TradingView charges $60 a month for deep backtesting.<br><span class=free>This one is free.</span></h1>
+  <p class=sub>London Strategic Edge is a London startup giving away <b style="color:var(--gold-hi);font-weight:500">market data, backtesting, options flow, insider buys and AI models</b>. Here's how to set it up in ten minutes and test your first strategy before you risk a dollar.</p>
+  <div class=map>
+    <div><div class=k>Price</div><div class=t>$0</div><div class=n>No card needed</div></div>
+    <div><div class=k>TradingView</div><div class=t>$60/mo</div><div class=n>Premium, for deep backtesting</div></div>
+    <div><div class=k>History</div><div class=t>Decades</div><div class=n>Stocks, options, FX, macro</div></div>
+    <div><div class=k>AI</div><div class=t>Built in</div><div class=n>Works with Claude too</div></div>
+  </div>
+  <a class=go-big href="https://londonstrategicedge.com/get-started/" target=_blank rel=noopener>Sign up free ↗</a>
+</header>
+
+<main>
+  <section class=topic id=key>
+    <div class=tnum>01 · Get started</div>
+    <h2>Sign up, then create your API key.</h2>
+    <p class=tdesc>Everything runs on one free key. Signing up is only the first step. <b>The data only switches on once you create your API key.</b></p>
+    <div class=audit><span class=ic>DON'T SKIP</span><p>An account on its own shows <b>no data</b>. After you sign up, go to the Data page and <b>create your API key</b>. It's free and starts with <b>lse_live_</b>.</p></div>
+    <ul class=steps style="margin-top:34px">
+      <li><span class=sn>1</span><div class=st><h3>Create a free account</h3><p>Sign up with your email. <b>No credit card, no trial timer.</b></p><a class=lk href="https://londonstrategicedge.com/get-started/" target=_blank rel=noopener>londonstrategicedge.com/get-started ↗</a></div></li>
+      <li><span class=sn>2</span><div class=st><h3>Create your API key</h3><p>While signed in, open the <b>Data</b> page and create a key. Copy it somewhere safe. It's like a password, so <b>never post it or share a screenshot</b> of it.</p><a class=lk href="https://londonstrategicedge.com/data/" target=_blank rel=noopener>londonstrategicedge.com/data ↗</a></div></li>
+      <li><span class=sn>3</span><div class=st><h3>Paste it where you'll use it</h3><p>In the desktop terminal, it asks for the key the first time you open it. On the website, your account is already linked, so you can start right away.</p></div></li>
+    </ul>
+  </section>
+
+  <section class=topic id=route>
+    <div class=tnum>02 · Pick your route</div>
+    <h2>Browser or desktop terminal.</h2>
+    <p class=tdesc>Start in the browser. Move to the terminal when you want an AI assistant writing and testing strategies for you.</p>
+    <table class=cmp>
+      <tr><th>Route</th><th>Best for</th><th>What you get</th></tr>
+      <tr class=pick><td><b>Browser</b> <span style="font:500 10px 'JetBrains Mono',monospace;letter-spacing:.1em;color:var(--gold-hi)">· START HERE</span></td><td>Everyone. Nothing to install.</td><td>Live charts, the Strategy Builder backtester, Manual Replay, screener, options, insider tracker, ML Studio. <a href="https://londonstrategicedge.com/backtest/" target=_blank rel=noopener>Open ↗</a></td></tr>
+      <tr><td><b>Desktop terminal</b></td><td>People who want an AI to do the work</td><td>Everything above, plus an <b>AI assistant</b> that writes, runs and fixes your strategy, 7 starter strategies, walk-forward and Monte Carlo tests. Mac and Windows. <a href="https://londonstrategicedge.com/terminal/" target=_blank rel=noopener>Download ↗</a></td></tr>
+    </table>
+    <p class=capt>The desktop terminal is open source (MIT) on <a href="https://github.com/londonstrategicedge/lse-terminal" target=_blank rel=noopener style="color:var(--gold)">GitHub ↗</a>. It's an early beta.</p>
+  </section>
+
+  <section class=topic id=backtest>
+    <div class=tnum>03 · Your first backtest</div>
+    <h2>Test a strategy in plain English.</h2>
+    <p class=tdesc>Example: the classic <b>"golden cross"</b>. Buy when the 50-day average crosses above the 200-day, sell when it crosses back below. Millions of traders use it. Does it actually work?</p>
+    <ul class=steps style="margin-top:28px">
+      <li><span class=sn>1</span><div class=st><h3>In the browser</h3><p>Open <b>Strategy Backtesting → Strategy Builder</b>. Pick the stock (e.g. AAPL), daily candles, and set the entry to "50-day average crosses above 200-day" and the exit to "crosses below". Run it.</p><a class=lk href="https://londonstrategicedge.com/backtest/" target=_blank rel=noopener>Strategy Backtesting ↗</a></div></li>
+      <li><span class=sn>2</span><div class=st><h3>Or ask the terminal's AI</h3><p>Open the assistant panel and type what you want, in normal words:</p></div></li>
+    </ul>
+    <div class=prompt><span class=pl>Type this into the assistant</span>Backtest a golden cross on AAPL daily: buy when the 50-day moving average crosses above the 200-day, sell when it crosses below. Use all available history, include 0.1% commission per trade, and compare the result with simply buying and holding AAPL. Show me the equity curve and the trade list.</div>
+    <p class=tdesc style="margin-top:26px">You get an equity curve, a trade list, drawdown, Sharpe ratio and win rate. Here's what we got when we ran exactly this on AAPL daily data, <b>2004 to 2026</b>:</p>
+    <div class=result>
+      <div><div class=k>Win rate</div><div class="t win">70%</div><div class=n>7 of 10 trades made money</div></div>
+      <div><div class=k>Strategy</div><div class=t>+3,648%</div><div class=n>Golden cross, after commission</div></div>
+      <div><div class=k>Just holding</div><div class="t win">+52,229%</div><div class=n>Buy AAPL and do nothing</div></div>
+    </div>
+    <div class=audit><span class=ic>THE LESSON</span><p>A <b>70% win rate</b> sounds amazing. But doing nothing made <b>14× more</b>. That's why you test: what <i>feels</i> like an edge on a chart can lose to holding. <b>Let the data prove your edge before your money does.</b></p></div>
+    <p class=capt>Our test used London Strategic Edge's bundled AAPL daily sample (split-adjusted), the Brue engine, 10-share entries and 0.1% commission per side. Past results don't predict future returns.</p>
+  </section>
+
+  <section class=topic id=features>
+    <div class=tnum>04 · The other features</div>
+    <h2>What else is free.</h2>
+    <p class=tdesc>The four from the reel, plus two extras worth knowing.</p>
+    <div class=prep>
+      <div class=pc><div class=co>🐋 Whale flow</div><h3>Big-money options trades</h3><a href="https://londonstrategicedge.com/options/" target=_blank rel=noopener>See the large options trades from today, filtered by size <span>OPEN ↗</span></a></div>
+      <div class=pc><div class=co>👔 Insider buys</div><h3>What CEOs are buying</h3><a href="https://londonstrategicedge.com/insider-trading/" target=_blank rel=noopener>CEO, CFO and director buys and sells from SEC filings <span>OPEN ↗</span></a></div>
+      <div class=pc><div class=co>🔍 Screener</div><h3>Find setups fast</h3><a href="https://londonstrategicedge.com/stock-screener/" target=_blank rel=noopener>Filter thousands of stocks in seconds <span>OPEN ↗</span></a></div>
+      <div class=pc><div class=co>🤖 AI forecasts</div><h3>Train AI models on any chart</h3><a href="https://londonstrategicedge.com/machine-learning-studio/" target=_blank rel=noopener>ML Studio: LSTM, XGBoost and more, a few free training runs a day <span>OPEN ↗</span></a></div>
+      <div class=pc><div class=co>⏪ Bonus</div><h3>Manual Replay</h3><a href="https://londonstrategicedge.com/backtest/" target=_blank rel=noopener>Step through old candles and practise trades, like bar replay <span>OPEN ↗</span></a></div>
+      <div class=pc><div class=co>📅 Bonus</div><h3>Economic calendar</h3><a href="https://londonstrategicedge.com/calendar/" target=_blank rel=noopener>CPI, jobs, rate decisions, with past results <span>OPEN ↗</span></a></div>
+    </div>
+  </section>
+
+  <section class=topic id=claude>
+    <div class=tnum>05 · Using it with Claude</div>
+    <h2>Your own AI, same tools.</h2>
+    <p class=tdesc>The terminal's assistant works out of the box with <b>their own AI model, through your free key</b>. If you already have <b>Claude</b> (or Codex or Gemini) installed on your computer, the terminal connects to it, and you use your own subscription.</p>
+    <div class=ok>
+      <div><span><b>Start in "Ask" mode.</b> The AI asks before every change it makes. Avoid the "full" autonomy mode until you know what it's doing.</span></div>
+      <div><span><b>Be specific.</b> Name the stock, the timeframe, the entry, the exit and the costs, like the example above.</span></div>
+      <div><span><b>Always ask it to compare with buy-and-hold.</b> That one line is what keeps you honest.</span></div>
+    </div>
+  </section>
+
+  <section class=topic id=know>
+    <div class=tnum>06 · Good to know</div>
+    <h2>Honest notes.</h2>
+    <div class=ok>
+      <div><span><b>It's a test lab, not a trading platform.</b> Charts refresh rather than stream every tick. Use it to research and backtest, then place real trades with your own broker.</span></div>
+      <div><span><b>Clean the data before you trust it.</b> Some history includes odd prints. For example, AAPL briefly shows a $150 trade on 30 Oct 2026 in the overnight session. If a result looks too good, check the trades.</span></div>
+      <div><span><b>Free plan limits:</b> 60 requests a minute, 50 GB of downloads a month and one live data connection at a time. Plenty for learning.</span></div>
+      <div><span><b>The desktop app is a beta</b> and isn't Apple-notarised yet, so macOS may warn you when you open it. If you'd rather not, the browser version does most of the same things.</span></div>
+      <div><span><b>The 97% stat</b> comes from a study of Brazilian day traders: of those who kept trading for 300+ days, about 97% lost money (<a href="https://quantpedia.com/retail-day-trading-is-an-uphill-battle/" target=_blank rel=noopener style="color:var(--gold-hi)">summary ↗</a>).</span></div>
+      <div><span><b>The $60:</b> TradingView Premium, the plan with deep backtesting, is about $59.95 a month billed yearly (more if you pay monthly). Prices checked 2 Nov 2026.</span></div>
+      <div><span><b>It's a young company</b> (founded 2025). Free plans can change, so grab what you need while it's free.</span></div>
+    </div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Want more like this?</div>
+    <h2>The best trading tools are often free.</h2>
+    <p>I find free tools for traders, test them myself, and only share what works. Follow for the next one.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="trader-skill.html">Free AI trader skills →</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>London Strategic Edge, TradingView and Claude are trademarks of their owners. Cloud9 is not affiliated with any of them. Features, limits and prices can change, so check londonstrategicedge.com before relying on them. Backtest results are hypothetical and don't guarantee future returns.</div>
+</footer>
+</div>
+</body></html>
