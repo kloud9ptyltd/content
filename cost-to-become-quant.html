@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cost to Become a Quant Trader: $0 · Cloud9</title>
+<meta name="description" content="The six free resources from the reel: Python, Harvard probability, MIT linear algebra, MIT math for finance, algorithmic trading in Python, and a Monte Carlo project you build with Claude.">
+<meta property="og:title" content="Cost to become a $400K quant trader: $0. All 6 links, free.">
+<meta property="og:description" content="Python, Harvard Stat 110, MIT 18.06, MIT 18.S096, freeCodeCamp algo trading and a Monte Carlo project. Every link free, no signup.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);margin-bottom:6px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:240px minmax(0,1fr) auto;gap:26px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 26px;scroll-margin-top:24px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .th{display:block;position:relative;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--gold-faint)}
+.sim .th img{width:100%;height:100%;object-fit:cover;display:block}
+.sim .th .z{position:absolute;left:8px;bottom:8px;font:500 13px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 8px}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:640px}
+.sim p b{color:var(--ink);font-weight:500}
+.audit{margin-top:26px;display:flex;gap:20px;align-items:center;border:2px solid var(--gold);background:rgba(200,162,78,.12);padding:22px 26px;max-width:880px}
+.audit .ic{flex:none;font:500 13px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--bg);background:var(--gold);padding:8px 12px}
+.audit p{margin:0;font-size:17px;font-weight:400;line-height:1.55;color:var(--ink)}
+.audit p b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.audit{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px}.audit p{font-size:16px}}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
+
+.total{margin-top:22px;display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-top:1px solid var(--gold);padding-top:18px;max-width:880px}
+.total span{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
+.total b{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(34px,4vw,48px);color:var(--gold-hi)}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim{grid-template-columns:minmax(0,1fr);gap:14px;padding:20px 18px}
+  .sim .go{text-align:center}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Quant Careers</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>All 6 links · From the reel</div>
+  <h1>Cost to become a $400K quant trader.<br><span class=free>$0.</span></h1>
+  <p class=sub>Six free resources, in the order I'd do them: <b style="color:var(--gold-hi);font-weight:500">code, then the maths, then trading, then build something real.</b> Harvard, MIT and freeCodeCamp on YouTube, plus one project you build yourself.</p>
+  <div class=map>
+    <a href="#python"><div class=k>$0</div><div class=t>Python</div><div class=n>freeCodeCamp</div></a>
+    <a href="#probability"><div class=k>$0</div><div class=t>Probability</div><div class=n>Harvard</div></a>
+    <a href="#linear-algebra"><div class=k>$0</div><div class=t>Linear Algebra</div><div class=n>MIT</div></a>
+    <a href="#math-finance"><div class=k>$0</div><div class=t>Math for Finance</div><div class=n>MIT</div></a>
+    <a href="#algo-trading"><div class=k>$0</div><div class=t>Algo Trading</div><div class=n>freeCodeCamp</div></a>
+    <a href="#project"><div class=k>$0</div><div class=t>Project</div><div class=n>Cloud9</div></a>
+  </div>
+</header>
+
+<main>
+  <section class=topic id=links>
+    <div class=tnum>01 · The six links</div>
+    <h2>Everything from the reel, in order.</h2>
+    <p class=tdesc>Every link is <b>free, with no signup</b>. Five are full lectures or courses on the official Harvard, MIT OpenCourseWare and freeCodeCamp YouTube channels. The sixth is a project from my own guide.</p>
+    <div class=audit><span class=ic>HOW TO USE IT</span><p>Don't binge all six. Do them <b>in order</b>: Python first so you can code along, then the maths, then the trading course, then build the project and put it on GitHub.</p></div>
+
+    <div class=sims>
+      <div class=sim id=python>
+        <a class=th href="https://www.youtube.com/watch?v=rfscVS0vtbw" target=_blank rel=noopener><img src="img/cost-to-become-quant/1-python.jpg" alt="Learn Python - Full Course for Beginners, freeCodeCamp" loading=lazy><span class=z>$0</span></a>
+        <div>
+          <div class=co>01 · freeCodeCamp</div>
+          <h3>Python</h3>
+          <div class=meta><span class=hot>100% FREE</span><span>4.5 HOURS</span><span>49.5M VIEWS</span></div>
+          <p>Learn Python · Full Course for Beginners. Every quant desk runs on Python. This is <b>the most-watched Python course on YouTube</b>: variables to functions to classes, no experience needed. Get through it once and the rest of this list opens up.</p>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=rfscVS0vtbw" target=_blank rel=noopener>Watch free ↗</a>
+      </div>
+      <div class=sim id=probability>
+        <a class=th href="https://www.youtube.com/watch?v=KbB0FjPg0mw" target=_blank rel=noopener><img src="img/cost-to-become-quant/2-probability.jpg" alt="Harvard Stat 110 Probability, Lecture 1" loading=lazy><span class=z>$0</span></a>
+        <div>
+          <div class=co>02 · Harvard University</div>
+          <h3>Probability</h3>
+          <div class=meta><span class=hot>100% FREE</span><span>46 MIN</span><span>1.8M VIEWS</span></div>
+          <p>Statistics 110 · Lecture 1: Probability and Counting. Quant trading is <b>betting with an edge</b>, and probability is how you measure the edge. Prof. Joe Blitzstein's Stat 110 is the class quants recommend most; the full course is 34 lectures on the same channel.</p>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=KbB0FjPg0mw" target=_blank rel=noopener>Watch free ↗</a>
+      </div>
+      <div class=sim id=linear-algebra>
+        <a class=th href="https://www.youtube.com/watch?v=J7DzL2_Na80" target=_blank rel=noopener><img src="img/cost-to-become-quant/3-linear-algebra.jpg" alt="MIT 18.06 Linear Algebra, Gilbert Strang, Lecture 1" loading=lazy><span class=z>$0</span></a>
+        <div>
+          <div class=co>03 · MIT OpenCourseWare</div>
+          <h3>Linear Algebra</h3>
+          <div class=meta><span class=hot>100% FREE</span><span>40 MIN</span><span>2.9M VIEWS</span></div>
+          <p>18.06 · Gilbert Strang · Lecture 1. Portfolios, risk models and machine learning are all <b>matrices underneath</b>. Gilbert Strang's 18.06 is the most-watched maths class on the internet for a reason.</p>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=J7DzL2_Na80" target=_blank rel=noopener>Watch free ↗</a>
+      </div>
+      <div class=sim id=math-finance>
+        <a class=th href="https://www.youtube.com/watch?v=TuTmC8aOQJE" target=_blank rel=noopener><img src="img/cost-to-become-quant/4-math-finance.jpg" alt="MIT 18.S096 Math for Finance, Stochastic Processes I" loading=lazy><span class=z>$0</span></a>
+        <div>
+          <div class=co>04 · MIT OpenCourseWare</div>
+          <h3>Math for Finance</h3>
+          <div class=meta><span class=hot>100% FREE</span><span>78 MIN</span><span>1.1M VIEWS</span></div>
+          <p>18.S096 · Topics in Mathematics with Applications in Finance · Stochastic Processes I. Random walks and Markov chains: the <b>maths behind how prices move</b>. MIT built this course for finance, with guest lectures from people working in the industry.</p>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=TuTmC8aOQJE" target=_blank rel=noopener>Watch free ↗</a>
+      </div>
+      <div class=sim id=algo-trading>
+        <a class=th href="https://www.youtube.com/watch?v=xfzGZB4HhEE" target=_blank rel=noopener><img src="img/cost-to-become-quant/5-algo-trading.jpg" alt="Algorithmic Trading Using Python, freeCodeCamp" loading=lazy><span class=z>$0</span></a>
+        <div>
+          <div class=co>05 · freeCodeCamp</div>
+          <h3>Algo Trading</h3>
+          <div class=meta><span class=hot>100% FREE</span><span>4.5 HOURS</span><span>3.2M VIEWS</span></div>
+          <p>Algorithmic Trading Using Python · Full Course. Now put the Python to work. Build <b>three trading strategies</b> from scratch: equal-weight S&amp;P 500, momentum and value. Code along; don't just watch.</p>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=xfzGZB4HhEE" target=_blank rel=noopener>Watch free ↗</a>
+      </div>
+      <div class=sim id=project>
+        <a class=th href="claude-quant-projects.html#mc"><img src="img/cost-to-become-quant/6-monte-carlo.jpg" alt="Monte Carlo Simulator project, Cloud9" loading=lazy><span class=z>$0</span></a>
+        <div>
+          <div class=co>06 · Cloud9 · my guide</div>
+          <h3>Project: Monte Carlo Simulator</h3>
+          <div class=meta><span class=hot>100% FREE</span><span>1 PROMPT</span><span>BUILD IT WITH CLAUDE</span></div>
+          <p>Watching isn't enough; you need something to show. Simulate <b>10,000 possible years</b> for a $100K portfolio and read the spread of outcomes. It's the first thing quant interviews probe: expected value, distributions and percentiles. The exact Claude prompt is in my guide, with four more projects after it.</p>
+        </div>
+        <a class=go href="claude-quant-projects.html#mc">Open the project →</a>
+      </div>
+    </div>
+    <div class=total><span>Total cost</span><b>$0</b></div>
+    <p class=capt>All six links checked live on 5 Nov 2026. View counts as of the same day.</p>
+  </section>
+
+  <section class=topic id=next>
+    <div class=tnum>02 · After the six</div>
+    <h2>Turn the list into a path.</h2>
+    <ul class=steps>
+      <li><span class=sn>1</span><div class=st><p><b>Finish the maths.</b> Stat 110 (34 lectures) and 18.06 are the two full courses worth completing. Do the problem sets, not just the videos.</p></div></li>
+      <li><span class=sn>2</span><div class=st><p><b>Build all five projects.</b> After the Monte Carlo simulator, <a href="claude-quant-projects.html" style="color:var(--gold-hi)">my guide</a> has a backtester, a pairs trade, a factor model and an options pricer. Put each one on GitHub with a short write-up.</p></div></li>
+      <li><span class=sn>3</span><div class=st><p><b>Practise the interview.</b> Read <a href="https://www.janestreet.com/join-jane-street/interviewing/" target=_blank rel=noopener style="color:var(--gold-hi)">Jane Street's own interview guide ↗</a> and do mental maths and probability puzzles daily.</p></div></li>
+      <li><span class=sn>4</span><div class=st><p><b>Want a 7-day version?</b> <a href="quant-week.html" style="color:var(--gold-hi)">My 1-week quant roadmap</a> adds the Jane Street mock interview and a machine-learning strategies course.</p></div></li>
+    </ul>
+  </section>
+
+  <section class=topic id=know>
+    <div class=tnum>03 · Good to know</div>
+    <h2>Honest notes.</h2>
+    <div class=ok>
+      <div><span><b>$400K is the top end, not the average.</b> It's first-year total compensation (base plus bonus) at the top trading firms; base salary is roughly half of that, and most quant roles start lower.</span></div>
+      <div><span><b>Free resources won't get you hired on their own.</b> They give you the skills; the job also takes a strong degree, interview practice and projects you can explain.</span></div>
+      <div><span><b>The Harvard and MIT lectures are older recordings.</b> The maths hasn't changed; the camera quality has.</span></div>
+      <div><span><b>freeCodeCamp courses use specific Python libraries and data sources.</b> If a step breaks, the idea still holds; ask Claude to update the code.</span></div>
+    </div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Want more like this?</div>
+    <h2>The best quant education is already free.</h2>
+    <p>I find free ways into quant finance (courses, projects, competitions) and check every link before I share it. Follow for the next one.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="claude-quant-projects.html">5 quant projects →</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is career or financial advice</span>
+  <div class=disclaimer>Videos are published by Harvard University, MIT OpenCourseWare and freeCodeCamp on their own YouTube channels. Cloud9 is not affiliated with any of them; names are used only to identify each resource. Compensation figures are approximate and vary by firm, role and year. View counts and availability can change.</div>
+</footer>
+</div>
+</body></html>
