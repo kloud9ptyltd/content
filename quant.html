@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Start Here: Quant · Cloud9</title>
+<meta name="description" content="Every free Cloud9 quant guide on one page, in the order to use them: roadmaps, free courses and degrees, projects and competitions, and the firm programs that get you hired.">
+<meta property="og:title" content="Want to become a quant? Start here. Every free guide, in order.">
+<meta property="og:description" content="Roadmap, free courses, projects, competitions and the firm programs that fly you out. One page, all free.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint);scroll-margin-top:24px}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+
+.map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:92px minmax(0,1fr) auto;gap:22px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:24px 26px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .no{font-family:'Playfair Display',serif;font-size:38px;line-height:1;color:var(--gold-hi);font-variant-numeric:lining-nums}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:680px}
+.sim p b{color:var(--ink);font-weight:500}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim{grid-template-columns:minmax(0,1fr);gap:12px;padding:22px 20px}
+  .sim .no{font-size:32px}
+  .sim .go{text-align:center}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Quant Careers</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Start here · Every quant guide</div>
+  <h1>Want to become a quant?<br><span class=free>Start here.</span></h1>
+  <p class=sub>Every free Cloud9 quant guide on one page, <b style="color:var(--gold-hi);font-weight:500">in the order to use them</b>. Get the roadmap, learn the maths for free, build projects, then get in front of the firms that hire.</p>
+  <div class=map>
+    <a href="#roadmap"><div class=k>Step 01</div><div class=t>The roadmap</div><div class=n>What to learn, in order</div></a>
+    <a href="#learn"><div class=k>Step 02</div><div class=t>Learn it free</div><div class=n>Courses · a free master's</div></a>
+    <a href="#build"><div class=k>Step 03</div><div class=t>Prove it</div><div class=n>Projects · competitions</div></a>
+    <a href="#hired"><div class=k>Step 04</div><div class=t>Get hired</div><div class=n>Programs · simulations</div></a>
+  </div>
+</header>
+
+<main>
+  <section class=topic id=roadmap>
+    <div class=tnum>Step 01 · The roadmap</div>
+    <h2>Know what to learn, and in what order.</h2>
+    <p class=tdesc>New to quant? Start with the <b>1-week roadmap</b>. Then use the full roadmap as your checklist.</p>
+    <div class=sims>
+      <div class=sim>
+        <div class=no>01</div>
+        <div>
+          <div class=co>Start here</div>
+          <h3>The 1-Week Quant Roadmap</h3>
+          <div class=meta><span class=hot>7 DAYS</span><span>HARVARD · MIT · JANE STREET</span></div>
+          <p>One free lesson a day: <b>Harvard probability, MIT linear algebra and stochastic processes, Jane Street's mock interview</b> and Python trading courses.</p>
+        </div>
+        <a class=go href="quant-week.html">Open →</a>
+      </div>
+      <div class=sim>
+        <div class=no>02</div>
+        <div>
+          <div class=co>The full checklist</div>
+          <h3>Quant Roadmap: Master These</h3>
+          <div class=meta><span>12 STRATEGIES</span><span>15 INTERVIEW QUESTIONS</span></div>
+          <p>12 strategies, 12 probability concepts, 15 statistics functions, 18 Claude Code commands, a production-level project and <b>15 real interview questions with answers</b>.</p>
+        </div>
+        <a class=go href="quant-roadmap.html">Open →</a>
+      </div>
+      <div class=sim>
+        <div class=no>03</div>
+        <div>
+          <div class=co>The handbook</div>
+          <h3>The Quant Handbook: 12 Laws</h3>
+          <div class=meta><span>8-SUBJECT MATHS PATH</span><span>BEST BOOKS</span></div>
+          <p>The 8-subject maths roadmap, the best free resources and books, and <b>the 12 laws every quant learns the hard way</b>.</p>
+        </div>
+        <a class=go href="quant-laws.html">Open →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class=topic id=learn>
+    <div class=tnum>Step 02 · Learn it free</div>
+    <h2>Top universities, for free.</h2>
+    <div class=sims>
+      <div class=sim>
+        <div class=no>04</div>
+        <div>
+          <div class=co>WorldQuant University</div>
+          <h3>A Free Master's in Financial Engineering</h3>
+          <div class=meta><span class=hot>ACCREDITED · FREE</span><span>ONLINE</span></div>
+          <p>An accredited online MSc that costs nothing. How to apply, <b>what the entry test covers</b> and the 2027 deadlines.</p>
+        </div>
+        <a class=go href="free-masters-financial-engineering.html">Open →</a>
+      </div>
+      <div class=sim>
+        <div class=no>05</div>
+        <div>
+          <div class=co>Harvard · Oxford · MIT · Yale · Cambridge · Columbia</div>
+          <h3>6 Free Top-University Finance Courses</h3>
+          <div class=meta><span class=hot>FREE</span><span>DIRECT LINKS</span></div>
+          <p>Six finance courses from the world's top universities, and <b>exactly how to take each one for free</b>.</p>
+        </div>
+        <a class=go href="free-top-university-finance-courses.html">Open →</a>
+      </div>
+      <div class=sim>
+        <div class=no>06</div>
+        <div>
+          <div class=co>MIT</div>
+          <h3>MIT's "Quant Bible"</h3>
+          <div class=meta><span>50 PAGES</span></div>
+          <p>The 50-page document behind <b>$400K quant jobs</b>, explained.</p>
+        </div>
+        <a class=go href="quant-bible.html">Open →</a>
+      </div>
+      <div class=sim>
+        <div class=no>07</div>
+        <div>
+          <div class=co>The library</div>
+          <h3>The Quant Vault</h3>
+          <div class=meta><span>RESOURCES</span></div>
+          <p>Free courses, books and tools to break into quant, all in one place.</p>
+        </div>
+        <a class=go href="quant-vault.html">Open →</a>
+      </div>
+      <div class=sim>
+        <div class=no>08</div>
+        <div>
+          <div class=co>GitHub · 3,865★</div>
+          <h3>The Quant Repo</h3>
+          <div class=meta><span>33 FOLDERS</span><span>6-WEEK ORDER</span></div>
+          <p>A free repo that promises a full quant education. We opened all 33 folders and built <b>the 6-week order the README doesn't give you</b>.</p>
+        </div>
+        <a class=go href="quant-repo.html">Open →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class=topic id=build>
+    <div class=tnum>Step 03 · Prove it</div>
+    <h2>Build things. Win things.</h2>
+    <p class=tdesc>Firms hire people who can show their work. <b>Projects on GitHub and a competition result</b> say more than a certificate.</p>
+    <div class=sims>
+      <div class=sim>
+        <div class=no>09</div>
+        <div>
+          <div class=co>Weekend projects</div>
+          <h3>5 Quant Projects to Build with Claude</h3>
+          <div class=meta><span class=hot>EXACT PROMPTS</span><span>GITHUB-READY</span></div>
+          <p>A Monte Carlo simulator, a backtester, a pairs-trading bot, a factor model and an options pricer: <b>what quant interviews test</b>, with the exact prompt for each.</p>
+        </div>
+        <a class=go href="claude-quant-projects.html">Open →</a>
+      </div>
+      <div class=sim>
+        <div class=no>10</div>
+        <div>
+          <div class=co>SIG · Jane Street · Bloomberg · Flow Traders · Optiver</div>
+          <h3>5 Free Quant Competitions</h3>
+          <div class=meta><span class=hot>FREE TO ENTER</span><span>PRIZES</span></div>
+          <p>Deadlines, prizes, who can enter and the official link for each.</p>
+        </div>
+        <a class=go href="quant-competitions.html">Open →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class=topic id=hired>
+    <div class=tnum>Step 04 · Get hired</div>
+    <h2>Get in front of the firms.</h2>
+    <div class=sims>
+      <div class=sim>
+        <div class=no>11</div>
+        <div>
+          <div class=co>Jane Street · Citadel · Optiver</div>
+          <h3>3 Firms That Fly You Out</h3>
+          <div class=meta><span class=hot>TRAVEL + HOTEL PAID</span><span>STUDENTS</span></div>
+          <p>Student programs where the firm <b>pays your flights, hotel and meals</b>. Who can apply, the deadlines and direct links.</p>
+        </div>
+        <a class=go href="quant-firm-programs.html">Open →</a>
+      </div>
+      <div class=sim>
+        <div class=no>12</div>
+        <div>
+          <div class=co>Jane Street</div>
+          <h3>Every Jane Street Program</h3>
+          <div class=meta><span>FOCUS · FTTP · AMP · WISE · BRIDGE</span></div>
+          <p>All of Jane Street's all-expenses-paid student programs, plus <b>the $300K internship</b>.</p>
+        </div>
+        <a class=go href="jane-street-programs.html">Open →</a>
+      </div>
+      <div class=sim>
+        <div class=no>13</div>
+        <div>
+          <div class=co>Goldman Sachs · Bank of America · Bloomberg · more</div>
+          <h3>5 Free Job Simulations</h3>
+          <div class=meta><span class=hot>CERTIFICATE</span><span>A FEW HOURS EACH</span></div>
+          <p>Self-paced simulations of the real work, with a <b>certificate for your résumé</b>.</p>
+        </div>
+        <a class=go href="free-finance-job-simulations.html">Open →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>New guides land here first</div>
+    <h2>Bookmark this page.</h2>
+    <p>Every new quant guide I make gets added here. I find the free ways into quant finance and check every link before I share it.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="quant-week.html">Start with day 1 →</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is career or financial advice</span>
+  <div class=disclaimer>Programs, deadlines and courses change; each linked guide shows when it was checked, and the official pages are always the final word. Cloud9 is not affiliated with any firm or university named; names are used only to identify their programs.</div>
+</footer>
+</div>
+</body></html>
