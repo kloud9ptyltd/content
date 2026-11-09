@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Quant 101 · Part 1: GARCH · Cloud9</title>
+<meta name="description" content="The Nobel-winning idea that forecasts how wild the market gets, not which way. Free Python code: run GARCH on any market in one command.">
+<meta property="og:title" content="Quant 101 · Part 1: GARCH · Cloud9">
+<meta property="og:description" content="Forecast how wild the market gets, not which way. Free Python code, one command, any ticker.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.tdesc code{font:500 14px 'JetBrains Mono',monospace;color:var(--gold-hi)}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 16px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.items{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;counter-reset:it}
+.items li{counter-increment:it;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:16px 18px 16px 58px;position:relative;min-width:0}
+.items li::before{content:counter(it,decimal-leading-zero);position:absolute;left:18px;top:16px;font:500 12px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 5px;line-height:1}
+.items li strong{display:block;color:var(--ink);font-weight:500;font-size:15px;margin-bottom:4px}
+.items li code{font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);word-break:break-word}
+.items li p{margin:4px 0 0;font-size:13.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.items li.star{border-color:var(--gold-dim);background:rgba(200,162,78,.07)}
+
+.code{position:relative;margin-top:24px;border:1px solid var(--gold-dim);background:#070605}
+.code pre{margin:0;padding:22px 22px 20px;overflow-x:auto;font:400 13px/1.65 'JetBrains Mono',monospace;color:#d9cfbb;white-space:pre}
+.code .hd{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 10px 22px;border-bottom:1px solid var(--gold-faint);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.code button{font:500 11px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));border:0;padding:8px 14px;cursor:pointer}
+.code.prompt pre{white-space:pre-wrap;font-size:13.5px}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+.steps .st i{color:var(--gold-hi);font-style:normal;font-family:'JetBrains Mono',monospace;font-size:13px}
+
+.big{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+.big div{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 18px;min-width:0}
+.big .v{font-family:'Playfair Display',serif;font-size:clamp(34px,4.6vw,52px);line-height:1;color:var(--gold-hi);font-variant-numeric:lining-nums}
+.big .l{margin-top:10px;font-size:13px;font-weight:300;line-height:1.55;color:var(--dim2)}
+.big .v.loss{color:#D9776A}.big .v.win{color:#3FB68B}.big .v.flat{color:var(--dim2)}
+
+.note{margin-top:22px;border-left:2px solid var(--gold);padding:12px 18px;background:rgba(200,162,78,.05);font-size:14px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:780px}
+.note b{color:var(--ink);font-weight:500}
+
+.cmp{width:100%;border-collapse:collapse;margin-top:26px;font-size:15px}
+.cmp th,.cmp td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);text-align:left;font-weight:300;color:var(--dim2)}
+.cmp th{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.cmp td b{color:var(--ink);font-weight:500}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:26px;border:1px solid var(--gold-faint)}
+.trades{width:100%;min-width:600px;border-collapse:collapse;font-size:13.5px}
+.trades th,.trades td{padding:11px 12px;border-bottom:1px solid var(--gold-faint);text-align:left;font-weight:300;color:var(--dim2);white-space:nowrap;font-variant-numeric:tabular-nums}
+.trades th{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:500;background:rgba(200,162,78,.05)}
+.trades td.win{color:#3FB68B}.trades td.loss{color:#D9776A}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .items{grid-template-columns:1fr}
+  .big{grid-template-columns:1fr}
+}
+.out{color:var(--gold-hi)}
+.formula{margin-top:22px;font:500 clamp(15px,2.4vw,20px) 'JetBrains Mono',monospace;color:var(--gold-hi);border:1px solid var(--gold-dim);background:rgba(200,162,78,.05);padding:18px 22px;overflow-x:auto;white-space:nowrap}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Quant 101</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="quant.html">Quant resources</a>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Free code · From the reel</div>
+  <h1>Quant 101 · Part 1:<br><span class=free>GARCH</span></h1>
+  <p class=sub>The Nobel-winning idea that forecasts how wild the market gets, not which way. Run it on any market in one command.</p>
+  <p class=sub style="margin-top:14px"><a href="quant.html" style="color:var(--gold-hi)">More free quant resources: start here →</a></p>
+</header>
+<main>
+
+  <section class=topic id=code>
+    <div class=tnum>01 · The code</div>
+    <h2>Copy it. Run it.</h2>
+    <p class=tdesc>Save this as <code>garch_forecast.py</code>. That is the whole thing.</p>
+    <div class=code>
+      <div class=hd><span>garch_forecast.py · Python</span><button data-copy=gf>Copy</button></div>
+<pre id=gf># GARCH volatility forecast for any market. Quant 101, part 1 (cloud9markets.com)
+# pip install yfinance arch      then: python garch_forecast.py QQQ
+import sys, numpy as np, pandas as pd, yfinance as yf
+from arch import arch_model
+
+ticker = sys.argv[1] if len(sys.argv) &gt; 1 else "QQQ"     # any Yahoo symbol: SPY, ^KS11, BTC-USD, NVDA
+prices = yf.download(ticker, period="3y", auto_adjust=True, progress=False)["Close"].squeeze()
+returns = 100 * np.log(prices).diff().dropna()          # daily % moves
+
+fit = arch_model(returns, vol="GARCH", p=1, q=1).fit(disp="off")
+w, a, b = fit.params["omega"], fit.params["alpha[1]"], fit.params["beta[1]"]
+normal = np.sqrt(w / (1 - a - b))                         # long-run daily volatility
+now = np.sqrt(fit.forecast(horizon=1).variance.iloc[-1, 0])
+half_life = np.log(0.5) / np.log(a + b)                   # days for the extra risk to fade halfway
+calm_date = pd.bdate_range(prices.index[-1], periods=int(round(half_life)) + 1)[-1]
+
+print(f"{ticker}: last close {prices.index[-1]:%Y-%m-%d}, last move {returns.iloc[-1]:+.2f}%")
+print(f"normal day: {normal:.2f}%   tomorrow's forecast: {now:.2f}%   ({now / normal:.1f}x normal)")
+print(f"memory (alpha+beta) {a + b:.3f} -&gt; half-life {half_life:.1f} trading days, about {calm_date:%b %d}")
+</pre>
+    </div>
+  </section>
+
+  <section class=topic id=run>
+    <div class=tnum>02 · How to run it</div>
+    <h2>Three steps.</h2>
+    <ul class=steps>
+      <li><span class=sn>1</span><div class=st><p><b>Install Python 3</b> from <a href="https://www.python.org/downloads/" target=_blank rel=noopener>python.org</a> if you don't have it.</p></div></li>
+      <li><span class=sn>2</span><div class=st><p><b>Install the two libraries.</b></p></div></li>
+    </ul>
+    <div class=code>
+      <div class=hd><span>Terminal</span><button data-copy=r1>Copy</button></div>
+<pre id=r1>pip install yfinance arch</pre>
+    </div>
+    <ul class=steps style="margin-top:24px">
+      <li><span class=sn>3</span><div class=st><p><b>Run it on a ticker.</b></p></div></li>
+    </ul>
+    <div class=code>
+      <div class=hd><span>Terminal</span><button data-copy=r2>Copy</button></div>
+<pre id=r2>python garch_forecast.py QQQ</pre>
+    </div>
+    <p class=tdesc style="margin-top:24px">Tickers to try: <code>QQQ</code> (Nasdaq-100), <code>SPY</code> (S&amp;P 500), <code>^KS11</code> (KOSPI), <code>BTC-USD</code>, <code>NVDA</code>. Any Yahoo Finance symbol works.</p>
+  </section>
+
+  <section class=topic id=output>
+    <div class=tnum>03 · The output</div>
+    <h2>What it printed on the Nasdaq.</h2>
+    <p class=tdesc>As of the Friday 2026-11-06 close.</p>
+    <div class=code>
+      <div class=hd><span>Output · QQQ</span></div>
+<pre>QQQ: last close 2026-11-06, last move +1.39%
+normal day: 1.36%   tomorrow's forecast: 2.49%   (1.8x normal)
+memory (alpha+beta) 0.955 -> half-life 15.1 trading days, about Nov 27</pre>
+    </div>
+    <p class=tdesc style="margin-top:22px">In plain English: the Nasdaq-100 fell about <b>6.4%</b> on Thu Nov 5. The model says daily swings are running <b>nearly double normal</b>, and the extra risk takes until about Thanksgiving to fade <b>halfway</b> (not fully).</p>
+  </section>
+
+  <section class=topic id=parts>
+    <div class=tnum>04 · The three parts</div>
+    <h2>Omega, alpha, beta.</h2>
+    <ol class=items>
+      <li><strong>omega (ω) · the baseline</strong><p>The normal level that risk drifts back to.</p></li>
+      <li><strong>alpha (α) · today's shock</strong><p>Squared, so a 4% move counts 16 times more than a 1% move.</p></li>
+      <li><strong>beta (β) · memory</strong><p>Yesterday's volatility carrying into tomorrow.</p></li>
+      <li><strong>alpha + beta close to 1</strong><p>Long memory: shocks take a long time to fade.</p></li>
+    </ol>
+    <div class=formula>σ²(t+1) = ω + α·ε²(t) + β·σ²(t)</div>
+  </section>
+
+  <section class=topic id=packs>
+    <div class=tnum>05 · The pattern</div>
+    <h2>Wild days come in packs.</h2>
+    <div class=big>
+      <div><div class=v>4x</div><div class=l>Nasdaq-100 since 1985: a &gt;3% day happens on 6.6% of days, but 25.1% of the days right after a &gt;3% day.</div></div>
+      <div><div class=v>16 of 20</div><div class=l>16 of the Nasdaq-100's 20 best days came within two weeks after a -5% day.</div></div>
+      <div><div class="v loss">-46%</div><div class=l>KOSPI 2026: circuit-breaker halts more than 10 times; down 46% from its June 19 high of 9,386 to 5,060 (Nov 6); 22 days of +4% or more this year.</div></div>
+    </div>
+  </section>
+
+  <section class=topic id=caveats>
+    <div class=tnum>06 · Before you use it</div>
+    <h2>Read this before you use it.</h2>
+    <ol class=items>
+      <li><strong>Size, not direction</strong><p>It forecasts the size of moves, not which way they go.</p></li>
+      <li><strong>"Predicts when it calms" is a model output</strong><p>It means the half-life estimate. It is not a promise.</p></li>
+      <li><strong>The data window matters</strong><p>A 10-year S&amp;P fit gives a slower decay than a 3-year fit. Change <code>period="3y"</code> in the code and compare.</p></li>
+      <li><strong>The date ignores holidays</strong><p>The half-life date counts weekdays only.</p></li>
+      <li><strong>History</strong><p>ARCH by Robert Engle (1982, Nobel 2003). GARCH by Tim Bollerslev (1986).</p></li>
+      <li><strong>Education only</strong><p>Not financial advice.</p></li>
+    </ol>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Quant resources</div>
+    <h2>Want to become a quant? Start here.</h2>
+    <p>Every free Cloud9 quant guide on one page, in the order to use them: roadmaps, free courses and degrees, projects, and the firm programs that hire.</p>
+    <div class=actions>
+      <a class=btn-gold href="quant.html">Open the quant hub</a>
+    </div>
+  </div>
+
+  <div class=ctaboard>
+    <div class=lbl>Next: Part 2</div>
+    <h2>How to trade a bumpy market without guessing direction.</h2>
+    <p>Delta hedging, and what market makers do every day. Follow so you don't miss it.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>Prices are closing prices from Yahoo Finance as of 6 Nov 2026. Model output depends on the data window. Investing is risky and you can lose money.</div>
+</footer>
+</div>
+<script>
+document.querySelectorAll('button[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.getAttribute('data-copy')).innerText;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){
+      b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy'},1600);
+    },function(){b.textContent='Select + copy';});
+  });
+});
+</script>
+</body></html>
