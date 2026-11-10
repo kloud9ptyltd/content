@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Top-Tier Investing Strategies · Cloud9</title>
+<meta name="description" content="The S and A tier strategies from the Cloud9 investing tier list: index funds, dividend growth, gold ETFs and the wheel, with the ETFs and fees for each.">
+<meta property="og:title" content="The top-tier investing strategies, with the exact ETFs.">
+<meta property="og:description" content="Index funds, dividend growth, gold and the wheel strategy. The tickers, the fees and the full guides. Free.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint);scroll-margin-top:24px}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+
+.map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:92px minmax(0,1fr) auto;gap:22px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:24px 26px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .no{font-family:'Playfair Display',serif;font-size:38px;line-height:1;color:var(--gold-hi);font-variant-numeric:lining-nums}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:680px}
+.sim p b{color:var(--ink);font-weight:500}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim{grid-template-columns:minmax(0,1fr);gap:12px;padding:22px 20px}
+  .sim .no{font-size:32px}
+  .sim .go{text-align:center}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Investing Tier List</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Investing tier list · 2027</div>
+  <h1>The top-tier strategies,<br><span class=free>with the exact ETFs.</span></h1>
+  <p class=sub>Day trading, forex and 0DTE went to D tier. These four made <b style="color:var(--gold-hi);font-weight:500">S and A tier</b>. Here are the tickers, the fees, and the full free guide for each.</p>
+  <div class=map>
+    <a href="#index"><div class=k>S tier</div><div class=t>Index funds</div><div class=n>VOO · QQQM</div></a>
+    <a href="#dividend"><div class=k>A tier</div><div class=t>Dividend growth</div><div class=n>SCHD · DGRO</div></a>
+    <a href="#gold"><div class=k>A tier</div><div class=t>Gold ETFs</div><div class=n>GLDM</div></a>
+    <a href="#wheel"><div class=k>A tier</div><div class=t>The wheel</div><div class=n>Get paid to buy stocks</div></a>
+  </div>
+</header>
+
+<main>
+  <section class=topic id=index>
+    <div class=tnum>S tier · Index funds</div>
+    <h2>Own the whole market and do nothing.</h2>
+    <p class=tdesc>Over 15 years, most professional fund managers fail to beat their index. A low-fee index fund <b>gives you the market's return for almost nothing</b>.</p>
+    <div class=sims>
+      <div class=sim>
+        <div class=no>01</div>
+        <div>
+          <div class=co>Vanguard</div>
+          <h3>VOO · S&amp;P 500</h3>
+          <div class=meta><span class=hot>~0.03% FEE</span><span>500 BIGGEST US COMPANIES</span></div>
+          <p>The core holding. <b>The 500 biggest US companies</b> in one buy, at rock-bottom cost.</p>
+        </div>
+        <a class=go href="etf-playbook.html#retire">Open →</a>
+      </div>
+
+      <div class=sim>
+        <div class=no>02</div>
+        <div>
+          <div class=co>Invesco</div>
+          <h3>QQQM · Nasdaq-100</h3>
+          <div class=meta><span class=hot>~0.15% FEE</span><span>TECH-HEAVY</span></div>
+          <p>The growth engine. The mega-cap tech leaders, and <b>the cheaper share class of QQQ</b>.</p>
+        </div>
+        <a class=go href="etf-playbook.html#retire">Open →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class=topic id=dividend>
+    <div class=tnum>A tier · Dividend growth</div>
+    <h2>Get paid more every year, just for holding.</h2>
+    <p class=tdesc>Dividend-growth funds hold companies that <b>raise their payout year after year</b>, so your income grows while you hold.</p>
+    <div class=sims>
+      <div class=sim>
+        <div class=no>03</div>
+        <div>
+          <div class=co>Schwab</div>
+          <h3>SCHD · US Dividend Equity</h3>
+          <div class=meta><span class=hot>~0.06% FEE</span><span>QUARTERLY</span></div>
+          <p>Quality plus income. It screens for <b>durable companies that keep growing their dividends</b>.</p>
+        </div>
+        <a class=go href="etf-playbook.html#income">Open →</a>
+      </div>
+
+      <div class=sim>
+        <div class=no>04</div>
+        <div>
+          <div class=co>iShares</div>
+          <h3>DGRO · Core Dividend Growth</h3>
+          <div class=meta><span class=hot>~0.08% FEE</span><span>QUARTERLY</span></div>
+          <p>Rising dividends. Companies with <b>a track record of raising their payout</b>.</p>
+        </div>
+        <a class=go href="etf-playbook.html#income">Open →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class=topic id=gold>
+    <div class=tnum>A tier · Gold ETFs</div>
+    <h2>Real money, in one ticker.</h2>
+    <p class=tdesc>With US debt past $40 trillion, gold is the asset nobody can print. A gold ETF <b>holds physical gold in a vault</b>, so you don't have to store bars yourself.</p>
+    <div class=sims>
+      <div class=sim>
+        <div class=no>05</div>
+        <div>
+          <div class=co>SPDR</div>
+          <h3>GLDM · Gold MiniShares</h3>
+          <div class=meta><span class=hot>~0.10% FEE</span><span>PHYSICAL GOLD</span></div>
+          <p>The hedge. <b>Physical gold exposure</b> at one of the lowest fees for a gold fund.</p>
+        </div>
+        <a class=go href="etf-playbook.html#retire">Open →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class=topic id=wheel>
+    <div class=tnum>A tier · The wheel strategy</div>
+    <h2>Get paid to buy stocks you already want.</h2>
+    <p class=tdesc>Sell a put on a stock you'd happily own, <b>collect the premium while you wait</b>, and if the price drops you buy it at the price you picked. The full guide walks you through it step by step.</p>
+    <div class=sims>
+      <div class=sim>
+        <div class=no>06</div>
+        <div>
+          <div class=co>Free guide</div>
+          <h3>The Wheel Method</h3>
+          <div class=meta><span class=hot>STEP BY STEP</span><span>CALCULATOR</span></div>
+          <p>How the wheel works, which stocks to run it on, and <b>a calculator for your premium</b>.</p>
+        </div>
+        <a class=go href="wheel-method.html">Open →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Want all three baskets?</div>
+    <h2>The full ETF Playbook.</h2>
+    <p>Retire-early compounding, AI and semis, and monthly income. 15 ETFs, what each one does, and the fee.</p>
+    <div class=actions>
+      <a class=btn-gold href="etf-playbook.html">Open the ETF Playbook</a>
+      <a class=btn-line href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · not financial advice</span>
+  <div class=disclaimer>Not a recommendation to buy any security. Expense ratios are approximate and change over time, dividends are not guaranteed, and options involve risk, including assignment. Do your own research. Cloud9 is not affiliated with any fund provider named; names are used only to identify their funds.</div>
+</footer>
+</div>
+</body></html>
