@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Jane Street's Free AI Tutor · Cloud9</title>
+<meta name="description" content="Jane Street open-sourced one file that turns Claude or ChatGPT into a tutor that won't give you the answer. The two-minute setup, the rules it follows, and 8 finance topics to start with.">
+<meta property="og:title" content="Jane Street's free AI tutor. The setup guide.">
+<meta property="og:description" content="One free file that turns Claude or ChatGPT into a tutor that won't give you the answer. Setup, rules, and 8 finance topics to start with.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.tdesc code{font:500 14px 'JetBrains Mono',monospace;color:var(--gold-hi)}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 16px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.items{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;counter-reset:it}
+.items li{counter-increment:it;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:16px 18px 16px 58px;position:relative;min-width:0}
+.items li::before{content:counter(it,decimal-leading-zero);position:absolute;left:18px;top:16px;font:500 12px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 5px;line-height:1}
+.items li strong{display:block;color:var(--ink);font-weight:500;font-size:15px;margin-bottom:4px}
+.items li code{font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);word-break:break-word}
+.items li p{margin:4px 0 0;font-size:13.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.items li.star{border-color:var(--gold-dim);background:rgba(200,162,78,.07)}
+
+.code{position:relative;margin-top:24px;border:1px solid var(--gold-dim);background:#070605}
+.code pre{margin:0;padding:22px 22px 20px;overflow-x:auto;font:400 13px/1.65 'JetBrains Mono',monospace;color:#d9cfbb;white-space:pre}
+.code .hd{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 10px 22px;border-bottom:1px solid var(--gold-faint);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.code button{font:500 11px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));border:0;padding:8px 14px;cursor:pointer}
+.code.prompt pre{white-space:pre-wrap;font-size:13.5px}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+.steps .st i{color:var(--gold-hi);font-style:normal;font-family:'JetBrains Mono',monospace;font-size:13px}
+
+.note{margin-top:22px;border-left:2px solid var(--gold);padding:12px 18px;background:rgba(200,162,78,.05);font-size:14px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:780px}
+.note b{color:var(--ink);font-weight:500}
+
+.cmp{width:100%;border-collapse:collapse;margin-top:26px;font-size:15px}
+.cmp th,.cmp td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);text-align:left;font-weight:300;color:var(--dim2);vertical-align:top}
+.cmp th{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.cmp td b{color:var(--ink);font-weight:500}
+.cmp td code{font:500 13.5px 'JetBrains Mono',monospace;color:var(--gold-hi);white-space:nowrap}
+.cmp td.lv{font-family:'Playfair Display',serif;font-size:24px;color:var(--gold-hi);width:56px;line-height:1}
+.cmp tr.goal td{background:rgba(200,162,78,.07)}
+
+.chat{margin-top:28px;max-width:640px;display:grid;gap:10px}
+.chat div{padding:13px 16px;font-size:14.5px;font-weight:300;line-height:1.6;max-width:86%}
+.chat .who{display:block;font-size:10px;letter-spacing:.26em;text-transform:uppercase;margin-bottom:5px}
+.chat .t{border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);color:var(--ink);justify-self:start}
+.chat .t .who{color:var(--gold)}
+.chat .u{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:var(--dim2);justify-self:end}
+.chat .u .who{color:var(--dim)}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .items{grid-template-columns:1fr}
+  .chat div{max-width:94%}
+  .cmp td code{white-space:normal}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>AI Study Desk</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Free setup guide · From the reel</div>
+  <h1>Jane Street's free<br><span class=free>AI tutor.</span></h1>
+  <p class=sub>One open-source file that turns Claude or ChatGPT into a tutor that <b style="color:var(--gold-hi);font-weight:500">won't give you the answer</b>. It tests what you know, scores you from zero to five, and takes a level back when you forget. Here's the file, the two-minute setup, and eight finance topics to start with.</p>
+  <div class=map>
+    <a href="#file"><div class=k>01 · The file</div><div class=t>Get it</div><div class=n>Free on GitHub</div></a>
+    <a href="#setup"><div class=k>02 · Setup</div><div class=t>Install it</div><div class=n>Any chatbot works</div></a>
+    <a href="#rules"><div class=k>03 · The rules</div><div class=t>How it teaches</div><div class=n>8 rules, levels 0 to 5</div></a>
+    <a href="#topics"><div class=k>04 · Use it</div><div class=t>Finance topics</div><div class=n>8 prompts to copy</div></a>
+    <a href="#commands"><div class=k>05 · Controls</div><div class=t>Commands</div><div class=n>Save and resume</div></a>
+  </div>
+</header>
+
+<main>
+  <section class=topic id=file>
+    <div class=tnum>01 · The file</div>
+    <h2>One file. Free. From Jane Street.</h2>
+    <p class=tdesc>Jane Street, the quant trading firm, published a public GitHub repo called <b>agent_skills</b> on <b>3 November 2026</b>. It holds a single skill, <b>socratic-tutor</b>, and that skill is one text file of instructions called <code>SKILL.md</code>. There's no app, no signup and no code to run. It's released under the <b>MIT licence</b>, so it's free to use and change.</p>
+    <div class=code>
+      <div class=hd><span>The skill file</span><button data-copy=u1>Copy</button></div>
+<pre id=u1>https://github.com/janestreet/agent_skills/blob/master/socratic-tutor/SKILL.md</pre>
+    </div>
+    <p class=tdesc style="margin-top:20px"><a href="https://github.com/janestreet/agent_skills/blob/master/socratic-tutor/SKILL.md" target=_blank rel=noopener><b>Open the skill file on GitHub ↗</b></a></p>
+    <p class=capt>The repo passed 8,000 GitHub stars in under two weeks (8,434 on 15 Nov 2026).</p>
+  </section>
+
+  <section class=topic id=setup>
+    <div class=tnum>02 · Setup</div>
+    <h2>Install it in two minutes.</h2>
+    <p class=tdesc>Pick whichever matches what you already use. <b>Option A works with any chatbot</b>, including free plans.</p>
+
+    <ol class=items>
+      <li class=star><strong>Option A · Any chatbot (easiest)</strong><p>Works in Claude, ChatGPT or Gemini. Open the skill file above, copy all of its text, and paste it as the first message of a new chat with one line added on top, shown below.</p></li>
+      <li><strong>Option B · Claude Code</strong><p>Installs it as a real skill, so it switches on by itself whenever you say "teach me". Needs Claude Code (the Code tab in the Claude desktop app, or the terminal version).</p></li>
+    </ol>
+
+    <ul class=steps style="margin-top:36px">
+      <li><span class=sn>A</span><div class=st><p><b>Paste this, then the file's text underneath it.</b> To keep the tutor around, put the file's text into a Project's instructions (Claude) or a custom GPT or Project (ChatGPT) instead, so every chat in it starts as the tutor.</p></div></li>
+    </ul>
+    <div class="code prompt">
+      <div class=hd><span>First message · any chatbot</span><button data-copy=p1>Copy</button></div>
+<pre id=p1>Follow the instructions below exactly for this whole chat. Then: teach me options.
+
+[paste the full text of SKILL.md here]</pre>
+    </div>
+
+    <ul class=steps style="margin-top:36px">
+      <li><span class=sn>B</span><div class=st><p><b>In Claude Code, paste this and send it.</b> Claude downloads the skill and puts it in your skills folder.</p></div></li>
+    </ul>
+    <div class="code prompt">
+      <div class=hd><span>Paste into Claude Code</span><button data-copy=p2>Copy</button></div>
+<pre id=p2>https://github.com/janestreet/agent_skills
+
+install the socratic-tutor skill</pre>
+    </div>
+    <p class=tdesc style="margin-top:28px">Or do it yourself in a terminal:</p>
+    <div class=code>
+      <div class=hd><span>Terminal · Mac / Linux</span><button data-copy=c1>Copy</button></div>
+<pre id=c1>git clone https://github.com/janestreet/agent_skills.git
+mkdir -p ~/.claude/skills
+cp -r agent_skills/socratic-tutor ~/.claude/skills/</pre>
+    </div>
+    <div class=note><b>How to start it:</b> the tutor only switches on when you ask to be taught. Say <b>"teach me"</b>, <b>"tutor me"</b>, <b>"quiz me"</b>, <b>"drill me"</b> or <b>"help me master"</b>, followed by a topic. A plain "explain X" gets a normal answer.</div>
+  </section>
+
+  <section class=topic id=rules>
+    <div class=tnum>03 · The rules</div>
+    <h2>How it teaches.</h2>
+    <p class=tdesc>These are the rules written in the file, in the order you'll meet them.</p>
+    <ol class=items>
+      <li><strong>It splits the topic up</strong><p>Your topic becomes 4 to 10 concrete subskills.</p></li>
+      <li><strong>It tests you first</strong><p>Three to five questions, easy to hard, before it teaches anything.</p></li>
+      <li><strong>You get a skill map</strong><p>Every subskill gets a level from 0 to 5, shown as progress bars.</p></li>
+      <li><strong>One question at a time</strong><p>It asks, then stops and waits. No hints tacked on the end.</p></li>
+      <li class=star><strong>It won't give you the answer</strong><p>Get it wrong and it asks a narrower question, so you find the mistake yourself. It only explains after two or three failed tries, then tests the same idea again from another angle.</p></li>
+      <li><strong>"Are you sure?"</strong><p>Get it right and it sometimes pushes back anyway, so you have to defend the answer.</p></li>
+      <li class=star><strong>Levels are earned, and can be lost</strong><p>To move up you need two separate correct answers, one of them from memory. It also re-tests old subskills without warning, and a miss drops your level.</p></li>
+      <li><strong>A final exam</strong><p>When every subskill reaches level 4, it sets one mixed test covering everything. Fail and you go back to the lessons.</p></li>
+    </ol>
+
+    <table class=cmp>
+      <tr><th>Level</th><th>What it means</th></tr>
+      <tr><td class=lv>0</td><td>Unaware</td></tr>
+      <tr><td class=lv>1</td><td>Heard of it</td></tr>
+      <tr><td class=lv>2</td><td>Can follow along</td></tr>
+      <tr><td class=lv>3</td><td>Can do it with help</td></tr>
+      <tr class=goal><td class=lv>4</td><td><b>Can do it independently.</b> This is the default finish line for every subskill.</td></tr>
+      <tr><td class=lv>5</td><td>Can teach it and handle edge cases. Ask for "full mastery" to make this the target.</td></tr>
+    </table>
+
+    <p class=tdesc style="margin-top:36px"><b>What a wrong answer looks like.</b> This is an illustration I wrote to show the pattern, not a transcript:</p>
+    <div class=chat>
+      <div class=t><span class=who>Tutor</span>You buy a call for $5 with a strike of $100. At expiry the stock is at $103. Did you make money?</div>
+      <div class=u><span class=who>You</span>Yes, $3.</div>
+      <div class=t><span class=who>Tutor</span>Not quite. What did you pay to own that call?</div>
+      <div class=u><span class=who>You</span>$5. Oh. I got $3 back on $5, so I lost $2.</div>
+      <div class=t><span class=who>Tutor</span>So where does the stock need to finish for you to break even?</div>
+    </div>
+  </section>
+
+  <section class=topic id=topics>
+    <div class=tnum>04 · Use it</div>
+    <h2>Eight finance topics to start with.</h2>
+    <p class=tdesc>Copy any line and send it. Narrow topics work best. A broad one gets split into branches and takes several sessions.</p>
+    <ol class=items>
+      <li><strong>Options basics</strong><code>Teach me options: calls, puts and payoffs</code><p>Start here if options are new to you.</p></li>
+      <li><strong>The Greeks</strong><code>Teach me the options Greeks</code><p>Delta, gamma, theta and vega, and how they move together.</p></li>
+      <li><strong>Interview probability</strong><code>Quiz me on probability brainteasers for quant interviews</code><p>Expected value, conditional probability and dice and card puzzles.</p></li>
+      <li><strong>Bonds</strong><code>Teach me bond pricing, duration and convexity</code><p>Why prices fall when rates rise, and by how much.</p></li>
+      <li><strong>Portfolio risk</strong><code>Help me master portfolio risk: volatility, correlation and value at risk</code><p>What actually drives the risk of a portfolio.</p></li>
+      <li><strong>Valuation</strong><code>Teach me DCF valuation</code><p>Cash flows, discount rates and terminal value.</p></li>
+      <li><strong>Financial statements</strong><code>Drill me on reading a cash flow statement</code><p>Where the cash came from and where it went.</p></li>
+      <li><strong>Market microstructure</strong><code>Teach me how an order book works</code><p>Bids, asks, spreads and what a market maker does.</p></li>
+    </ol>
+    <div class=note><b>Answer the diagnostic honestly.</b> Guessing your way to a higher starting level only means it skips material you needed. If you don't know, say "I don't know".</div>
+  </section>
+
+  <section class=topic id=commands>
+    <div class=tnum>05 · Controls</div>
+    <h2>Six commands you can type anytime.</h2>
+    <table class=cmp>
+      <tr><th>Type this</th><th>What it does</th></tr>
+      <tr><td><code>show progress</code></td><td>Shows your skill map with every level.</td></tr>
+      <tr><td><code>harder</code> / <code>easier</code></td><td>Changes the difficulty of the questions.</td></tr>
+      <tr><td><code>just tell me</code></td><td>Gets you the answer to the current question only. The tutor goes back to asking after that.</td></tr>
+      <tr><td><code>save state</code></td><td>Prints a short block with your topic, levels and weak spots.</td></tr>
+      <tr><td><code>resume from:</code></td><td>Paste a saved block after it in a new chat to carry on where you stopped.</td></tr>
+    </table>
+    <div class=note><b>Save before you close the chat.</b> A new chat doesn't remember your levels. Type <b>save state</b> at the end of each session, keep the block in your notes, and start the next session with <b>resume from:</b> and that block.</div>
+  </section>
+
+  <section class=topic id=honest>
+    <div class=tnum>06 · Honest notes</div>
+    <h2>Know what you're getting.</h2>
+    <div class=ok>
+      <div><span><b>It's a tutor for any topic, not a trading tool.</b> It doesn't pick stocks, give signals or contain any Jane Street trading knowledge. It's a set of teaching rules.</span></div>
+      <div><span><b>Jane Street published it; it hasn't said how it uses it.</b> The repo describes the skill and nothing more, so treat it as a study method from a top firm, not a copy of its internal training.</span></div>
+      <div><span><b>The AI can still be wrong.</b> The file controls how it teaches, not what it knows. Check anything important against a textbook or a course.</span></div>
+      <div><span><b>Better models make better tutors.</b> The same file gives sharper questions on a stronger model, and a weaker one may drift back into lecturing.</span></div>
+      <div><span><b>It's slow on purpose.</b> Expect a topic to take several sessions. That's the point of the method.</span></div>
+    </div>
+    <div class=note>Only get the file from <b>github.com/janestreet/agent_skills</b>, never from copies or look-alike repos.</div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Want more like this?</div>
+    <h2>The struggle is the lesson.</h2>
+    <p>I find the free tools worth your time, test what they actually do, and show you the setup. Follow for the next one.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="https://github.com/janestreet/agent_skills" target=_blank rel=noopener>The repo on GitHub ↗</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>socratic-tutor is an open-source project published by Jane Street under the MIT licence. Cloud9 is not affiliated with Jane Street, Anthropic, OpenAI or Google. Star count as of 15 November 2026.</div>
+</footer>
+</div>
+<script>
+document.querySelectorAll('button[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.getAttribute('data-copy')).innerText;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){
+      b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy'},1600);
+    },function(){b.textContent='Select + copy';});
+  });
+});
+</script>
+</body></html>
