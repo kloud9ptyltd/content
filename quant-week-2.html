@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>1 Week Quant Roadmap — Week 2 · Cloud9</title>
+<meta name="description" content="Week 2 of the free quant roadmap: Python and Pandas, statistics, options pricing, GARCH, backtesting, Kaggle and a Citadel interview. 7 free videos, one a day.">
+<meta property="og:title" content="Week 2 of the free quant roadmap. 7 free videos, one a day.">
+<meta property="og:description" content="Python, statistics, options, GARCH, backtesting, Kaggle and a Citadel interview. All free.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:92px minmax(0,1fr) auto;gap:22px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:24px 26px;scroll-margin-top:24px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .no{font-family:'Playfair Display',serif;font-size:38px;line-height:1;color:var(--gold-hi);font-variant-numeric:lining-nums}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:680px}
+.sim p b{color:var(--ink);font-weight:500}
+.audit{margin-top:26px;display:flex;gap:20px;align-items:center;border:2px solid var(--gold);background:rgba(200,162,78,.12);padding:22px 26px;max-width:880px}
+.audit .ic{flex:none;font:500 13px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--bg);background:var(--gold);padding:8px 12px}
+.audit p{margin:0;font-size:17px;font-weight:400;line-height:1.55;color:var(--ink)}
+.audit p b{color:var(--gold-hi);font-weight:500}
+.sim .how{margin-top:10px;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--gold-hi)}
+@media (max-width:860px){.audit{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px}.audit p{font-size:16px}}
+.sim .sk{margin-top:8px;font-size:12.5px;color:var(--dim);letter-spacing:.02em}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
+
+.cmp{width:100%;border-collapse:collapse;margin-top:26px;font-size:15px}
+.cmp th,.cmp td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);text-align:left;font-weight:300;color:var(--dim2);vertical-align:top}
+.cmp th{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.cmp td b{color:var(--ink);font-weight:500}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim{grid-template-columns:minmax(0,1fr);gap:12px;padding:22px 20px}
+  .sim .no{font-size:32px}
+  .sim .go{text-align:center}
+  .cmp{font-size:13.5px}
+}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Quant Careers</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Week 2 · All 7 links · From the reel</div>
+  <h1>Week 2 of the free quant roadmap.<br><span class=free>7 videos. 7 days.</span></h1>
+  <p class=sub>One free video a day, picking up where Week 1 left off. <b style="color:var(--gold-hi);font-weight:500">Code, statistics, options, then the job.</b> <a href="quant-week.html" style="color:var(--gold-hi)">Missed Week 1? Start here →</a></p>
+  <div class=map>
+    <a href="#mon"><div class=k>MON</div><div class=t>Python &amp; Pandas</div><div class=n>freeCodeCamp</div></a>
+    <a href="#tue"><div class=k>TUE</div><div class=t>Statistics</div><div class=n>zedstatistics</div></a>
+    <a href="#wed"><div class=k>WED</div><div class=t>How Options Are Priced</div><div class=n>Khan Academy</div></a>
+    <a href="#thu"><div class=k>THU</div><div class=t>Predict Volatility</div><div class=n>Cloud9</div></a>
+    <a href="#fri"><div class=k>FRI</div><div class=t>Backtesting</div><div class=n>Chad Thackray</div></a>
+    <a href="#sat"><div class=k>SAT</div><div class=t>Kaggle</div><div class=n>Rob Mulla</div></a>
+    <a href="#sun"><div class=k>SUN</div><div class=t>Citadel Interview</div><div class=n>Quant Blueprint</div></a>
+  </div>
+</header>
+
+<main>
+  <div class=ctaboard style="margin-top:40px">
+    <div class=lbl>Don't miss it</div>
+    <h2>Week 3 drops soon.</h2>
+    <p>Follow @cloud9.markets on Instagram so you don't miss it.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="quant.html">All quant guides →</a>
+    </div>
+  </div>
+
+  <section class=topic id=links>
+    <div class=tnum>The seven days</div>
+    <h2>One a day. Start Monday.</h2>
+    <p class=tdesc>Every link is <b>free, with no signup</b>. Thursday is my own breakdown on this site.</p>
+
+    <div class=sims>
+      <div class=sim id=mon>
+        <div class=no>Mon</div>
+        <div>
+          <div class=co>Monday · freeCodeCamp</div>
+          <h3>Python &amp; Pandas</h3>
+          <div class=meta><span class=hot>FREE</span><span>4.3M VIEWS</span></div>
+          <p>Data Analysis with Python · Full Course for Beginners (Numpy, Pandas, Matplotlib, Seaborn). Python is the main tool quants use. Learn to <b>load, clean and chart data</b> before you touch a strategy.</p>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=r-uOLxNrNk8" target=_blank rel=noopener>Watch free ↗</a>
+      </div>
+      <div class=sim id=tue>
+        <div class=no>Tue</div>
+        <div>
+          <div class=co>Tuesday · zedstatistics</div>
+          <h3>Statistics</h3>
+          <div class=meta><span class=hot>FREE</span><span>3.5M VIEWS</span></div>
+          <p>Teach me STATISTICS in half an hour! Seriously. Prices are noisy. Statistics tells you <b>what is real and what is luck</b>.</p>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=kyjlxsLW1Is" target=_blank rel=noopener>Watch free ↗</a>
+      </div>
+      <div class=sim id=wed>
+        <div class=no>Wed</div>
+        <div>
+          <div class=co>Wednesday · Khan Academy</div>
+          <h3>How options are priced</h3>
+          <div class=meta><span class=hot>FREE</span><span>1.2M VIEWS</span></div>
+          <p>Introduction to the Black-Scholes formula. Options are everywhere in trading. This shows <b>how a fair price is worked out</b>.</p>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=pr-u4LCFYEY" target=_blank rel=noopener>Watch free ↗</a>
+      </div>
+      <div class=sim id=thu>
+        <div class=no>Thu</div>
+        <div>
+          <div class=co>Thursday · Cloud9 · my breakdown</div>
+          <h3>Predict volatility (GARCH)</h3>
+          <div class=meta><span class=hot>FREE</span><span>ON THIS SITE</span></div>
+          <p>Quant 101 · Part 1. Volatility is how wildly prices swing. GARCH is the classic tool to <b>forecast the next swings</b>, with real code.</p>
+        </div>
+        <a class=go href="quant101-garch.html">Open my guide →</a>
+      </div>
+      <div class=sim id=fri>
+        <div class=no>Fri</div>
+        <div>
+          <div class=co>Friday · Chad Thackray</div>
+          <h3>Backtest your strategy</h3>
+          <div class=meta><span class=hot>FREE</span><span>274K VIEWS</span></div>
+          <p>Backtesting.py · Full course in Python. Test an idea on <b>old data before risking money</b>. Every quant does this first.</p>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=e4ytbIm2Xg0" target=_blank rel=noopener>Watch free ↗</a>
+      </div>
+      <div class=sim id=sat>
+        <div class=no>Sat</div>
+        <div>
+          <div class=co>Saturday · Rob Mulla</div>
+          <h3>Kaggle competitions</h3>
+          <div class=meta><span class=hot>FREE</span><span>282K VIEWS</span></div>
+          <p>Kaggle Competitions: A Beginner's Guide to Winning. Compete on real data problems and <b>build proof you can do the work</b>.</p>
+          <p style="margin-top:10px">Want more? See <a href="quant-competitions.html" style="color:var(--gold-hi)">more free quant competitions →</a></p>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=4BOtr1PZ2D8" target=_blank rel=noopener>Watch free ↗</a>
+      </div>
+      <div class=sim id=sun>
+        <div class=no>Sun</div>
+        <div>
+          <div class=co>Sunday · Quant Blueprint</div>
+          <h3>Citadel quant interview</h3>
+          <div class=meta><span class=hot>FREE</span><span>1.0M VIEWS</span></div>
+          <p>2024 Citadel Quant Trading Interview with Analysis from Real Quants. End the week by seeing <b>what a top firm actually asks</b>.</p>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=SCP7JptxPU0" target=_blank rel=noopener>Watch free ↗</a>
+      </div>
+    </div>
+    <p class=capt>Views checked 14 Nov 2026. Counts can change.</p>
+  </section>
+
+  <div class=ctaboard style="margin-top:64px">
+    <div class=lbl>Don't miss it</div>
+    <h2>Week 3 drops soon.</h2>
+    <p>Follow @cloud9.markets on Instagram so you don't miss it.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+      <a class=btn-line href="quant.html">All quant guides →</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is career or financial advice</span>
+  <div class=disclaimer>Videos are published by freeCodeCamp, zedstatistics, Khan Academy, Chad Thackray, Rob Mulla and Quant Blueprint on their own YouTube channels. Cloud9 is not affiliated with any of them; names are used only to identify each resource. View counts and availability can change.</div>
+</footer>
+</div>
+</body></html>
