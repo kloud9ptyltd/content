@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>5 Free Tools That Make TradingView More Powerful · Cloud9</title>
+<meta name="description" content="Five free, open-source GitHub tools for TradingView: a Pine Script indicator library, the official chart engine, a Python screener, alerts to Telegram or Discord, and an AI chart reader. Links, setup and use cases, checked on 16 November 2026.">
+<meta property="og:title" content="5 free tools that make TradingView more powerful">
+<meta property="og:description" content="Five free, open-source GitHub tools for TradingView, with setup steps and a use case for each. Checked on 16 November 2026.">
+<meta property="og:url" content="https://www.cloud9markets.com/tradingview-tools.html">
+<link rel="canonical" href="https://www.cloud9markets.com/tradingview-tools.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);margin-bottom:6px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:240px minmax(0,1fr) auto;gap:26px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 26px;scroll-margin-top:24px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .th{display:block;position:relative;aspect-ratio:860/400;overflow:hidden;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05)}
+.sim .th img{width:100%;height:100%;object-fit:contain;display:block;padding:4px;box-sizing:border-box}
+.sim .th .z{position:absolute;left:8px;bottom:8px;font:500 13px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 8px}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:640px}
+.sim p b{color:var(--ink);font-weight:500}
+.audit{margin-top:26px;display:flex;gap:20px;align-items:center;border:2px solid var(--gold);background:rgba(200,162,78,.12);padding:22px 26px;max-width:880px}
+.audit .ic{flex:none;font:500 13px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--bg);background:var(--gold);padding:8px 12px}
+.audit p{margin:0;font-size:17px;font-weight:400;line-height:1.55;color:var(--ink)}
+.audit p b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.audit{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px}.audit p{font-size:16px}}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
+
+.total{margin-top:22px;display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-top:1px solid var(--gold);padding-top:18px;max-width:880px}
+.total span{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
+.total b{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(34px,4vw,48px);color:var(--gold-hi)}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim{grid-template-columns:minmax(0,1fr);gap:14px;padding:20px 18px}
+  .sim .go{text-align:center}
+}
+
+.map{grid-template-columns:repeat(5,minmax(0,1fr))}
+.sim{grid-template-columns:minmax(0,1fr) auto;align-items:start}
+.sim p{max-width:760px}
+.sim .who{margin-top:12px}
+.sim .lab{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:18px 0 8px}
+.sim ol{margin:0;padding-left:20px;font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:760px}
+.sim ol b{color:var(--ink);font-weight:500}
+.sim code{font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);background:rgba(200,162,78,.08);border:1px solid var(--gold-faint);padding:2px 6px;overflow-wrap:anywhere}
+.sim pre{margin:10px 0 0;max-width:760px;overflow-x:auto;font:400 12.5px/1.6 'JetBrains Mono',monospace;color:var(--ink);background:rgba(0,0,0,.28);border:1px solid var(--gold-faint);padding:14px 16px}
+.sim .ask{margin-top:10px;max-width:760px;border-left:2px solid var(--gold);padding:8px 14px;font-size:14.5px;font-style:italic;color:var(--ink)}
+@media (max-width:860px){.map{grid-template-columns:repeat(2,minmax(0,1fr))}.sim{grid-template-columns:minmax(0,1fr)}}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Trading Tools</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>5 free tools · Checked 16 Nov 2026</div>
+  <h1>5 free tools that make TradingView <span class=free>more powerful</span></h1>
+  <p class=sub>Five open-source projects on GitHub, each with the link, what it is for, and how to start. Number one needs no code at all. All five checked on 16 November 2026.</p>
+</header>
+
+<main>
+  <section class=topic id=map>
+    <div class=tnum>00 · Pick your level</div>
+    <h2>Start where you are.</h2>
+    <p class=tdesc>You do not need all five. <b>If you do not code, start with number one.</b> Two to four need a little Python or JavaScript. Number five needs the TradingView desktop app and Claude.</p>
+    <div class=map>
+      <a href="#pine"><div class=k>01</div><div class=t>Awesome Pine Script</div><div class=n>No code</div></a>
+      <a href="#charts"><div class=k>02</div><div class=t>Lightweight Charts</div><div class=n>JavaScript</div></a>
+      <a href="#screener"><div class=k>03</div><div class=t>TradingView Screener</div><div class=n>Python</div></a>
+      <a href="#webhook"><div class=k>04</div><div class=t>Webhook Bot</div><div class=n>Python + a server</div></a>
+      <a href="#mcp"><div class=k>05</div><div class=t>TradingView MCP</div><div class=n>Claude + desktop app</div></a>
+    </div>
+  </section>
+
+  <section class=topic id=links>
+    <div class=tnum>01 · The five tools</div>
+    <h2>Free, in one list.</h2>
+    <div class=sims>
+
+      <div class=sim id=pine>
+        <div>
+          <div class=co>01 · pAulseperformance / awesome-pinescript</div>
+          <h3>Awesome Pine Script</h3>
+          <div class=meta><span class=hot>FREE</span><span>2.0K STARS</span><span>MIT</span><span>NO CODE NEEDED</span></div>
+          <p>One curated list of everything Pine Script: <b>indicators, strategies, screeners, libraries and learning guides</b>, each linking to the script on TradingView. It saves you digging through thousands of public scripts to find the good ones.</p>
+          <p class=who><b>Use case:</b> you want a volume profile, a flag finder or a killzone indicator, and you would rather add a tested free one than pay for it or write it.</p>
+          <div class=lab>How to use it</div>
+          <ol>
+            <li>Open the list and jump to <b>Indicators</b> or <b>Strategies</b>.</li>
+            <li>Click a script. It opens on TradingView.</li>
+            <li>Press <b>Add to favorites</b>, then find it under Indicators on your chart.</li>
+            <li>Want to learn to write your own? Use the <b>Learning Resources</b> section at the bottom.</li>
+          </ol>
+        </div>
+        <a class=go href="https://github.com/pAulseperformance/awesome-pinescript" target=_blank rel=noopener>Open the list ↗</a>
+      </div>
+
+      <div class=sim id=charts>
+        <div>
+          <div class=co>02 · tradingview / lightweight-charts</div>
+          <h3>Lightweight Charts</h3>
+          <div class=meta><span class=hot>FREE</span><span>17.9K STARS</span><span>APACHE-2.0</span><span>JAVASCRIPT</span></div>
+          <p><b>TradingView's own open-source chart engine.</b> It draws fast, interactive candlestick, line and area charts on any web page, using your own data.</p>
+          <p class=who><b>Use case:</b> you built a bot or a backtest and want to see its trades on a TradingView-style chart, or you want a clean chart on your own dashboard or site.</p>
+          <div class=lab>How to start</div>
+          <ol>
+            <li>Install it: <code>npm install lightweight-charts</code></li>
+            <li>Create a chart and give it your candles:</li>
+          </ol>
+<pre>import { createChart, CandlestickSeries } from 'lightweight-charts';
+
+const chart = createChart(document.body, { width: 800, height: 400 });
+const candles = chart.addSeries(CandlestickSeries);
+candles.setData([
+  { time: '2026-11-13', open: 100, high: 104, low: 99, close: 103 },
+  { time: '2026-11-14', open: 103, high: 106, low: 101, close: 102 },
+]);</pre>
+          <p class=who>Not a coder? Paste the link into Claude or ChatGPT and ask it to chart a CSV of your trades with this library.</p>
+        </div>
+        <a class=go href="https://github.com/tradingview/lightweight-charts" target=_blank rel=noopener>Open on GitHub ↗</a>
+      </div>
+
+      <div class=sim id=screener>
+        <div>
+          <div class=co>03 · shner-elmo / TradingView-Screener</div>
+          <h3>TradingView Screener</h3>
+          <div class=meta><span class=hot>FREE</span><span>1.4K STARS</span><span>MIT</span><span>PYTHON</span></div>
+          <p>A Python package that <b>builds custom screeners on TradingView's data</b>: stocks, crypto, forex, futures and options, with more than 3,000 fields and timeframes from one minute to one month.</p>
+          <p class=who><b>Use case:</b> every morning you want the stocks with unusual volume and a fresh MACD cross, as a table you can save or feed into a bot, without clicking through the screener by hand.</p>
+          <div class=lab>How to start</div>
+          <ol>
+            <li>Install it: <code>pip install tradingview-screener</code></li>
+            <li>Write your filters and run it:</li>
+          </ol>
+<pre>from tradingview_screener import Query, col
+
+count, df = (Query()
+  .select('name', 'close', 'volume', 'relative_volume_10d_calc')
+  .where(
+      col('relative_volume_10d_calc') > 1.2,
+      col('MACD.macd') >= col('MACD.signal'),
+  )
+  .order_by('volume', ascending=False)
+  .limit(25)
+  .get_scanner_data())
+print(df)</pre>
+          <p class=who>It returns 50 rows by default. Keep your requests modest; the author warns that heavy use can get you blocked.</p>
+        </div>
+        <a class=go href="https://github.com/shner-elmo/TradingView-Screener" target=_blank rel=noopener>Open on GitHub ↗</a>
+      </div>
+
+      <div class=sim id=webhook>
+        <div>
+          <div class=co>04 · fabston / TradingView-Webhook-Bot</div>
+          <h3>Webhook Bot</h3>
+          <div class=meta><span class=hot>FREE</span><span>1.9K STARS</span><span>MIT</span><span>PYTHON</span></div>
+          <p>A small server that <b>listens for your TradingView alerts and forwards them to Telegram, Discord, Slack or email</b>, with the ticker and price filled in.</p>
+          <p class=who><b>Use case:</b> your strategy fires an alert and you want it in a Telegram or Discord channel straight away, for yourself or for a group you trade with.</p>
+          <div class=lab>How to start</div>
+          <ol>
+            <li>Clone it and install: <code>git clone https://github.com/fabston/TradingView-Webhook-Bot.git</code>, then <code>pip install -r requirements.txt</code></li>
+            <li>Put your Telegram or Discord details and a secret key in <code>config.py</code>.</li>
+            <li>Run <code>python main.py</code> on a machine that stays online.</li>
+            <li>In a TradingView alert, tick <b>Webhook URL</b>, point it at your server's <code>/webhook</code> address, and use a message like this:</li>
+          </ol>
+<pre>{
+  "key": "your-secret-key",
+  "msg": "Long {{ticker}} at {{close}}"
+}</pre>
+          <p class=who>Two honest catches: <b>TradingView only sends webhooks on its paid plans</b>, and the bot needs a server that is always on.</p>
+        </div>
+        <a class=go href="https://github.com/fabston/TradingView-Webhook-Bot" target=_blank rel=noopener>Open on GitHub ↗</a>
+      </div>
+
+      <div class=sim id=mcp>
+        <div>
+          <div class=co>05 · tradesdontlie / tradingview-mcp</div>
+          <h3>TradingView MCP</h3>
+          <div class=meta><span class=hot>FREE</span><span>7.2K STARS</span><span>JAVASCRIPT</span><span>WORKS WITH CLAUDE CODE</span></div>
+          <p>Connects Claude to the TradingView desktop app running on your computer, so <b>the AI can read your live chart</b>: the symbol, your indicator values, the levels you have drawn. It can also change symbols and timeframes, draw lines, and write and fix Pine Script for you.</p>
+          <p class=who><b>Use case:</b> ask "what is on my chart?" and get a read of trend, levels and indicators in plain English, or describe an indicator and have Claude write it and load it onto the chart.</p>
+          <div class=lab>How to start</div>
+          <ol>
+            <li>You need the <b>TradingView desktop app</b>, <b>Node.js 18 or newer</b>, and <b>Claude Code</b>.</li>
+            <li>Paste this into Claude Code and let it do the setup:</li>
+          </ol>
+          <div class=ask>Install the TradingView MCP server. Clone https://github.com/tradesdontlie/tradingview-mcp.git, run npm install, add it to my MCP config, and launch TradingView with the debug port. Then verify the connection with tv_health_check.</div>
+          <ol start=3>
+            <li>Then ask: <b>"What's on my chart?"</b> or <b>"Give me a full analysis."</b></li>
+          </ol>
+          <p class=who>Good to know: it is an unofficial tool, it does not place trades, everything runs on your own machine, and the author says you need a TradingView subscription for real-time data.</p>
+        </div>
+        <a class=go href="https://github.com/tradesdontlie/tradingview-mcp" target=_blank rel=noopener>Open on GitHub ↗</a>
+      </div>
+
+    </div>
+    <p class=capt>All five links, star counts and licences checked on 16 November 2026.</p>
+  </section>
+
+  <section class=topic id=know>
+    <div class=tnum>02 · Good to know</div>
+    <h2>Honest notes.</h2>
+    <div class=ok>
+      <div><span><b>The tools are free. TradingView itself may not be.</b> Webhook alerts need a paid TradingView plan, and the MCP author says real-time data needs a subscription. Numbers one to three work with a free account.</span></div>
+      <div><span><b>Only Lightweight Charts is made by TradingView.</b> The other four are community projects and are not endorsed by TradingView. Unofficial tools can break when TradingView changes something.</span></div>
+      <div><span><b>Read the code before you run it,</b> or ask an AI assistant to explain what it does. That goes for anything you download from GitHub.</span></div>
+      <div><span><b>An indicator is a tool, not a signal.</b> Test anything from the Pine Script list on past data before you trust it with money.</span></div>
+      <div><span><b>AI can misread a chart.</b> Treat its read as a second opinion and check the levels yourself.</span></div>
+    </div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Want more like this?</div>
+    <h2>Free tools for traders, checked before I share them.</h2>
+    <p>I find free, open-source tools for trading and markets and test every link first. Follow for the next list.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>TradingView, Pine Script and Lightweight Charts are trademarks of TradingView, Inc. Cloud9 is not affiliated with TradingView or with the authors of these projects; names are used only to identify each tool. The projects are free and open source under their own licences. Features, star counts and requirements can change. Trading involves risk of loss.</div>
+</footer>
+</div>
+</body></html>
