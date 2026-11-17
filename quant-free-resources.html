@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>3 Free Things Quant Firms Hand You · Cloud9</title>
+<meta name="description" content="Three free resources from trading firms: Jane Street mock interviews, Optiver competitions on Kaggle and Akuna Options 101. Each with a link, what it is and what to use it for. Checked on 17 November 2026.">
+<meta property="og:title" content="3 free things quant firms hand you">
+<meta property="og:description" content="Three free resources from trading firms, with a link and a use for each. Checked on 17 November 2026.">
+<meta property="og:url" content="https://www.cloud9markets.com/quant-free-resources.html">
+<link rel="canonical" href="https://www.cloud9markets.com/quant-free-resources.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);margin-bottom:6px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:240px minmax(0,1fr) auto;gap:26px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 26px;scroll-margin-top:24px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .th{display:block;position:relative;aspect-ratio:860/400;overflow:hidden;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05)}
+.sim .th img{width:100%;height:100%;object-fit:contain;display:block;padding:4px;box-sizing:border-box}
+.sim .th .z{position:absolute;left:8px;bottom:8px;font:500 13px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 8px}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:640px}
+.sim p b{color:var(--ink);font-weight:500}
+.audit{margin-top:26px;display:flex;gap:20px;align-items:center;border:2px solid var(--gold);background:rgba(200,162,78,.12);padding:22px 26px;max-width:880px}
+.audit .ic{flex:none;font:500 13px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--bg);background:var(--gold);padding:8px 12px}
+.audit p{margin:0;font-size:17px;font-weight:400;line-height:1.55;color:var(--ink)}
+.audit p b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.audit{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px}.audit p{font-size:16px}}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
+
+.total{margin-top:22px;display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-top:1px solid var(--gold);padding-top:18px;max-width:880px}
+.total span{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
+.total b{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(34px,4vw,48px);color:var(--gold-hi)}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim{grid-template-columns:minmax(0,1fr);gap:14px;padding:20px 18px}
+  .sim .go{text-align:center}
+}
+
+.map{grid-template-columns:repeat(5,minmax(0,1fr))}
+.sim{grid-template-columns:minmax(0,1fr) auto;align-items:start}
+.sim p{max-width:760px}
+.sim .who{margin-top:12px}
+.sim .lab{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:18px 0 8px}
+.sim ol{margin:0;padding-left:20px;font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:760px}
+.sim ol b{color:var(--ink);font-weight:500}
+.sim code{font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);background:rgba(200,162,78,.08);border:1px solid var(--gold-faint);padding:2px 6px;overflow-wrap:anywhere}
+.sim pre{margin:10px 0 0;max-width:760px;overflow-x:auto;font:400 12.5px/1.6 'JetBrains Mono',monospace;color:var(--ink);background:rgba(0,0,0,.28);border:1px solid var(--gold-faint);padding:14px 16px}
+.sim .ask{margin-top:10px;max-width:760px;border-left:2px solid var(--gold);padding:8px 14px;font-size:14.5px;font-style:italic;color:var(--ink)}
+@media (max-width:860px){.map{grid-template-columns:repeat(2,minmax(0,1fr))}.sim{grid-template-columns:minmax(0,1fr)}}
+.sim .gos{display:grid;gap:10px;align-content:start}
+.sim .gos .go{text-align:center}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Quant Resources</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>3 free resources · Checked 17 Nov 2026</div>
+  <h1>3 free things <span class=free>quant firms hand you</span></h1>
+  <p class=sub>Trading firms publish a surprising amount of their own prep material. These are the three from the reel, with a link and what each one is good for. All links checked 17 November 2026.</p>
+</header>
+
+<main>
+  <section class=topic id=s1>
+    <div class=tnum>01 · From the reel</div>
+    <h2>From the reel</h2>
+    <div class=sims>
+
+      <div class=sim id=r1>
+        <div>
+          <div class=co>01 · Jane Street on YouTube</div>
+          <h3>Jane Street mock interviews</h3>
+          <p><b>What it is:</b> Two full mock interviews run by Jane Street staff, &ldquo;A Jane Street Trading Mock Interview with Graham and Andrea&rdquo; and &ldquo;A Jane Street Software Engineering Mock Interview with Grace and Nolen&rdquo;.</p>
+          <p class=who><b>Use it for:</b> hearing how a strong candidate talks through a question before your own interview.</p>
+        </div>
+        <div class=gos><a class=go href="https://www.youtube.com/watch?v=NT_I1MjckaU" target=_blank rel=noopener>Trading, 25 min ↗</a><a class=go href="https://www.youtube.com/watch?v=V8DGdPkBBxg" target=_blank rel=noopener>Software engineering, 37 min ↗</a></div>
+      </div>
+
+      <div class=sim id=r2>
+        <div>
+          <div class=co>02 · Optiver</div>
+          <h3>Optiver on Kaggle</h3>
+          <p><b>What it is:</b> Two competitions built on real market data: predict closing price moves for US stocks, and predict short-term volatility. Both competitions have ended; the data, notebooks and discussion are still on the page.</p>
+          <p class=who><b>Use it for:</b> a market-data modelling project you can put on a resume.</p>
+        </div>
+        <div class=gos><a class=go href="https://www.kaggle.com/competitions/optiver-trading-at-the-close" target=_blank rel=noopener>Trading at the Close ↗</a><a class=go href="https://www.kaggle.com/competitions/optiver-realized-volatility-prediction" target=_blank rel=noopener>Realized Volatility ↗</a></div>
+      </div>
+
+      <div class=sim id=r3>
+        <div>
+          <div class=co>03 · Akuna Capital</div>
+          <h3>Akuna Options 101</h3>
+          <p><b>What it is:</b> Akuna's free course covering industry fundamentals such as open outcry, electronic trading and option greeks.</p>
+          <p class=who><b>Use it for:</b> learning options from an options market maker.</p>
+        </div>
+        <a class=go href="https://akunacapital.com/options-101" target=_blank rel=noopener>Open the course ↗</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class=topic id=s2>
+    <div class=tnum>02 · Keep going</div>
+    <h2>Want the full map?</h2>
+    <div class=sims>
+
+      <div class=sim id=more>
+        <div>
+          <div class=co>Cloud9 Research</div>
+          <h3>Start Here: Quant</h3>
+          <p><b>What it is:</b> Our master page of quant resources, all in one place.</p>
+          <p class=who><b>Use it for:</b> picking what to learn next once you have worked through these three.</p>
+        </div>
+        <a class=go href="quant.html">Open the quant hub →</a>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Cloud9 Research · MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>Educational only, not financial or career advice. Cloud9 Markets is not affiliated with any firm listed. Programs, prizes and eligibility change, so check each site.</div>
+</footer>
+</div>
+</body></html>
