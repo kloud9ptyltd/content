@@ -1,308 +1,280 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The 15-Cent Trading Firm — Cloud9 Markets Intel</title>
-<meta name="description" content="I hired an open-source AI trading firm — seven agents that research, debate and issue a verdict on any stock. The full setup guide, our real NVDA run, the exact costs, and where it embarrassed itself." />
-<meta property="og:title" content="The 15-Cent Trading Firm — Cloud9 Markets" />
-<meta property="og:description" content="Seven AI agents argued about NVDA. It cost 15 cents. Full setup + the honest verdict." />
-<meta property="og:type" content="article" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Your Own AI Trading Firm: TradingAgents Setup + NVDA Call History · Cloud9</title>
+<meta name="description" content="The free setup guide for TradingAgents, the open-source AI trading firm: seven agents that research, debate and issue a verdict on any stock. Six setup steps, the cost per run, which AI model to use, and every NVDA call it has made, marked to market. Updated 18 November 2026.">
+<meta property="og:title" content="Your own AI trading firm: the TradingAgents setup guide">
+<meta property="og:description" content="Six setup steps, the cost per run, which AI model to use, and every NVDA call marked to market. Updated 18 November 2026.">
+<meta property="og:url" content="https://www.cloud9markets.com/ai-trading-firm.html">
+<link rel="canonical" href="https://www.cloud9markets.com/ai-trading-firm.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
 <style>
-  :root{
-    --bg:#06080D;--bg2:#080B12;--panel:rgba(255,255,255,.025);--panel2:rgba(255,255,255,.05);
-    --glass:rgba(20,28,44,.55);--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.055);
-    --text:#F1F4FA;--muted:#9AA7BD;--faint:#5E6B82;
-    --c9:#46A8FF;--c9deep:#1E6FE0;
-    --gold:#E6D2A8;--gold2:#C9AE76;
-    --bull:#43D6A0;--bear:#FF6B7A;--base:#E6B354;--violet:#B49BF5;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--text);
-    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased;
-    background-image:
-      radial-gradient(1100px 620px at 78% -6%,rgba(180,155,245,.10),transparent 60%),
-      radial-gradient(820px 560px at -8% 8%,rgba(70,168,255,.08),transparent 55%),
-      radial-gradient(900px 700px at 50% 120%,rgba(230,210,168,.05),transparent 60%);
-    background-attachment:fixed;}
-  .serif{font-family:"Fraunces",Georgia,serif}
-  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
-  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
 
-  /* ---------- CODE GATE ---------- */
-  #gate{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
-    background:rgba(4,6,10,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-  .gatecard{width:min(420px,90vw);border:1px solid var(--line);border-radius:20px;background:var(--glass);
-    padding:38px 34px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.55)}
-  .gatecard img{height:44px;border-radius:10px;margin-bottom:18px}
-  .gatecard h1{font-size:24px;margin:0 0 8px}
-  .gatecard p{color:var(--muted);font-size:14px;line-height:1.55;margin:0 0 22px}
-  .gatecard input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--line);
-    background:rgba(0,0,0,.35);color:var(--gold);font-family:"JetBrains Mono",monospace;font-size:18px;
-    letter-spacing:4px;text-align:center;text-transform:uppercase;outline:none}
-  .gatecard input:focus{border-color:var(--gold2)}
-  .gatecard button{margin-top:14px;width:100%;padding:14px;border:0;border-radius:12px;cursor:pointer;
-    background:linear-gradient(135deg,var(--gold),var(--gold2));color:#14100a;font-weight:700;font-size:15px;
-    letter-spacing:.5px}
-  .gatecard .hint{margin-top:16px;font-size:12px;color:var(--faint)}
-  .gatecard .hint a{color:var(--c9);text-decoration:none}
-  .gatecard.shake{animation:shake .35s}
-  @keyframes shake{20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
-  #gate .err{color:var(--bear);font-size:12.5px;height:16px;margin-top:10px}
-  body.locked{overflow:hidden}
-  body.locked #content{filter:blur(14px);user-select:none;pointer-events:none}
+.map{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);margin-bottom:6px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
 
-  /* ---------- PAGE ---------- */
-  header{padding:64px 0 8px}
-  .kicker{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:3px;color:var(--gold2);text-transform:uppercase}
-  h2.hero{font-family:"Fraunces",serif;font-size:clamp(34px,6vw,58px);line-height:1.06;margin:14px 0 14px;font-weight:600}
-  h2.hero em{font-style:normal;color:var(--gold)}
-  .sub{color:var(--muted);font-size:16.5px;line-height:1.65;max-width:760px}
-  .sub b{color:var(--text)}
-  .brand{display:flex;align-items:center;gap:12px;margin-bottom:26px}
-  .brand img{height:34px;border-radius:8px}
-  .brand a{color:var(--text);text-decoration:none;font-weight:600;letter-spacing:.4px}
-  .brand .at{color:var(--faint);font-size:13px}
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:240px minmax(0,1fr) auto;gap:26px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 26px;scroll-margin-top:24px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .th{display:block;position:relative;aspect-ratio:860/400;overflow:hidden;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05)}
+.sim .th img{width:100%;height:100%;object-fit:contain;display:block;padding:4px;box-sizing:border-box}
+.sim .th .z{position:absolute;left:8px;bottom:8px;font:500 13px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 8px}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:640px}
+.sim p b{color:var(--ink);font-weight:500}
+.audit{margin-top:26px;display:flex;gap:20px;align-items:center;border:2px solid var(--gold);background:rgba(200,162,78,.12);padding:22px 26px;max-width:880px}
+.audit .ic{flex:none;font:500 13px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--bg);background:var(--gold);padding:8px 12px}
+.audit p{margin:0;font-size:17px;font-weight:400;line-height:1.55;color:var(--ink)}
+.audit p b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.audit{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px}.audit p{font-size:16px}}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
 
-  section{margin:54px 0}
-  .sechead{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
-  .sechead .n{font-family:"JetBrains Mono",monospace;color:var(--gold2);font-size:13px}
-  .sechead h3{font-family:"Fraunces",serif;font-size:26px;margin:0;font-weight:600}
-  .sechead .ln{flex:1;height:1px;background:var(--line2)}
+.total{margin-top:22px;display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-top:1px solid var(--gold);padding-top:18px;max-width:880px}
+.total span{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
+.total b{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(34px,4vw,48px);color:var(--gold-hi)}
 
-  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
-  .fact{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:20px 22px;text-align:center}
-  .fact .big{font-family:"Fraunces",serif;font-size:34px;color:var(--gold)}
-  .fact .lbl{color:var(--muted);font-size:13px;line-height:1.5;margin-top:6px}
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
 
-  .insight{border:1px solid var(--line);border-left:3px solid var(--gold2);border-radius:14px;
-    background:var(--panel);padding:22px 24px;margin-bottom:14px}
-  .insight h4{margin:0 0 8px;font-size:17px}
-  .insight h4 .tag{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--gold2);margin-right:10px}
-  .insight p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.65}
-  .insight p b{color:var(--text)}
-  .insight .win{margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--bull)}
-  .insight.fail{border-left-color:var(--bear)}
-  .insight.fail h4 .tag{color:var(--bear)}
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
 
-  .steps{counter-reset:step}
-  .step{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px 24px;margin-bottom:12px;
-    display:flex;gap:18px;align-items:flex-start}
-  .step .num{font-family:"Fraunces",serif;font-size:26px;color:var(--gold);min-width:34px}
-  .step .body{flex:1}
-  .step h4{margin:0 0 6px;font-size:16px}
-  .step p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
-  .step p b{color:var(--text)}
-  .code{display:block;background:rgba(0,0,0,.4);border:1px solid var(--line2);border-radius:10px;
-    padding:12px 16px;margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:13px;color:#9fe3d2;
-    overflow-x:auto;white-space:pre}
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim{grid-template-columns:minmax(0,1fr);gap:14px;padding:20px 18px}
+  .sim .go{text-align:center}
+}
 
-  table{width:100%;border-collapse:collapse;font-size:14px}
-  th{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
-    color:var(--faint);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
-  td{padding:12px;border-bottom:1px solid var(--line2);vertical-align:top;line-height:1.5}
-  td.t{font-family:"JetBrains Mono",monospace;color:var(--bull);white-space:nowrap}
-  .tablewrap{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:6px 10px;overflow-x:auto}
+.map{grid-template-columns:repeat(5,minmax(0,1fr))}
+.sim{grid-template-columns:minmax(0,1fr) auto;align-items:start}
+.sim p{max-width:760px}
+.sim .who{margin-top:12px}
+.sim .lab{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:18px 0 8px}
+.sim ol{margin:0;padding-left:20px;font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:760px}
+.sim ol b{color:var(--ink);font-weight:500}
+.sim code{font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);background:rgba(200,162,78,.08);border:1px solid var(--gold-faint);padding:2px 6px;overflow-wrap:anywhere}
+.sim pre{margin:10px 0 0;max-width:760px;overflow-x:auto;font:400 12.5px/1.6 'JetBrains Mono',monospace;color:var(--ink);background:rgba(0,0,0,.28);border:1px solid var(--gold-faint);padding:14px 16px}
+.sim .ask{margin-top:10px;max-width:760px;border-left:2px solid var(--gold);padding:8px 14px;font-size:14.5px;font-style:italic;color:var(--ink)}
+@media (max-width:860px){.map{grid-template-columns:repeat(2,minmax(0,1fr))}.sim{grid-template-columns:minmax(0,1fr)}}
+.sim .gos{display:grid;gap:10px;align-content:start}
+.sim .gos .go{text-align:center}
 
-  .honest{border:1px dashed rgba(255,107,122,.4);border-radius:14px;padding:20px 24px;background:rgba(255,107,122,.04)}
-  .honest h4{margin:0 0 8px;color:var(--bear);font-size:15px}
-  .honest p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.65}
-  .honest p b{color:var(--text)}
-
-  .cta{border:1px solid var(--line);border-radius:20px;background:linear-gradient(160deg,rgba(230,210,168,.08),rgba(20,28,44,.5));
-    padding:34px;text-align:center}
-  .cta h3{font-family:"Fraunces",serif;font-size:26px;margin:0 0 10px}
-  .cta p{color:var(--muted);margin:0 0 20px}
-  .cta a.btn{display:inline-block;padding:14px 30px;border-radius:12px;text-decoration:none;font-weight:700;
-    background:linear-gradient(135deg,var(--gold),var(--gold2));color:#14100a}
-  footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px;line-height:1.7;text-align:center}
-  footer a{color:var(--c9);text-decoration:none}
+.tbl{width:100%;max-width:880px;border-collapse:collapse;margin-top:24px;font-size:14.5px;font-weight:300;color:var(--dim2)}
+.tbl th{text-align:left;font:500 10.5px 'Jost',sans-serif;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);padding:10px 12px;border-bottom:1px solid var(--gold-dim)}
+.tbl td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);vertical-align:top}
+.tbl td b{color:var(--ink);font-weight:500}
+.tbl .num{font-family:'Playfair Display',serif;font-size:19px;color:var(--gold-hi);white-space:nowrap}
+.steps pre,.sim pre.k{margin:10px 0 0;max-width:760px;overflow-x:auto;font:400 12.5px/1.6 'JetBrains Mono',monospace;color:var(--ink);background:rgba(0,0,0,.28);border:1px solid var(--gold-faint);padding:14px 16px}
+.steps code,.tdesc code{font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);background:rgba(200,162,78,.08);border:1px solid var(--gold-faint);padding:2px 6px;overflow-wrap:anywhere}
+.steps{grid-template-columns:minmax(0,1fr)}.steps li{min-width:0}.steps .st{flex:1 1 0;min-width:0;max-width:780px}.steps pre,.sim pre.k{max-width:100%}
+.steps .st h3{font-family:'Playfair Display',serif;font-weight:500;font-size:21px;color:var(--ink);margin:0 0 6px}
+.calls{display:grid;gap:14px;margin-top:30px;max-width:980px}
+.call{display:grid;grid-template-columns:150px minmax(0,1fr) 190px;gap:24px;align-items:start;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 26px}
+.call.now{border:2px solid var(--gold);background:rgba(200,162,78,.10)}
+.call .d{font:500 12px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2)}
+.call .d b{display:block;font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:var(--ink);letter-spacing:0;margin-top:4px}
+.call .v{font-family:'Playfair Display',serif;font-size:26px;color:var(--gold-hi);margin:0 0 6px}
+.call .who{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.call p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.call p b{color:var(--ink);font-weight:500}
+.call .mk{text-align:right}
+.call .mk .pct{font-family:'Playfair Display',serif;font-size:30px;color:var(--ink)}
+.call .mk .res{display:inline-block;margin-top:8px;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.08em;padding:5px 9px;border:1px solid var(--gold-faint);color:var(--dim2)}
+.call .mk .res.good{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.call .mk .res.bad{color:#e8a39a;border-color:rgba(232,163,154,.4)}
+.call .mk small{display:block;margin-top:6px;font-size:11.5px;color:var(--dim)}
+.verdict{font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.14em;padding:4px 8px;color:var(--bg);background:var(--gold);margin-right:8px}
+.verdict.bad{background:#c9786c}.verdict.miss{background:var(--dim)}
+@media (max-width:860px){.call{grid-template-columns:minmax(0,1fr);gap:10px;padding:20px 18px}.call .mk{text-align:left}.tbl{font-size:13.5px}.tbl th,.tbl td{padding:10px 8px}}
 </style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
 </head>
 <body>
-
-<div id="content">
-<div class="wrap">
-
-<header>
-  <div class="brand">
-    <img src="cloud9-logo.png" alt="Cloud9 Markets logo">
-    <div><a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">CLOUD9 MARKETS</a><br>
-    <span class="at">@cloud9.markets · AI Builds · August 2026</span></div>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>AI Builds</span></div>
   </div>
-  <div class="kicker">Seven agents · One verdict</div>
-  <h2 class="hero">I hired an AI<br>trading firm for <em>15 cents.</em></h2>
-  <p class="sub">TradingAgents is an open-source framework that spins up a full research desk out of AI agents —
-  <b>market, sentiment, news and fundamentals analysts, a bull and a bear who debate each other, a trader,
-  a risk team, and a portfolio manager who makes the final call.</b> I wired it to a dirt-cheap model,
-  pointed it at NVDA, and watched it argue with itself. Then I swapped in a frontier brain and ran the
-  <b>identical ticker on the identical date</b> — and the verdict flipped completely. This is the exact setup,
-  both verdicts, the exact costs — and what that flip really means.</p>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Free setup guide · Updated 18 Nov 2026</div>
+  <h1>Your own AI <span class=free>trading firm</span></h1>
+  <p class=sub>TradingAgents is a free, open-source framework that turns AI models into a research desk: four analysts, a bull and a bear who argue, a trader, a risk team and a portfolio manager who makes the call. Below is the exact setup, what a run costs, which model to put in the chair, and every NVDA call we have run through it, marked to market.</p>
 </header>
 
-<section>
-  <div class="sechead"><span class="n">01</span><h3 class="serif">The run, in four numbers</h3><span class="ln"></span></div>
-  <div class="facts">
-    <div class="fact"><div class="big">7</div><div class="lbl">agent roles — analysts, debaters, trader, risk, portfolio manager</div></div>
-    <div class="fact"><div class="big">~15¢</div><div class="lbl">per full analysis on a budget model via OpenRouter</div></div>
-    <div class="fact"><div class="big">~350k</div><div class="lbl">tokens burned per run — the reports get re-read at every desk</div></div>
-    <div class="fact"><div class="big" style="color:var(--bear)">UNDERWEIGHT</div><div class="lbl">the frontier (GPT-sol) desk's call on NVDA — trim; the $0.15 desk said the opposite (see the flip ↓)</div></div>
+<main>
+  <div class=map>
+    <a href="#setup"><div class=k>6</div><div class=t>Setup steps</div><div class=n>clone · key · run</div></a>
+    <a href="#history"><div class=k>3</div><div class=t>NVDA calls</div><div class=n>marked to market</div></a>
+    <a href="#cost"><div class=k>15¢</div><div class=t>Cost per run</div><div class=n>budget to frontier</div></a>
+    <a href="#model"><div class=k>A/B</div><div class=t>Which AI model</div><div class=n>same data, opposite calls</div></a>
+    <a href="#findings"><div class=k>✓✗</div><div class=t>Honest findings</div><div class=n>what works, what fails</div></a>
   </div>
-</section>
 
-<section>
-  <div class="sechead"><span class="n">02</span><h3 class="serif">Build it — the exact setup</h3><span class="ln"></span></div>
-  <div class="steps">
-    <div class="step"><div class="num">1</div><div class="body">
-      <h4>Clone and install</h4>
-      <p>Python 3.12+ and five minutes. The repo is TauricResearch/TradingAgents on GitHub.</p>
-      <span class="code">git clone https://github.com/TauricResearch/TradingAgents.git
+  <section class=topic id=setup>
+    <div class=tnum>01 · Build it</div>
+    <h2>The exact setup</h2>
+    <p class=tdesc>Python 3.12+ and about five minutes. Verified on <b>TradingAgents v0.3.1</b>.</p>
+    <ol class=steps>
+      <li><span class=sn>1</span><div class=st><h3>Clone and install</h3><p>The repo is <b>TauricResearch/TradingAgents</b> on GitHub.</p>
+<pre>git clone https://github.com/TauricResearch/TradingAgents.git
 cd TradingAgents
-python3 -m venv .venv && .venv/bin/pip install .</span>
-    </div></div>
-    <div class="step"><div class="num">2</div><div class="body">
-      <h4>One key runs every brain</h4>
-      <p>Skip juggling OpenAI/Anthropic/Google keys — one <b>OpenRouter</b> key reaches all of them,
-      including the cheap DeepSeek models that make runs cost cents. Create a <code class="mono">.env</code> in the repo folder:</p>
-      <span class="code">OPENROUTER_API_KEY=sk-or-v1-your-key
+python3 -m venv .venv &amp;&amp; .venv/bin/pip install .</pre></div></li>
+      <li><span class=sn>2</span><div class=st><h3>One key runs every brain</h3><p>One <b>OpenRouter</b> key reaches every model, including the cheap DeepSeek ones that make a run cost cents. Create a <code>.env</code> in the repo folder:</p>
+<pre>OPENROUTER_API_KEY=sk-or-v1-your-key
 TRADINGAGENTS_LLM_PROVIDER=openrouter
 TRADINGAGENTS_DEEP_THINK_LLM=deepseek/deepseek-chat
 TRADINGAGENTS_QUICK_THINK_LLM=deepseek/deepseek-chat
 TRADINGAGENTS_MAX_DEBATE_ROUNDS=2
-TRADINGAGENTS_MAX_RISK_ROUNDS=2</span>
-    </div></div>
-    <div class="step"><div class="num">3</div><div class="body">
-      <h4>Free macro data (optional but worth it)</h4>
-      <p>Stock data comes from yfinance with no key. Add a free <b>FRED</b> key (fred.stlouisfed.org) to the
-      <code class="mono">.env</code> as <code class="mono">FRED_API_KEY=...</code> and the macro analyst gets real
-      Federal Reserve data — rates, inflation, labor.</p>
-    </div></div>
-    <div class="step"><div class="num">4</div><div class="body">
-      <h4>Run the firm</h4>
-      <p>Launch from the repo folder (that's where the <code class="mono">.env</code> is found). Pick a ticker and date,
-      then watch each desk light up live in the terminal.</p>
-      <span class="code">.venv/bin/python -m cli.main</span>
-    </div></div>
-    <div class="step"><div class="num">5</div><div class="body">
-      <h4>Upgrade the brain when it matters</h4>
-      <p>Swap one line to put a frontier model in the chair — same firm, sharper analysts, ~20× the price.</p>
-      <span class="code">TRADINGAGENTS_DEEP_THINK_LLM=openai/gpt-5.6-sol</span>
-    </div></div>
-    <div class="step"><div class="num">6</div><div class="body">
-      <h4>A real run, start to finish — our NVDA example</h4>
-      <p>The CLI walks you through a few prompts, then every desk lights up live in the terminal. Here's the
-      <b>exact frontier run</b> behind this page — NVDA, as of 2026-08-10:</p>
-      <span class="code"><b style="color:var(--gold)">Step 1 · Ticker</b>           NVDA
-<b style="color:var(--gold)">Step 2 · Analysis date</b>    2026-08-10
-<b style="color:var(--gold)">Step 3 · Output language</b>  English (default)
-<b style="color:var(--gold)">Step 4 · Analysts team</b>    market · social · news · fundamentals   <span style="color:var(--faint)">(space toggles, enter = done)</span>
-<span style="color:var(--bull)">✓</span> Research depth  2 debate / 2 risk rounds        <span style="color:var(--faint)">(from .env)</span>
-<span style="color:var(--bull)">✓</span> LLM provider    openrouter · openai/gpt-5.6-sol  <span style="color:var(--faint)">(from .env)</span>
+TRADINGAGENTS_MAX_RISK_ROUNDS=2</pre>
+<p style="margin-top:12px">Have Claude API credit instead? Use your Anthropic key directly. This is the setup behind our November run (Opus as the manager, Haiku for everyone else):</p>
+<pre>ANTHROPIC_API_KEY=your-key
+TRADINGAGENTS_LLM_PROVIDER=anthropic
+TRADINGAGENTS_DEEP_THINK_LLM=claude-opus-5-5
+TRADINGAGENTS_QUICK_THINK_LLM=claude-haiku-5-5
+TRADINGAGENTS_MAX_DEBATE_ROUNDS=3</pre>
+<p style="margin-top:12px"><b>Important for Claude 5.5 models:</b> read the <a href="#bug" style="color:var(--gold-hi)">blank-bear fix</a> below first, or the bear agent can go silent.</p></div></li>
+      <li><span class=sn>3</span><div class=st><h3>Free macro data (optional)</h3><p>Stock data comes from yfinance with no key. Add a free FRED key (fred.stlouisfed.org) to the <code>.env</code> as <code>FRED_API_KEY=...</code> and the news analyst gets real Federal Reserve data: rates, inflation, jobs.</p></div></li>
+      <li><span class=sn>4</span><div class=st><h3>Run the firm</h3><p>Launch from the repo folder (that is where the <code>.env</code> is found), pick a ticker and a date, and watch each desk light up in the terminal.</p>
+<pre>.venv/bin/python -m cli.main</pre></div></li>
+      <li><span class=sn>5</span><div class=st><h3>Upgrade the brain when it matters</h3><p>Change one line to put a frontier model in the manager's chair. Same firm, sharper reasoning, higher price.</p>
+<pre>TRADINGAGENTS_DEEP_THINK_LLM=openai/gpt-5.6-sol</pre></div></li>
+      <li><span class=sn>6</span><div class=st><h3>A real run, start to finish</h3><p>The CLI asks a few questions, then every desk runs live. Our August frontier run on NVDA, as of 2026-08-10:</p>
+<pre>Step 1 · Ticker            NVDA
+Step 2 · Analysis date     2026-08-10
+Step 3 · Output language   English (default)
+Step 4 · Analysts team     market · social · news · fundamentals
+✓ Research depth  2 debate / 2 risk rounds (from .env)
+✓ LLM provider    openrouter · openai/gpt-5.6-sol (from .env)
+Analyst Team   market · sentiment · news · fundamentals   completed
+Research Team  bull · bear · research manager             completed
+Trading Team   trader                                     completed
+Action: Sell — "Trim NVDA to an underweight allocation: at $223.96 the
+17.37× forward P/E leans on unfavourable near-term risk/reward."</pre></div></li>
+    </ol>
+  </section>
 
-  Analyst Team    market · sentiment · news · fundamentals    <span style="color:var(--bull)">completed</span>
-  Research Team   bull · bear · research manager               <span style="color:var(--bull)">completed</span>
-  Trading Team    trader                                       <span style="color:var(--bull)">completed</span>
+  <section class=topic id=history>
+    <div class=tnum>02 · Call history</div>
+    <h2>Every NVDA call, marked to market</h2>
+    <p class=tdesc>Same framework, same ticker, different months and different brains. Marked against NVDA's <b>$156.14 close on 16 November 2026</b>. Three runs are an anecdote, not a track record.</p>
+    <div class=calls>
+      <div class=call>
+        <div class=d>AUGUST 2026<b>10 Aug</b>at $223.96</div>
+        <div><div class=who>Budget desk · deepseek/deepseek-chat</div><div class=v>Buy · Overweight</div>
+          <p>A <b>3–5% position, dollar-cost averaged in</b>. Its stop-loss sat at $224, right where the stock was trading, so it would have stopped itself out almost at once.</p></div>
+        <div class=mk><div class=pct>−30.3%</div><span class="res bad">WRONG WAY</span><small>$223.96 → $156.14</small></div>
+      </div>
+      <div class=call>
+        <div class=d>AUGUST 2026<b>10 Aug</b>at $223.96</div>
+        <div><div class=who>Frontier desk · openai/gpt-5.6-sol</div><div class=v>Underweight · trim</div>
+          <p>Same data, same date, the opposite call: <b>trim NVDA</b> because the 17.4× forward P/E leaned on poor near-term risk/reward. Cost $2.99 for the run.</p></div>
+        <div class=mk><div class=pct>−30.3%</div><span class="res good">RIGHT WAY</span><small>$223.96 → $156.14</small></div>
+      </div>
+      <div class="call now">
+        <div class=d>NOVEMBER 2026<b>17 Nov</b>at $156.14</div>
+        <div><div class=who>Claude desk · Opus 5.5 manager · Haiku 5.5 team</div><div class=v>Underweight · trim, not exit</div>
+          <p><b>Trim to 60–70% of a normal weight in three steps</b>, no new money, hard stop on a close below <b>$139</b>. Why trim: operating cash flow fell from $50.3B to $24.1B, debt rose from $12.3B to $38.4B, and the price is below every moving average with the 10-year yield at 5.15%. Why not sell it all: RSI is 23 (deeply oversold), the forward P/E is 9.9 and the balance sheet is not distressed.</p>
+          <p style="margin-top:10px">Its memory remembered the earlier Buy on 7 Aug (+0.5% over five days, only +0.1% better than the market) and the lesson it wrote then: <b>near the top of the range, size smaller or wait for the pullback.</b></p></div>
+        <div class=mk><div class=pct>Open</div><span class=res>WE WILL MARK IT</span><small>reference $156.14</small></div>
+      </div>
+    </div>
+  </section>
 
-<span style="color:var(--bear)">Action: Sell</span> — "Trim NVDA to an <b>underweight</b> allocation: at $223.96 the
-17.37× forward P/E leans on unfavourable near-term risk/reward."</span>
-      <p class="sub" style="margin-top:14px"><b>⚠ Heads-up on Reddit:</b> the social/sentiment analyst pulls Reddit's
-      public RSS, which now rate-limits aggressively — our run threw <code class="mono">HTTP 429 · Too Many Requests</code>
-      on r/stocks and r/investing and backed off. Sentiment still finishes (it leans on the other sources), but for
-      <b>reliable</b> social data you'll want a proper scraper wired in as an extra tool — e.g. an
-      <b>Apify</b> Reddit actor — rather than the bare RSS feed. Same goes for any source that gates bots.</p>
-    </div></div>
+  <section class=topic id=cost>
+    <div class=tnum>03 · Cost</div>
+    <h2>What a verdict costs</h2>
+    <table class=tbl>
+      <tr><th>Desk</th><th>Models</th><th>Cost per full run</th></tr>
+      <tr><td><b>Budget</b></td><td>deepseek/deepseek-chat (OpenRouter)</td><td class=num>~$0.10–0.15</td></tr>
+      <tr><td><b>Claude</b></td><td>Opus 5.5 manager + Haiku 5.5 team (Anthropic API)</td><td class=num>~$0.50–0.70</td></tr>
+      <tr><td><b>Frontier</b></td><td>openai/gpt-5.6-sol (OpenRouter)</td><td class=num>~$2.50–4.00</td></tr>
+    </table>
+    <p class=capt>One ticker, one date, roughly 350K tokens. The Claude run stays cheap because only the two manager seats use Opus; the analysts, debaters, trader and risk team run on Haiku.</p>
+  </section>
+
+  <section class=topic id=model>
+    <div class=tnum>04 · Which model</div>
+    <h2>Swap the brain, flip the verdict</h2>
+    <p class=tdesc>In August we held everything fixed (ticker, date, data, agents) and swapped only the model. The budget desk said <b>Buy</b>. The frontier desk said <b>Underweight</b>. Two runs on the same cheap model agreed with each other, so the flip is the model's personality, not random noise.</p>
+    <p class=tdesc>Fourteen weeks later NVDA is down 30%, so the expensive brain was right on direction. In November the Claude desk, with a working bear, also said Underweight. <b>Our pick: a strong model in the two manager seats and a cheap, fast model for the team.</b></p>
+  </section>
+
+  <section class=topic id=findings>
+    <div class=tnum>05 · Honest findings</div>
+    <h2>What works, what fails</h2>
+    <div class=sims>
+      <div class=sim><div><div class=co>Works</div><h3>The process is worth watching</h3><p>Four analysts pull real data (fundamentals, technicals, headlines, sentiment), then a bull and a bear argue before a trader and a risk team weigh in. As a way to learn how a desk reasons, it is the best free tool in AI finance.</p></div></div>
+      <div class=sim id=bug><div><div class=co>Fails · Claude 5.5 models</div><h3>The blank bear</h3><p>Claude 5.5 models think before they answer, and TradingAgents caps each answer at 4,096 tokens. In our first Opus run the bear spent the whole budget thinking and returned <b>nothing in all three rounds</b>, and the one-sided debate came back <b>Overweight</b>. With the cap raised, the same model said <b>Underweight</b>. Raise it in a short run script:</p>
+<pre class=k>from tradingagents.graph.trading_graph import TradingAgentsGraph
+from tradingagents.default_config import DEFAULT_CONFIG
+
+orig = TradingAgentsGraph._get_provider_kwargs
+TradingAgentsGraph._get_provider_kwargs = lambda self: {**orig(self), "max_tokens": 16000}
+
+config = DEFAULT_CONFIG.copy()   # provider/models come from your .env
+state, decision = TradingAgentsGraph(config=config).propagate("NVDA", "2026-11-17")
+print(decision)</pre>
+<p style="margin-top:10px">Then check that both <b>bull_history</b> and <b>bear_history</b> in the output have text before you trust a verdict.</p></div></div>
+      <div class=sim><div><div class=co>Fails · budget models</div><h3>A stop-loss at the current price</h3><p>The budget desk put its stop at the price NVDA was trading at. The technical analyst had flagged that level as resistance and the cheap model recycled it without checking it against the price. A human risk manager catches that at a glance.</p></div></div>
+      <div class=sim><div><div class=co>Fails · data</div><h3>Reddit blocks the sentiment feed</h3><p>The sentiment analyst reads Reddit's public RSS, which now returns <b>HTTP 403 and 429</b> errors. The run still finishes on StockTwits and other sources, but for real Reddit data you need a proper scraper (for example an Apify Reddit actor).</p></div></div>
+      <div class=sim><div><div class=co>Missing</div><h3>No price target, by design</h3><p>No agent does valuation math: no DCF, no comps, no earnings model. You get a desk-style decision (buy, hold or sell, plus sizing and risk) but never a 12-month target, whichever model you pay for.</p></div></div>
+    </div>
+    <div class=audit><span class=ic>THE HONEST LINE</span><p>A <b>research tool</b> in the shape of a firm: brilliant for learning how a desk reasons, dangerous if you trade its output raw. Its verdict can flip with the model you plug in. Treat every call as one intern's opinion, not an answer.</p></div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Cloud9 Research</div>
+    <h2>Want the next build the night it drops?</h2>
+    <p>We wire up AI trading tools, test the hype and publish the receipts.</p>
+    <div class=actions><a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a></div>
   </div>
-</section>
-
-<section>
-  <div class="sechead"><span class="n">03</span><h3 class="serif">What it costs per verdict</h3><span class="ln"></span></div>
-  <div class="tablewrap"><table>
-    <tr><th>Brain</th><th>OpenRouter model</th><th>Cost per full analysis*</th></tr>
-    <tr><td>Budget desk</td><td class="t">deepseek/deepseek-chat</td><td>~$0.10–0.15</td></tr>
-    <tr><td>Frontier desk</td><td class="t">openai/gpt-5.6-sol</td><td>~$2.50–4.00</td></tr>
-  </table></div>
-  <p class="sub" style="margin-top:14px;font-size:13.5px">*One ticker, one date, 2 debate rounds, ~350k tokens.
-  The token count barely changes with the model — only the price per token does.</p>
-
-  <div class="sechead" style="margin-top:44px"><span class="n">03b</span><h3 class="serif">The A/B that broke the illusion</h3><span class="ln"></span></div>
-  <div class="tablewrap"><table>
-    <tr><th>Desk</th><th>Brain</th><th>NVDA verdict (same date, same data)</th><th>Measured cost</th></tr>
-    <tr><td>Budget</td><td class="t">deepseek/deepseek-chat</td><td><b style="color:var(--bull)">BUY · Overweight</b> — 3–5% position, DCA in</td><td>~$0.15</td></tr>
-    <tr><td>Frontier</td><td class="t">openai/gpt-5.6-sol</td><td><b style="color:var(--bear)">UNDERWEIGHT</b> — the opposite call</td><td>$2.99 (metered)</td></tr>
-  </table></div>
-  <p class="sub" style="margin-top:14px">Same firm. Same seven agents. Same NVDA, same date, same yfinance data.
-  The only variable was which model sat in the chairs — <b>and the verdict flipped 180°.</b> I paid twenty times
-  more to be told the opposite.</p>
-
-  <div class="insight" style="margin-top:26px;border-left-color:var(--bull)"><h4><span class="tag" style="color:var(--bull)">SCOREBOARD</span>Early days — but the $3 desk is winning</h4>
-    <p>Marking to market: NVDA closed <b>$223.96</b> on the analysis date, and within two sessions it had pulled back
-    to <b>~$217.50 — down about 2.9%</b>. The frontier desk's <b>Underweight is ahead</b>; the budget desk's Buy is
-    underwater. The kicker: the cheap model's stop-loss at $224 — placed at spot — would have stopped its own trade
-    out almost immediately. <b>Full disclaimer:</b> this is one ticker, one run, a few days of price action — an
-    anecdote, not a track record. Direction being right doesn't validate the process any more than the flip
-    invalidated it. But if you're keeping score at home: expensive brain 1, cheap brain 0.</p></div>
-</section>
-
-<section>
-  <div class="sechead"><span class="n">04</span><h3 class="serif">The honest findings</h3><span class="ln"></span></div>
-
-  <div class="insight"><h4><span class="tag">WORKS</span>The process is genuinely impressive to watch</h4>
-    <p>Four analysts pull real data (my run cited NVIDIA's actual fundamentals — the multi-trillion market cap,
-    forward P/E, PEG, margins, the debt load), then a bull and a bear argue the case before a trader and risk team
-    weigh in. As a <b>research workflow demo</b>, it's the best free show in AI finance.</p>
-    <div class="win">→ film the terminal. the debate IS the content.</div></div>
-
-  <div class="insight fail"><h4><span class="tag">FAILS</span>It placed a stop-loss at the current price</h4>
-    <p>The portfolio manager recommended a stop at a level that was, at that moment, <b>roughly where NVDA was
-    trading</b>. Why? The technical analyst had flagged that number as resistance — and the cheap model recycled it
-    as a stop without ever checking it against spot. A human risk manager catches that in one glance.
-    <b>This is the cheap-model tax:</b> numbers get moved around confidently but not sanity-checked.</p></div>
-
-  <div class="insight fail"><h4><span class="tag">MISSING</span>No price target — by design</h4>
-    <p>No agent in the chain does valuation math. There's no DCF, no comps model, no earnings build. The framework
-    outputs a desk-style <b>decision</b> (buy/hold/sell + sizing + risk framing), not an analyst's target. If you want
-    "12-month PT $X", this tool structurally cannot give it to you — no matter which model you pay for.</p></div>
-
-  <div class="insight fail"><h4><span class="tag">THE FLIP</span>Swap the brain, flip the verdict</h4>
-    <p>Held everything fixed — ticker, date, data, agents — and swapped only the model. The budget desk said
-    <b>Overweight</b>. The frontier desk said <b>Underweight</b>. When the same "research process" reaches opposite
-    conclusions depending on which brain you rent, the verdict isn't coming from the data — it's coming from the
-    <b>model's temperament</b>, wearing a research firm as a costume. (To be fair to the machines: two runs on the
-    same cheap model DID agree with each other — the flip is systematic model personality, not random noise. And
-    humans at different desks disagree on NVDA too. But nobody sells you a human desk as an algorithm.)</p></div>
-</section>
-
-<section>
-  <div class="honest">
-    <h4>THE HONEST LINE</h4>
-    <p>This is a research toy with a firm-shaped costume — brilliant for learning how a desk reasons, dangerous if
-    you trade its output raw. It has no valuation engine, its risk checks are only as sharp as the model you pay for,
-    its confidence never wavers even when its numbers should — and as my A/B showed, <b>its final verdict can flip
-    180° based purely on which model you plug in.</b> Treat every verdict as one intern's opinion, not an answer.
-    Educational content only — not financial advice.</p>
-  </div>
-</section>
-
-<section>
-  <div class="cta">
-    <h3 class="serif">Want the next build the night it drops?</h3>
-    <p>We wire up AI trading tools, backtest the hype, and publish the receipts all week.</p>
-    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets</a>
-  </div>
-</section>
+</main>
 
 <footer>
-  Setup verified on TradingAgents v0.3.1 (Aug 2026) · run costs measured via OpenRouter usage metering ·
-  NVDA run analyzed as of 2026-08-07. Educational content only — not financial advice. Do your own research.
-  · <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Instagram</a>
+  <span>Cloud9 Research · MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>Educational content only, not financial advice. Setup verified on TradingAgents v0.3.1. August costs measured with OpenRouter usage metering; the November Claude run cost is from our Anthropic billing. Prices marked to NVDA's 16 Nov 2026 close. Past calls do not predict future results. Do your own research.</div>
 </footer>
-
 </div>
-</div>
-
-</body>
-</html>
+</body></html>
