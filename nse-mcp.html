@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NSE MCP: Connect Claude &amp; ChatGPT to NSE Market Data (Setup + 20 Prompts) · Cloud9</title>
+<meta name="description" content="NSE's free MCP servers let Claude and ChatGPT answer questions from official NSE data: 5 years of daily history for 3,500+ stocks plus near-live prices. Two-minute setup for Claude and ChatGPT, 20 ready-to-copy prompts, real answers and the limits. Updated 18 November 2026.">
+<meta property="og:title" content="NSE MCP: ask Claude or ChatGPT about any NSE stock">
+<meta property="og:description" content="Two-minute setup, 20 ready-to-copy prompts, real answers and the limits. Updated 18 November 2026.">
+<meta property="og:url" content="https://www.cloud9markets.com/nse-mcp.html">
+<link rel="canonical" href="https://www.cloud9markets.com/nse-mcp.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);margin-bottom:6px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:240px minmax(0,1fr) auto;gap:26px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 26px;scroll-margin-top:24px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .th{display:block;position:relative;aspect-ratio:860/400;overflow:hidden;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05)}
+.sim .th img{width:100%;height:100%;object-fit:contain;display:block;padding:4px;box-sizing:border-box}
+.sim .th .z{position:absolute;left:8px;bottom:8px;font:500 13px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 8px}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:640px}
+.sim p b{color:var(--ink);font-weight:500}
+.audit{margin-top:26px;display:flex;gap:20px;align-items:center;border:2px solid var(--gold);background:rgba(200,162,78,.12);padding:22px 26px;max-width:880px}
+.audit .ic{flex:none;font:500 13px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--bg);background:var(--gold);padding:8px 12px}
+.audit p{margin:0;font-size:17px;font-weight:400;line-height:1.55;color:var(--ink)}
+.audit p b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.audit{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px}.audit p{font-size:16px}}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
+
+.total{margin-top:22px;display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-top:1px solid var(--gold);padding-top:18px;max-width:880px}
+.total span{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
+.total b{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(34px,4vw,48px);color:var(--gold-hi)}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim{grid-template-columns:minmax(0,1fr);gap:14px;padding:20px 18px}
+  .sim .go{text-align:center}
+}
+
+.map{grid-template-columns:repeat(5,minmax(0,1fr))}
+.sim{grid-template-columns:minmax(0,1fr) auto;align-items:start}
+.sim p{max-width:760px}
+.sim .who{margin-top:12px}
+.sim .lab{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:18px 0 8px}
+.sim ol{margin:0;padding-left:20px;font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:760px}
+.sim ol b{color:var(--ink);font-weight:500}
+.sim code{font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);background:rgba(200,162,78,.08);border:1px solid var(--gold-faint);padding:2px 6px;overflow-wrap:anywhere}
+.sim pre{margin:10px 0 0;max-width:760px;overflow-x:auto;font:400 12.5px/1.6 'JetBrains Mono',monospace;color:var(--ink);background:rgba(0,0,0,.28);border:1px solid var(--gold-faint);padding:14px 16px}
+.sim .ask{margin-top:10px;max-width:760px;border-left:2px solid var(--gold);padding:8px 14px;font-size:14.5px;font-style:italic;color:var(--ink)}
+@media (max-width:860px){.map{grid-template-columns:repeat(2,minmax(0,1fr))}.sim{grid-template-columns:minmax(0,1fr)}}
+.sim .gos{display:grid;gap:10px;align-content:start}
+.sim .gos .go{text-align:center}
+
+.tbl{width:100%;max-width:880px;border-collapse:collapse;margin-top:24px;font-size:14.5px;font-weight:300;color:var(--dim2)}
+.tbl th{text-align:left;font:500 10.5px 'Jost',sans-serif;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);padding:10px 12px;border-bottom:1px solid var(--gold-dim)}
+.tbl td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);vertical-align:top}
+.tbl td b{color:var(--ink);font-weight:500}
+.tbl .num{font-family:'Playfair Display',serif;font-size:19px;color:var(--gold-hi);white-space:nowrap}
+.steps pre,.sim pre.k{margin:10px 0 0;max-width:760px;overflow-x:auto;font:400 12.5px/1.6 'JetBrains Mono',monospace;color:var(--ink);background:rgba(0,0,0,.28);border:1px solid var(--gold-faint);padding:14px 16px}
+.steps code,.tdesc code{font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);background:rgba(200,162,78,.08);border:1px solid var(--gold-faint);padding:2px 6px;overflow-wrap:anywhere}
+.steps{grid-template-columns:minmax(0,1fr)}.steps li{min-width:0}.steps .st{flex:1 1 0;min-width:0;max-width:780px}.steps pre,.sim pre.k{max-width:100%}
+.steps .st h3{font-family:'Playfair Display',serif;font-weight:500;font-size:21px;color:var(--ink);margin:0 0 6px}
+.calls{display:grid;gap:14px;margin-top:30px;max-width:980px}
+.call{display:grid;grid-template-columns:150px minmax(0,1fr) 190px;gap:24px;align-items:start;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 26px}
+.call.now{border:2px solid var(--gold);background:rgba(200,162,78,.10)}
+.call .d{font:500 12px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2)}
+.call .d b{display:block;font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:var(--ink);letter-spacing:0;margin-top:4px}
+.call .v{font-family:'Playfair Display',serif;font-size:26px;color:var(--gold-hi);margin:0 0 6px}
+.call .who{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.call p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.call p b{color:var(--ink);font-weight:500}
+.call .mk{text-align:right}
+.call .mk .pct{font-family:'Playfair Display',serif;font-size:30px;color:var(--ink)}
+.call .mk .res{display:inline-block;margin-top:8px;font:500 11px 'JetBrains Mono',monospace;letter-spacing:.08em;padding:5px 9px;border:1px solid var(--gold-faint);color:var(--dim2)}
+.call .mk .res.good{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.call .mk .res.bad{color:#e8a39a;border-color:rgba(232,163,154,.4)}
+.call .mk small{display:block;margin-top:6px;font-size:11.5px;color:var(--dim)}
+.verdict{font:500 10.5px 'JetBrains Mono',monospace;letter-spacing:.14em;padding:4px 8px;color:var(--bg);background:var(--gold);margin-right:8px}
+.verdict.bad{background:#c9786c}.verdict.miss{background:var(--dim)}
+@media (max-width:860px){.call{grid-template-columns:minmax(0,1fr);gap:10px;padding:20px 18px}.call .mk{text-align:left}.tbl{font-size:13.5px}.tbl th,.tbl td{padding:10px 8px}}
+
+.pg{margin-top:30px;max-width:980px}
+.pg .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.prompts{list-style:none;margin:0;padding:0}
+.prompts li{display:flex;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--gold-faint);min-width:0}
+.prompts .pn{flex:none;width:30px;font-family:'Playfair Display',serif;font-size:19px;color:var(--gold-hi)}
+.prompts .pq{flex:1 1 0;min-width:0;font-size:16px;font-weight:400;line-height:1.5;color:var(--ink)}
+.prompts .pq small{display:block;font:500 11.5px 'JetBrains Mono',monospace;color:var(--dim);margin-top:4px}
+.prompts .cp{flex:none;cursor:pointer;font:500 11px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-hi);background:transparent;border:1px solid var(--gold-dim);padding:8px 12px}
+.prompts .cp:hover{background:rgba(200,162,78,.12)}
+.srv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:26px;max-width:980px}
+.srv>div{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 24px;min-width:0}
+.srv h3{font-family:'Playfair Display',serif;font-weight:500;font-size:22px;margin:0 0 8px;color:var(--ink)}
+.srv p{margin:8px 0 0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.srv code{display:block;margin-top:10px;font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);background:rgba(200,162,78,.08);border:1px solid var(--gold-faint);padding:8px 10px;overflow-wrap:anywhere}
+@media (max-width:860px){.srv{grid-template-columns:minmax(0,1fr)}.prompts .pq{font-size:15px}}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>AI Builds</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>Free setup guide · Updated 18 Nov 2026</div>
+  <h1>Ask the <span class=free>stock exchange</span> anything</h1>
+  <p class=sub>On 8 November 2026 the National Stock Exchange of India opened two free MCP servers. Connect them to Claude or ChatGPT once and you can ask about any NSE stock in plain English: prices, 52-week ranges, dividends, sector moves, index valuations. The AI pulls the numbers from NSE's own data. Below: the two-minute setup, 20 prompts to copy, real answers we got, and what it can't do.</p>
+</header>
+
+<main>
+  <div class=map>
+    <a href="#what"><div class=k>36</div><div class=t>Tools</div><div class=n>2 NSE servers</div></a>
+    <a href="#setup"><div class=k>2 min</div><div class=t>Setup</div><div class=n>Claude · ChatGPT</div></a>
+    <a href="#prompts"><div class=k>20</div><div class=t>Prompts</div><div class=n>ready to copy</div></a>
+    <a href="#answers"><div class=k>6</div><div class=t>Real answers</div><div class=n>17 Nov 2026 close</div></a>
+    <a href="#limits"><div class=k>✓✗</div><div class=t>Limits</div><div class=n>what it can't do</div></a>
+  </div>
+
+  <section class=topic id=what>
+    <div class=tnum>01 · What it is</div>
+    <h2>A plug between NSE and your AI</h2>
+    <p class=tdesc><b>MCP (Model Context Protocol)</b> is a standard way for AI apps to reach outside data. NSE built the socket; Claude or ChatGPT plugs in and looks up NSE data whenever your question needs it. <b>No account, no API key, no code.</b></p>
+    <div class=srv>
+      <div><div class=co style="font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)">History · 21 tools</div><h3>nse-bhavcopy</h3><p>End-of-day prices for <b style="color:var(--ink);font-weight:500">3,500+ stocks over 5 years</b>, plus indices, valuations, breadth, India VIX and corporate actions. Updated after each close.</p><code>https://mcp.nseindia.in/bhavcopy/cm/mcp</code></div>
+      <div><div class=co style="font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)">Live · 15 tools</div><h3>cm-market</h3><p>Today's market: gainers, losers, live quotes and index values, about <b style="color:var(--ink);font-weight:500">1–3 minutes behind</b> real time. Also covers SME stocks and bonds.</p><code>https://mcp.nseindia.in/cmmkt/mcp</code></div>
+    </div>
+    <p class=capt>Tool counts from our own connection on 18 Nov 2026 (NSE's page says 35+). Source: <a href="https://www.nseindia.com/nse-mcp" target=_blank rel=noopener style="color:var(--gold)">nseindia.com/nse-mcp</a>.</p>
+  </section>
+
+  <section class=topic id=setup>
+    <div class=tnum>02 · Connect it</div>
+    <h2>Setup in two minutes</h2>
+    <p class=tdesc>You need an AI app that supports <b>custom MCP connectors</b>: Claude on a Pro, Max, Team or Enterprise plan, or a paid ChatGPT plan. The NSE side is free.</p>
+    <ol class=steps>
+      <li><span class=sn>1</span><div class=st><h3>Claude: open Connectors</h3><p>In Claude (web or desktop), go to <b>Settings → Connectors</b>.</p></div></li>
+      <li><span class=sn>2</span><div class=st><h3>Add the history server</h3><p>Click <b>Add custom connector</b>. Name it <code>nse-bhavcopy</code>, paste the URL below, then click <b>Add</b>.</p><pre>https://mcp.nseindia.in/bhavcopy/cm/mcp</pre></div></li>
+      <li><span class=sn>3</span><div class=st><h3>Add the live server</h3><p>Repeat with the name <code>cm-market</code>. Leave Advanced settings blank.</p><pre>https://mcp.nseindia.in/cmmkt/mcp</pre></div></li>
+      <li><span class=sn>4</span><div class=st><h3>Switch them on</h3><p>Start a new chat, click <b>+ → Connectors</b> and turn on both NSE connectors. On Team and Enterprise plans an organisation owner adds them in Admin settings first.</p></div></li>
+      <li><span class=sn>5</span><div class=st><h3>ChatGPT instead?</h3><p>On a paid plan, go to <b>Settings → Apps &amp; Connectors → Advanced settings</b> and turn on <b>Developer mode</b>. Then <b>Create</b> a connector for each URL above, with no authentication. Menu names change between app versions, so follow the closest match.</p></div></li>
+      <li><span class=sn>6</span><div class=st><h3>Test it</h3><p>NSE's suggested first question:</p><pre>How did the market close today? Show the top 5 stocks by turnover.</pre></div></li>
+    </ol>
+  </section>
+
+  <section class=topic id=prompts>
+    <div class=tnum>03 · Ask it</div>
+    <h2>20 prompts to copy</h2>
+    <p class=tdesc>Each one maps to a real NSE tool (shown in grey). Use full company names or NSE symbols; the AI finds the right ticker.</p>
+    <div class=pg><div class=co>Market right now · live server</div><ol class=prompts><li><span class=pn>01</span><div class=pq>What are the top 10 gainers on NSE right now?<small>nse_get_gainers</small></div><button class=cp data-q="What are the top 10 gainers on NSE right now?">Copy</button></li>
+<li><span class=pn>02</span><div class=pq>Which Nifty 50 stocks are falling the most today?<small>nse_get_market_movers</small></div><button class=cp data-q="Which Nifty 50 stocks are falling the most today?">Copy</button></li>
+<li><span class=pn>03</span><div class=pq>Give me the live quote for Reliance, with today's high and low.<small>cm_get_stock_quote</small></div><button class=cp data-q="Give me the live quote for Reliance, with today's high and low.">Copy</button></li>
+<li><span class=pn>04</span><div class=pq>How are Nifty Bank and Nifty IT doing right now?<small>cm_get_live_indices</small></div><button class=cp data-q="How are Nifty Bank and Nifty IT doing right now?">Copy</button></li>
+</ol></div>
+<div class=pg><div class=co>Market mood · history server</div><ol class=prompts><li><span class=pn>05</span><div class=pq>How nervous is the market today? Use India VIX and breadth.<small>get_market_mood</small></div><button class=cp data-q="How nervous is the market today? Use India VIX and breadth.">Copy</button></li>
+<li><span class=pn>06</span><div class=pq>Did more stocks rise or fall in the last trading session?<small>get_market_breadth</small></div><button class=cp data-q="Did more stocks rise or fall in the last trading session?">Copy</button></li>
+<li><span class=pn>07</span><div class=pq>Which sectors led the market this month, and which lagged?<small>get_index_movers</small></div><button class=cp data-q="Which sectors led the market this month, and which lagged?">Copy</button></li>
+</ol></div>
+<div class=pg><div class=co>One stock</div><ol class=prompts><li><span class=pn>08</span><div class=pq>How far is TCS from its 52-week high and low?<small>get_52_week_high_low</small></div><button class=cp data-q="How far is TCS from its 52-week high and low?">Copy</button></li>
+<li><span class=pn>09</span><div class=pq>Is Hindalco above its 200-day average?<small>moving_average</small></div><button class=cp data-q="Is Hindalco above its 200-day average?">Copy</button></li>
+<li><span class=pn>10</span><div class=pq>Has trading volume in Reliance been unusually high this month?<small>get_volume_analysis</small></div><button class=cp data-q="Has trading volume in Reliance been unusually high this month?">Copy</button></li>
+<li><span class=pn>11</span><div class=pq>Show me Infosys's daily prices for the last 3 months.<small>get_stock_history</small></div><button class=cp data-q="Show me Infosys's daily prices for the last 3 months.">Copy</button></li>
+<li><span class=pn>12</span><div class=pq>What did HDFC Bank close at on 1 April 2026?<small>get_ltp_by_date</small></div><button class=cp data-q="What did HDFC Bank close at on 1 April 2026?">Copy</button></li>
+</ol></div>
+<div class=pg><div class=co>Compare</div><ol class=prompts><li><span class=pn>13</span><div class=pq>Compare HDFC Bank, ICICI Bank and SBI over the last year, with each one's worst drop.<small>compare_stocks</small></div><button class=cp data-q="Compare HDFC Bank, ICICI Bank and SBI over the last year, with each one's worst drop.">Copy</button></li>
+<li><span class=pn>14</span><div class=pq>How has TCS done against the Nifty 50 over 6 months? Include beta.<small>get_stock_vs_index</small></div><button class=cp data-q="How has TCS done against the Nifty 50 over 6 months? Include beta.">Copy</button></li>
+<li><span class=pn>15</span><div class=pq>Compare Nifty 50, Nifty Bank and Nifty Midcap 100 over the last year.<small>compare_indices</small></div><button class=cp data-q="Compare Nifty 50, Nifty Bank and Nifty Midcap 100 over the last year.">Copy</button></li>
+</ol></div>
+<div class=pg><div class=co>Index valuation</div><ol class=prompts><li><span class=pn>16</span><div class=pq>Is the Nifty 50 cheap or expensive versus its own recent history?<small>get_index_valuation</small></div><button class=cp data-q="Is the Nifty 50 cheap or expensive versus its own recent history?">Copy</button></li>
+<li><span class=pn>17</span><div class=pq>How has Nifty IT performed over 1 week, 1 month, 1 year and 2 years?<small>get_index_performance</small></div><button class=cp data-q="How has Nifty IT performed over 1 week, 1 month, 1 year and 2 years?">Copy</button></li>
+</ol></div>
+<div class=pg><div class=co>Dividends, splits and activity</div><ol class=prompts><li><span class=pn>18</span><div class=pq>Has ITC paid a dividend in the last year? List the ex-dates.<small>get_corporate_actions</small></div><button class=cp data-q="Has ITC paid a dividend in the last year? List the ex-dates.">Copy</button></li>
+<li><span class=pn>19</span><div class=pq>Did Infosys have any splits or bonuses? Adjust the old prices if so.<small>get_corporate_actions</small></div><button class=cp data-q="Did Infosys have any splits or bonuses? Adjust the old prices if so.">Copy</button></li>
+<li><span class=pn>20</span><div class=pq>Which stocks traded the most by value in the last session?<small>get_top_by_volume</small></div><button class=cp data-q="Which stocks traded the most by value in the last session?">Copy</button></li>
+</ol></div>
+
+  </section>
+
+  <section class=topic id=answers>
+    <div class=tnum>04 · Receipts</div>
+    <h2>Real answers we got</h2>
+    <p class=tdesc>Straight from NSE's servers on 18 Nov 2026, using the close of <b>17 Nov 2026</b>.</p>
+    <table class=tbl>
+      <tr><th>We asked</th><th>NSE data said</th></tr>
+      <tr><td><b>How nervous is the market today?</b></td><td>India VIX <span class=num>15.52</span>, down 10.9% in a week but higher than on 68% of days in the past year. 1,404 stocks up, 1,533 down: mixed.</td></tr>
+      <tr><td><b>Is the Nifty 50 cheap or expensive?</b></td><td>P/E <span class=num>20.7×</span> vs a median of 21.7× since Oct 2024. It was lower on only 27% of days in that window.</td></tr>
+      <tr><td><b>How far is TCS from its 52-week high?</b></td><td>Close <span class=num>₹2,406.60</span>, 28.2% below the ₹3,350 high (3 Feb 2026), 21.7% above the ₹1,976.80 low (1 Jul 2026).</td></tr>
+      <tr><td><b>HDFC Bank vs ICICI Bank vs SBI, last year?</b></td><td>ICICI Bank <span class=num>+16.4%</span>, SBI +14.0%, HDFC Bank −17.9% (worst drop along the way: 32.6%).</td></tr>
+      <tr><td><b>Has ITC paid a dividend in the last year?</b></td><td>₹6.50 interim (ex 4 Feb 2026) + ₹8.00 final (ex 27 May 2026) = <span class=num>₹14.50</span>.</td></tr>
+      <tr><td><b>Which sectors led this month?</b></td><td>Nifty PSU Bank <span class=num>+17.2%</span>, Capital Markets +12.5%, Hospitals +12.3%. Weakest: Sugar &amp; Ethanol −8.7% (144 indices ranked).</td></tr>
+    </table>
+    <p class=capt>Past moves describe what happened. They are not a forecast or a recommendation.</p>
+  </section>
+
+  <section class=topic id=limits>
+    <div class=tnum>05 · Honest limits</div>
+    <h2>What it can't do (yet)</h2>
+    <div class=ok>
+      <div><span><b>No intraday candles, ticks or order book.</b> History is end of day; live data is a snapshot 1–3 minutes behind.</span></div>
+      <div><span><b>No F&amp;O.</b> We found no option-chain, futures or FII/DII flow tools on either server.</span></div>
+      <div><span><b>Old prices are not adjusted</b> for splits or bonuses. For long periods add "check for splits or bonuses" to your question.</span></div>
+      <div><span><b>3 months per history call.</b> The AI makes more calls on its own for longer periods, so a 1-year question takes a little longer.</span></div>
+      <div><span><b>Holidays are handled.</b> "Last trading session" works better than "yesterday".</span></div>
+      <div><span><b>Informational use only.</b> NSE's terms bar commercial use and training AI models on the data.</span></div>
+    </div>
+    <div class=audit><span class=ic>THE HONEST LINE</span><p>It makes looking things up <b>effortless</b>. It doesn't make the AI right about what happens next. Use it to check facts fast, then do your own thinking.</p></div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Cloud9 Research</div>
+    <h2>Want the next tool the day it drops?</h2>
+    <p>We wire up new AI market tools, test them and publish the receipts.</p>
+    <div class=actions><a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a></div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research · MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>Educational content only, not financial advice. Not affiliated with NSE, Anthropic or OpenAI. Data via NSE's public MCP servers, queried 18 Nov 2026 (17 Nov 2026 close). Setup steps from nseindia.com/nse-mcp; app menus may change. Past performance does not predict future results.</div>
+</footer>
+</div>
+<script>
+document.querySelectorAll('.cp').forEach(b=>b.addEventListener('click',()=>{
+  navigator.clipboard&&navigator.clipboard.writeText(b.dataset.q).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1400)});
+}));
+</script>
+</body></html>
