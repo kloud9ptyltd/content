@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>5 Skills = Algo Trader · Cloud9</title>
+<title>5 Skills = Top 1% Trader · Cloud9</title>
 <meta name="description" content="Every link from the reel. One free video to learn each of 5 algo trading skills, one free video to practice it, and an open-source GitHub repo to build with.">
-<meta property="og:title" content="5 Skills = Algo Trader">
-<meta property="og:description" content="Trading bots, backtesting, trading, Python and risk management: a free learn video, a free practice video and an open-source repo for each.">
+<meta property="og:title" content="5 Skills = Top 1% Trader">
+<meta property="og:description" content="Trading bots, backtesting, charting, Python and risk management: a free learn video, a practice video, a hands-on AI-prompt project and an open-source repo for each.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="cloud9-luxe.css">
@@ -34,7 +34,22 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
 .ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
 .ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
 .disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
-@media (max-width:860px){.items{grid-template-columns:1fr}.ctaboard{padding:34px 22px}}
+
+.howto{margin:8px auto 0;max-width:900px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.04);padding:28px 30px}
+.howto h3,.task h3{font-family:'Playfair Display',serif;font-weight:500;font-size:22px;margin:0 0 12px;color:var(--gold-hi)}
+.howto ol,.task ol{margin:0;padding-left:22px;font-size:14.5px;font-weight:300;line-height:1.75;color:var(--dim2)}
+.howto li b,.task li b{color:var(--ink);font-weight:500}
+.howto .note{margin-top:12px;font-size:13.5px;font-weight:300;color:var(--dim2);line-height:1.6}
+.task{margin-top:16px;border:1px solid var(--gold-dim);background:rgba(200,162,78,.05);padding:26px 26px 22px}
+.task .meta{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.task .goal{font-size:15px;font-weight:300;line-height:1.7;color:var(--ink);margin:0 0 14px}
+.prompt{position:relative;margin-top:16px;border:1px solid var(--gold-faint);background:rgba(0,0,0,.35)}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--gold-faint);font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.prompt button{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:#0b0a08;border:0;padding:7px 12px;cursor:pointer}
+.prompt pre{margin:0;padding:16px;white-space:pre-wrap;word-break:break-word;font:400 13px/1.65 'JetBrains Mono',monospace;color:var(--ink)}
+.done{margin-top:14px;font-size:14px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.done b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.task,.howto{padding:22px 18px}.items{grid-template-columns:1fr}.ctaboard{padding:34px 22px}}
 </style>
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
 </head>
@@ -53,10 +68,21 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
 
 <header class=hero>
 <div class=eyebrow>From the reel · Free list</div>
-<h1>5 Skills =<br><span class=free>Algo Trader.</span></h1>
-<p class=sub>Every link from the reel. One free video to learn each skill, one free video to practice it, and the open-source GitHub repo to build with.</p>
+<h1>5 Skills =<br><span class=free>Top 1% Trader.</span></h1>
+<p class=sub>Every link from the reel. For each skill: a free video to learn it, a free video to practice it, a hands-on project with a copy-paste AI prompt, and the open-source GitHub repo the pros use.</p>
 </header>
 <main>
+
+<section class=howto>
+  <h3>How to use this page</h3>
+  <ol>
+    <li><b>Watch the Learn video</b> for a skill. Just watch, no notes needed.</li>
+    <li><b>Do the practice project</b> under it. Copy the prompt into ChatGPT or Claude and let the AI walk you through it step by step.</li>
+    <li><b>Open the GitHub repo</b> once your project works, to see how the pros build the same thing at scale.</li>
+    <li><b>Paper trade only.</b> Every project here uses fake money or past data. Never point a bot you just built at real money.</li>
+  </ol>
+  <p class=note>Never coded before? Do the skills in this order: <b>04 Python → 03 Charting → 02 Backtesting → 05 Risk → 01 Trading bots</b>. You can use Google Colab (free, runs in your browser) for every coding project, so there's nothing to install.</p>
+</section>
 <section class=topic id=s1>
   <div class=tnum>01 · Skill</div>
   <h2>Trading bots</h2>
@@ -64,6 +90,21 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
     <a class="item learn" href="https://www.youtube.com/watch?v=J3VEniAKg5A" target=_blank rel=noopener><span class=lbl>Learn</span><strong>Build a Python Trading Bot for Algorithmic Trading Using AI</strong><span class=desc>Ryan O&#x27;Connell, CFA · 38m</span><span class=go>Watch free on YouTube ↗</span></a>
     <a class="item practice" href="https://www.youtube.com/watch?v=iF7osyiDkBY" target=_blank rel=noopener><span class=lbl>Practice</span><strong>How To Build a Stock Trading Bot With Alpaca and Python</strong><span class=desc>connorcreate · 32m</span><span class=go>Watch free on YouTube ↗</span></a>
     <a class="item build" href="https://github.com/TauricResearch/TradingAgents" target=_blank rel=noopener><span class=lbl>Build</span><strong>TauricResearch/TradingAgents</strong><span class=desc>Open-source framework where a team of AI agents (analysts, researchers, a trader and a risk manager) debate every trade.</span><span class=desc><b>★ 123K</b></span><span class=go>Open on GitHub ↗</span></a>
+  </div>
+
+  <div class=task>
+    <div class=meta>Practice project · about 2 hours</div>
+    <h3>Your project</h3>
+    <p class=goal>Build a simple bot that trades SPY on a free <b>paper</b> account (fake money): buy when the price is above its 50-day average, sell when it drops below.</p>
+    <ol><li>Open a free <b>Alpaca paper trading</b> account and copy your paper API keys.</li><li>Open Google Colab or install Python, then paste the prompt below into ChatGPT or Claude.</li><li>Run the bot once a day and check the paper orders in your Alpaca dashboard.</li><li>Optional: run <b>TradingAgents</b> on one ticker to watch a team of AI agents argue about a trade. It needs an API key from an AI provider, and each run costs a little.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>You are my patient coding tutor and I&#x27;m a beginner. Help me build a simple trading bot in Python that ONLY uses Alpaca&#x27;s paper trading account (fake money).
+
+Rules: once a day, check SPY. If the latest close is above its 50-day moving average and I have no position, buy 1 share. If it&#x27;s below and I hold SPY, sell it.
+
+Use the alpaca-py library, read my API keys from environment variables (never hard-code them), print what the bot decided and why, and log every order to a CSV file.
+
+Explain each block of code in plain English, then tell me exactly how to run it step by step.</pre></div>
+    <p class=done><b>You're done when:</b> the bot prints its decision, and the paper order shows up in your Alpaca dashboard.</p>
   </div>
 </section>
 <section class=topic id=s2>
@@ -75,6 +116,24 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
     <a class="item build" href="https://github.com/microsoft/qlib" target=_blank rel=noopener><span class=lbl>Build</span><strong>microsoft/qlib</strong><span class=desc>Microsoft&#x27;s open-source AI quant research platform: data, models and backtests in one place. Advanced: start with backtesting.py from the video first.</span><span class=desc><b>★ 50.4K</b></span><span class=go>Open on GitHub ↗</span></a>
     <a class="item build" href="https://github.com/freqtrade/freqtrade" target=_blank rel=noopener><span class=lbl>Build</span><strong>freqtrade/freqtrade</strong><span class=desc>Free, open-source trading bot with a full backtesting engine and a web UI. Built for crypto markets.</span><span class=desc><b>★ 57.2K</b></span><span class=go>Open on GitHub ↗</span></a>
   </div>
+
+  <div class=task>
+    <div class=meta>Practice project · about 1 hour</div>
+    <h3>Your project</h3>
+    <p class=goal>Test a classic strategy on 15 years of real data and find out if it actually beats just buying and holding.</p>
+    <ol><li>Open Google Colab (free, nothing to install).</li><li>Paste the prompt below into ChatGPT or Claude and run each code cell it gives you.</li><li>Read the comparison table and the AI's explanation of why backtests can lie.</li><li>Advanced: once this makes sense, open <b>Microsoft Qlib</b> to see how a research team backtests machine-learning strategies.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Act as my quant tutor. Using Python with yfinance and backtesting.py, write a beginner-friendly script that:
+
+1. Downloads daily SPY prices from 2010 to today.
+2. Tests a strategy that buys when the 50-day moving average crosses above the 200-day, and sells when it crosses below.
+3. Charges 0.1% commission per trade.
+4. Compares it to simply buying and holding SPY.
+
+Print total return, max drawdown, number of trades and win rate for both, and plot the equity curves.
+
+Then explain in plain English why these results could be misleading (overfitting, look-ahead bias, costs).</pre></div>
+    <p class=done><b>You're done when:</b> you can say in one sentence whether the crossover beat buy-and-hold, and why.</p>
+  </div>
 </section>
 <section class=topic id=s3>
   <div class=tnum>03 · Skill</div>
@@ -83,6 +142,23 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
     <a class="item learn" href="https://www.youtube.com/watch?v=J-ntsk7Dsd0" target=_blank rel=noopener><span class=lbl>Learn</span><strong>How To Read Stock Charts For Beginners</strong><span class=desc>James Rich Young · 11m</span><span class=go>Watch free on YouTube ↗</span></a>
     <a class="item practice" href="https://www.youtube.com/watch?v=2PWx6P0Pbok" target=_blank rel=noopener><span class=lbl>Practice</span><strong>Trading Basics with Paper Trading</strong><span class=desc>TradingView · 16m</span><span class=desc><i>Practise with fake money first.</i></span><span class=go>Watch free on YouTube ↗</span></a>
     <a class="item build" href="https://github.com/tradesdontlie/tradingview-mcp" target=_blank rel=noopener><span class=lbl>Build</span><strong>tradesdontlie/tradingview-mcp</strong><span class=desc>Connects Claude to your TradingView Desktop so AI can read and analyse your charts. Community project, not made by TradingView.</span><span class=desc><b>★ 7.3K</b></span><span class=go>Open on GitHub ↗</span></a>
+  </div>
+
+  <div class=task>
+    <div class=meta>Practice project · about 1 hour</div>
+    <h3>Your project</h3>
+    <p class=goal>Mark up 5 real charts yourself, then have AI check your work like a coach.</p>
+    <ol><li>Make a free <b>TradingView</b> account and open the daily chart of a big stock, such as AAPL.</li><li>Draw the trend, plus your support and resistance lines. Take a screenshot.</li><li>Paste the screenshot and the prompt below into ChatGPT or Claude. Repeat with 5 different stocks.</li><li>Advanced: <b>tradingview-mcp</b> connects Claude Code to TradingView Desktop so the AI can read your charts directly.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>I&#x27;m learning to read stock charts. I&#x27;ve attached a screenshot of a daily candlestick chart I marked up.
+
+Act as a strict but kind trading coach:
+1. Describe the trend in one sentence.
+2. Check whether my support and resistance lines are in the right places and suggest better levels.
+3. Point out any candlestick patterns and what the volume is telling us.
+4. Tell me what beginners usually get wrong on a chart like this.
+
+Don&#x27;t tell me whether to buy or sell. Finish with 3 questions that test whether I understood.</pre></div>
+    <p class=done><b>You're done when:</b> you've marked up 5 charts and your levels mostly match the coach's.</p>
   </div>
 </section>
 <section class=topic id=s4>
@@ -93,6 +169,19 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
     <a class="item practice" href="https://www.youtube.com/watch?v=OQBvSQhkehs" target=_blank rel=noopener><span class=lbl>Practice</span><strong>yfinance Crash Course: Financial Programming in Python</strong><span class=desc>NeuralNine · 27m</span><span class=go>Watch free on YouTube ↗</span></a>
     <a class="item build" href="https://github.com/ranaroussi/yfinance" target=_blank rel=noopener><span class=lbl>Build</span><strong>ranaroussi/yfinance</strong><span class=desc>Pull free Yahoo Finance market data into Python in one line.</span><span class=desc><b>★ 26K</b></span><span class=go>Open on GitHub ↗</span></a>
   </div>
+
+  <div class=task>
+    <div class=meta>Practice project · about 1 hour</div>
+    <h3>Your project</h3>
+    <p class=goal>Your first finance program: a mini dashboard comparing 5 famous stocks.</p>
+    <ol><li>Open Google Colab (free, runs in your browser).</li><li>Paste the prompt below into ChatGPT or Claude. It teaches you one small cell at a time.</li><li>When it works, swap in 5 stocks you care about.</li><li>Then look at <b>yfinance</b> on GitHub. It's the free data library you just used.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Teach me Python by building one small project in Google Colab. I&#x27;ve never coded.
+
+Project: download 1 year of daily prices for AAPL, MSFT, NVDA, JPM and KO with yfinance. Then calculate each stock&#x27;s total return, its average daily return and its volatility, put the results in a table sorted by return, and plot all five prices on one chart rebased to 100.
+
+Give me the code in small cells, one at a time, and explain every line like I&#x27;m 12. After each cell, ask me to run it and tell you what I see before moving on.</pre></div>
+    <p class=done><b>You're done when:</b> you get the table and the chart, and you can change the tickers yourself.</p>
+  </div>
 </section>
 <section class=topic id=s5>
   <div class=tnum>05 · Skill</div>
@@ -101,6 +190,22 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
     <a class="item learn" href="https://www.youtube.com/watch?v=gM65dEuNsMw" target=_blank rel=noopener><span class=lbl>Learn</span><strong>Risk Management &amp; Position Sizing Strategy for Trading</strong><span class=desc>Humbled Trader · 17m</span><span class=go>Watch free on YouTube ↗</span></a>
     <a class="item practice" href="https://www.youtube.com/watch?v=KEwIQYp3Fpg" target=_blank rel=noopener><span class=lbl>Practice</span><strong>Automated Risk Management for Algorithmic Trading in Python</strong><span class=desc>CodeTrading · 16m</span><span class=go>Watch free on YouTube ↗</span></a>
     <a class="item build" href="https://github.com/goldmansachs/gs-quant" target=_blank rel=noopener><span class=lbl>Build</span><strong>goldmansachs/gs-quant</strong><span class=desc>Goldman Sachs&#x27; own Python toolkit for quant finance: pricing and risk.</span><span class=desc><b>★ 14.2K</b></span><span class=go>Open on GitHub ↗</span></a>
+  </div>
+
+  <div class=task>
+    <div class=meta>Practice project · about 1 hour</div>
+    <h3>Your project</h3>
+    <p class=goal>Build a position-size calculator and see, with a simulation, why risking too much per trade wipes people out.</p>
+    <ol><li>Open Google Colab and paste the prompt below into ChatGPT or Claude.</li><li>Try your own numbers in the calculator.</li><li>Run the simulation and compare risking 1%, 5% and 10% per trade.</li><li>Advanced: <b>gs-quant</b> is Goldman Sachs' own toolkit. Its tutorials show how a big bank models risk (some features need a Goldman Marquee account).</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Help me build a position-size calculator in Python for paper trading.
+
+Inputs: account size, the % of my account I&#x27;m willing to lose on one trade (default 1%), entry price and stop-loss price.
+Outputs: how many shares to buy, the dollar amount at risk, and the position as a % of my account. Warn me if the position would be more than 20% of the account.
+
+Then simulate 100 trades with a 45% win rate, where winners make 2x the risk and losers lose 1x. Show how the account changes when I risk 1% vs 5% vs 10% per trade, on a chart.
+
+Explain in plain English what this teaches about the risk of ruin.</pre></div>
+    <p class=done><b>You're done when:</b> you can explain why the 10% version blows up even with the same win rate.</p>
   </div>
 </section>
 <p class=capt>Star counts as of November 2026.</p>
@@ -121,4 +226,7 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
   <div class=disclaimer>For education only, not financial advice. Trading bots can lose money, so paper trade first. Everything linked here is free. Cloud9 is not affiliated with any creator, company or project named.</div>
 </footer>
 </div>
+<script>
+function cp(b){const t=b.closest('.prompt').querySelector('pre').innerText;navigator.clipboard.writeText(t).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)})}
+</script>
 </body></html>
