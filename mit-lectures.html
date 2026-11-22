@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>5 Free MIT Lectures on How Quants Think · Cloud9</title>
+<meta name="description" content="Five free MIT OpenCourseWare lectures on YouTube that show how quants think: poker theory, Andrew Lo's mystery box auction, rebalancing, loss aversion and the fair coin game. Links, what to watch for and the full courses, checked on 22 November 2026.">
+<meta property="og:title" content="5 free MIT lectures on how quants think">
+<meta property="og:description" content="Five free MIT lectures on YouTube, with the link, what each one teaches and the exact minute to jump to. Checked on 22 November 2026.">
+<meta property="og:url" content="https://www.cloud9markets.com/mit-lectures.html">
+<link rel="canonical" href="https://www.cloud9markets.com/mit-lectures.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%;box-sizing:border-box;min-width:0}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+
+.map{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);margin-bottom:6px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:grid;grid-template-columns:240px minmax(0,1fr) auto;gap:26px;align-items:center;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 26px;scroll-margin-top:24px}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .th{display:block;position:relative;aspect-ratio:860/400;overflow:hidden;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05)}
+.sim .th img{width:100%;height:100%;object-fit:contain;display:block;padding:4px;box-sizing:border-box}
+.sim .th .z{position:absolute;left:8px;bottom:8px;font:500 13px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 8px}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:640px}
+.sim p b{color:var(--ink);font-weight:500}
+.audit{margin-top:26px;display:flex;gap:20px;align-items:center;border:2px solid var(--gold);background:rgba(200,162,78,.12);padding:22px 26px;max-width:880px}
+.audit .ic{flex:none;font:500 13px 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--bg);background:var(--gold);padding:8px 12px}
+.audit p{margin:0;font-size:17px;font-weight:400;line-height:1.55;color:var(--ink)}
+.audit p b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.audit{flex-direction:column;align-items:flex-start;gap:12px;padding:18px 20px}.audit p{font-size:16px}}
+.sim .go{display:inline-block;text-decoration:none;white-space:nowrap;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:14px 20px}
+.sim .go:hover{filter:brightness(1.08)}
+
+.total{margin-top:22px;display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-top:1px solid var(--gold);padding-top:18px;max-width:880px}
+.total span{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
+.total b{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(34px,4vw,48px);color:var(--gold-hi)}
+
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:0}
+.steps li{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--gold-faint)}
+.steps li:first-child{padding-top:0}
+.steps .sn{flex:none;width:32px;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);line-height:1.2}
+.steps .st p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.steps .st b{color:var(--ink);font-weight:500}
+
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sim{grid-template-columns:minmax(0,1fr);gap:14px;padding:20px 18px}
+  .sim .go{text-align:center}
+}
+
+.map{grid-template-columns:repeat(5,minmax(0,1fr))}
+.sim{grid-template-columns:minmax(0,1fr) auto;align-items:start}
+.sim p{max-width:760px}
+.sim .who{margin-top:12px}
+.sim .lab{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:18px 0 8px}
+.sim ol{margin:0;padding-left:20px;font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:760px}
+.sim ol b{color:var(--ink);font-weight:500}
+.sim code{font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);background:rgba(200,162,78,.08);border:1px solid var(--gold-faint);padding:2px 6px;overflow-wrap:anywhere}
+.sim pre{margin:10px 0 0;max-width:760px;overflow-x:auto;font:400 12.5px/1.6 'JetBrains Mono',monospace;color:var(--ink);background:rgba(0,0,0,.28);border:1px solid var(--gold-faint);padding:14px 16px}
+.sim .ask{margin-top:10px;max-width:760px;border-left:2px solid var(--gold);padding:8px 14px;font-size:14.5px;font-style:italic;color:var(--ink)}
+@media (max-width:860px){.map{grid-template-columns:repeat(2,minmax(0,1fr))}.sim{grid-template-columns:minmax(0,1fr)}}
+.sim .yt{display:block;position:relative;max-width:440px;aspect-ratio:16/9;overflow:hidden;border:1px solid var(--gold-faint);margin:0 0 16px;background:#000}
+.sim .yt img{width:100%;height:100%;object-fit:cover;display:block}
+.sim .yt .z{position:absolute;left:8px;bottom:8px;font:500 13px 'JetBrains Mono',monospace;color:var(--bg);background:var(--gold);padding:3px 8px}
+.sim .jump{list-style:none;margin:0;padding:0;display:grid;gap:8px;max-width:760px}
+.sim .jump li{display:flex;gap:12px;align-items:baseline;font-size:14.5px;font-weight:300;line-height:1.55;color:var(--dim2)}
+.sim .jump a{flex:none;min-width:62px;text-align:center;text-decoration:none;font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);background:rgba(200,162,78,.08);border:1px solid var(--gold-faint);padding:3px 8px}
+.sim .jump a:hover{border-color:var(--gold)}
+.sim .more{display:inline-block;margin-top:14px;font-size:13px;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold-faint)}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Free Lectures</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+  <div class=eyebrow>5 free lectures · Checked 22 Nov 2026</div>
+  <h1>5 free MIT lectures on how quants <span class=free>think</span></h1>
+  <p class=sub>Five real MIT classes, free on YouTube from MIT OpenCourseWare. Each one has the link, what it teaches, and the exact minute to jump to if you only have ten minutes. All five checked on 22 November 2026.</p>
+</header>
+
+<main>
+  <section class=topic id=map>
+    <div class=tnum>00 · Pick your level</div>
+    <h2>Start where you are.</h2>
+    <p class=tdesc>You do not need to watch all five, or all of any one. <b>Numbers one and two need no maths at all.</b> Three and four use a little. Number five is a real maths lecture, so use the jump links.</p>
+    <div class=map>
+      <a href="#poker"><div class=k>01</div><div class=t>Poker Theory</div><div class=n>No Maths</div></a>
+      <a href="#finance"><div class=k>02</div><div class=t>Finance Theory</div><div class=n>No Maths</div></a>
+      <a href="#portfolio"><div class=k>03</div><div class=t>Portfolio Management</div><div class=n>Some Maths</div></a>
+      <a href="#terms"><div class=k>04</div><div class=t>Financial Terms and Concepts</div><div class=n>Light Maths</div></a>
+      <a href="#stochastic"><div class=k>05</div><div class=t>Stochastic Processes</div><div class=n>Heavy Maths</div></a>
+    </div>
+  </section>
+
+  <section class=topic id=links>
+    <div class=tnum>01 · The five lectures</div>
+    <h2>Free, in one list.</h2>
+    <div class=sims>
+
+      <div class=sim id=poker>
+        <div>
+          <a class=yt href="https://www.youtube.com/watch?v=OTkq4OsG_Yc" target=_blank rel=noopener><img src="img/mit-lectures/poker.jpg" alt="Poker Theory, MIT OpenCourseWare lecture" loading=lazy><span class=z>1.8M VIEWS</span></a>
+          <div class=co>01 · MIT 15.S50 · Lecture 1</div>
+          <h3>Poker Theory</h3>
+          <div class=meta><span class=hot>FREE</span><span>1.8M VIEWS</span><span>30 MIN</span><span>NO MATHS</span></div>
+          <p>The first class of MIT's <b>Poker Theory and Analytics</b> course. PokerStars set up a private, play-money league just for the students, and trading firms put up the prizes: Akuna for the weekly tournaments and Optiver for the live final.</p>
+          <p class=who><b>Taught by:</b> Kevin Desmond.</p>
+          <div class=lab>Jump straight to</div>
+          <ul class=jump>
+            <li><a href="https://www.youtube.com/watch?v=OTkq4OsG_Yc&t=45s" target=_blank rel=noopener>0:45</a><span>the private PokerStars league</span></li>
+            <li><a href="https://www.youtube.com/watch?v=OTkq4OsG_Yc&t=331s" target=_blank rel=noopener>5:31</a><span>why players who beat weak opponents get crushed when the game gets real</span></li>
+            <li><a href="https://www.youtube.com/watch?v=OTkq4OsG_Yc&t=422s" target=_blank rel=noopener>7:02</a><span>the prizes and the live final</span></li>
+          </ul>
+          <p class=who><b>Why it matters:</b> Poker is the cleanest practice there is for <b>betting when you cannot see everything</b>, which is why trading firms like it.</p>
+          <a class=more href="https://ocw.mit.edu/courses/15-s50-poker-theory-and-analytics-january-iap-2015/" target=_blank rel=noopener>Full course: Poker Theory and Analytics ↗</a>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=OTkq4OsG_Yc" target=_blank rel=noopener>Watch on YouTube ↗</a>
+      </div>
+
+      <div class=sim id=finance>
+        <div>
+          <a class=yt href="https://www.youtube.com/watch?v=HdHlfiOAJyE" target=_blank rel=noopener><img src="img/mit-lectures/finance.jpg" alt="Finance Theory, MIT OpenCourseWare lecture" loading=lazy><span class=z>2.9M VIEWS</span></a>
+          <div class=co>02 · MIT 15.401 · Session 1</div>
+          <h3>Finance Theory</h3>
+          <div class=meta><span class=hot>FREE</span><span>2.9M VIEWS</span><span>1 HR 7 MIN</span><span>NO MATHS</span></div>
+          <p>Day one of Andrew Lo's <b>Finance Theory</b> course for MIT Sloan students. He auctions a wrapped box that nobody is allowed to touch or shake. The class bids it up to <b>$45</b>. Inside was an iPod that sold for <b>$149</b>.</p>
+          <p class=who><b>Taught by:</b> Professor Andrew Lo.</p>
+          <div class=lab>Jump straight to</div>
+          <ul class=jump>
+            <li><a href="https://www.youtube.com/watch?v=HdHlfiOAJyE&t=807s" target=_blank rel=noopener>13:27</a><span>the maths professor who became the best-paid hedge fund manager of his year</span></li>
+            <li><a href="https://www.youtube.com/watch?v=HdHlfiOAJyE&t=1563s" target=_blank rel=noopener>26:03</a><span>the mystery box auction</span></li>
+            <li><a href="https://www.youtube.com/watch?v=HdHlfiOAJyE&t=2227s" target=_blank rel=noopener>37:07</a><span>what the $45 tells you about how markets price things</span></li>
+          </ul>
+          <p class=who><b>Why it matters:</b> His point: a market will put a price on anything, even with almost <b>no information</b>, and the discount for the unknown is not crazy.</p>
+          <a class=more href="https://ocw.mit.edu/courses/15-401-finance-theory-i-fall-2008/" target=_blank rel=noopener>Full course: Finance Theory I ↗</a>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=HdHlfiOAJyE" target=_blank rel=noopener>Watch on YouTube ↗</a>
+      </div>
+
+      <div class=sim id=portfolio>
+        <div>
+          <a class=yt href="https://www.youtube.com/watch?v=8TJQhQ2GZ0Y" target=_blank rel=noopener><img src="img/mit-lectures/portfolio.jpg" alt="Portfolio Management, MIT OpenCourseWare lecture" loading=lazy><span class=z>6.1M VIEWS</span></a>
+          <div class=co>03 · MIT 18.S096 · Lecture 16</div>
+          <h3>Portfolio Management</h3>
+          <div class=meta><span class=hot>FREE</span><span>6.1M VIEWS</span><span>1 HR 29 MIN</span><span>SOME MATHS</span></div>
+          <p>From MIT's <b>maths for finance</b> course. The example from the reel: stock A doubles, then halves. Stock B halves, then doubles. Both end exactly where they started. Hold half of each and <b>rebalance</b> after year one, and the mix is up <b>25% in each year</b>.</p>
+          <p class=who><b>Taught by:</b> A former Morgan Stanley trader.</p>
+          <div class=lab>Jump straight to</div>
+          <ul class=jump>
+            <li><a href="https://www.youtube.com/watch?v=8TJQhQ2GZ0Y&t=166s" target=_blank rel=noopener>2:46</a><span>he gives the class five minutes to build a portfolio on a blank page</span></li>
+            <li><a href="https://www.youtube.com/watch?v=8TJQhQ2GZ0Y&t=3102s" target=_blank rel=noopener>51:42</a><span>the two-stock example, "the closest thing to a free lunch"</span></li>
+            <li><a href="https://www.youtube.com/watch?v=8TJQhQ2GZ0Y&t=3901s" target=_blank rel=noopener>1:05:01</a><span>why everyone using the same strategy is dangerous</span></li>
+          </ul>
+          <p class=who><b>Why it matters:</b> The 25% comes from <b>made-up numbers chosen to show the idea</b>. Real stocks do not double and halve on schedule. The lesson is that mixing and rebalancing can beat holding either one.</p>
+          <a class=more href="https://ocw.mit.edu/courses/18-s096-topics-in-mathematics-with-applications-in-finance-fall-2013/" target=_blank rel=noopener>Full course: Topics in Mathematics with Applications in Finance ↗</a>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=8TJQhQ2GZ0Y" target=_blank rel=noopener>Watch on YouTube ↗</a>
+      </div>
+
+      <div class=sim id=terms>
+        <div>
+          <a class=yt href="https://www.youtube.com/watch?v=wvXDB9dMdEo" target=_blank rel=noopener><img src="img/mit-lectures/terms.jpg" alt="Financial Terms and Concepts, MIT OpenCourseWare lecture" loading=lazy><span class=z>8M VIEWS</span></a>
+          <div class=co>04 · MIT 18.S096 · Lecture 1</div>
+          <h3>Financial Terms and Concepts</h3>
+          <div class=meta><span class=hot>FREE</span><span>8M VIEWS</span><span>1 HR</span><span>LIGHT MATHS</span></div>
+          <p>The opening lecture of the same course, and its most watched. He gives the room a choice: <b>lose $280 for certain</b>, or take a gamble with an 80% chance to lose $500 and a 20% chance to win $500. The gamble is worse on average, and some people still take it.</p>
+          <p class=who><b>Taught by:</b> Jake Xia, former Morgan Stanley options trader.</p>
+          <div class=lab>Jump straight to</div>
+          <ul class=jump>
+            <li><a href="https://www.youtube.com/watch?v=wvXDB9dMdEo&t=346s" target=_blank rel=noopener>5:46</a><span>his first day on a Wall Street options desk</span></li>
+            <li><a href="https://www.youtube.com/watch?v=wvXDB9dMdEo&t=2564s" target=_blank rel=noopener>42:44</a><span>why the "holy grail" trading strategy does not exist</span></li>
+            <li><a href="https://www.youtube.com/watch?v=wvXDB9dMdEo&t=2672s" target=_blank rel=noopener>44:32</a><span>the sure loss or the gamble</span></li>
+          </ul>
+          <p class=who><b>Why it matters:</b> In that MIT room only <b>about 6 of 50</b> took the gamble. He says a wider crowd would take it far more often, because people hate locking in a loss. That is the habit behind holding losing trades.</p>
+          <a class=more href="https://ocw.mit.edu/courses/18-s096-topics-in-mathematics-with-applications-in-finance-fall-2013/" target=_blank rel=noopener>Full course: Topics in Mathematics with Applications in Finance ↗</a>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=wvXDB9dMdEo" target=_blank rel=noopener>Watch on YouTube ↗</a>
+      </div>
+
+      <div class=sim id=stochastic>
+        <div>
+          <a class=yt href="https://www.youtube.com/watch?v=TuTmC8aOQJE" target=_blank rel=noopener><img src="img/mit-lectures/stochastic.jpg" alt="Stochastic Processes, MIT OpenCourseWare lecture" loading=lazy><span class=z>1.1M VIEWS</span></a>
+          <div class=co>05 · MIT 18.S096 · Lecture 5</div>
+          <h3>Stochastic Processes</h3>
+          <div class=meta><span class=hot>FREE</span><span>1.1M VIEWS</span><span>1 HR 18 MIN</span><span>HEAVY MATHS</span></div>
+          <p>The maths of things that move at random, like a price. The game from the reel: bet $1 on a fair coin and keep playing until you are <b>up $100 or down $50</b>. You reach the $100 only <b>one time in three</b>.</p>
+          <p class=who><b>Taught by:</b> The course maths instructor (not named in the video).</p>
+          <div class=lab>Jump straight to</div>
+          <ul class=jump>
+            <li><a href="https://www.youtube.com/watch?v=TuTmC8aOQJE&t=1402s" target=_blank rel=noopener>23:22</a><span>the coin game and the one-in-three answer</span></li>
+            <li><a href="https://www.youtube.com/watch?v=TuTmC8aOQJE&t=3744s" target=_blank rel=noopener>1:02:24</a><span>why roulette is built for the casino</span></li>
+            <li><a href="https://www.youtube.com/watch?v=TuTmC8aOQJE&t=4025s" target=_blank rel=noopener>1:07:05</a><span>no strategy can beat a fair game</span></li>
+          </ul>
+          <p class=who><b>Why it matters:</b> A bigger target on a fair bet means you win less often, so the average stays at zero. By the same sum, a $200 target with a $50 stop wins <b>one time in five</b>. This is the hardest of the five lectures.</p>
+          <a class=more href="https://ocw.mit.edu/courses/18-s096-topics-in-mathematics-with-applications-in-finance-fall-2013/" target=_blank rel=noopener>Full course: Topics in Mathematics with Applications in Finance ↗</a>
+        </div>
+        <a class=go href="https://www.youtube.com/watch?v=TuTmC8aOQJE" target=_blank rel=noopener>Watch on YouTube ↗</a>
+      </div>
+
+    </div>
+    <p class=capt>All five links and view counts checked on 22 November 2026. Times are where each moment starts in the video.</p>
+  </section>
+
+  <section class=topic id=know>
+    <div class=tnum>02 · Good to know</div>
+    <h2>Honest notes.</h2>
+    <div class=ok>
+      <div><span><b>Five lectures will not make you a quant.</b> They show you how quants think about bets, prices and risk. The job itself takes years of maths, statistics and code.</span></div>
+      <div><span><b>These are full university classes.</b> Most run an hour or more and they are not edited for entertainment. The jump links are there so you can see the best part first.</span></div>
+      <div><span><b>The 25% a year is a classroom example,</b> built from made-up numbers to show why rebalancing works. Nobody is promising you that return.</span></div>
+      <div><span><b>The coin game is a fair bet with no edge.</b> Real trading has costs, and most strategies have no edge either, which is the point of the lecture.</span></div>
+      <div><span><b>The lectures are from 2008 to 2015.</b> The ideas have not changed, but some of the market examples and numbers are old.</span></div>
+    </div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Want more like this?</div>
+    <h2>Free ways to learn finance, checked before I share them.</h2>
+    <p>I find free courses, tools and lectures for markets and quant finance, and I watch or test them first. Follow for the next list.</p>
+    <div class=actions>
+      <a class=btn-gold href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>The lectures are published by MIT OpenCourseWare under a Creative Commons licence. Cloud9 is not affiliated with MIT, MIT OpenCourseWare, the lecturers, PokerStars, Akuna Capital, Optiver or Morgan Stanley; names are used only to describe the lectures. View counts change. Trading involves risk of loss.</div>
+</footer>
+</div>
+</body></html>
