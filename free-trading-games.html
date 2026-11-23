@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>5 Free Games That Train You Like a Quant Trader · Cloud9</title>
+<meta name="description" content="Every game from the reel. Jane Street's free trading card game, plus 4 free games that drill what quant interviews test: mental math, bet sizing, estimation and expected value.">
+<meta property="og:title" content="5 Free Games That Train You Like a Quant Trader">
+<meta property="og:description" content="Figgie by Jane Street, plus free games for mental math, Kelly bet sizing, Fermi estimation and expected value. A practice plan and a copy-paste AI coach prompt for each.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%;box-sizing:border-box;min-width:0}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.lede{font-size:15px;font-weight:300;line-height:1.75;color:var(--dim2);max-width:820px;margin:0}
+.lede b{color:var(--ink);font-weight:500}
+.capt{margin-top:14px;font-size:12px;letter-spacing:.04em;color:var(--dim);max-width:780px;line-height:1.6}
+.items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.item{display:flex;flex-direction:column;gap:8px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:20px 18px;min-width:0;text-decoration:none;color:var(--ink)}
+.item:hover{border-color:var(--gold-dim);background:rgba(200,162,78,.06)}
+.item .lbl{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.item strong{font-family:'Playfair Display',serif;font-weight:500;font-size:19px;line-height:1.3;overflow-wrap:anywhere}
+.item .desc{font-size:13.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.item .desc b{color:var(--gold-hi);font-weight:500}
+.item .go{margin-top:auto;padding-top:6px;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hi)}
+.item.build{background:rgba(200,162,78,.06);border-color:var(--gold-dim)}
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+
+.howto{margin:8px auto 0;max-width:900px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.04);padding:28px 30px}
+.howto h3,.task h3{font-family:'Playfair Display',serif;font-weight:500;font-size:22px;margin:0 0 12px;color:var(--gold-hi)}
+.howto ol,.task ol{margin:0;padding-left:22px;font-size:14.5px;font-weight:300;line-height:1.75;color:var(--dim2)}
+.howto li b,.task li b{color:var(--ink);font-weight:500}
+.howto .note{margin-top:12px;font-size:13.5px;font-weight:300;color:var(--dim2);line-height:1.6}
+.task{margin-top:16px;border:1px solid var(--gold-dim);background:rgba(200,162,78,.05);padding:26px 26px 22px}
+.task .meta{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.task .goal{font-size:15px;font-weight:300;line-height:1.7;color:var(--ink);margin:0 0 14px}
+.prompt{position:relative;margin-top:16px;border:1px solid var(--gold-faint);background:rgba(0,0,0,.35)}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--gold-faint);font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.prompt button{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:#0b0a08;border:0;padding:7px 12px;cursor:pointer}
+.prompt pre{margin:0;padding:16px;white-space:pre-wrap;word-break:break-word;font:400 13px/1.65 'JetBrains Mono',monospace;color:var(--ink)}
+.done{margin-top:14px;font-size:14px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.done b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.task,.howto{padding:22px 18px}.items{grid-template-columns:1fr}.ctaboard{padding:34px 22px}}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Trading Games</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+<div class=eyebrow>From the reel · Free list</div>
+<h1>5 free games that train you<br><span class=free>like a quant trader.</span></h1>
+<p class=sub>Every game from the reel. Jane Street's own trading card game, plus four free games that drill exactly what quant interviews test. For each one: what it trains, a practice plan and a copy-paste AI coach prompt.</p>
+</header>
+<main>
+
+<section class=howto>
+  <h3>How to use this page</h3>
+  <ol>
+    <li><b>Play one game a day</b> for 10–15 minutes. Short and daily beats one long session.</li>
+    <li><b>Follow the practice plan</b> under each game. It tells you what to focus on, so you're training, not just clicking.</li>
+    <li><b>Stuck? Use the AI coach.</b> Copy the prompt into ChatGPT or Claude and it will drill you on the same skill and explain what you got wrong.</li>
+    <li><b>Write down your score</b> each day. Watching it climb is the whole point.</li>
+  </ol>
+  <p class=note>New to all of this? Go in this order: <b>02 Mental math → 05 Expected value → 04 Estimation → 03 Bet sizing → 01 Figgie</b>. Figgie is the most fun, but it gets much easier once the other four skills click. These are games with play money only. Nothing here involves real money.</p>
+</section>
+
+<section class=topic id=s1>
+  <div class=tnum>01 · Made by Jane Street</div>
+  <h2>Figgie: the trading card game</h2>
+  <p class=lede>Jane Street invented Figgie in 2013 to simulate open-outcry commodities trading, and still teaches it. Four or five players start with play money and a hand from a 40-card deck. <b>One suit is the goal suit</b>, and nobody knows which. For 4 minutes everyone bids and offers on cards. At the bell, each goal-suit card pays $10 from the pot, and whoever holds the most goal cards wins the rest.</p>
+  <div class=items>
+    <a class="item build" href="https://www.figgie.com/play" target=_blank rel=noopener><span class=lbl>Play</span><strong>Figgie in your browser</strong><span class=desc>Play as a guest, no account needed. Not enough people online? Add bots to the empty seats with the + button.</span><span class=go>Play free ↗</span></a>
+    <a class="item learn" href="https://www.figgie.com/how-to-play" target=_blank rel=noopener><span class=lbl>Learn</span><strong>Rules, strategy and examples</strong><span class=desc>The official rules page, with a tutorial video and tips from Jane Street traders.</span><span class=go>Read the rules ↗</span></a>
+    <a class="item practice" href="https://apps.apple.com/us/app/figgie-by-jane-street/id6466661064" target=_blank rel=noopener><span class=lbl>App</span><strong>Figgie by Jane Street</strong><span class=desc>Free on the App Store for iPhone and iPad.</span><span class=go>Get the app ↗</span></a>
+    <a class="item practice" href="https://play.google.com/store/apps/details?id=com.janestreet.figgie" target=_blank rel=noopener><span class=lbl>App</span><strong>Figgie on Android</strong><span class=desc>Free on Google Play.</span><span class=go>Get the app ↗</span></a>
+  </div>
+
+  <div class=task>
+    <div class=meta>Practice plan · 3 sessions of 20 minutes</div>
+    <h3>Your project</h3>
+    <p class=goal>Learn to work out the goal suit from what other players buy and sell, then price cards by how sure you are.</p>
+    <ol><li><b>Session 1:</b> read the rules page, then play 3 rounds against bots. Just learn the buttons.</li><li><b>Session 2:</b> before trading, count your own hand. Remember the goal suit is the same colour as the 12-card suit, so the suit you see most of is a clue.</li><li><b>Session 3:</b> watch which suit everyone keeps bidding on. That's the order flow telling you what they think. Buy that suit early while it's cheap and sell the others.</li><li>After each session, paste your notes into the AI coach below.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>I'm learning Figgie, Jane Street's trading card game. Rules: 40 cards, suits of 12, 10, 10 and 8 cards. The goal suit is the same colour as the 12-card suit and has 8 or 10 cards. Each goal card pays $10 at the end, and whoever holds the most goal cards wins the rest of the $200 pot.
+
+Act as my trading coach:
+1. My starting hand was: [e.g. 4 spades, 2 clubs, 3 hearts, 1 diamond]. Which suit is most likely the goal suit, and roughly how likely? Show the reasoning simply.
+2. Based on that, what's a fair price for one card of each suit?
+3. During the round, other players kept bidding on: [suit]. How should that change my guess?
+
+Explain it like I'm new to probability, then give me 3 quick practice hands to work out on my own.</pre></div>
+    <p class=done><b>You're done when:</b> you can guess the goal suit before the bell in most rounds, and you finish a session up on chips against bots.</p>
+  </div>
+</section>
+
+<section class=topic id=s2>
+  <div class=tnum>02 · Skill</div>
+  <h2>Mental math: Speed Engine</h2>
+  <p class=lede>Trading firms test fast arithmetic in their first rounds because traders do it all day. Speed Engine gives you 60-second rounds. Practice mode has 5 lives and adds 5 seconds for every correct answer. Competitive mode is sudden death for the leaderboard.</p>
+  <div class=items>
+    <a class="item build" href="https://myntbit.com/games/speed-engine" target=_blank rel=noopener><span class=lbl>Play</span><strong>Speed Engine</strong><span class=desc>By MyntBit, a quant interview prep site. Start in Practice mode.</span><span class=go>Play free ↗</span></a>
+  </div>
+
+  <div class=task>
+    <div class=meta>Practice plan · 10 minutes a day for a week</div>
+    <h3>Your project</h3>
+    <p class=goal>Double your Speed Engine score in 7 days.</p>
+    <ol><li>Day 1: play 3 rounds in Practice mode and write down your best score.</li><li>Every day after: 5 minutes of drills with the AI coach, then 3 rounds of the game.</li><li>Learn the shortcuts the coach shows you, like multiplying by 25 or squaring numbers near 50.</li><li>Day 7: play 3 rounds and compare with day 1.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Be my mental math coach for quant trading interviews.
+
+Give me 10 questions at a time, one by one: multiplication of 2-digit numbers, percentages, fractions to decimals, and simple division. Wait for my answer before showing the next one. Don't show answers early.
+
+After each set of 10, tell me my score, which types I was slowest or wrong on, and teach me one shortcut for that type (for example, multiplying by 25, squaring numbers near 50, or turning a fraction into a percentage fast). Then make the next set slightly harder.</pre></div>
+    <p class=done><b>You're done when:</b> your day-7 score is about double your day-1 score.</p>
+  </div>
+</section>
+
+<section class=topic id=s3>
+  <div class=tnum>03 · Skill</div>
+  <h2>Bet sizing: Risk Lab</h2>
+  <p class=lede>Knowing a bet is good isn't enough. You also have to know how much to put on it. The Kelly criterion gives the size that grows your money fastest without blowing up. Risk Lab makes you size bets round after round. Practice mode gives you 3 saves if you go bust, and competitive mode is 25 rounds with no safety net.</p>
+  <div class=items>
+    <a class="item build" href="https://myntbit.com/games/risk-lab" target=_blank rel=noopener><span class=lbl>Play</span><strong>Risk Lab</strong><span class=desc>By MyntBit. Kelly criterion bet sizing game.</span><span class=go>Play free ↗</span></a>
+  </div>
+
+  <div class=task>
+    <div class=meta>Practice plan · about 30 minutes</div>
+    <h3>Your project</h3>
+    <p class=goal>Learn the Kelly formula well enough to size a bet in your head, then prove it in the game.</p>
+    <ol><li>Paste the prompt below into ChatGPT or Claude and work through its examples.</li><li>Play Risk Lab in Practice mode and size every bet with the formula.</li><li>Then try one game betting double the Kelly size and watch what happens to your bankroll.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Teach me the Kelly criterion like I'm a beginner.
+
+1. Explain the formula for a simple bet with win probability p and payout odds b, in plain English.
+2. Work through 3 examples, like a coin that lands heads 60% of the time paying even money.
+3. Explain why betting MORE than Kelly is worse than betting less, and what "half Kelly" means.
+4. Then quiz me with 5 bets, one at a time, and I'll tell you what fraction of my bankroll I'd bet.
+
+This is for learning and a play-money game only. Don't give any real trading or betting advice.</pre></div>
+    <p class=done><b>You're done when:</b> you can size a bet in under 10 seconds and finish a Practice game without using a save.</p>
+  </div>
+</section>
+
+<section class=topic id=s4>
+  <div class=tnum>04 · Skill</div>
+  <h2>Estimation: Market Maker</h2>
+  <p class=lede>A classic trading interview question: "Make me a market on how many piano tuners there are in New York." You can't know the answer, so you estimate it and quote a range. Market Maker asks order-of-magnitude questions and has you set a bid and ask around your guess.</p>
+  <div class=items>
+    <a class="item build" href="https://myntbit.com/games/market-maker" target=_blank rel=noopener><span class=lbl>Play</span><strong>Market Maker</strong><span class=desc>By MyntBit. Fermi estimation, quoted as a bid/ask spread.</span><span class=go>Play free ↗</span></a>
+  </div>
+
+  <div class=task>
+    <div class=meta>Practice plan · 15 minutes a day for 5 days</div>
+    <h3>Your project</h3>
+    <p class=goal>Get your estimates within 10x of the real answer and learn to set a range you'd actually trade on.</p>
+    <ol><li>Do 3 estimation questions with the AI coach. Say your reasoning out loud, step by step.</li><li>Play Market Maker and keep your spread tight only when you're confident.</li><li>Note which kinds of questions you're furthest off on, and practise those with the coach.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Act as a trading interviewer giving me Fermi estimation questions (like "How many golf balls fit in a school bus?").
+
+For each question:
+1. Ask it, then wait for my estimate and my reasoning.
+2. Ask me to "make a market": a bid and an ask around my estimate.
+3. Show me a clean step-by-step estimate and the rough real answer.
+4. Tell me whether my range was too wide, too narrow or about right, and which assumption hurt me most.
+
+Give me 5 questions, starting easy and getting harder.</pre></div>
+    <p class=done><b>You're done when:</b> most of your estimates land within 10x of the real answer and you can explain every step.</p>
+  </div>
+</section>
+
+<section class=topic id=s5>
+  <div class=tnum>05 · Skill</div>
+  <h2>Expected value: Probability Poker</h2>
+  <p class=lede>Expected value is the average result of a bet if you played it many times. Every trade is an EV question. Probability Poker gives you timed EV problems. Practice mode has 5 lives and 30 seconds a question, and competitive mode is sudden death with 15 seconds.</p>
+  <div class=items>
+    <a class="item build" href="https://myntbit.com/games/probability-poker" target=_blank rel=noopener><span class=lbl>Play</span><strong>Probability Poker</strong><span class=desc>By MyntBit. Timed expected-value questions.</span><span class=go>Play free ↗</span></a>
+  </div>
+
+  <div class=task>
+    <div class=meta>Practice plan · about 1 hour over a week</div>
+    <h3>Your project</h3>
+    <p class=goal>Answer EV questions inside the 30-second limit and explain why each answer is right.</p>
+    <ol><li>Work through the AI coach's dice and card problems first.</li><li>Play Probability Poker in Practice mode. Write down any question you missed.</li><li>Paste the missed questions back into the coach and ask for the shortcut.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Teach me expected value for quant trading interviews. I'm a beginner.
+
+1. Explain expected value in plain English with one dice example.
+2. Then give me 8 questions one at a time, getting harder: dice games, card draws, coin-flip bets, and "would you take this bet?" questions.
+3. Wait for my answer each time. If I'm wrong, show the fastest way to work it out.
+4. At the end, list the 3 patterns that come up most in interviews.</pre></div>
+    <p class=done><b>You're done when:</b> you get 7 out of 8 coach questions right and clear 10 questions in a Practice game.</p>
+  </div>
+</section>
+<p class=capt>Figgie is made by Jane Street. Games 02–05 are made by MyntBit, a separate quant interview prep site, not by Jane Street. Game details checked November 2026; some features may need a free account.</p>
+<div class=ctaboard>
+  <div class=lbl>Keep going</div>
+  <h2>Want the full quant path? Start here.</h2>
+  <p>The full free roadmap for learning quant finance, step by step, including the firms that fly you out for their intern programmes.</p>
+  <div class=actions>
+    <a class=btn-gold href="https://cloud9markets.com/quant.html" target=_blank rel=noopener>Open the quant hub</a>
+    <a class=btn-line href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+  </div>
+</div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>For education only, not financial advice. These are play-money games. Everything linked here is free to start. Cloud9 is not affiliated with Jane Street, MyntBit or any company named.</div>
+</footer>
+</div>
+<script>
+function cp(b){const t=b.closest('.prompt').querySelector('pre').innerText;navigator.clipboard.writeText(t).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)})}
+</script>
+</body></html>
