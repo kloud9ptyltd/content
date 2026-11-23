@@ -1,130 +1,206 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Backtest Any Strategy in TradingView with Claude — Free · Cloud9</title>
-<meta property="og:title" content="Describe a strategy in English. AI backtests it in TradingView."/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Backtest Any Indicator in TradingView with Claude: Free · Cloud9</title>
+<meta property="og:title" content="Backtest any indicator in TradingView with Claude. In plain English."/>
 <meta property="og:description" content="Claude Code writes the Pine Script strategy, compiles it, runs TradingView's Strategy Tester with real fees, and reads the results back — all on your machine, free."/>
 <meta property="og:image" content="https://www.cloud9markets.com/tv-backtest-stats.jpg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
 <style>
-  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
-    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--red:#ff6a6a;--c9:#46a8ff}
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
-    background:radial-gradient(900px 500px at 80% -5%,rgba(106,168,255,.10),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(22,224,138,.07),transparent 55%),var(--bg)}
-  a{color:var(--c9)}
-  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
-  .c9logo{height:34px;width:auto;display:block}
-  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
-  h1{font-size:34px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:24px 0 10px}
-  h1 em{font-style:normal;color:var(--g)}
-  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
-  .lede b{color:#fff}
-  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
-  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
-  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
-  .step{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
-  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--g);color:#04130c;font-weight:900;font-size:14px;margin-right:10px}
-  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
-  .step p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0;padding-left:36px}
-  .code{position:relative;margin:12px 0 0 36px;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:13px 44px 13px 14px;
-    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;line-height:1.55;color:#d8e6ff;white-space:pre-wrap;word-break:break-word}
-  .cp{position:absolute;top:8px;right:8px;font-size:11px;font-weight:700;color:var(--mut);background:var(--card2);border:1px solid var(--line2);border-radius:7px;padding:5px 9px;cursor:pointer}
-  .cp:active{color:var(--g)}
-  .note{font-size:13px;color:var(--faint);margin-top:9px;padding-left:36px}
-  .note b{color:var(--mut)}
-  .shot{display:block;width:100%;border-radius:14px;border:1px solid var(--line);margin-top:14px}
-  .cap{font-size:12.5px;color:var(--faint);margin-top:8px;text-align:center}
-  .demo{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
-  .demo h3{font-size:17px;font-weight:800}
-  .demo p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0}
-  .demo .code{margin-left:0}
-  .demo .note{padding-left:0}
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
-  .stat{background:var(--card2);border:1px solid var(--line2);border-radius:13px;padding:12px 10px;text-align:center}
-  .stat .v{font-size:19px;font-weight:850;letter-spacing:-.3px}
-  .stat .v.up{color:var(--g)} .stat .v.dn{color:var(--red)} .stat .v.nt{color:var(--blu)}
-  .stat .k{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--faint);margin-top:4px}
-  .check{margin-top:10px;padding-left:0;list-style:none}
-  .check li{font-size:14px;line-height:1.55;color:#cfd8e4;padding:7px 0 7px 28px;position:relative;border-top:1px solid var(--line2)}
-  .check li:first-child{border-top:0}
-  .check li::before{content:"✓";position:absolute;left:2px;color:var(--g);font-weight:900}
-  .check li.x::before{content:"✕";color:var(--red)}
-  .check li b{color:#fff}
-  .cta{margin-top:28px;background:linear-gradient(180deg,rgba(70,168,255,.14),var(--card));border:1px solid rgba(70,168,255,.35);border-radius:20px;padding:22px;text-align:center}
-  .cta h2{font-size:21px;font-weight:850}
-  .cta p{font-size:14px;color:#cfd8e4;margin:8px 0 14px}
-  .btn{display:inline-block;background:var(--c9);color:#04101f;font-weight:850;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none}
-  details{margin:12px 0 0 0}
-  details summary{cursor:pointer;font-size:13.5px;font-weight:800;color:var(--blu);padding:4px 0;list-style:none}
-  details summary::before{content:"▸ "} details[open] summary::before{content:"▾ "}
-  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
+/* page-level additions, same palette and type as tradingview-tools.html and tv-indicator-bench.html */
+.section{max-width:980px;margin:0 auto;padding:56px 0}
+.section + .section{border-top:1px solid var(--gold-faint)}
+.section .kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.section h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(26px,3.6vw,42px);line-height:1.18;margin:0 0 20px;text-wrap:pretty}
+.section h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(20px,2.4vw,26px);line-height:1.25;margin:0 0 12px;color:var(--ink)}
+.section p.lead{font-size:16px;font-weight:300;line-height:1.75;letter-spacing:.01em;color:#DDD2BE;max-width:760px;margin:0 0 18px}
+.section p.lead b,.note b{color:var(--ink);font-weight:500}
+.section code{font:500 12.5px 'JetBrains Mono',monospace;color:var(--gold-hi);background:rgba(200,162,78,.08);border:1px solid var(--gold-faint);padding:2px 6px;overflow-wrap:anywhere}
+.note{font-size:14px;font-weight:300;line-height:1.7;color:var(--dim2);max-width:760px;margin:0 0 18px}
+.hero h1 .free{white-space:nowrap}
+.hero .sub b{color:var(--ink);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:26px}
+.chips span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:5px 10px}
+
+.tblwrap{overflow-x:auto;border:1px solid var(--gold-faint);margin:8px 0 10px;max-width:760px}
+table.lux{width:100%;border-collapse:collapse}
+table.lux th{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);font-weight:500;text-align:left;padding:14px 16px;border-bottom:1px solid var(--gold-dim)}
+table.lux th.r,table.lux td.num{text-align:right}
+table.lux td{font-size:14.5px;color:var(--ink);padding:12px 16px;border-bottom:1px solid var(--gold-faint)}
+table.lux tr:last-child td{border-bottom:none}
+table.lux td.rk{width:34px;padding-right:0;font-family:'Playfair Display',serif;color:var(--dim)}
+table.lux td.name{font-family:'Playfair Display',serif;font-size:16px}
+table.lux td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+table.lux .pos{color:var(--gold-hi);font-weight:500}
+table.lux .neg{color:#C97B6B}
+table.lux tr.win td{background:rgba(200,162,78,.06)}
+table.lux tr.ref td{background:rgba(239,231,216,.05);border-top:1px dashed var(--gold-dim);font-style:italic}
+table.lux tr.ref td.name::after{content:"REFERENCE";font:500 9px 'Jost',sans-serif;font-style:normal;letter-spacing:.24em;color:var(--bg);background:var(--gold);padding:3px 7px;margin-left:10px;vertical-align:middle;white-space:nowrap}
+.tblcap{font-size:12px;letter-spacing:.04em;line-height:1.6;color:var(--dim);margin:0 0 26px;max-width:760px;font-family:'Playfair Display',serif;font-style:italic}
+.golink{display:inline-block;text-decoration:none;text-align:center;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:15px 22px}
+.golink:hover{color:var(--bg);filter:brightness(1.08)}
+
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:22px 0}
+.stat{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 18px}
+.stat .big{font-family:'Playfair Display',serif;font-size:clamp(26px,3.4vw,38px);color:var(--ink);line-height:1;margin-bottom:10px}
+.stat .big.up{color:var(--gold-hi)}
+.stat .big.dn{color:#C97B6B}
+.stat .tag{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.shot{display:block;width:100%;height:auto;border:1px solid var(--gold-faint);margin-top:22px}
+.cap{font-size:12px;letter-spacing:.04em;color:var(--dim);margin-top:10px}
+
+.codeblock{border:1px solid var(--gold-faint);background:#0E0C08;margin:16px 0 18px;max-width:100%}
+.codeblock .head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px 10px 16px;border-bottom:1px solid var(--gold-faint)}
+.codeblock .head .t{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.copybtn{font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-hi);background:transparent;border:1px solid var(--gold-dim);padding:10px 16px;min-height:40px;cursor:pointer;flex:none}
+.copybtn:hover{border-color:var(--gold-hi);color:#fff}
+.copybtn.copied{color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));border-color:transparent}
+pre.code{margin:0;padding:16px 18px;overflow-x:auto;font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.6;color:#D9CFB8;white-space:pre}
+
+.card2{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:26px 26px 14px;margin-top:22px}
+.card2 .n{display:inline-block;font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);margin-right:12px}
+.card2 h3{display:flex;align-items:baseline}
+.card2 .note:last-child{margin-bottom:12px}
+.card2 .note a{overflow-wrap:anywhere}
+details{margin:14px 0 0}
+details summary{cursor:pointer;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi);padding:10px 0;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸ "}
+details[open] summary::before{content:"▾ "}
+
+.ok{display:grid;gap:12px;margin:8px 0 0;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.ok div::before{content:'✓';color:var(--gold);flex:none}
+.ok div.x::before{content:'✕';color:#C97B6B}
+.ok b{color:var(--ink);font-weight:500}
+
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:600px){
+.section{padding:44px 0}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{padding:18px 14px}
+.card2{padding:20px 16px 8px}
+.ctaboard{padding:32px 20px;margin-top:44px}
+.golink{display:block}
+table.lux th,table.lux td{padding-left:12px;padding-right:12px}
+pre.code{font-size:12px;padding:14px}
+}
 </style>
-<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script><!-- End Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
 </head>
 <body>
-  <header><img class="c9logo" src="https://www.cloud9markets.com/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">Backtest with AI</span></header>
-
-  <h1>Describe a strategy in English. <em>Claude backtests it</em> in TradingView.</h1>
-  <p class="lede">No Pine Script knowledge needed. You describe the rules — <b>Claude Code writes the strategy, compiles it, runs TradingView's own Strategy Tester with real fees, and reads the results back to you</b>: net profit, drawdown, profit factor, every single trade. All on your machine. Free.</p>
-
-  <div class="agents">
-    <span class="chip">🧠 English → Pine v6</span><span class="chip">🧪 Strategy Tester</span><span class="chip">💸 Real fees &amp; fills</span>
-    <span class="chip">📋 Trade list</span><span class="chip">🛡️ Overfit audit</span>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class="brand">
+    <img class="logo" src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class="wm">Cloud9 <b>Research</b></div>
+    <div class="tag">Backtest with AI</div>
   </div>
+  <div class="right">
+    <a class="ig" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets ↗</a>
+  </div>
+</nav>
 
-  <div class="sect">Proof — the exact run from the reel</div>
-  <div class="demo">
-    <h3>🤖 My bitcoin bot's live strategy, verified in TradingView</h3>
-    <p>My bot trades a Donchian breakout system on BTC (4h). One prompt made Claude port the exact rules to Pine, apply them to the Hyperliquid BTC perp chart, and run the tester over ~17 months — with taker fees and next-bar fills, no lookahead.</p>
-    <div class="stats">
-      <div class="stat"><div class="v up">+11.8%</div><div class="k">Strategy return</div></div>
-      <div class="stat"><div class="v dn">&minus;42.1%</div><div class="k">Buy &amp; hold return</div></div>
-      <div class="stat"><div class="v up">+53.9 pts</div><div class="k">Outperformance</div></div>
-      <div class="stat"><div class="v nt">1.32</div><div class="k">Profit factor</div></div>
-      <div class="stat"><div class="v dn">25%</div><div class="k">Win rate (6/24)</div></div>
-      <div class="stat"><div class="v dn">17.8%</div><div class="k">Max drawdown</div></div>
+<header class="hero">
+  <div class="eyebrow">Backtest with AI · Free · English to Pine v6</div>
+  <h1>Backtest any indicator in TradingView. <span class="free">In plain English.</span></h1>
+  <p class="sub">No Pine Script knowledge needed. You describe the rules — <b>Claude Code writes the strategy, compiles it, runs TradingView's own Strategy Tester with real fees, and reads the results back to you</b>: net profit, drawdown, profit factor, every single trade. All on your machine. Free.</p>
+  <div class="chips">
+    <span>🧠 English → Pine v6</span><span>🧪 Strategy Tester</span><span>💸 Real fees &amp; fills</span><span>📋 Trade list</span><span>🛡️ Overfit audit</span>
+  </div>
+</header>
+
+<main>
+
+  <section class="section" id="leaderboard">
+    <div class="kicker">The Indicator Bench</div>
+    <h2>We already backtested the retail favourites.</h2>
+    <p class="lead">Thirteen of the most popular TradingView indicators, same test, real fees. Use these as your starting point, then test your own with the guide below.</p>
+    <div class="tblwrap">
+      <table class="lux">
+        <thead><tr><th></th><th>Indicator</th><th class="r">Total P&amp;L</th></tr></thead>
+        <tbody>
+          <tr class="win"><td class="rk">1</td><td class="name">Chandelier Exit</td><td class="num pos">+2.08%</td></tr>
+          <tr class="win"><td class="rk">2</td><td class="name">Golden Cross (1h)</td><td class="num pos">+1.67%</td></tr>
+          <tr class="win"><td class="rk">3</td><td class="name">Bollinger breakout</td><td class="num pos">+1.49%</td></tr>
+          <tr class="win"><td class="rk">4</td><td class="name">SuperTrend</td><td class="num pos">+1.41%</td></tr>
+          <tr><td class="rk">5</td><td class="name">Squeeze Momentum</td><td class="num neg">−2.07%</td></tr>
+          <tr><td class="rk">6</td><td class="name">Hull Suite</td><td class="num neg">−2.23%</td></tr>
+          <tr><td class="rk">7</td><td class="name">Ichimoku</td><td class="num neg">−5.35%</td></tr>
+          <tr><td class="rk">8</td><td class="name">WaveTrend</td><td class="num neg">−5.78%</td></tr>
+          <tr><td class="rk">9</td><td class="name">RSI 30/70</td><td class="num neg">−9.29%</td></tr>
+          <tr><td class="rk">10</td><td class="name">Bollinger mean reversion</td><td class="num neg">−10.92%</td></tr>
+          <tr><td class="rk">11</td><td class="name">UT Bot</td><td class="num neg">−11.28%</td></tr>
+          <tr><td class="rk">12</td><td class="name">MACD</td><td class="num neg">−15.60%</td></tr>
+          <tr class="ref"><td class="rk">·</td><td class="name">Buy &amp; hold market</td><td class="num neg">−20.20%</td></tr>
+        </tbody>
+      </table>
     </div>
-    <div class="note" style="margin-top:12px"><b>Read it straight:</b> just holding BTC over these 17 months <b>lost 42.1%</b>. The strategy <b>made +11.8%</b> — mostly on the short side. The difference between those two numbers is the <b>+53.9-point "Strategy outperformance"</b> TradingView reports. And a 25% win rate that still profits is what trend-following really looks like: many small losses, a few huge winners (best trade: <b>+15.6% in one short</b>). No cherry-picking: full stats below.</div>
+    <p class="tblcap">Binance futures BTC/ETH/SOL perps, 1h candles, real fees, long-only, 2025-06-26 → 2026-08-22 (~14 months). Buy &amp; hold is the average of the three over the same window. This is one test window, not a law: a different window, timeframe, or market gives different numbers.</p>
+    <a class="golink" href="tv-indicator-bench.html">See all 13 results and the Pine code</a>
+  </section>
+
+  <section class="section" id="proof">
+    <div class="kicker">Proof: a real run, start to finish</div>
+    <h2>🤖 My bitcoin bot's live strategy, verified in TradingView</h2>
+    <p class="lead">My bot trades a Donchian breakout system on BTC (4h). One prompt made Claude port the exact rules to Pine, apply them to the Hyperliquid BTC perp chart, and run the tester over ~17 months — with taker fees and next-bar fills, no lookahead.</p>
+    <div class="stats">
+      <div class="stat"><div class="big up">+11.8%</div><div class="tag">Strategy return</div></div>
+      <div class="stat"><div class="big dn">&minus;42.1%</div><div class="tag">Buy &amp; hold return</div></div>
+      <div class="stat"><div class="big up">+53.9 pts</div><div class="tag">Outperformance</div></div>
+      <div class="stat"><div class="big">1.32</div><div class="tag">Profit factor</div></div>
+      <div class="stat"><div class="big dn">25%</div><div class="tag">Win rate (6/24)</div></div>
+      <div class="stat"><div class="big dn">17.8%</div><div class="tag">Max drawdown</div></div>
+    </div>
+    <p class="note"><b>Read it straight:</b> just holding BTC over these 17 months <b>lost 42.1%</b>. The strategy <b>made +11.8%</b> — mostly on the short side. The difference between those two numbers is the <b>+53.9-point "Strategy outperformance"</b> TradingView reports. And a 25% win rate that still profits is what trend-following really looks like: many small losses, a few huge winners (best trade: <b>+15.6% in one short</b>). No cherry-picking: full stats below.</p>
     <img class="shot" src="tv-backtest-stats.jpg" alt="TradingView Strategy Tester — key stats and equity curve of the AI-built Donchian strategy" loading="lazy"/>
     <div class="cap">TradingView's Strategy Tester: equity curve, PnL, drawdown — computed by TV, not by the AI.</div>
     <img class="shot" src="tv-backtest-trades.jpg" alt="TradingView list of trades generated by the backtest" loading="lazy"/>
     <div class="cap">Every trade with entry/exit time, price, size and PnL. This is the receipt.</div>
-  </div>
+  </section>
 
-  <div class="sect">Setup — 5 minutes, once</div>
+  <section class="section" id="setup">
+    <div class="kicker">Setup — 5 minutes, once</div>
+    <h2>Get the apps and the bridge.</h2>
 
-  <div class="step">
-    <h3><span class="n">1</span> Get the two apps + the bridge</h3>
-    <p><b>TradingView Desktop</b> (the app, not the website — free account is fine) and <b>Claude Code</b>. Node.js 18+ if you don't have it. Then install the open-source MCP bridge:</p>
-    <div class="code"><button class="cp">Copy</button>git clone https://github.com/tradesdontlie/tradingview-mcp.git ~/tradingview-mcp
+    <div class="card2">
+      <h3><span class="n">1</span> Get the two apps + the bridge</h3>
+      <p class="note"><b>TradingView Desktop</b> (the app, not the website — free account is fine) and <b>Claude Code</b>. Node.js 18+ if you don't have it. Then install the open-source MCP bridge:</p>
+      <div class="codeblock"><div class="head"><div class="t">Terminal</div><button class="copybtn" data-target="c1">Copy</button></div><pre class="code" id="c1">git clone https://github.com/tradesdontlie/tradingview-mcp.git ~/tradingview-mcp
 cd ~/tradingview-mcp &amp;&amp; npm install
-claude mcp add --scope user tradingview -- node ~/tradingview-mcp/src/server.js</div>
-    <div class="note">→ <a href="https://www.tradingview.com/desktop/" target="_blank" rel="noopener">tradingview.com/desktop</a> · <a href="https://claude.com/code" target="_blank" rel="noopener">claude.com/code</a> · <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> · Full install walkthrough with screenshots: <a href="claude-tradingview-setup.html">the setup guide</a>.</div>
-  </div>
+claude mcp add --scope user tradingview -- node ~/tradingview-mcp/src/server.js</pre></div>
+      <p class="note">→ <a href="https://www.tradingview.com/desktop/" target="_blank" rel="noopener">tradingview.com/desktop</a> · <a href="https://claude.com/code" target="_blank" rel="noopener">claude.com/code</a> · <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> · Full install walkthrough with screenshots: <a href="claude-tradingview-setup.html">the setup guide</a>.</p>
+    </div>
 
-  <div class="step">
-    <h3><span class="n">2</span> Start TradingView in debug mode</h3>
-    <p><b>Quit TradingView fully first</b> (this matters — a normally-launched instance blocks the bridge). Then either ask Claude to run <code>tv_launch</code>, or start it yourself:</p>
-    <div class="code"><button class="cp">Copy</button># macOS
-open -a TradingView --args --remote-debugging-port=9222</div>
-    <div class="note"><b>Windows:</b> run <code>scripts\launch_tv_debug.bat</code> from the repo. Verify with <code>curl http://127.0.0.1:9222/json/version</code> — it should print JSON.</div>
-  </div>
+    <div class="card2">
+      <h3><span class="n">2</span> Start TradingView in debug mode</h3>
+      <p class="note"><b>Quit TradingView fully first</b> (this matters — a normally-launched instance blocks the bridge). Then either ask Claude to run <code>tv_launch</code>, or start it yourself:</p>
+      <div class="codeblock"><div class="head"><div class="t">Terminal</div><button class="copybtn" data-target="c2">Copy</button></div><pre class="code" id="c2"># macOS
+open -a TradingView --args --remote-debugging-port=9222</pre></div>
+      <p class="note"><b>Windows:</b> run <code>scripts\launch_tv_debug.bat</code> from the repo. Verify with <code>curl http://127.0.0.1:9222/json/version</code> — it should print JSON.</p>
+    </div>
 
-  <div class="step">
-    <h3><span class="n">3</span> Sanity check</h3>
-    <p>New Claude Code session:</p>
-    <div class="code"><button class="cp">Copy</button>Use tv_health_check to verify TradingView is connected, then tell me what's on my chart.</div>
-  </div>
+    <div class="card2">
+      <h3><span class="n">3</span> Sanity check</h3>
+      <p class="note">New Claude Code session:</p>
+      <div class="codeblock"><div class="head"><div class="t">Prompt</div><button class="copybtn" data-target="c3">Copy</button></div><pre class="code" id="c3">Use tv_health_check to verify TradingView is connected, then tell me what's on my chart.</pre></div>
+    </div>
+  </section>
 
-  <div class="sect">The backtest prompt — copy, edit the rules, send</div>
-
-  <div class="demo">
-    <h3>📝 The master prompt</h3>
-    <p>This is the whole trick. Fill in your market, timeframe and rules in plain English — Claude handles Pine syntax, compiling, applying to the chart and reading the tester. The cost/fill lines at the bottom are what make the result honest; keep them.</p>
-    <div class="code"><button class="cp">Copy</button>Backtest this strategy in TradingView using the tradingview MCP tools:
+  <section class="section" id="prompt">
+    <div class="kicker">The backtest prompt — copy, edit the rules, send</div>
+    <h2>📝 The master prompt</h2>
+    <p class="lead">This is the whole trick. Fill in your market, timeframe and rules in plain English — Claude handles Pine syntax, compiling, applying to the chart and reading the tester. The cost/fill lines at the bottom are what make the result honest; keep them.</p>
+    <div class="codeblock"><div class="head"><div class="t">Master prompt</div><button class="copybtn" data-target="c4">Copy</button></div><pre class="code" id="c4">Backtest this strategy in TradingView using the tradingview MCP tools:
 
 MARKET: BINANCE:BTCUSDT.P   TIMEFRAME: 4h
 
@@ -152,16 +228,16 @@ DO
    winners and losers with dates.
 4. Screenshot the Strategy Tester panel.
 If anything errors (compile error, panel not found, old TV
-instance running), debug it yourself and continue.</div>
-    <div class="note"><b>Swap the rules for anything:</b> "buy the pullback to the 20 EMA in an uptrend, stop under the last swing low, take profit at 2R" works exactly the same way. If you can say it, it can be tested.</div>
-  </div>
+instance running), debug it yourself and continue.</pre></div>
+    <p class="note"><b>Swap the rules for anything:</b> "buy the pullback to the 20 EMA in an uptrend, stop under the last swing low, take profit at 2R" works exactly the same way. If you can say it, it can be tested.</p>
+  </section>
 
-  <div class="demo">
-    <h3>⚙️ What Claude actually does with it</h3>
-    <p>So you know what "working" looks like: it writes a Pine v6 <code>strategy()</code>, injects it into TradingView's Pine editor, hits compile, fixes its own compile errors, adds it to the chart, opens the Strategy Tester, and reads the Key stats + trade list straight off the panel. You watch it happen live on your chart — nothing is simulated outside TradingView.</p>
+  <section class="section" id="how">
+    <h2>⚙️ What Claude actually does with it</h2>
+    <p class="lead">So you know what "working" looks like: it writes a Pine v6 <code>strategy()</code>, injects it into TradingView's Pine editor, hits compile, fixes its own compile errors, adds it to the chart, opens the Strategy Tester, and reads the Key stats + trade list straight off the panel. You watch it happen live on your chart — nothing is simulated outside TradingView.</p>
     <details>
       <summary>The exact Pine strategy from the run above (if you want to paste it manually)</summary>
-      <div class="code"><button class="cp">Copy</button>//@version=6
+      <div class="codeblock"><div class="head"><div class="t">Pine v6</div><button class="copybtn" data-target="c5">Copy</button></div><pre class="code" id="c5">//@version=6
 strategy("Donchian 80/40 Breakout", overlay=true,
      initial_capital=10000,
      default_qty_type=strategy.percent_of_equity,
@@ -203,57 +279,82 @@ if strategy.position_size < 0 and close > exitHi
 
 plot(entryHigh, "80-bar high", color.new(color.teal, 40))
 plot(entryLow,  "80-bar low",  color.new(color.red, 40))
-plot(emaF,      "EMA filter",  color.new(color.orange, 0), linewidth=2)</div>
+plot(emaF,      "EMA filter",  color.new(color.orange, 0), linewidth=2)</pre></div>
     </details>
-  </div>
+  </section>
 
-  <div class="demo">
-    <h3>🛡️ Then make it attack its own result</h3>
-    <p>A green backtest is a hypothesis, not a green light. Send this straight after:</p>
-    <div class="code"><button class="cp">Copy</button>Now audit this backtest like a skeptical quant. Check: trade count
+  <section class="section" id="audit">
+    <h2>🛡️ Then make it attack its own result</h2>
+    <p class="lead">A green backtest is a hypothesis, not a green light. Send this straight after:</p>
+    <div class="codeblock"><div class="head"><div class="t">Audit prompt</div><button class="copybtn" data-target="c6">Copy</button></div><pre class="code" id="c6">Now audit this backtest like a skeptical quant. Check: trade count
 (is 24 trades even significant?), whether performance came from 1-2
 outlier trades, how sensitive results are if the lookbacks change
 ±20%, what the strategy does in a range vs a trend, costs I haven't
 modeled (funding, slippage, gaps), and any way the test flatters
 itself. Argue the bear case. Then tell me what you'd need to see
-before trusting it with real money.</div>
-    <div class="note"><b>This is the difference</b> between "AI made me a strategy" content and actually knowing what you own. My bot's own research pipeline rejected dozens of variants before promoting this one — one backtest proves nothing on its own.</div>
-  </div>
+before trusting it with real money.</pre></div>
+    <p class="note"><b>This is the difference</b> between "AI made me a strategy" content and actually knowing what you own. My bot's own research pipeline rejected dozens of variants before promoting this one — one backtest proves nothing on its own.</p>
+  </section>
 
-  <div class="sect">Honesty checklist — read before you believe any backtest</div>
-  <div class="step">
-    <ul class="check" style="margin-left:2px">
-      <li><b>Costs on.</b> Commission + realistic fills (next-bar open) are in the prompt for a reason. A strategy that dies when you add 0.045% fees was never alive.</li>
-      <li><b>Closed bars only.</b> Signals on the current, still-forming bar = lookahead bias = fantasy money.</li>
-      <li><b>Enough trades.</b> Under ~30 trades the stats are noise. Zoom the timeframe down or the history back.</li>
-      <li class="x"><b>Don't tune until it's pretty.</b> Every parameter you nudge to improve the past steals from the future. If small changes to a lookback flip profit to loss, you fit noise.</li>
-      <li class="x"><b>Perps caveat:</b> TradingView doesn't model funding rates on perpetuals — on funding-heavy pairs the real result is a few % different. Test the spot pair as a cross-check.</li>
-      <li><b>Out-of-sample or it didn't happen.</b> Ask Claude to re-run the same rules on a different symbol or an earlier date range it wasn't built on.</li>
-    </ul>
-  </div>
+  <section class="section" id="honesty">
+    <div class="kicker">Honesty checklist — read before you believe any backtest</div>
+    <div class="ok">
+      <div><span><b>Costs on.</b> Commission + realistic fills (next-bar open) are in the prompt for a reason. A strategy that dies when you add 0.045% fees was never alive.</span></div>
+      <div><span><b>Closed bars only.</b> Signals on the current, still-forming bar = lookahead bias = fantasy money.</span></div>
+      <div><span><b>Enough trades.</b> Under ~30 trades the stats are noise. Zoom the timeframe down or the history back.</span></div>
+      <div class="x"><span><b>Don't tune until it's pretty.</b> Every parameter you nudge to improve the past steals from the future. If small changes to a lookback flip profit to loss, you fit noise.</span></div>
+      <div class="x"><span><b>Perps caveat:</b> TradingView doesn't model funding rates on perpetuals — on funding-heavy pairs the real result is a few % different. Test the spot pair as a cross-check.</span></div>
+      <div><span><b>Out-of-sample or it didn't happen.</b> Ask Claude to re-run the same rules on a different symbol or an earlier date range it wasn't built on.</span></div>
+    </div>
+  </section>
 
-  <div class="sect">If something breaks</div>
-  <div class="step">
-    <p style="padding-left:2px">Honestly: <b>paste the error into Claude and tell it to fix it</b> — it can see the app and debug itself. The three snags that actually happen:</p>
-    <ul class="check" style="margin-left:2px">
-      <li><b>"CDP connection failed"</b> → a normally-launched TradingView is still running. Quit it fully (macOS: ⌘Q, check the Dock), relaunch in debug mode.</li>
-      <li><b>"Could not open Pine Editor"</b> → your Pine editor is docked to the side. Click its ⇱ icon to move it back to the bottom panel — or just tell Claude, it can work around it.</li>
-      <li><b>Existing scripts:</b> if the editor has one of your saved scripts open, tell Claude to <b>create a new script or "Make a copy"</b> first so it never saves over your work.</li>
-    </ul>
-  </div>
+  <section class="section" id="broken">
+    <div class="kicker">If something breaks</div>
+    <p class="lead">Honestly: <b>paste the error into Claude and tell it to fix it</b> — it can see the app and debug itself. The three snags that actually happen:</p>
+    <div class="ok">
+      <div><span><b>"CDP connection failed"</b> → a normally-launched TradingView is still running. Quit it fully (macOS: ⌘Q, check the Dock), relaunch in debug mode.</span></div>
+      <div><span><b>"Could not open Pine Editor"</b> → your Pine editor is docked to the side. Click its ⇱ icon to move it back to the bottom panel — or just tell Claude, it can work around it.</span></div>
+      <div><span><b>Existing scripts:</b> if the editor has one of your saved scripts open, tell Claude to <b>create a new script or "Make a copy"</b> first so it never saves over your work.</span></div>
+    </div>
+  </section>
 
-  <div class="cta">
-    <h2>Watched the bot get verified live?</h2>
-    <p>Next up on @cloud9.markets: what happens when the backtested strategy runs for real. Follow so you don't miss the live results.</p>
-    <a class="btn" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+  <div class="ctaboard">
+    <h2>More backtests every week.</h2>
+    <p>Follow @cloud9.markets for the next indicator we put through the same test, with the full results.</p>
+    <div class="actions">
+      <a class="btn-gold" href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">Follow @cloud9.markets →</a>
+    </div>
   </div>
+</main>
 
-  <footer>Educational guide · not affiliated with TradingView Inc. or Anthropic · backtested performance is hypothetical and does not guarantee future results · <b>not financial advice</b> · do your own research<br/>© Cloud9 Markets</footer>
+<footer>
+  <span>© Cloud9 Markets</span>
+  <div class="disclaimer">Educational guide · not affiliated with TradingView Inc. or Anthropic · backtested performance is hypothetical and does not guarantee future results · <b>not financial advice</b> · do your own research</div>
+</footer>
+</div>
 
 <script>
-  document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',function(){
-    var code=b.parentNode.textContent.replace('Copy','').trim();
-    navigator.clipboard&&navigator.clipboard.writeText(code);b.textContent='Copied ✓';setTimeout(function(){b.textContent='Copy';},1500);});});
+document.querySelectorAll('.copybtn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var text = document.getElementById(btn.getAttribute('data-target')).textContent;
+    function done(){
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text, done); });
+    } else { fallbackCopy(text, done); }
+  });
+});
+function fallbackCopy(text, cb){
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try { document.execCommand('copy'); } catch(e){}
+  document.body.removeChild(ta);
+  if(cb) cb();
+}
 </script>
 </body>
 </html>
