@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>5 Skills = Top 1% Trader, Part 2 · Cloud9</title>
+<meta name="description" content="Part 2: day trading, stock research, price prediction, hedge fund trading and trading strategies. A free learn video, a practice video, a hands-on AI-prompt project and the GitHub repo for each.">
+<meta property="og:title" content="5 Skills = Top 1% Trader, Part 2">
+<meta property="og:description" content="Day trading, stock research, price prediction, hedge fund trading and trading strategies: free videos, an AI-prompt project and the GitHub repo for each.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%;box-sizing:border-box;min-width:0}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.capt{margin-top:14px;font-size:12px;letter-spacing:.04em;color:var(--dim);max-width:780px;line-height:1.6}
+.items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.item{display:flex;flex-direction:column;gap:8px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:20px 18px;min-width:0;text-decoration:none;color:var(--ink)}
+.item:hover{border-color:var(--gold-dim);background:rgba(200,162,78,.06)}
+.item .lbl{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.item strong{font-family:'Playfair Display',serif;font-weight:500;font-size:19px;line-height:1.3;overflow-wrap:anywhere}
+.item .desc{font-size:13.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.item .desc b{color:var(--gold-hi);font-weight:500}
+.item .desc i{color:var(--gold-hi);font-style:normal}
+.item .go{margin-top:auto;padding-top:6px;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hi)}
+.item.build{background:rgba(200,162,78,.06);border-color:var(--gold-dim)}
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+
+.howto{margin:8px auto 0;max-width:900px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.04);padding:28px 30px}
+.howto h3,.task h3{font-family:'Playfair Display',serif;font-weight:500;font-size:22px;margin:0 0 12px;color:var(--gold-hi)}
+.howto ol,.task ol{margin:0;padding-left:22px;font-size:14.5px;font-weight:300;line-height:1.75;color:var(--dim2)}
+.howto li b,.task li b{color:var(--ink);font-weight:500}
+.howto .note{margin-top:12px;font-size:13.5px;font-weight:300;color:var(--dim2);line-height:1.6}
+.task{margin-top:16px;border:1px solid var(--gold-dim);background:rgba(200,162,78,.05);padding:26px 26px 22px}
+.task .meta{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.task .goal{font-size:15px;font-weight:300;line-height:1.7;color:var(--ink);margin:0 0 14px}
+.prompt{position:relative;margin-top:16px;border:1px solid var(--gold-faint);background:rgba(0,0,0,.35)}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--gold-faint);font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.prompt button{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:#0b0a08;border:0;padding:7px 12px;cursor:pointer}
+.prompt pre{margin:0;padding:16px;white-space:pre-wrap;word-break:break-word;font:400 13px/1.65 'JetBrains Mono',monospace;color:var(--ink)}
+.done{margin-top:14px;font-size:14px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.done b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.task,.howto{padding:22px 18px}.items{grid-template-columns:1fr}.ctaboard{padding:34px 22px}}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Top 1% Trader · Part 2</span></div>
+  </div>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+
+<header class=hero>
+<div class=eyebrow>From the reel · Free list</div>
+<h1>5 Skills =<br><span class=free>Top 1% Trader.</span></h1>
+<div class=eyebrow style="margin-top:14px">Part 2</div>
+<p class=sub>Every link from the reel. For each skill: a free video to learn it, a free video to practice it, a hands-on project with a copy-paste AI prompt, and the open-source GitHub repo the pros use.</p>
+</header>
+<main>
+
+<section class=howto>
+  <h3>How to use this page</h3>
+  <ol>
+    <li><b>Watch the Learn video</b> for a skill. Just watch, no notes needed.</li>
+    <li><b>Do the practice project</b> under it. Copy the prompt into ChatGPT or Claude and let the AI walk you through it step by step.</li>
+    <li><b>Open the GitHub repo</b> once your project works, to see how the pros build the same thing at scale.</li>
+    <li><b>Paper trade only.</b> Every project here uses fake money or past data. Never point a bot you just built at real money.</li>
+  </ol>
+  <p class=note>New here? Start with <b>01 Day trading</b> and <b>02 Stock research</b> (no code needed), then 04, 05 and 03. Haven't seen Part 1 yet? <a href="https://www.cloud9markets.com/algo-trader.html" target=_blank rel=noopener style="color:var(--gold-hi)">Start with Part 1 ↗</a>. You can use Google Colab (free, runs in your browser) for every coding project, so there's nothing to install.</p>
+</section>
+<section class=topic id=s1>
+  <div class=tnum>01 · Skill</div>
+  <h2>Day trading</h2>
+  <div class=items>
+    <a class="item learn" href="https://www.youtube.com/watch?v=2pJJO9G_Xyw" target=_blank rel=noopener><span class=lbl>Learn</span><strong>The Only Day Trading Guide a Beginner Will Ever Need</strong><span class=desc>SMB Capital · 1h 27m</span><span class=go>Watch free on YouTube ↗</span></a>
+    <a class="item practice" href="https://www.youtube.com/watch?v=_o-e4SqaieQ" target=_blank rel=noopener><span class=lbl>Practice</span><strong>TradingView Paper Trading Tutorial For Beginners</strong><span class=desc>Ryan Scribner · 30m</span><span class=desc><i>Practise with fake money first.</i></span><span class=go>Watch free on YouTube ↗</span></a>
+    <a class="item build" href="https://github.com/Jakeschincariol/day-trader-skill" target=_blank rel=noopener><span class=lbl>Build</span><strong>Jakeschincariol/day-trader-skill</strong><span class=desc>11 free Claude skills for day traders: a chart scanner, news desk, entry timer, position sizer, risk manager and a replay “time machine”.</span><span class=desc><b>★ 9.3K</b></span><span class=go>Open on GitHub ↗</span></a>
+  </div>
+  <div class=task>
+    <div class=meta>Practice project · 5 trading days</div>
+    <h3>Your project</h3>
+    <p class=goal>Write a real day-trading plan, then follow it for 5 days on a <b>paper</b> account (fake money) and journal every trade.</p>
+    <ol><li>Open a free <b>TradingView</b> paper trading account (the practice video shows how).</li><li>Paste the prompt below into ChatGPT or Claude to write your one-page plan and journal.</li><li>Take at most 1–3 paper trades a day, only when your plan's setup appears, and journal each one.</li><li>Advanced: install <b>day-trader-skill</b> in Claude to scan, size and time trades for you. <a href="https://www.cloud9markets.com/day-trader-skill.html" target=_blank rel=noopener style="color:var(--gold-hi)">Our free setup guide ↗</a></li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>I&#x27;m a beginner learning day trading on a paper trading account (fake money). Help me write a one-page trading plan.
+
+Ask me questions first, then include:
+1. Which stocks I&#x27;ll trade (liquid, high volume, price above $10).
+2. ONE entry setup, explained simply (for example an opening range breakout).
+3. Where my stop-loss goes and how I size each trade so I never risk more than 1% of my account.
+4. Daily limits: max 3 trades, stop for the day after 2 losses, flat by the close.
+5. A simple journal template (setup, entry, exit, followed the rules yes/no, lesson).
+
+Don&#x27;t recommend specific stocks to buy. At the end, quiz me with 5 questions on my own rules.</pre></div>
+    <p class=done><b>You're done when:</b> you've journaled 5 paper days and followed your rules on every trade, win or lose.</p>
+  </div>
+</section>
+<section class=topic id=s2>
+  <div class=tnum>02 · Skill</div>
+  <h2>Stock research</h2>
+  <div class=items>
+    <a class="item learn" href="https://www.youtube.com/watch?v=kXYvRR7gV2E" target=_blank rel=noopener><span class=lbl>Learn</span><strong>How I Research Stocks: Step-by-Step Fundamental Analysis</strong><span class=desc>The Plain Bagel · 19m</span><span class=go>Watch free on YouTube ↗</span></a>
+    <a class="item practice" href="https://www.youtube.com/watch?v=GtNUj6zy2JA" target=_blank rel=noopener><span class=lbl>Practice</span><strong>How To Use Claude’s New Stock Market AI Agents</strong><span class=desc>TheFinanceValueGuy · 16m</span><span class=go>Watch free on YouTube ↗</span></a>
+    <a class="item build" href="https://github.com/anthropics/financial-services" target=_blank rel=noopener><span class=lbl>Build</span><strong>anthropics/financial-services</strong><span class=desc>Anthropic's official finance plugins for Claude: equity research, earnings reviewer, market researcher, model builder and more.</span><span class=desc><b>★ 41.5K</b></span><span class=go>Open on GitHub ↗</span></a>
+  </div>
+  <div class=task>
+    <div class=meta>Practice project · about 1 hour</div>
+    <h3>Your project</h3>
+    <p class=goal>Write a one-page research note on a company you already know, the way an analyst would.</p>
+    <ol><li>Pick a company whose products you use (Costco, Apple, Nike…).</li><li>Paste the prompt below into ChatGPT or Claude (turn on web search so it can read the latest annual report).</li><li>Check two of its numbers yourself against the company's annual report or investor page.</li><li>Advanced: add Anthropic's <b>financial-services</b> plugins to Claude and run its equity research agent on the same company.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Act as an equity research analyst teaching a beginner. Help me write a one-page research note on [COMPANY].
+
+Include:
+1. What it sells and who pays for it.
+2. How it makes money: its main revenue segments.
+3. Three key numbers from the latest annual report (revenue growth, operating margin, debt) and what each one means.
+4. The bull case and the bear case, 3 bullets each.
+5. The 3 things to watch at the next earnings report.
+
+Use the company&#x27;s latest annual report, say where each number comes from, and flag anything you&#x27;re unsure about. Don&#x27;t tell me whether to buy.</pre></div>
+    <p class=done><b>You're done when:</b> you have a one-page note you could explain to a friend in 2 minutes.</p>
+  </div>
+</section>
+<section class=topic id=s3>
+  <div class=tnum>03 · Skill</div>
+  <h2>Price prediction</h2>
+  <div class=items>
+    <a class="item learn" href="https://www.youtube.com/watch?v=1O_BenficgE" target=_blank rel=noopener><span class=lbl>Learn</span><strong>Predict The Stock Market With Machine Learning And Python</strong><span class=desc>Dataquest · 36m</span><span class=go>Watch free on YouTube ↗</span></a>
+    <a class="item practice" href="https://www.youtube.com/watch?v=_tB4pdy9VJw" target=_blank rel=noopener><span class=lbl>Practice</span><strong>Google&#x27;s New TimesFM-3 vs. Classical Forecasting</strong><span class=desc>AI with Surya · 13m</span><span class=go>Watch free on YouTube ↗</span></a>
+    <a class="item build" href="https://github.com/google-research/timesfm" target=_blank rel=noopener><span class=lbl>Build</span><strong>google-research/timesfm</strong><span class=desc>Google's free forecasting model: give it a price history and it forecasts what comes next.</span><span class=desc><b>★ 35.7K</b></span><span class=go>Open on GitHub ↗</span></a>
+    <a class="item build" href="https://github.com/shiyu-coder/Kronos" target=_blank rel=noopener><span class=lbl>Build</span><strong>shiyu-coder/Kronos</strong><span class=desc>An open-source model trained on market data that draws the next candles, not just a line.</span><span class=desc><b>★ 48.1K</b></span><span class=go>Open on GitHub ↗</span></a>
+  </div>
+  <div class=task>
+    <div class=meta>Practice project · about 1 hour</div>
+    <h3>Your project</h3>
+    <p class=goal>Forecast a month of prices with Google's AI, then check how wrong it was. That's the real lesson.</p>
+    <ol><li>Open Google Colab (free, runs in your browser).</li><li>Paste the prompt below into ChatGPT or Claude and run each cell it gives you.</li><li>Compare the AI forecast with what actually happened, and with a dumb “same as yesterday” forecast.</li><li>Advanced: try <b>Kronos</b> on the same stock to forecast whole candles.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Teach me to use Google&#x27;s TimesFM forecasting model in Google Colab. I&#x27;m a beginner.
+
+1. Download 2 years of daily closing prices for SPY with yfinance.
+2. Hold out the last 30 days, and forecast those 30 days with TimesFM.
+3. Plot the forecast against what actually happened, and calculate the average error.
+4. Compare it with a naive forecast that just repeats the last price.
+
+Explain every step simply. Finish by explaining in plain English why price forecasts are usually wrong, and what they can still be useful for.</pre></div>
+    <p class=done><b>You're done when:</b> you can say whether TimesFM beat the naive forecast on your test, and by how much.</p>
+  </div>
+</section>
+<section class=topic id=s4>
+  <div class=tnum>04 · Skill</div>
+  <h2>Hedge fund trading</h2>
+  <div class=items>
+    <a class="item learn" href="https://www.youtube.com/watch?v=SUKKZVrBf_o" target=_blank rel=noopener><span class=lbl>Learn</span><strong>How Hedge Funds Trade</strong><span class=desc>Roman Paolucci · 21m</span><span class=go>Watch free on YouTube ↗</span></a>
+    <a class="item practice" href="https://www.youtube.com/watch?v=cWoh6Leznlo" target=_blank rel=noopener><span class=lbl>Practice</span><strong>TradingAgents: I Ran the Open-Source Hedge Fund (Full Setup)</strong><span class=desc>EverydayAI School · 11m</span><span class=go>Watch free on YouTube ↗</span></a>
+    <a class="item build" href="https://github.com/TauricResearch/TradingAgents" target=_blank rel=noopener><span class=lbl>Build</span><strong>TauricResearch/TradingAgents</strong><span class=desc>A full AI hedge fund desk: analysts, bull and bear researchers, a trader and a risk manager debate every trade.</span><span class=desc><b>★ 123K</b></span><span class=go>Open on GitHub ↗</span></a>
+  </div>
+  <div class=task>
+    <div class=meta>Practice project · about 45 minutes</div>
+    <h3>Your project</h3>
+    <p class=goal>Run a hedge fund investment committee on one stock, then judge which arguments hold up.</p>
+    <ol><li>Pick one large company you know.</li><li>Paste the prompt below into ChatGPT or Claude. No code needed.</li><li>Read the debate and write down which side convinced you, and why.</li><li>Advanced: install <b>TradingAgents</b> (the practice video shows how) to run the real multi-agent desk. It needs an API key from an AI provider, and each run costs a little.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Simulate a hedge fund investment committee for [TICKER]. Play these roles in order:
+
+1. A fundamentals analyst
+2. A news and sentiment analyst
+3. A technical analyst
+4. A bull researcher and a bear researcher, who argue with each other
+5. A risk manager, who sets a maximum position size and explains why
+
+Give each role 4–6 bullet points, and have each one say what data would make it more confident. End with a summary table of the arguments, and tell me which argument is weakest and why.
+
+This is for learning how a trading desk thinks, not a recommendation.</pre></div>
+    <p class=done><b>You're done when:</b> you can explain how a desk turns five different opinions into one decision.</p>
+  </div>
+</section>
+<section class=topic id=s5>
+  <div class=tnum>05 · Skill</div>
+  <h2>Trading strategies</h2>
+  <div class=items>
+    <a class="item learn" href="https://www.youtube.com/watch?v=AYO62d__Bog" target=_blank rel=noopener><span class=lbl>Learn</span><strong>I Tried 10 Trading Strategies (This One is Best For Beginners!)</strong><span class=desc>Umar Punjabi · 16m</span><span class=go>Watch free on YouTube ↗</span></a>
+    <a class="item practice" href="https://www.youtube.com/watch?v=mYIgtixNPBk" target=_blank rel=noopener><span class=lbl>Practice</span><strong>How to Build a Trading Strategy Using Claude AI (Step-by-Step)</strong><span class=desc>Trading with Groww · 30m</span><span class=go>Watch free on YouTube ↗</span></a>
+    <a class="item build" href="https://github.com/HKUDS/Vibe-Trading" target=_blank rel=noopener><span class=lbl>Build</span><strong>HKUDS/Vibe-Trading</strong><span class=desc>Describe a strategy in plain English: it writes the rules, backtests them on past data and can paper trade through Alpaca.</span><span class=desc><b>★ 38.7K</b></span><span class=go>Open on GitHub ↗</span></a>
+  </div>
+  <div class=task>
+    <div class=meta>Practice project · about 1 hour</div>
+    <h3>Your project</h3>
+    <p class=goal>Turn a vague trading idea into exact rules, then test them on 10 years of real data.</p>
+    <ol><li>Pick a simple idea from the learn video (for example: buy strong stocks after a pullback).</li><li>Paste the prompt below into ChatGPT or Claude. Let it question you until the rules are exact.</li><li>Run the code in Google Colab and read the results table.</li><li>Advanced: give the same idea to <b>Vibe-Trading</b> in plain English and compare its backtest with yours.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Help me turn a trading idea into exact, testable rules. My idea: [DESCRIBE YOUR IDEA].
+
+First, ask me questions until the entry, exit, stop-loss and position size are 100% specific.
+
+Then write Python (yfinance + backtesting.py, runnable in Google Colab) that backtests the rules on SPY and 4 large stocks from 2015 to today, with 0.1% costs per trade, and compares them with buy-and-hold.
+
+Show the win rate, the average win vs the average loss, and the max drawdown. Finish with 3 reasons the result might not hold up in the future.</pre></div>
+    <p class=done><b>You're done when:</b> your rules are so specific that two different people would place exactly the same trades.</p>
+  </div>
+</section>
+<p class=capt>Star counts as of November 2026.</p>
+<div class=ctaboard>
+  <div class=lbl>Keep going</div>
+  <h2>Missed Part 1? Trading bots, backtesting, charting, Python and risk.</h2>
+  <p>Same format: a free learn video, a practice project and the GitHub repo for each skill.</p>
+  <div class=actions>
+    <a class=btn-gold href="https://www.cloud9markets.com/algo-trader.html" target=_blank rel=noopener>Open Part 1</a>
+    <a class=btn-line href="https://cloud9markets.com/quant.html" target=_blank rel=noopener>Quant hub</a>
+    <a class=btn-line href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+  </div>
+</div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>For education only, not financial advice. Trading bots can lose money, so paper trade first. Everything linked here is free. Cloud9 is not affiliated with any creator, company or project named.</div>
+</footer>
+</div>
+<script>
+function cp(b){const t=b.closest('.prompt').querySelector('pre').innerText;navigator.clipboard.writeText(t).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)})}
+</script>
+</body></html>
