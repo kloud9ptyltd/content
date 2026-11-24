@@ -1,117 +1,189 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>MIT's "Quant Bible" — the 50-page doc behind $400K quant jobs · Cloud9</title>
-<meta property="og:title" content="MIT's &quot;Quant Bible&quot; just leaked — save your copy"/>
-<meta property="og:description" content="The 50-page doc MIT students pass around to land $400K+ quant jobs at Jane Street, Citadel, Two Sigma & co. Real interview questions, worked answers, the exact courseroad."/>
-<meta property="og:image" content="https://kloud9ptyltd.github.io/content/cloud9-logo.png"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MIT's Quant Bible: the Free 51-Page Guide for Breaking Into Quant · Cloud9</title>
+<meta name="description" content="The Quant Bible is a free 51-page PDF written by MIT Sloan Business Club students to prepare for quant interviews. What is inside, three real questions with answers, the MIT class list and the link. Checked on 24 November 2026.">
+<meta property="og:title" content="MIT's Quant Bible: the free guide for breaking into quant">
+<meta property="og:description" content="A free 51-page PDF written by MIT students to prepare for quant interviews, with the link and what is inside. Checked on 24 November 2026.">
+<meta property="og:url" content="https://www.cloud9markets.com/quant-bible.html">
+<link rel="canonical" href="https://www.cloud9markets.com/quant-bible.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
 <style>
-  :root{--bg:#06080f;--card:#11161f;--card2:#161c27;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.05);
-    --tx:#eef2f8;--mut:#8a98ad;--faint:#5d6b7e;--g:#16e08a;--blu:#6aa8ff;--gold:#e6c878;--c9:#46a8ff;--red:#ff6a6a}
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-  body{max-width:600px;margin:0 auto;padding:0 18px 80px;
-    background:radial-gradient(900px 500px at 80% -5%,rgba(230,200,120,.10),transparent 60%),radial-gradient(700px 500px at 0% 12%,rgba(106,168,255,.08),transparent 55%),var(--bg)}
-  a{color:var(--c9)}
-  header{padding:30px 2px 6px;display:flex;align-items:center;gap:11px}
-  .c9logo{height:34px;width:auto;display:block}
-  .hsub{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--mut);text-transform:uppercase;border-left:1px solid var(--line);padding-left:11px}
-  .alert{margin-top:22px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,106,106,.1);border:1px solid rgba(255,106,106,.35);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--red)}
-  .alert .dot{width:7px;height:7px;border-radius:50%;background:var(--red);animation:blink 1.2s infinite}
-  @keyframes blink{50%{opacity:.25}}
-  h1{font-size:33px;font-weight:850;line-height:1.08;letter-spacing:-.5px;margin:16px 0 10px}
-  h1 em{font-style:normal;color:var(--gold)}
-  .lede{font-size:16px;line-height:1.5;color:#cfd8e4;font-weight:500}
-  .lede b{color:#fff}
-  .agents{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 8px}
-  .chip{font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line2);color:var(--mut)}
-  .sect{margin:30px 0 4px;font-size:12px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--mut)}
-  .step{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
-  .step .n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--gold);color:#171204;font-weight:900;font-size:14px;margin-right:10px}
-  .step h3{display:flex;align-items:center;font-size:17px;font-weight:800}
-  .step p{font-size:14px;line-height:1.5;color:#cfd8e4;margin:10px 0 0;padding-left:36px}
-  .step p b{color:#fff}
-  .q{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
-  .q .firm{font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--blu)}
-  .q h3{font-size:16.5px;font-weight:800;line-height:1.35;margin-top:8px}
-  .q details{margin-top:12px}
-  .q summary{cursor:pointer;font-size:13px;font-weight:800;color:var(--g);list-style:none}
-  .q summary::before{content:"▸ "}
-  .q details[open] summary::before{content:"▾ "}
-  .q .ans{font-size:14px;line-height:1.55;color:#cfd8e4;margin-top:9px;background:#0a0e16;border:1px solid var(--line2);border-radius:12px;padding:13px 14px}
-  .q .ans b{color:var(--g)}
-  .firms{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-  .firms span{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;font-weight:700;letter-spacing:.5px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 11px;color:var(--blu)}
-  .cta{margin-top:30px;background:linear-gradient(180deg,rgba(230,200,120,.14),var(--card));border:1px solid rgba(230,200,120,.4);border-radius:20px;padding:24px;text-align:center}
-  .cta h2{font-size:21px;font-weight:850}
-  .cta p{font-size:14px;color:#cfd8e4;margin:9px 0 15px;line-height:1.5}
-  .btn{display:inline-block;background:var(--gold);color:#171204;font-weight:850;font-size:16px;padding:14px 28px;border-radius:999px;text-decoration:none}
-  .cta .sub{font-size:12px;color:var(--faint);margin:12px 0 0}
-  .credit{margin-top:22px;background:var(--card);border:1px solid var(--line2);border-radius:14px;padding:15px;font-size:13px;line-height:1.55;color:var(--mut)}
-  .credit b{color:#cfd8e4}
-  footer{margin-top:26px;text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7}
-  footer a{color:var(--mut)}
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%;box-sizing:border-box;min-width:0}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.tdesc{font-size:15.5px;font-weight:300;line-height:1.7;letter-spacing:.01em;color:var(--dim2);max-width:780px;margin:0 0 14px}
+.tdesc b{color:var(--ink);font-weight:500}
+.capt{margin-top:18px;font-size:12px;letter-spacing:.04em;color:var(--dim)}
+.hero .cta-row{margin-top:26px}
+.btn-open{display:inline-block;text-decoration:none;font:500 14px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-hi));padding:18px 32px}
+.btn-open:hover{filter:brightness(1.08)}
+.small{margin:12px 0 0;font-size:13px;color:var(--dim)}
+.map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:30px}
+.map a{display:block;text-decoration:none;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:18px 14px;min-width:0}
+.map a:hover{border-color:var(--gold)}
+.map .k{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold-hi);margin-bottom:6px}
+.map .t{font-family:'Playfair Display',serif;font-size:18px;color:var(--ink);line-height:1.2}
+.map .n{font-size:12px;color:var(--dim);margin-top:6px}
+.map a:last-child{grid-column:span 2}
+.sims{display:grid;gap:14px;margin-top:30px}
+.sim{display:block;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:22px 26px;min-width:0}
+.sim:hover{border-color:var(--gold-dim)}
+.sim .co{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.sim h3{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(22px,2.4vw,28px);line-height:1.2;margin:0 0 8px;color:var(--ink)}
+.sim .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sim .meta span{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;color:var(--dim2);border:1px solid var(--gold-faint);padding:4px 8px}
+.sim .meta span.hot{color:var(--bg);background:var(--gold);border-color:var(--gold)}
+.sim p{margin:0;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2);max-width:760px}
+.sim p b{color:var(--ink);font-weight:500}
+.sim .lab{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:18px 0 8px}
+.q .qt{margin:0 0 14px;font-size:16px;font-weight:400;line-height:1.55;color:var(--ink);max-width:760px}
+details{max-width:760px}
+summary{cursor:pointer;display:inline-block;list-style:none;font:500 12px 'Jost',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-hi);border:1px solid var(--gold);padding:10px 16px}
+summary::-webkit-details-marker{display:none}
+summary:hover{background:rgba(200,162,78,.1)}
+details[open] summary{background:rgba(200,162,78,.12)}
+.ans{margin-top:12px;border:1px solid var(--gold-faint);background:rgba(0,0,0,.28);padding:14px 16px;font-size:14.5px;font-weight:300;line-height:1.65;color:var(--dim2)}
+.ans b{color:var(--gold-hi);font-weight:500}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:30px}
+.two .sim{padding:22px 26px}
+.two ul{margin:0;padding-left:20px;font-size:14.5px;font-weight:300;line-height:1.8;color:var(--dim2)}
+.two ul b{color:var(--ink);font-weight:500}
+.ok{display:grid;gap:10px;margin-top:24px;max-width:780px}
+.ok div{display:flex;gap:14px;font-size:14.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.ok div::before{content:'\2713';color:var(--gold);flex:none}
+.ok b{color:var(--ink);font-weight:500}
+.bottom{margin-top:40px}
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+@media (max-width:860px){
+  .map{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:minmax(0,1fr)}
+  .sim{padding:20px 18px}
+  .btn-open{display:block;text-align:center;padding:18px 20px}
+  .ctaboard{padding:34px 22px}
+}
+
 </style>
-<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script><!-- End Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
 </head>
 <body>
-  <header><img class="c9logo" src="https://kloud9ptyltd.github.io/content/cloud9-logo.png" alt="Cloud9 Markets"/><span class="hsub">The Quant Bible</span></header>
-
-  <div class="alert"><span class="dot"></span> Live Google Drive link — save your copy</div>
-
-  <h1>MIT's <em>"Quant Bible"</em> — the 50-page doc behind $400K quant jobs.</h1>
-  <p class="lede">Written by MIT students, passed around campus to break into <b>Jane Street, Citadel, Two Sigma, Optiver, SIG</b> and the rest of the highest-paying firms in finance — the ones with <b>reported $400K+ first-year packages</b>. It's sitting on a public Drive link right now. Links like this die all the time. <b>Save it.</b></p>
-
-  <div class="agents">
-    <span class="chip">🎲 Probability & Bayes</span><span class="chip">📊 Regressions & data science</span>
-    <span class="chip">💹 Market-making masterclass</span><span class="chip">🏦 Firm-by-firm question bank</span>
-    <span class="chip">🎓 The exact MIT courseroad</span>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Quant Bible</span></div>
   </div>
-
-  <div class="sect">What's inside — all 7 sections</div>
-
-  <div class="step"><h3><span class="n">1</span> The fundamentals quants actually get tested on</h3>
-    <p>Conditional probability, Bayes' theorem, expected value, random variables, LLN/CLT, confidence intervals — every concept explained with the <b>exact brainteasers firms ask</b>, worked to the answer.</p></div>
-
-  <div class="step"><h3><span class="n">2</span> A market-making masterclass</h3>
-    <p>How market makers really quote bid/ask, and full playthroughs of the classic interview games: <b>make a market on Red Sox wins</b>, on the population of Tanzania, on the windows in SIG's building — trade by trade, with the PNL math shown.</p></div>
-
-  <div class="step"><h3><span class="n">3</span> A real question bank, firm by firm</h3>
-    <p>Actual questions contributors faced in interviews, with solutions — organized by firm, round by round. Plus real quant-research case studies (<b>Two Sigma NY housing prices, CitiBikes</b>) and the MIT class list + book list that builds the skillset.</p></div>
-
-  <div class="firms">
-    <span>JANE STREET</span><span>CITADEL</span><span>TWO SIGMA</span><span>VIRTU</span><span>OPTIVER</span>
-    <span>AKUNA</span><span>HUDSON RIVER</span><span>FIVE RINGS</span><span>SIG</span>
+  <div class=right>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
   </div>
+</nav>
 
-  <div class="sect">Try 3 of the real questions</div>
-
-  <div class="q"><div class="firm">Jane Street · Round 1</div>
-    <h3>Roll a die, you get paid the number. You may re-roll once. What's the fair price of this game?</h3>
-    <details><summary>Reveal answer</summary><div class="ans">One roll alone is worth 3.5. With a free re-roll you only re-roll when the first roll is below 3.5 — so keep 4, 5, 6, re-roll 1, 2, 3. That's <b>½ × 3.5 + ⅙ × (4+5+6) = $4.25</b>.</div></details></div>
-
-  <div class="q"><div class="firm">Asked constantly in trading phone screens</div>
-    <h3>1000 coins: 999 fair, one has heads on both sides. You pick one at random and flip 10 heads in a row. Odds you're holding the rigged coin?</h3>
-    <details><summary>Reveal answer</summary><div class="ans">Feels like a near-certainty — it's a coin flip. Bayes' theorem: 1 / (1 + 999/1024) ≈ <b>50%</b>. The rigged coin is rare enough that 999 fair coins produce a 10-heads streak about as often as the one rigged coin does.</div></details></div>
-
-  <div class="q"><div class="firm">Citadel</div>
-    <h3>100 passengers board a plane in order; passenger 1 is drunk and sits randomly. Everyone else takes their own seat if free, random if taken. Odds passenger 100 gets their own seat?</h3>
-    <details><summary>Reveal answer</summary><div class="ans">Every random choice either ends the chaos (seat 1) or passes it on — and seats 1 and 100 are always equally likely to be the one that gets taken. Exactly <b>1/2</b>.</div></details></div>
-
-  <div class="cta">
-    <h2>Get the full 50-page Quant Bible</h2>
-    <p>Every section, every firm's questions, every worked answer — free on Google Drive. No sign-up, no email. <b>Download it, don't just bookmark it.</b></p>
-    <a class="btn" href="https://drive.google.com/file/d/1LO7D0C9FC-KHViThmTXfUTLyr6Wke5-f/view?usp=drivesdk" target="_blank" rel="noopener">📄 Open the Quant Bible →</a>
-    <p class="sub">Hosted on a public Google Drive share — if the link dies, DM us on Instagram for the latest copy.</p>
+<header class=hero>
+  <div class=eyebrow>51 pages · Free PDF · Checked 24 Nov 2026</div>
+  <h1>MIT's Quant Bible, the guide students use to break into <span class=free>quant</span></h1>
+  <p class=sub>It was written by students of the MIT Sloan Business Club to prepare for interviews at Jane Street, Citadel, Two Sigma, Optiver and SIG. It is free on a public Google Drive link. These firms are known for reported first-year packages of $400K+.</p>
+  <div class=cta-row>
+    <a class=btn-open href="https://drive.google.com/file/d/1LO7D0C9FC-KHViThmTXfUTLyr6Wke5-f/view?usp=drivesdk" target=_blank rel=noopener>Open the Quant Bible ↗</a>
+    <p class=small>Download it. Don't just bookmark it, links like this can go away.</p>
   </div>
+</header>
 
-  <div class="credit"><b>Credit where it's due:</b> the Quant Bible was written by students of the <b>MIT Sloan Business Club</b> (with named contributors throughout) to democratize quant finance as a career. We didn't write it — we're just making sure you see it. Comp figures reflect widely reported first-year packages at top quant firms and vary by firm and role.</div>
+<main>
+  <section class=topic id=inside>
+    <div class=tnum>00 · What's inside</div>
+    <h2>Seven sections, 51 pages.</h2>
+    <p class=tdesc>The page number is where each section starts.</p>
+    <div class=map><a href="https://drive.google.com/file/d/1LO7D0C9FC-KHViThmTXfUTLyr6Wke5-f/view?usp=drivesdk" target=_blank rel=noopener><div class=k>01</div><div class=t>Introduction</div><div class=n>Where to apply, classes, books · p.2</div></a><a href="https://drive.google.com/file/d/1LO7D0C9FC-KHViThmTXfUTLyr6Wke5-f/view?usp=drivesdk" target=_blank rel=noopener><div class=k>02</div><div class=t>Probability</div><div class=n>p.5</div></a><a href="https://drive.google.com/file/d/1LO7D0C9FC-KHViThmTXfUTLyr6Wke5-f/view?usp=drivesdk" target=_blank rel=noopener><div class=k>03</div><div class=t>Statistics</div><div class=n>p.10</div></a><a href="https://drive.google.com/file/d/1LO7D0C9FC-KHViThmTXfUTLyr6Wke5-f/view?usp=drivesdk" target=_blank rel=noopener><div class=k>04</div><div class=t>Data Science</div><div class=n>p.12</div></a><a href="https://drive.google.com/file/d/1LO7D0C9FC-KHViThmTXfUTLyr6Wke5-f/view?usp=drivesdk" target=_blank rel=noopener><div class=k>05</div><div class=t>Research Case Studies</div><div class=n>p.26</div></a><a href="https://drive.google.com/file/d/1LO7D0C9FC-KHViThmTXfUTLyr6Wke5-f/view?usp=drivesdk" target=_blank rel=noopener><div class=k>06</div><div class=t>Market Making</div><div class=n>p.31</div></a><a href="https://drive.google.com/file/d/1LO7D0C9FC-KHViThmTXfUTLyr6Wke5-f/view?usp=drivesdk" target=_blank rel=noopener><div class=k>07</div><div class=t>Question Bank</div><div class=n>p.36</div></a></div>
+  </section>
 
-  <footer>
-    <a href="https://www.instagram.com/cloud9.markets/" target="_blank" rel="noopener">@cloud9.markets</a> · Cloud9 Markets<br/>
-    For educational purposes only. Not financial advice, not career advice — just a very good PDF.
-  </footer>
-</body>
-</html>
+  <section class=topic id=parts>
+    <div class=tnum>01 · The three parts worth your time</div>
+    <h2>Where I would start.</h2>
+    <div class=sims>
+      <div class=sim>
+        <div class=co>Part 1</div>
+        <h3>The maths firms test</h3>
+        <div class=meta><span class=hot>PAGES 5-11</span></div>
+        <p>Conditional probability, Bayes' theorem, expected value, the law of large numbers and confidence intervals. Each one comes with worked brainteasers.</p>
+      </div>
+      <div class=sim>
+        <div class=co>Part 2</div>
+        <h3>A market-making walkthrough</h3>
+        <div class=meta><span class=hot>PAGES 31-35</span></div>
+        <p>It shows how to quote a bid and an ask. Then it plays full games trade by trade: Boston Red Sox wins, the population of Tanzania, and the number of windows in SIG's building.</p>
+      </div>
+      <div class=sim>
+        <div class=co>Part 3</div>
+        <h3>The question bank, firm by firm</h3>
+        <div class=meta><span>Jane Street 37</span><span>Virtu 40</span><span>Optiver 42</span><span>Akuna 43</span><span>Citadel 44</span><span>Hudson River Trading 46</span><span>Two Sigma 47</span><span>Five Rings 48</span><span>SIG 50</span></div>
+        <p>Real questions contributors were asked, with solutions. The number is the page where each firm starts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class=topic id=try>
+    <div class=tnum>02 · Try three real questions</div>
+    <h2>Answer first, then reveal.</h2>
+    <div class=sims><div class="sim q">
+      <div class=co>Jane Street section · page 37</div>
+      <p class=qt>Roll a die and you get paid the number. You may re-roll once. What is the fair price of this game?</p>
+      <details><summary>Reveal answer</summary><div class=ans>One roll alone is worth 3.5. With a free re-roll, you only re-roll when the first roll is below 3.5. So keep 4, 5 and 6, and re-roll 1, 2 and 3. That is <b>½ × 3.5 + ⅙ × (4 + 5 + 6) = $4.25</b>.</div></details>
+    </div><div class="sim q">
+      <div class=co>Probability section · page 5</div>
+      <p class=qt>There are 1000 coins. 999 are fair and one has heads on both sides. You pick one at random and flip 10 heads in a row. What are the odds you are holding the rigged coin?</p>
+      <details><summary>Reveal answer</summary><div class=ans>It feels like a near-certainty, but it is not. Bayes' theorem gives 1 / (1 + 999/1024), which is about <b>50%</b>. The rigged coin is rare enough that 999 fair coins produce a 10-heads streak about as often as the one rigged coin does.</div></details>
+    </div><div class="sim q">
+      <div class=co>Citadel section · page 44</div>
+      <p class=qt>100 passengers board a plane in order. Passenger 1 is drunk and sits in a random seat. Everyone else takes their own seat if it is free, and a random one if it is taken. What are the odds passenger 100 gets their own seat?</p>
+      <details><summary>Reveal answer</summary><div class=ans>Every random choice either ends the chaos (seat 1) or passes it on. Seats 1 and 100 are always equally likely to be the one that gets taken. The answer is exactly <b>1/2</b>.</div></details>
+    </div></div>
+  </section>
+
+  <section class=topic id=classes>
+    <div class=tnum>03 · The MIT class list</div>
+    <h2>The classes it tells you to take.</h2>
+    <p class=tdesc>Not at MIT? Most of these have free versions on MIT OpenCourseWare.</p>
+    <div class=two>
+      <div class=sim><div class=co>Core classes</div><ul><li><b>18.600</b> Probability and Random Variables</li><li><b>18.06</b> Linear Algebra</li><li><b>14.32</b> Econometrics</li><li><b>6.042</b> Discrete Math</li><li><b>6.006 / 6.046</b> Algorithms</li><li><b>6.034 / 6.036</b> Machine Learning</li><li><b>18.650</b> Statistics</li></ul></div>
+      <div class=sim><div class=co>Books it names</div><ul><li><b>Heard on the Street</b> by Timothy Crack</li><li><b>Elements of Statistical Learning</b> by Trevor Hastie and others</li><li><b>Option Volatility and Pricing</b> by Sheldon Natenberg</li></ul></div>
+    </div>
+  </section>
+
+  <section class=topic id=know>
+    <div class=tnum>04 · Good to know</div>
+    <h2>Honest notes.</h2>
+    <div class=ok><div><span><b>Cloud9 did not write it.</b> It was written by students of the MIT Sloan Business Club, with named contributors, to open up quant finance as a career.</span></div><div><span><b>The PDF is dated January 2022.</b> The maths has not changed, but interview questions do.</span></div><div><span><b>It sits on a public Google Drive share.</b> If the link stops working, message @cloud9.markets on Instagram.</span></div><div><span><b>Reading it will not get you hired.</b> It shows you the level. The practice is on you.</span></div><div><span><b>Pay figures are widely reported</b> first-year packages at top firms and vary by firm and role.</span></div></div>
+    <div class=bottom><a class=btn-open href="https://drive.google.com/file/d/1LO7D0C9FC-KHViThmTXfUTLyr6Wke5-f/view?usp=drivesdk" target=_blank rel=noopener>Open the Quant Bible ↗</a></div>
+  </section>
+
+  <div class=ctaboard>
+    <div class=lbl>Keep going</div>
+    <h2>Want the full quant path? Start here.</h2>
+    <p>The Quant Bible is one step. The quant hub has every free guide in order: the roadmap, the free courses, the projects to build and the firms that hire.</p>
+    <div class=actions>
+      <a class=btn-gold href="quant.html">Open the quant hub</a>
+      <a class=btn-line href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · not financial or career advice</span>
+  <div class=disclaimer>Cloud9 is not affiliated with MIT, the MIT Sloan Business Club or any firm named; names are used only to describe the document. Pay figures are widely reported and vary by firm and role.</div>
+</footer>
+</div>
+</body></html>
