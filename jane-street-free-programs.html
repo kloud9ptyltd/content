@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Jane Street's 4 Free Programs (Most People Miss) · Cloud9</title>
+<meta name="description" content="Four free Jane Street programs: FTTP, WiSE 2027, Quantile 2027 and the Protocol Emulator ASIC contest. Who each is for, what you get, the dates, and a prep project for each.">
+<meta property="og:title" content="Jane Street's 4 free programs (most people miss)">
+<meta property="og:description" content="FTTP, WiSE, Quantile and the chip-design contest: who they are for, dates, official links and a prep project for each.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%;box-sizing:border-box;min-width:0}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.capt{margin-top:14px;font-size:12px;letter-spacing:.04em;color:var(--dim);max-width:780px;line-height:1.6}
+.items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.item{display:flex;flex-direction:column;gap:8px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:20px 18px;min-width:0;text-decoration:none;color:var(--ink)}
+.item:hover{border-color:var(--gold-dim);background:rgba(200,162,78,.06)}
+.item .lbl{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.item strong{font-family:'Playfair Display',serif;font-weight:500;font-size:19px;line-height:1.3;overflow-wrap:anywhere}
+.item .desc{font-size:13.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.item .desc b{color:var(--gold-hi);font-weight:500}
+.item .desc i{color:var(--gold-hi);font-style:normal}
+.item .go{margin-top:auto;padding-top:6px;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hi)}
+.item.build{background:rgba(200,162,78,.06);border-color:var(--gold-dim)}
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+
+.howto{margin:8px auto 0;max-width:900px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.04);padding:28px 30px}
+.howto h3,.task h3{font-family:'Playfair Display',serif;font-weight:500;font-size:22px;margin:0 0 12px;color:var(--gold-hi)}
+.howto ol,.task ol{margin:0;padding-left:22px;font-size:14.5px;font-weight:300;line-height:1.75;color:var(--dim2)}
+.howto li b,.task li b{color:var(--ink);font-weight:500}
+.howto .note{margin-top:12px;font-size:13.5px;font-weight:300;color:var(--dim2);line-height:1.6}
+.task{margin-top:16px;border:1px solid var(--gold-dim);background:rgba(200,162,78,.05);padding:26px 26px 22px}
+.task .meta{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.task .goal{font-size:15px;font-weight:300;line-height:1.7;color:var(--ink);margin:0 0 14px}
+.prompt{position:relative;margin-top:16px;border:1px solid var(--gold-faint);background:rgba(0,0,0,.35)}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--gold-faint);font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.prompt button{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:#0b0a08;border:0;padding:7px 12px;cursor:pointer}
+.prompt pre{margin:0;padding:16px;white-space:pre-wrap;word-break:break-word;font:400 13px/1.65 'JetBrains Mono',monospace;color:var(--ink)}
+.done{margin-top:14px;font-size:14px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.done b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.task,.howto{padding:22px 18px}.items{grid-template-columns:1fr}.ctaboard{padding:34px 22px}}
+
+.tbl{width:100%;border-collapse:collapse;margin:8px 0 0;font-size:13.5px;font-weight:300;color:var(--dim2)}
+.tbl th{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);text-align:left;padding:12px 12px;border-bottom:1px solid var(--gold-dim)}
+.tbl td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);vertical-align:top;line-height:1.55}
+.tbl td:first-child{color:var(--ink);font-family:'Playfair Display',serif;font-size:17px;white-space:nowrap}
+.tbl td b{color:var(--gold-hi);font-weight:500}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.facts .item{cursor:default}
+.btnrow{margin-top:20px;display:flex;gap:14px;flex-wrap:wrap}
+.btnrow a{display:inline-block;text-decoration:none}
+.honest div{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:16px 18px;margin-top:10px;font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2)}
+.honest b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.facts{grid-template-columns:1fr}.tblwrap{overflow-x:visible}.tbl,.tbl tbody,.tbl tr,.tbl td{display:block;width:100%;box-sizing:border-box}.tbl thead{display:none}.tbl tr{border:1px solid var(--gold-faint);padding:12px 14px;margin-top:10px;background:rgba(200,162,78,.03)}.tbl td{border:0;padding:4px 0}.tbl td:first-child{white-space:normal}.tbl td[data-l]::before{content:attr(data-l) ' · ';font:500 10px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>Jane Street · Free programs</span></div>
+  </div>
+  <div class=right>
+    <a href="quant.html">← Quant hub</a>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+<header class=hero>
+<div class=eyebrow>From the reel · Free list</div>
+<h1>Jane Street's 4 free programs<br><span class=free>(most people miss).</span></h1>
+<p class=sub>Free to enter, and no finance background needed for FTTP, WiSE and Quantile. The chip-design contest is open to students and professionals. Official links, dates and a prep project for each.</p>
+</header>
+<main>
+<section class=howto>
+  <h3>At a glance</h3>
+  <div class=tblwrap><table class=tbl><thead><tr><th>Program</th><th>For</th><th>What you get</th><th>Deadline / status</th></tr></thead><tbody><tr><td>FTTP</td><td data-l="For">First-year STEM undergraduates; no finance needed</td><td data-l="You get">Free trip: travel, meals, housing, classes, mock trading game</td><td data-l="Deadline">London, New York, Hong Kong, Mar 21–25, 2027; apply by <b>Jan 31, 2027</b> (London: <b>Jan 3</b>)</td></tr><tr><td>WiSE 2027</td><td data-l="For">Women, trans and/or gender-expansive students starting uni</td><td data-l="You get">Free multi-day program: probability, logic, markets, trading</td><td data-l="Deadline"><b>Dates not announced</b>; notify form</td></tr><tr><td>Quantile 2027</td><td data-l="For">Students/recent grads in India (any subject)</td><td data-l="You get">Free quant championship, ₹1.5 lakh prize pool</td><td data-l="Deadline"><b>Registration not open</b> yet; notify on site</td></tr><tr><td>ASIC contest</td><td data-l="For">Students and professionals, solo or teams</td><td data-l="You get">Chip design; ~4 designs taped out by Jane Street</td><td data-l="Deadline"><b>Jan 18, 2027</b> deadline</td></tr></tbody></table></div>
+  <p class=note>Dates checked November 25, 2026. <a href="jane-street-programs.html" style="color:var(--gold-hi)">More: the full Jane Street program guide ↗</a></p>
+</section>
+<section class=topic id=s1>
+  <div class=tnum>01 · Program</div>
+  <h2>FTTP: a free trip to a Jane Street office</h2>
+  <div class=facts>
+    <div class=item><span class=lbl>Who it's for</span><span class=desc>A select group of first-year undergraduates planning to study math, physics, CS or another STEM field. No prior finance knowledge required.</span></div>
+    <div class=item><span class=lbl>What you get</span><span class=desc>Jane Street covers travel to and from, meals, housing, social events and a set daily amount for expenses. A few days of classes plus a team-based mock trading simulation game.</span></div>
+    <div class="item build"><span class=lbl>Key date / status</span><span class=desc><b>London: March 21–25, 2027</b>, apply by <b>Sunday, January 3, 2027, 11:59pm GMT</b> (earliest deadline). <b>New York: March 21–25, 2027</b>, apply by <b>Sunday, January 31, 2027, 11:59pm EST</b>. <b>Hong Kong: March 21–24, 2027</b>, apply by <b>Sunday, January 31, 2027, 11:59pm HKT</b>. Apply only to the location nearest you.</span></div>
+  </div>
+  
+  <div class=btnrow><a class=btn-gold href="https://www.janestreet.com/join-jane-street/programs-and-events/fttp/" target=_blank rel=noopener>Official FTTP page ↗</a></div>
+  <div class=task>
+    <div class=meta>Prep project · this week, about 2 hours</div>
+    <h3>Prep project</h3>
+    <p class=goal>Get a feel for what the program covers: probability, expected value and trading with a team. Do 5 puzzles, then play a mock market with friends.</p>
+    <ol><li>Paste the prompt below into ChatGPT or Claude and work through the 5 puzzles. Write your own answer before asking for the solution.</li><li>Gather 3+ friends and play the mock market game the prompt describes, 3 rounds.</li><li>Write down one mistake you made and what you would change next round.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>I&#x27;m a first-year student preparing for a trading-style program application. I have no finance background. Do two things.
+
+1. Give me 5 probability and expected-value puzzles, easiest first (coin flips, dice games, simple bets). Give one at a time. Wait for my answer, then tell me if I&#x27;m right and explain the logic simply before the next one.
+
+2. Then write the rules for a mock market-making game I can play with 3-6 friends using paper and a deck of cards. One player is the market maker who quotes a bid and an ask on the total of cards held by the group; others buy or sell. Include how to score each round and how to tell who made money.
+
+Keep everything beginner-friendly.</pre></div>
+    <p class=done><b>Done when:</b> you solved the 5 puzzles and wrote down one lesson from a mock-market round.</p>
+  </div>
+</section>
+<section class=topic id=s2>
+  <div class=tnum>02 · Program</div>
+  <h2>WiSE 2027: a multi-day program for women and gender-expansive students</h2>
+  <div class=facts>
+    <div class=item><span class=lbl>Who it's for</span><span class=desc>Women, transgender, and/or gender-expansive individuals about to start their first year of university. No finance knowledge needed.</span></div>
+    <div class=item><span class=lbl>What you get</span><span class=desc>A challenging multi-day program on probability, logic, financial markets and algorithmic trading, and you meet traders and technologists. Jane Street covers travel, meals, housing, social events and a daily amount.</span></div>
+    <div class="item build"><span class=lbl>Key date / status</span><span class=desc><b>2027 dates not announced yet.</b> Use the notify form to hear first. Apply to ONE location: the region where you will be based this summer.</span></div>
+  </div>
+  <div class=btnrow><a class=btn-gold href="https://www.janestreet.com/join-jane-street/programs-and-events/wise/" target=_blank rel=noopener>Official WiSE page ↗</a></div>
+  <div class=task>
+    <div class=meta>Prep project · this week, about 2 hours</div>
+    <h3>Prep project</h3>
+    <p class=goal>Practise the kinds of thinking the program covers: probability, logic and simple market games. Do 5 puzzles, then play a mock market with friends.</p>
+    <ol><li>Sign up on the <a href="https://forms.gle/UmRZT8P589XJTZoa8" target=_blank rel=noopener style="color:var(--gold-hi)">WiSE notify form ↗</a> so you hear when 2027 opens.</li><li>Paste the prompt below into ChatGPT or Claude and solve the puzzles one at a time.</li><li>Play the mock market game with friends for 3 rounds and note who profited and why.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>I&#x27;m about to start university and I&#x27;m preparing for a program on probability, logic and trading. I have no finance background. Do two things.
+
+1. Give me 5 logic and probability puzzles, easiest first, including at least two expected-value problems. One at a time: wait for my answer, then check it and explain the reasoning in plain English.
+
+2. Teach me what a market maker does in 5 sentences, then write the rules for a mock market-making game I can play with 3-6 friends using paper and dice. Include how to score each round.
+
+Keep it friendly and simple.</pre></div>
+    <p class=done><b>Done when:</b> you have signed up for the notify form and solved the 5 puzzles without looking at the answers first.</p>
+  </div>
+</section>
+<section class=topic id=s3>
+  <div class=tnum>03 · Program</div>
+  <h2>Quantile 2027: India's quant championship with no answer key</h2>
+  <div class=facts>
+    <div class=item><span class=lbl>Who it's for</span><span class=desc>Any student at a college in India (any level, any subject), plus graduates of Indian institutions within the last year. India only. Free and individual.</span></div>
+    <div class=item><span class=lbl>What you get</span><span class=desc>A competition run by IQCS with a ₹1.5 lakh prize pool; Jane Street is Founding Title Sponsor. It is not a finance-knowledge, programming or paper-trading contest.</span></div>
+    <div class="item build"><span class=lbl>Key date / status</span><span class=desc><b>Registration is not open yet</b> ("Registration opens soon"); add your email on the site to be notified. Rounds: Spark 17 Jan (online), Orbit Feb (IIT centres), Nova Mar (IIT Kanpur).</span></div>
+  </div>
+  
+  <div class=btnrow><a class=btn-gold href="https://quantile.iqcs.in" target=_blank rel=noopener>Quantile site ↗</a></div>
+  <div class=task>
+    <div class=meta>Prep project · this week, about 90 minutes</div>
+    <h3>Prep project</h3>
+    <p class=goal>There is no answer key, so practise reasoning under uncertainty: estimate, state your assumptions and defend your number.</p>
+    <ol><li>Add your email on the Quantile site so you are notified when registration opens.</li><li>Paste the prompt below into ChatGPT or Claude and answer each problem with a number and your reasoning, before seeing any solution.</li><li>Ask for critique of your assumptions, not for the right answer.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Give me 5 estimation and probability problems in the style of a quant competition with no answer key (for example, estimating a quantity from scratch, or a probability puzzle with unclear information). One at a time.
+
+For each one: wait for my answer and reasoning. Do NOT give me a final answer. Instead, critique my assumptions, point out what I ignored, and tell me whether my reasoning is sound and how I could check my estimate. After all 5, summarise my strengths and weaknesses.</pre></div>
+    <p class=done><b>Done when:</b> you have answered 5 problems with a number, a range and written assumptions, and revised at least one after critique.</p>
+  </div>
+</section>
+<section class=topic id=s4>
+  <div class=tnum>04 · Program</div>
+  <h2>Protocol Emulator ASIC Competition: design a real chip</h2>
+  <div class=facts>
+    <div class=item><span class=lbl>Who it's for</span><span class=desc>Students and professionals are both welcome. Enter solo or as a team (no size limit); one entry per team.</span></div>
+    <div class=item><span class=lbl>What you get</span><span class=desc>Design an open-source protocol emulator ASIC (a tiny CPU for reading and writing pins with precise timing) on IHP 130nm via Tiny Tapeout. Jane Street pays to tape out around four designs, and winners get their chip on a Tiny Tapeout demo board.</span></div>
+    <div class="item build"><span class=lbl>Key date / status</span><span class=desc><b>Deadline: January 18, 2027.</b> Selections in early February. Submit a public repo with RTL, tests and a passing GDS/precheck. The submission form is not live yet. Questions: asic-competition@janestreet.com</span></div>
+  </div>
+  
+  <div class=btnrow><a class=btn-gold href="https://blog.janestreet.com/protocol-emulator-asic-competition/" target=_blank rel=noopener>Official contest post ↗</a></div>
+  <div class=task>
+    <div class=meta>Prep project · this week, 2-3 hours</div>
+    <h3>Prep project</h3>
+    <p class=goal>Get a tiny design through the Tiny Tapeout flow before you attempt the real thing: a small CPU that toggles pins, with a testbench.</p>
+    <ol><li>Start from the Tiny Tapeout IHP Verilog template (find it via the contest post).</li><li>Paste the prompt below into ChatGPT or Claude to write a tiny pin-toggling CPU and its testbench.</li><li>Run the testbench in a simulator and check the precheck passes in the template workflow.</li></ol>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Help me build a first hardware project in Verilog, starting from the Tiny Tapeout IHP Verilog template. I&#x27;m a beginner.
+
+1. Design a tiny CPU with a 4-instruction set: SET pin, CLEAR pin, WAIT n cycles, and JUMP. It should drive an 8-bit output pin register from a small program memory.
+2. Write the Verilog module that fits the Tiny Tapeout template&#x27;s top-level ports.
+3. Write a testbench that loads a program toggling one pin every 4 clock cycles and checks the output waveform.
+4. Explain how to run the simulation with an open-source simulator, and explain each part of the code in plain English.</pre></div>
+    <p class=done><b>Done when:</b> your testbench passes, the pin toggles on the exact cycles you programmed, and the template precheck runs without errors.</p>
+  </div>
+</section>
+<section class="topic honest" id=honest>
+  <div class=tnum>Good to know</div>
+  <h2>Honest notes.</h2>
+  <div><b>No program guarantees an internship.</b> They are a way into the firm and a way to learn, not a promise.</div>
+  <div><b>FTTP and WiSE are selective.</b> Only a select group is chosen.</div>
+  <div><b>Quantile is India-only and not open yet.</b> Registration has not opened.</div>
+  <div><b>Dates were checked on November 25, 2026.</b> Always confirm on the official page before you plan around a deadline.</div>
+</section>
+<div class=ctaboard>
+  <div class=lbl>Keep going</div>
+  <h2>More free ways into quant finance.</h2>
+  <p>I check every link before I share it.</p>
+  <div class=actions>
+    <a class=btn-gold href="jane-street-programs.html">More: the full Jane Street program guide</a>
+    <a class=btn-line href="quant.html">Quant hub</a>
+    <a class=btn-line href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+  </div>
+</div>
+</main>
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>For education only, not financial advice. Cloud9 is not affiliated with Jane Street, IQCS or Tiny Tapeout. Always confirm details on the official pages.</div>
+</footer>
+</div>
+<script>
+function cp(b){const t=b.closest('.prompt').querySelector('pre').innerText;navigator.clipboard.writeText(t).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)})}
+</script>
+</body></html>
