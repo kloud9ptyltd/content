@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>3 free TradingView alternatives (no broker, no KYC) · Cloud9</title>
-<meta name="description" content="OpenMarket, DM Charts and Vela: three free TradingView alternatives that need no broker account. What is free, what to try first, and an AI prompt for each.">
+<meta name="description" content="OpenMarket, DM Charts and Vela: three free TradingView alternatives that need no broker account. What is free, what to try first, and an AI prompt for each, plus a free backtesting guide.">
 <meta property="og:title" content="3 free TradingView alternatives (no broker, no KYC)">
-<meta property="og:description" content="OpenMarket, DM Charts and Vela: free charts with more indicators, drawings and tools than TradingView's free plan.">
+<meta property="og:description" content="OpenMarket, DM Charts and Vela: free charts with more indicators, drawings and tools than TradingView's free plan, plus a free backtesting guide.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="cloud9-luxe.css">
@@ -88,6 +88,7 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
 <section class=howto>
   <h3>How to use this page</h3>
   <ol><li><b>Open each link</b> in a browser tab.</li><li><b>Try your usual setup</b> on one chart for 10 minutes.</li><li><b>Keep the one that fits;</b> you don't have to pick just one.</li></ol>
+  <p class=note>Plus a free backtesting guide below.</p>
 </section>
 <section class=topic id=s1>
   <div class=tnum>01 · Tool</div>
@@ -123,6 +124,25 @@ main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:10
     <h3>Copy-paste prompt</h3>
     <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Here&#x27;s my trading idea: [describe it]. Turn it into exact entry, exit and stop rules I can paste into a backtest, and list 3 ways the backtest could be fooling me.</pre></div>
     <p class=done><b>Done when:</b> You have one backtest result and can name its max drawdown.</p>
+  </div>
+</section>
+<section class=topic id=backtest>
+  <div class=tnum>04 · GUIDE</div>
+  <h2>Free backtesting guide: test a strategy in 15 minutes</h2>
+  <div class=items>
+  <div class=item><span class=lbl>Step 1</span><strong>Write the rules first</strong><span class=desc>Entry, exit, stop and position size in plain sentences. If you can't write it down, you can't test it.</span></div>
+  <div class=item><span class=lbl>Step 2</span><strong>Build it with Vela's Quant AI</strong><span class=desc>Free, limited usage. Open Quant, pick "Strategy", paste your rules. Then pick "Backtest agent loop" to run it and refine it.</span></div>
+  <div class=item><span class=lbl>Step 3</span><strong>Or use Pine</strong><span class=desc>Paste the strategy into DM Charts' Pine Editor (free, no sign-up), or TradingView's free Strategy Tester.</span></div>
+  <div class=item><span class=lbl>Step 4</span><strong>Read 4 numbers</strong><span class=desc>Net profit, max drawdown, win rate, number of trades. Fewer than ~30 trades means the result is mostly luck.</span></div>
+  <div class=item><span class=lbl>Step 5</span><strong>Check it isn't fooling you</strong><span class=desc>Add fees and slippage, test on a different date range than you built it on, and compare against simply buying and holding.</span></div>
+  <div class=item><span class=lbl>Step 6</span><strong>Paper trade it first</strong><span class=desc>Paper trade for 2–4 weeks before risking real money. Vela has paper trading built in.</span></div>
+  </div>
+  <div class=btnrow><a class=btn-line href="/claude-tv-backtest.html">Deeper guide: backtest any indicator with Claude →</a></div>
+  <div class=task>
+    <div class=meta>AI prompt · about 15 minutes</div>
+    <h3>Copy-paste prompt</h3>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Here are my strategy rules: [paste]. Rewrite them as exact, testable rules (entry, exit, stop, position size), write a Pine Script v5 strategy for them with 0.1% commission and 1 tick slippage, and list 5 ways this backtest could be misleading me.</pre></div>
+    <p class=done><b>Done when:</b> You have one backtest with at least 30 trades, and you can name its max drawdown and how it compares to buy-and-hold.</p>
   </div>
 </section>
 <section class="topic honest" id=honest>
