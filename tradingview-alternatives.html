@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>3 free TradingView alternatives (no broker, no KYC) · Cloud9</title>
+<meta name="description" content="OpenMarket, DM Charts and Vela: three free TradingView alternatives that need no broker account. What is free, what to try first, and an AI prompt for each.">
+<meta property="og:title" content="3 free TradingView alternatives (no broker, no KYC)">
+<meta property="og:description" content="OpenMarket, DM Charts and Vela: free charts with more indicators, drawings and tools than TradingView's free plan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cloud9-luxe.css">
+<style>
+main{max-width:1220px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 60px;width:100%;box-sizing:border-box;min-width:0}
+.topic{margin-top:64px;padding-top:40px;border-top:1px solid var(--gold-faint)}
+.topic:first-of-type{margin-top:48px}
+.tnum{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.topic h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(28px,3.4vw,42px);line-height:1.15;margin:0 0 16px;text-wrap:pretty}
+.capt{margin-top:14px;font-size:12px;letter-spacing:.04em;color:var(--dim);max-width:780px;line-height:1.6}
+.items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.item{display:flex;flex-direction:column;gap:8px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:20px 18px;min-width:0;text-decoration:none;color:var(--ink)}
+.item:hover{border-color:var(--gold-dim);background:rgba(200,162,78,.06)}
+.item .lbl{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.item strong{font-family:'Playfair Display',serif;font-weight:500;font-size:19px;line-height:1.3;overflow-wrap:anywhere}
+.item .desc{font-size:13.5px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.item .desc b{color:var(--gold-hi);font-weight:500}
+.item .desc i{color:var(--gold-hi);font-style:normal}
+.item .go{margin-top:auto;padding-top:6px;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hi)}
+.item.build{background:rgba(200,162,78,.06);border-color:var(--gold-dim)}
+.ctaboard{margin:64px auto 0;max-width:760px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.05);padding:44px 38px;text-align:center}
+.ctaboard .lbl{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.ctaboard h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3vw,32px);margin:0 0 16px;color:var(--gold-hi)}
+.ctaboard p{font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2);margin:0 auto 10px;max-width:560px}
+.ctaboard .actions{margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.ctaboard .btn-gold,.ctaboard .btn-line{display:inline-block;text-decoration:none}
+.disclaimer{flex-basis:100%;margin-top:14px;font-size:10.5px;letter-spacing:.04em;text-transform:none;color:#6b6255;line-height:1.6}
+
+.howto{margin:8px auto 0;max-width:900px;border:1px solid var(--gold-faint);background:rgba(200,162,78,.04);padding:28px 30px}
+.howto h3,.task h3{font-family:'Playfair Display',serif;font-weight:500;font-size:22px;margin:0 0 12px;color:var(--gold-hi)}
+.howto ol,.task ol{margin:0;padding-left:22px;font-size:14.5px;font-weight:300;line-height:1.75;color:var(--dim2)}
+.howto li b,.task li b{color:var(--ink);font-weight:500}
+.howto .note{margin-top:12px;font-size:13.5px;font-weight:300;color:var(--dim2);line-height:1.6}
+.task{margin-top:16px;border:1px solid var(--gold-dim);background:rgba(200,162,78,.05);padding:26px 26px 22px}
+.task .meta{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.task .goal{font-size:15px;font-weight:300;line-height:1.7;color:var(--ink);margin:0 0 14px}
+.prompt{position:relative;margin-top:16px;border:1px solid var(--gold-faint);background:rgba(0,0,0,.35)}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--gold-faint);font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.prompt button{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:#0b0a08;border:0;padding:7px 12px;cursor:pointer}
+.prompt pre{margin:0;padding:16px;white-space:pre-wrap;word-break:break-word;font:400 13px/1.65 'JetBrains Mono',monospace;color:var(--ink)}
+.done{margin-top:14px;font-size:14px;font-weight:300;line-height:1.6;color:var(--dim2)}
+.done b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.task,.howto{padding:22px 18px}.items{grid-template-columns:1fr}.ctaboard{padding:34px 22px}}
+
+.tbl{width:100%;border-collapse:collapse;margin:8px 0 0;font-size:13.5px;font-weight:300;color:var(--dim2)}
+.tbl th{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);text-align:left;padding:12px 12px;border-bottom:1px solid var(--gold-dim)}
+.tbl td{padding:14px 12px;border-bottom:1px solid var(--gold-faint);vertical-align:top;line-height:1.55}
+.tbl td:first-child{color:var(--ink);font-family:'Playfair Display',serif;font-size:17px;white-space:nowrap}
+.tbl td b{color:var(--gold-hi);font-weight:500}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.facts .item{cursor:default}
+.btnrow{margin-top:20px;display:flex;gap:14px;flex-wrap:wrap}
+.btnrow a{display:inline-block;text-decoration:none}
+.honest div{border:1px solid var(--gold-faint);background:rgba(200,162,78,.03);padding:16px 18px;margin-top:10px;font-size:14.5px;font-weight:300;line-height:1.7;color:var(--dim2)}
+.honest b{color:var(--gold-hi);font-weight:500}
+@media (max-width:860px){.facts{grid-template-columns:1fr}.tblwrap{overflow-x:visible}.tbl,.tbl tbody,.tbl tr,.tbl td{display:block;width:100%;box-sizing:border-box}.tbl thead{display:none}.tbl tr{border:1px solid var(--gold-faint);padding:12px 14px;margin-top:10px;background:rgba(200,162,78,.03)}.tbl td{border:0;padding:4px 0}.tbl td:first-child{white-space:normal}.tbl td[data-l]::before{content:attr(data-l) ' · ';font:500 10px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}}
+</style>
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d81a64cce134c9e9eba25f3776bc7e0"}'></script>
+</head>
+<body>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+<nav>
+  <div class=brand>
+    <img class=logo src="cloud9-logo-gold.png" alt="" onerror="this.style.display='none'">
+    <div class=wm>Cloud9 <b>Research</b></div>
+    <div class=tag><span class=hh>TradingView · Free alternatives</span></div>
+  </div>
+  <div class=right>
+    <a href="quant.html">← Quant hub</a>
+    <a class=ig href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets ↗</a>
+  </div>
+</nav>
+<header class=hero>
+<div class=eyebrow>From the reel · Free list</div>
+<h1>3 free TradingView alternatives<br><span class=free>(no broker, no KYC).</span></h1>
+<p class=sub>TradingView's free plan now caps you at 30 drawings per chart and 2 indicators, and some desktop users are getting an upgrade ad with no close button. These three are free, need no broker account, and you can open them in a browser today.</p>
+</header>
+<main>
+<section class=howto>
+  <h3>How to use this page</h3>
+  <ol><li><b>Open each link</b> in a browser tab.</li><li><b>Try your usual setup</b> on one chart for 10 minutes.</li><li><b>Keep the one that fits;</b> you don't have to pick just one.</li></ol>
+</section>
+<section class=topic id=s1>
+  <div class=tnum>01 · Tool</div>
+  <h2>#1 OpenMarket: replay and pro options data</h2>
+  <div class=facts><div class=item><span class=lbl>What's free</span><span class=desc>Charts, indicators and drawings ("free to use" per the site), tick-by-tick market replay, and a BTC options panel (data from Deribit): GEX profile, max pain, call/put walls, expected move, put/call ratio.</span></div><div class="item build"><span class=lbl>Try this first</span><span class=desc>Open BTCUSDT, start Replay on yesterday's session at 10x, and mark where price reacted to the max-pain and call-wall levels.</span></div></div>
+  <div class=btnrow><a class=btn-gold href="https://openmarket.xyz" target=_blank rel=noopener>Open OpenMarket ↗</a></div>
+  <div class=task>
+    <div class=meta>AI prompt · about 20 minutes</div>
+    <h3>Copy-paste prompt</h3>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Explain gamma exposure (GEX) and max pain like I&#x27;m a beginner. Then give me a 5-step checklist to read a GEX profile on BTC before I take a trade, and 3 mistakes beginners make with it.</pre></div>
+    <p class=done><b>Done when:</b> You can say, for today, where the biggest call wall and put wall are and whether dealers are long or short gamma.</p>
+  </div>
+</section>
+<section class=topic id=s2>
+  <div class=tnum>02 · Tool</div>
+  <h2>#2 DM Charts: order flow with zero sign-up</h2>
+  <div class=facts><div class=item><span class=lbl>What's free</span><span class=desc>No sign-up or login. "No limit on indicators or panes" (per the site). Pine Editor that runs TradingView Pine Scripts, footprint charts, heatmap and a DOM ladder. Crypto, stocks, FX, commodities.</span></div><div class="item build"><span class=lbl>Try this first</span><span class=desc>Open BTCUSDT, add the DOM ladder and footprint, and watch where big bids or asks sit before price moves.</span></div></div>
+  <div class=btnrow><a class=btn-gold href="https://dmcharts.com" target=_blank rel=noopener>Open DM Charts ↗</a></div>
+  <div class=task>
+    <div class=meta>AI prompt · about 20 minutes</div>
+    <h3>Copy-paste prompt</h3>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>I&#x27;m new to order flow. Explain a DOM ladder, footprint chart and delta in plain English, then give me one simple setup to practice spotting absorption on a 1-minute chart.</pre></div>
+    <p class=done><b>Done when:</b> You've pasted one of your TradingView Pine Scripts into the Pine Editor and it plots on the chart.</p>
+  </div>
+</section>
+<section class=topic id=s3>
+  <div class=tnum>03 · Tool</div>
+  <h2>#3 Vela by LuxAlgo: unlimited drawings + a built-in quant AI</h2>
+  <div class=facts><div class=item><span class=lbl>What's free</span><span class=desc>Free account, no card. Unlimited drawings, up to 16 charts per tab, every LuxAlgo tool (incl. Smart Money Concepts) built in, Pine editor, paper trading, and a one-click "Bring my TradingView setup" import. iPhone and Android apps.</span></div><div class=item><span class=lbl>The AI</span><span class=desc>Quant AI can write indicators, build strategies and run a backtest agent loop ("Strategy", "Backtest agent loop", "Fix my code" modes).</span></div><div class=item><span class=lbl>Open source</span><span class=desc>The chart engine is on GitHub (<a href="https://github.com/LuxAlgo/Vela" target=_blank rel=noopener style="color:var(--gold-hi)">github.com/LuxAlgo/Vela</a>, Apache-2.0).</span></div><div class="item build"><span class=lbl>Try this first</span><span class=desc>Import your TradingView setup, then ask Quant AI: "Build a 50/200 moving-average crossover strategy on SPY daily and backtest it."</span></div></div>
+  <div class=btnrow><a class=btn-gold href="https://vela.luxalgo.com" target=_blank rel=noopener>Open Vela ↗</a></div>
+  <div class=task>
+    <div class=meta>AI prompt · about 20 minutes</div>
+    <h3>Copy-paste prompt</h3>
+    <div class=prompt><div class=ph><span>Copy into ChatGPT or Claude</span><button type=button onclick="cp(this)">Copy</button></div><pre>Here&#x27;s my trading idea: [describe it]. Turn it into exact entry, exit and stop rules I can paste into a backtest, and list 3 ways the backtest could be fooling me.</pre></div>
+    <p class=done><b>Done when:</b> You have one backtest result and can name its max drawdown.</p>
+  </div>
+</section>
+<section class="topic honest" id=honest>
+  <div class=tnum>Good to know</div>
+  <h2>Honest notes.</h2>
+<div><b>Free tiers change.</b> Everything here was checked on Nov 26, 2026.</div>
+<div><b>Vela's Quant AI has limited free usage;</b> heavier use needs a paid plan.</div>
+<div><b>Imports can break.</b> Vela's TradingView import and PineTS may fail on some complex scripts. Simple indicators usually come over fine.</div>
+<div><b>OpenMarket's options panel covers crypto options (Deribit),</b> not stock options. It also has its own scripting language.</div>
+<div><b>DM Charts' footer says "Charts by Vela",</b> so it appears to use Vela's open-source chart engine; it's a separate app.</div>
+<div><b>TradingView's free Basic plan still includes the Strategy Tester;</b> the limits are 30 drawings per chart, 2 indicators, 1 chart per tab and 3 alerts (per TradingView's pricing page).</div>
+<div><b>The no-close-button ad</b> is from user reports on the Windows/Mac desktop app, not every account.</div>
+<div><b>Education, not financial advice.</b> No affiliate links.</div>
+</section>
+<div class=ctaboard>
+  <div class=lbl>Keep going</div>
+  <h2>More free tools.</h2>
+  <p>I check every link before I share it.</p>
+  <div class=actions>
+    <a class=btn-gold href="tradingview-tools.html">More TradingView tools</a>
+    <a class=btn-line href="free-trading-terminal.html">Free trading terminal</a>
+    <a class=btn-line href="quant.html">Quant hub</a>
+    <a class=btn-line href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>Follow @cloud9.markets</a>
+  </div>
+</div>
+</main>
+<footer>
+  <span>Cloud9 Research — MMXXVI</span>
+  <span>Educational only · nothing here is financial advice</span>
+  <div class=disclaimer>For education only, not financial advice. Cloud9 is not affiliated with TradingView, OpenMarket, DM Charts or LuxAlgo. Always confirm details on the official pages.</div>
+</footer>
+</div>
+<script>
+function cp(b){const t=b.closest('.prompt').querySelector('pre').innerText;navigator.clipboard.writeText(t).then(()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1500)})}
+</script>
+</body></html>
