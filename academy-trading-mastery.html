@@ -276,6 +276,20 @@ footer{flex-direction:column;align-items:center;text-align:center;gap:10px;
 .tcard h2{font-size:21px}
 .tcard p{font-size:14px}
 }
+.perks{list-style:none;padding:0;margin:18px auto 0;max-width:440px;text-align:left;display:grid;gap:9px;font-size:15px;color:var(--ink)}
+.perks li:before{content:"✓";color:var(--gold-hi);margin-right:10px}
+.skillmap{max-width:1100px;margin:0 auto 64px;text-align:center}
+.skillmap .lbl{display:block;margin-bottom:12px;color:var(--gold);font-size:10px;letter-spacing:.34em;text-transform:uppercase}
+@media(max-width:640px){.smgrid{grid-template-columns:1fr}.skillmap{padding:0 16px;margin-bottom:44px}}
+.skillmap h3{font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(24px,3vw,36px);margin:0 0 10px;color:var(--ink)}
+.smsub{color:var(--dim);font-size:14px;margin:0 0 30px}
+.smgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;text-align:left}
+.smcol{border:1px solid var(--gold-faint);background:rgba(200,162,78,.04);padding:18px 16px}
+.smpill{display:inline-block;background:#F5C542;color:#0A0907;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;margin-bottom:12px}
+.smcol ol{margin:0;padding-left:22px;display:grid;gap:4px;color:var(--dim);font-size:13px}
+.smi{all:unset;cursor:pointer;color:var(--ink);font-size:14px;display:flex;justify-content:space-between;gap:8px;width:100%}
+.smi span{color:var(--gold);font-size:11px;letter-spacing:.06em;white-space:nowrap}
+.smi:hover,.smi:focus-visible{color:var(--gold-hi)}
 </style></head><body>
 <div style="min-height:100vh;display:flex;flex-direction:column">
 <nav>
@@ -300,21 +314,29 @@ footer{flex-direction:column;align-items:center;text-align:center;gap:10px;
 <header class=hero>
   <div class=eyebrow>Trading Mastery</div>
   <h1>Trade like the 1% — risk, sizing, edge, psychology.</h1>
-  <div class=free>In 21 lessons.</div>
-  <p class=sub id=heroSub>21 lessons · lesson one is open — sign in to unlock the rest.</p>
+  <div class=free>In 21 lessons. 100% free.</div>
+  <p class=sub id=heroSub>Lesson one is open — create a free account to unlock all 21. No card, no spam.</p>
   <div class=prog id=progWrap style=display:none><div class=rail><div class=fill id=pbar></div></div><div class=txt id=ptxt></div></div>
 </header>
 <main>
   <div class=gatebar id=gate style=display:none>
     <div class=lbl>Access code</div>
-    <p>This track unlocks with the code from our Instagram DM — comment <b style="font-style:normal;color:var(--gold-hi)">TRADER</b> on the reel and it lands in your inbox.</p>
+    <p>This track unlocks with the code from our Instagram DM — comment on the reel and it lands in your inbox.</p>
     <form id=gateForm><input id=gateInput placeholder="CODE" autocomplete=off><button class=btn-gold type=submit>Unlock</button></form>
     <div class=msg id=gateMsg></div>
   </div>
+  <section class=skillmap id=skills>
+    <div class=lbl>The skill map</div>
+    <h3>Master these to become a top 1% trader in 2027</h3>
+    <p class=smsub>50 skills in 5 lists. Tap any skill to open the lesson that teaches it.</p>
+    <div class=smgrid><div class=smcol><div class=smh><span class=smpill>Trading</span></div><ol><li><button class=smi data-n=6>Reading candlesticks<span>L06</span></button></li><li><button class=smi data-n=8>Timeframes<span>L08</span></button></li><li><button class=smi data-n=5>Support &amp; resistance<span>L05</span></button></li><li><button class=smi data-n=8>Market structure<span>L08</span></button></li><li><button class=smi data-n=13>Trend vs range<span>L13</span></button></li><li><button class=smi data-n=7>Volume<span>L07</span></button></li><li><button class=smi data-n=3>Order types<span>L03</span></button></li><li><button class=smi data-n=5>Entries<span>L05</span></button></li><li><button class=smi data-n=17>Exits<span>L17</span></button></li><li><button class=smi data-n=16>Patience<span>L16</span></button></li></ol></div><div class=smcol><div class=smh><span class=smpill>Managing risk</span></div><ol><li><button class=smi data-n=1>The 1% rule<span>L01</span></button></li><li><button class=smi data-n=2>Position sizing<span>L02</span></button></li><li><button class=smi data-n=3>Stop before you click<span>L03</span></button></li><li><button class=smi data-n=3>Stops outside the noise<span>L03</span></button></li><li><button class=smi data-n=4>R-multiples<span>L04</span></button></li><li><button class=smi data-n=17>Risk/reward first<span>L17</span></button></li><li><button class=smi data-n=17>Daily loss limit<span>L17</span></button></li><li><button class=smi data-n=19>Cutting losers fast<span>L19</span></button></li><li><button class=smi data-n=19>Letting winners run<span>L19</span></button></li><li><button class=smi data-n=3>Respecting your stop<span>L03</span></button></li></ol></div><div class=smcol><div class=smh><span class=smpill>Indicators</span></div><ol><li><button class=smi data-n=14>Moving averages<span>L14</span></button></li><li><button class=smi data-n=14>50 vs 200-day<span>L14</span></button></li><li><button class=smi data-n=15>RSI<span>L15</span></button></li><li><button class=smi data-n=15>Momentum<span>L15</span></button></li><li><button class=smi data-n=7>VWAP<span>L07</span></button></li><li><button class=smi data-n=15>MACD<span>L15</span></button></li><li><button class=smi data-n=3>ATR for stops<span>L03</span></button></li><li><button class=smi data-n=16>Breakouts vs fakeouts<span>L16</span></button></li><li><button class=smi data-n=21>Correlation<span>L21</span></button></li><li><button class=smi data-n=14>Two indicators, max<span>L14</span></button></li></ol></div><div class=smcol><div class=smh><span class=smpill>Trading psychology</span></div><ol><li><button class=smi data-n=10>Why 90% lose<span>L10</span></button></li><li><button class=smi data-n=9>FOMO<span>L09</span></button></li><li><button class=smi data-n=18>Revenge trading<span>L18</span></button></li><li><button class=smi data-n=18>Overtrading<span>L18</span></button></li><li><button class=smi data-n=18>Taking the L<span>L18</span></button></li><li><button class=smi data-n=16>Waiting for your setup<span>L16</span></button></li><li><button class=smi data-n=18>Stopping for the day<span>L18</span></button></li><li><button class=smi data-n=9>Following your rules<span>L09</span></button></li><li><button class=smi data-n=9>Forgetting the P&amp;L<span>L09</span></button></li><li><button class=smi data-n=10>Boring is profitable<span>L10</span></button></li></ol></div><div class=smcol><div class=smh><span class=smpill>Your edge</span></div><ol><li><button class=smi data-n=11>One setup<span>L11</span></button></li><li><button class=smi data-n=11>One market<span>L11</span></button></li><li><button class=smi data-n=11>Written rules<span>L11</span></button></li><li><button class=smi data-n=20>Bar replay<span>L20</span></button></li><li><button class=smi data-n=20>Backtesting<span>L20</span></button></li><li><button class=smi data-n=20>100+ trade sample<span>L20</span></button></li><li><button class=smi data-n=4>Expectancy<span>L04</span></button></li><li><button class=smi data-n=12>Journaling every trade<span>L12</span></button></li><li><button class=smi data-n=12>Weekly review<span>L12</span></button></li><li><button class=smi data-n=20>Knowing when it stops working<span>L20</span></button></li></ol></div></div>
+  </section>
   <div class=grid id=grid></div>
   <div class=cta>
-    <div class=lbl>No code needed</div>
-    <p class=line>Sign in once and every lesson opens — progress saves to your account. More drops at <a href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets</a>.</p>
+    <div class=lbl>Free account · no card</div>
+    <ul class=perks><li>All 21 lessons, unlocked</li><li>A practice task + AI prompt to copy in every lesson</li><li>Quizzes to check you really got it</li><li>Progress saved across your devices</li><li>New lessons as they drop</li></ul>
+    <button class="btn-gold hideauth" id=btnJoin style="margin-top:22px;padding:14px 26px">Unlock all 21 free</button>
+    <p class=line>Sign up once and every lesson opens. More drops at <a href="https://www.instagram.com/cloud9.markets/" target=_blank rel=noopener>@cloud9.markets</a>.</p>
   </div>
   <div class=other>More tracks<br><a href="academy-ai-investing.html">AI for Investing</a> · <a href="academy-quant-career.html">Quant Career</a> · <a href="academy-build-with-ai.html">Build With AI</a> · <a href="academy-market-decoded.html">Market Decoded</a> · <a href="academy-options-unlocked.html">Options Unlocked</a> · <a href="academy-money-wealth.html">Money & Wealth</a> · <a href="academy-data-signals.html">Data & Signals</a></div>
 </main>
@@ -352,9 +374,9 @@ footer{flex-direction:column;align-items:center;text-align:center;gap:10px;
 <div class=figzoom id=figZoom role=dialog aria-label="Enlarged chart"></div>
 <div class=overlay id=loginModal>
   <div class="sheet login" role=dialog aria-modal=true>
-    <div class=members>Members</div>
-    <h2>Sign in</h2>
-    <p class=sub>One account for every Cloud9 Academy track — your progress and unlocked courses follow you across devices.</p>
+    <div class=members>Free account</div>
+    <h2>Unlock all 21 lessons</h2>
+    <p class=sub>Free forever · no card, no spam. One account opens every lesson, practice task and quiz in every Cloud9 Academy track, and your progress follows you across devices.</p>
     <form id=emailForm style="display:flex;flex-direction:column;gap:24px">
       <label><span>Email</span><input name=email id=emailInput type=email required placeholder="you@example.com"></label>
       <button type=submit class=btn-gold style="margin-top:6px;padding:14px">Email me a sign-in link</button>
@@ -405,10 +427,10 @@ async function fbInit(){
  document.addEventListener("click",()=>$("#avMenu")&&$("#avMenu").classList.remove("on"));
  fx.onAuthStateChanged(fx.auth,async u=>{
   if(!u){user=null;profile=null;uref=null;
-   $("#btnLogin").classList.remove("hideauth");$("#avWrap").classList.add("hideauth");
+   $("#btnLogin").classList.remove("hideauth");$("#btnJoin").classList.remove("hideauth");$("#avWrap").classList.add("hideauth");
    onUser();return;}
   user=u;uref=fx.doc(fx.db,"academy_users",u.uid);
-  $("#btnLogin").classList.add("hideauth");$("#avWrap").classList.remove("hideauth");
+  $("#btnLogin").classList.add("hideauth");$("#btnJoin").classList.add("hideauth");$("#avWrap").classList.remove("hideauth");
   $("#avEmail").textContent=u.email||"member";
   $("#avBtn").innerHTML=u.photoURL?`<img src="${u.photoURL}" alt="" referrerpolicy=no-referrer>`:(u.email||"C")[0].toUpperCase();
   $("#loginModal").classList.remove("on");
@@ -452,7 +474,7 @@ function render(){const d=prog();
  $("#gate").style.display=(user&&!full)?"":"none";
  $("#progWrap").style.display=full?"":"none";
  $("#heroSub").textContent=full?"Your progress syncs to your account automatically.":
-  (user?"Enter your access code below to unlock every lesson.":"21 lessons · lesson one is open — sign in to unlock the rest.");
+  (user?"Enter your access code below to unlock every lesson.":"Lesson one is open — create a free account to unlock all 21. No card, no spam.");
  if(full){const c=M.filter(m=>d[m.id]).length;
   $("#pbar").style.width=(100*c/M.length)+"%";
   $("#ptxt").textContent=`${c} of ${M.length} lessons complete`;}}
@@ -464,7 +486,7 @@ function openLesson(id){const m=M.find(x=>x.id==id);if(!m||!m.ready)return;
  openId=id;
  $("#mNum").textContent="Lesson "+pad(m.n);$("#mTitle").textContent=m.title;
  $("#mHook").textContent=m.hook||"";$("#mBody").innerHTML=m.lesson||"";
- $("#mDone").textContent=user?(prog()[id]?"Mark as not complete":"Mark lesson complete"):"Sign in to track progress";
+ $("#mDone").textContent=user?(prog()[id]?"Mark as not complete":"Mark lesson complete"):"Unlock all 21 free";
  if(m.prompt){$("#mSteal").style.display="";$("#mPromptTxt").textContent="“"+m.prompt+"”";
   $("#mCopy").textContent="Copy prompt";
   $("#mCopy").onclick=async()=>{try{await navigator.clipboard.writeText(m.prompt);$("#mCopy").textContent="Copied ✓"}catch(e){}};}
@@ -537,7 +559,7 @@ function renderQuiz(qs,lid){const el=$("#mQuiz");
    who skips the quiz can still finish the lesson, but the label stops
    "complete" from silently meaning "clicked a button". */
 function syncDone(){const b=$("#mDone");if(!b||!openId)return;
- if(!user){b.textContent="Sign in to track progress";return;}
+ if(!user){b.textContent="Unlock all 21 free";return;}
  const q=quizFor(openId),base=prog()[openId]?"Mark as not complete":"Mark lesson complete";
  b.textContent=(q&&q.t&&q.a&&q.a.filter(x=>x!==null&&x!==undefined).length===q.t)
   ?`${base} · quiz ${q.s}/${q.t}`:base;}
@@ -592,6 +614,8 @@ async function onUser(signedIn){
    photo:user.photoURL||null,lastSeen:fx.serverTimestamp(),
    progress:{[SLUG]:merged},quiz:{[SLUG]:mq}},{merge:true});}catch(e){}}
  render();}
+document.querySelectorAll(".smi").forEach(b=>b.onclick=()=>{const m=M.find(x=>x.n==+b.dataset.n);if(m)openLesson(m.id)});
+$("#btnJoin").onclick=()=>$("#loginModal").classList.add("on");
 render();
 fbInit();
 </script>
